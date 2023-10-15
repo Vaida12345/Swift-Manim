@@ -16,6 +16,13 @@ public protocol PointLike {
 }
 
 
+extension PointLike where Self == Point {
+    
+    public static var center: Point { Point() }
+    
+}
+
+
 /// A point, with the center being (0, 0, 0).
 public class Point: PyObject, PointLike {
    
@@ -24,9 +31,6 @@ public class Point: PyObject, PointLike {
     let y: Double
     
     let z: Double
-    
-    
-    public static let center = Point()
     
     
     public func shift(_ value: Double, to direction: Direction) -> Point {

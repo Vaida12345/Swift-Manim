@@ -15,9 +15,9 @@ public class Camera: MObject {
         let object = MObject(identifier: __formVariableName(base: "\(MObject.self)"))
         let functionName = __formVariableName(base: "updater\(Self.self)")
         Generator.main.add("def \(functionName)(\(object.identifier)):")
-        indentCount = 3
+        indentCount += 1
         handler(object)
-        indentCount = 2
+        indentCount -= 1
         Generator.main.add("")
         self.attribute("frame.add_updater", to: [("update_function", functionName),
                                            ("index", index?.description),

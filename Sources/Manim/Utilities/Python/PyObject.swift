@@ -13,6 +13,10 @@ public class PyObject: Equatable {
     
     internal let identifier: String
     
+    internal let __base: String?
+    
+    internal let __args: Args?
+    
     
     internal func attribute(_ attributeName: String, to args: [(key: String?, value: String?)]) {
         Generator.main.add("\(self.identifier).\(attributeName)\(__formArgs(args))")
@@ -21,12 +25,23 @@ public class PyObject: Equatable {
     
     init(base: String? = nil, args: Args) {
         let base = base ?? "\(Self.self)"
-        self.identifier = __formVariableName(base: base)
-        Generator.main.add("\(self.identifier) = \(base)\(__formArgs(args))")
+        
+        if shouldOverrideInit {
+            self.identifier = ""
+            self.__base = base
+            self.__args = args
+        } else {
+            self.identifier = __formVariableName(base: base)
+            Generator.main.add("\(self.identifier) = \(base)\(__formArgs(args))")
+            self.__base = nil
+            self.__args = nil
+        }
     }
     
     required init(identifier: String) {
         self.identifier = identifier
+        self.__base = nil
+        self.__args = nil
     }
     
     

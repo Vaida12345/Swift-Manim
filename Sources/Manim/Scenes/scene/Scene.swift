@@ -9,18 +9,18 @@ import Foundation
 
 
 /// A Scene is the canvas of your animation.
-public class Scene {
+open class Scene {
     
     public func configure(_ configuration: inout Generator.Configuration) {
         
     }
     
-    public func construct() {
+    open func construct() {
         Generator.main.add("\n    def construct(self):", ignoresIndentGuide: true)
     }
     
     
-    required init() {
+    required public init() {
         Generator.main.add("\nclass \(Self.self)(Scene):", ignoresIndentGuide: true)
     }
     

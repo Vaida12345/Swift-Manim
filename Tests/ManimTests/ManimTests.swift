@@ -1,24 +1,18 @@
 import XCTest
-@testable import Manim
+import Manim
 
-final class swiftManimTests: XCTestCase {
+final class ManimTests: XCTestCase {
     func testExample() throws {
         class TracedPathExample: Scene {
             
             override func construct() {
                 super.construct()
                 
-                let text = Text("Hello~")
+                let arrow = Arrow(start: .center, end: .center.shift(1, to: .left), tip: .custom(base: Circle()))
                 
                 withAnimation {
-                    text.show()
+                    arrow.show()
                 }
-                
-                withAnimation {
-                    text.offset(x: -1)
-                }
-                
-                sleep(for: .seconds(1))
             }
         }
         

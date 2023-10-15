@@ -13,7 +13,7 @@ public final class Generator {
     private var components: [String]
     
     
-    static let main = Generator()
+    public static let main = Generator()
     
     
     /// The indentation would be added automatically according to `indentCount`, unless `ignoresIndentGuide`.
