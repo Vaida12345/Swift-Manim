@@ -50,8 +50,14 @@ public final class Generator {
         manager.wait()
     }
     
-    internal func assign(_ variableName: String, to value: String) {
-        self.add("\(variableName) = \(value)")
+    internal func assign<T, Parent>(type: T.Type, by parent: Parent, calling method: String, args: Args) -> T where Parent: PyObject, T: PyObject {
+        let result = T(identifier: __formVariableName(base: "\(T.self)"))
+        self.add("\(result.identifier) = \(parent.identifier).\(method)(\(__formArgs(args))")
+        return result
+    }
+    
+    internal func assign<T>(_ method: Method<T>) -> T {
+        self.assign(type: T.self, by: method.parent, calling: method.name, args: method.args)
     }
     
     

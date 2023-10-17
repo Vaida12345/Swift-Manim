@@ -164,10 +164,7 @@ public class MObject: PyObject {
     
     /// Create and return an identical copy of the object including all children.
     public func copied() -> Self {
-        let copy = Self(identifier: __formVariableName(base: "\(Self.self)"))
-        Generator.main.assign(copy.identifier, to: "\(self.identifier).copy()")
-        
-        return copy
+        Generator.main.assign(type: Self.self, by: self, calling: "copy", args: [])
     }
     
     /// Flips/Mirrors an object about its center.

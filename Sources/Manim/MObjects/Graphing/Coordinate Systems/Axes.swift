@@ -44,6 +44,19 @@ public class Axes: VGroup {
     
     required init(identifier: String) { super.init(identifier: identifier) }
     
+    
+    /// Accepts coordinates and returns a point with respect to the `destination`.
+    public func convert(_ point: Point, from source: CoordinateSpace, to destination: CoordinateSpace) -> Point {
+        switch (source, destination) {
+        case (.canvas, .axis):
+            Generator.main.assign(type: Point.self, by: self, calling: "coords_to_point", args: [(nil, point.pyDescription)])
+        case (.axis, .canvas):
+            Generator.main.assign(type: Point.self, by: self, calling: "point_to_coords", args: [(nil, point.pyDescription)])
+        default:
+            fatalError("You're trying to convert a coordinate space to itself, this could be a logic error.")
+        }
+    }
+    
     public enum Style {
         case __both(NumberLine)
         case __individual(x: NumberLine, y: NumberLine)
@@ -59,6 +72,15 @@ public class Axes: VGroup {
             defer { shouldOverrideInit = false }
             return .__individual(x: x(), y: y())
         }
+    }
+    
+    
+    public enum CoordinateSpace {
+        /// The coordinate on the canvas, ie, the ``Scene``.
+        case canvas
+        
+        /// The coordinate on the ``Axes``.
+        case axis
     }
     
 }
