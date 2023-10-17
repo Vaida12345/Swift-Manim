@@ -19,18 +19,30 @@ public final class NumberLine: Line {
     ///   - domain: The
     ///   - length: The length of the axis.
     ///   - unitSize: The distance between each tick of the line. Overwritten by `length`, if specified.
-    ///   - includeTicks: Whether to include ticks on the number line.
-    ///   - width: The thickness of the line.
-    ///   - includeTips: Whether or not to include the tip on axis.
+    ///   - include: The set to include on graph.
+    ///   - strokeWidth: The thickness of the line.
     ///   - tip: The properties of the tip.
     public init(domain: Range? = nil,
                 length: Double? = nil,
                 unitSize: Double = 1,
                 include: DisplayStyle = [],
-                width: Double? = nil,
+                strokeWidth: Double? = nil,
                 tip: TipStyle? = nil
                 ) {
-//        includeTip: Bool = true,
+        var args: Args = [
+            ("x_range", domain?.pyDescription),
+            ("length", length?.description),
+            ("unit_size", unitSize.description),
+            ("stroke_width", strokeWidth?.description),
+            ("tip_width", tip?.width?.description),
+            ("tip_height", tip?.height?.description),
+            ("tip_shape", tip?.shape?.identifier)
+        ]
+        if include.contains(.ticks)   { args.append(("include_ticks",   true.pyDescription)) }
+        if include.contains(.numbers) { args.append(("include_numbers", true.pyDescription)) }
+        if tip != nil                 { args.append(("include_tip",     true.pyDescription)) }
+        
+        super.init(args: args)
     }
     
     
@@ -41,6 +53,11 @@ public final class NumberLine: Line {
         let max: Double
         
         let step: Double
+        
+        
+        var pyDescription: String {
+            "[\(min), \(max), \(step)]"
+        }
         
         
         /// Creates an range given its `(min, max, step)` values of the axis.
