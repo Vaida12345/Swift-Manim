@@ -16,29 +16,34 @@ public final class NumberLine: Line {
     /// Creates a number line with tick marks.
     ///
     /// - Parameters:
-    ///   - domain: The
+    ///   - range: The range of the axis.
     ///   - length: The length of the axis.
     ///   - unitSize: The distance between each tick of the line. Overwritten by `length`, if specified.
     ///   - include: The set to include on graph.
     ///   - strokeWidth: The thickness of the line.
     ///   - tip: The properties of the tip.
-    public init(domain: Range? = nil,
+    ///   - scaling: The way the `range` is value is scaled.
+    public init(range: Range? = nil,
                 length: Double? = nil,
                 unitSize: Double = 1,
                 include: DisplayStyle = [],
                 strokeWidth: Double? = nil,
-                tip: TipStyle? = nil
+                tip: TipStyle? = nil,
+                scaling: ScaleBase = .linear(),
+                start: (any PointLike)? = nil, end: (any PointLike)? = nil
                 ) {
         var args: Args = [
-            ("x_range", domain?.pyDescription),
+            ("x_range", range?.pyDescription),
             ("length", length?.description),
             ("unit_size", unitSize.description),
             ("stroke_width", strokeWidth?.description),
             ("tip_width", tip?.width?.description),
             ("tip_height", tip?.height?.description),
-            ("tip_shape", tip?.shape?.identifier)
+            ("tip_shape", tip?.shape?.identifier),
+            ("scaling", scaling.pyDescription),
+            ("start", start?.pyDescription), ("end", end?.pyDescription)
         ]
-        if include.contains(.ticks)   { args.append(("include_ticks",   true.pyDescription)) }
+        if !include.contains(.ticks)  { args.append(("include_ticks",  false.pyDescription)) }
         if include.contains(.numbers) { args.append(("include_numbers", true.pyDescription)) }
         if tip != nil                 { args.append(("include_tip",     true.pyDescription)) }
         
@@ -104,9 +109,18 @@ public final class NumberLine: Line {
         }
     }
     
-    public enum ScaleBase: String {
-        case linear
-        case log
+    public enum ScaleBase {
+        case linear(scale: Double = 1)
+        case log(base: Double = 10)
+        
+        var pyDescription: String {
+            switch self {
+            case .linear(let scale):
+                "LinearBase(scale=\(scale))"
+            case .log(let base):
+                "LogBase(base=\(base))"
+            }
+        }
     }
     
 }

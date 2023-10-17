@@ -73,7 +73,7 @@ func __formVariableName(base: String) -> String {
 extension Args {
     
     var pyDescription: String {
-        "{\(self.filter { $0.key != nil && $0.value != nil }.map { $0.key! + ":" + $0.value! }.joined(separator: ", "))}"
+        "{\(self.filter { $0.key != nil && $0.value != nil }.map { "\"\($0.key!)\":" + $0.value! }.joined(separator: ", "))}"
     }
     
 }

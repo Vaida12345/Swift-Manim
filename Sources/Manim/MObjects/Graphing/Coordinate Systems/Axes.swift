@@ -48,13 +48,13 @@ public class Axes: VGroup {
         case __both(NumberLine)
         case __individual(x: NumberLine, y: NumberLine)
         
-        public func both(style: @autoclosure () -> NumberLine) -> Style {
+        public static func both(_ style: @autoclosure () -> NumberLine) -> Style {
             shouldOverrideInit = true
             defer { shouldOverrideInit = false }
             return .__both(style())
         }
         
-        public func individual(x: @autoclosure () -> NumberLine, y: @autoclosure () -> NumberLine) -> Style {
+        public static func individual(x: @autoclosure () -> NumberLine, y: @autoclosure () -> NumberLine) -> Style {
             shouldOverrideInit = true
             defer { shouldOverrideInit = false }
             return .__individual(x: x(), y: y())

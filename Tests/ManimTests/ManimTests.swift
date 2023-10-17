@@ -8,10 +8,12 @@ final class ManimTests: XCTestCase {
             override func construct() {
                 super.construct()
                 
-                let axis = Axes()
+                let axis = Axes(style: .both(.init(include: [.numbers, .ticks], scaling: .log())))
                 withAnimation {
                     axis.show()
                 }
+                
+                sleep(for: .seconds(1))
             }
         }
         
