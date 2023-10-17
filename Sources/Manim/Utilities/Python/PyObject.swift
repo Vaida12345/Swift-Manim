@@ -5,7 +5,7 @@
 //  Created by Vaida on 2023/10/7.
 //
 
-import Foundation
+
 
 
 /// The base python class.
@@ -68,4 +68,12 @@ func __formVariableName(base: String) -> String {
         base.append(index.description)
     }
     return base
+}
+
+extension Args {
+    
+    var pyDescription: String {
+        "{\(self.filter { $0.key != nil && $0.value != nil }.map { $0.key! + ":" + $0.value! }.joined(separator: ", "))}"
+    }
+    
 }

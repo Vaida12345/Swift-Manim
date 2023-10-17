@@ -8,10 +8,9 @@ final class ManimTests: XCTestCase {
             override func construct() {
                 super.construct()
                 
-                let arrow = Arrow(start: .center, end: .center.shift(1, to: .left), tip: .custom(base: Circle()))
-                
+                let axis = Axes()
                 withAnimation {
-                    arrow.show()
+                    axis.show()
                 }
             }
         }

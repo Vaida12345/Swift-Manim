@@ -5,7 +5,7 @@
 //  Created by Vaida on 2023/10/15.
 //
 
-import Foundation
+
 
 
 /// A background rectangle. Its default color is the background color of the scene.
