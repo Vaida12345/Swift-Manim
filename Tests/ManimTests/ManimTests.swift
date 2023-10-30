@@ -1,5 +1,6 @@
 import XCTest
 import Manim
+import LaTeX
 
 final class ManimTests: XCTestCase {
     func testExample() throws {
@@ -8,9 +9,11 @@ final class ManimTests: XCTestCase {
             override func construct() {
                 super.construct()
                 
-                let axis = Axes(style: .both(.init(include: [.numbers, .ticks], scaling: .log())))
+                let function = FunctionGraph { x in
+                    LaTeX.sin(x)
+                }
                 withAnimation {
-                    axis.show()
+                    function.show()
                 }
                 
                 sleep(for: .seconds(1))
