@@ -11,11 +11,17 @@ import LaTeX
 
 public final class FunctionGraph: VMObject {
     
-    public init(function: (_ x: String) -> some LaTeXComponent) {
+    public init(color: Color? = nil, range: ClosedRange<Double>? = nil, function: (_ x: String) -> some LaTeXComponent) {
         let symbol = "t"
         let result = function(symbol)
         
-        super.init(args: [(nil, "lambda t: \(result.pyDescription)")])
+        super.init(
+            args: [
+                (nil, "lambda t: \(result.pyDescription)"),
+                ("color", color?.pyDescription),
+                ("range", range.map { "[\($0.lowerBound), \($0.upperBound), 1]" }),
+            ]
+        )
     }
     
     
