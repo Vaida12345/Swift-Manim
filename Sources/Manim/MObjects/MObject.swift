@@ -12,6 +12,15 @@ import SwiftUI
 /// Mathematical Object: base class for objects that can be displayed on screen.
 public class MObject: PyObject {
     
+    /// Internal state, tracks if the object is attached by calling 
+    internal var isAttached: Bool = false
+    
+    /// Sets `self` as attached, any changes to `self` will be reflected on the object it is attached to.
+    public func attached() -> Self {
+        self.isAttached = true
+        return self
+    }
+    
     /// The bottom point.
     public var bottom: Method<Point> {
         Method<Point>(name: "get_bottom", args: [], parent: self)
@@ -93,19 +102,19 @@ public class MObject: PyObject {
     /// Moves to the center of given object.
     @discardableResult
     public func move(to target: MObject, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
-        AttachedAnimation(name: "move_to", target: self.identifier, args: [("point_or_mobject", target.identifier),
-                                                                           ("aligned_edge", alignedEdges.pyDescription),
-                                                                           ("coor_mask", coordinateMask.pyDescription)])
-    }
-    
-    /// Moves to the center of given object.
-    @discardableResult
-    public func move(to target: AttachedObject, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
-        target.base.addUpdater(initialCall: false) { object in
-            self.move(to: object, alignedEdges: alignedEdges, coordinateMask: coordinateMask)
-        }
+        let args = [
+            ("point_or_mobject", target.identifier),
+            ("aligned_edge", alignedEdges.pyDescription),
+            ("coor_mask", coordinateMask.pyDescription)
+        ]
         
-        return self.move(to: target.base, alignedEdges: alignedEdges, coordinateMask: coordinateMask)
+        return AttachedAnimation(name: "move_to", target: self.identifier, args: args) {
+            if target.isAttached {
+                self.addUpdater(initialCall: false) { object in
+                    object.attribute("move_to", to: args)
+                }
+            }
+        }
     }
     
     /// Moves the object along the border of the `path` object,
@@ -140,17 +149,6 @@ public class MObject: PyObject {
     /// - Parameters:
     ///   - position: The position of `self` relative to `target`
     @discardableResult
-    public func move(nextTo target: MObject, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
-        AttachedAnimation(name: "next_to", target: self.identifier, args: [(nil, target.identifier),
-                                                                           (nil, position.pyDescription),
-                                                                           ("buff", padding.description)])
-    }
-    
-    /// Moves the current object next to `target`.
-    ///
-    /// - Parameters:
-    ///   - position: The position of `self` relative to `target`
-    @discardableResult
     public func move(nextTo target: Method<Point>, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
         if !target.isDetached {
             self.addUpdater(initialCall: false) { object in
@@ -170,19 +168,22 @@ public class MObject: PyObject {
     /// - Parameters:
     ///   - position: The position of `self` relative to `target`
     @discardableResult
-    public func move(nextTo target: AttachedObject, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
-        AttachedAnimation(
+    public func move(nextTo target: MObject, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+        let args = [
+            (nil, target.identifier),
+            (nil, position.pyDescription),
+            ("buff", padding.description)
+        ]
+        return AttachedAnimation(
             name: "next_to",
             target: self.identifier,
-            args: [(nil, target.base.identifier),
-                   (nil, position.pyDescription),
-                   ("buff", padding.description)]) {
-                       self.addUpdater(initialCall: false) { object in
-                           object.attribute("next_to", to: [(nil, target.base.identifier),
-                                                            (nil, position.pyDescription),
-                                                            ("buff", padding.description)])
-                       }
-                   }
+            args: args) {
+                if target.isAttached {
+                    self.addUpdater(initialCall: false) { object in
+                        object.attribute("next_to", to: args)
+                    }
+                }
+            }
     }
     
     /// Add `child` as sub object.
