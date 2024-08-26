@@ -30,13 +30,15 @@ public final class Generator {
         self.add("", ignoresIndentGuide: true)
         var configuration = Configuration()
         configurationBuilder(&configuration)
-        configuration.push()
         self.add("", ignoresIndentGuide: true)
         
         for scene in scenes {
             let scene = scene.init()
             scene.construct()
+            scene.configure(&configuration)
         }
+        
+        configuration.push()
         
         try FileManager.default.createDirectory(atPath: folder, withIntermediateDirectories: true, attributes: nil)
         try self.components.joined(separator: "\n").write(toFile: "\(folder)/swiftmanim.py", atomically: true, encoding: .utf8)
@@ -77,7 +79,7 @@ public final class Generator {
         /// Main output directory.
         public var mediaFolder: String = "\(NSHomeDirectory())/Documents/Swift Manim"
         
-        /// Whether dry run is enabled.
+        /// Enable GUI interaction.
         public var enableGUI: Bool?
         
         /// File format
@@ -108,7 +110,7 @@ public final class Generator {
         
         public var imagesDestination: String = "\(NSHomeDirectory())/Documents/Swift Manim/Image Sequence"
         
-        
+        /// Push the configs to the main generator.
         func push() {
             if let background {
                 if let color = background.color {

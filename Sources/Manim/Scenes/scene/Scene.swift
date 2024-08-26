@@ -11,10 +11,20 @@
 /// A Scene is the canvas of your animation.
 open class Scene {
     
-    public func configure(_ configuration: inout Generator.Configuration) {
+    open func configure(_ configuration: inout Generator.Configuration) {
         
     }
     
+    /// The constructor.
+    ///
+    /// You *must* call `super` at the beginning of your override.
+    ///
+    /// ```swift
+    /// override func construct() {
+    ///     super.construct()
+    ///
+    ///     // Animations here
+    /// }
     open func construct() {
         Generator.main.add("\n    def construct(self):", ignoresIndentGuide: true)
     }

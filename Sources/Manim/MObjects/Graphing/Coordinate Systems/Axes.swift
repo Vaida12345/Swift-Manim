@@ -12,21 +12,22 @@ public class Axes: VGroup {
     
     /// Creates a set of axes.
     ///
+    /// Note that the axes coordinate space is the same as global coordinate space.
+    ///
     /// - Parameters:
     ///   - domain: The `(x_min, x_max, x_step)` values of the x-axis.
     ///   - range: The `(y_min, y_max, y_step)` values of the y-axis.
-    ///   - length: The length of the `(x, y)`-axis.
     ///   - style: The style of axes.
-    ///   - dimensions: The dimension.
+    ///   - dimensions: The dimension, defaults to 2.
     public init(domain: NumberLine.Range? = nil,
                 range: NumberLine.Range? = nil,
-                length: (x: Double?, y: Double?)? = nil,
                 style: Style? = nil,
                 dimensions: Int? = nil) {
         var args = [
             ("x_range", domain?.pyDescription),
             ("y_range", range?.pyDescription),
-            ("x_length", length?.x?.description),
+            ("x_length", domain?.length.description),
+            ("y_length", range?.length.description),
             ("dimensions", dimensions?.description)
         ]
         switch style {

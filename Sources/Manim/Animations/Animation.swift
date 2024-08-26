@@ -37,7 +37,7 @@ internal class EmptyAnimation: Animation {
 ///   - delay: The delay of animation
 ///   - animation: The style of animation
 ///   - body: The body of animation
-public func withAnimation(duration: Double? = nil, delay: Double? = nil, animation: RateFunction = .easeInOut, @AnimationBuilder body: () -> AnimationGroup) {
+public func withAnimation(duration: Double? = nil, delay: Double? = nil, animation: RateFunction = .spring, @AnimationBuilder body: () -> AnimationGroup) {
     shouldUseAnimation = true
     let animations = body()
     let body = animations
@@ -65,7 +65,7 @@ public func withAnimation(duration: Double? = nil, delay: Double? = nil, animati
 ///   - delay: The delay of **each** animation.
 ///   - animation: The style of animation
 ///   - body: The body of animation
-public func withAnimationGroup(duration: Double? = nil, delay: Double? = nil, animation: RateFunction = .easeInOut, @AnimationBuilder _ body: () -> AnimationGroup) {
+public func withAnimationGroup(duration: Double? = nil, delay: Double? = nil, animation: RateFunction = .spring, @AnimationBuilder _ body: () -> AnimationGroup) {
     shouldUseAnimation = true
     let animations = body()
     let body = animations

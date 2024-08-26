@@ -9,11 +9,19 @@ final class ManimTests: XCTestCase {
             override func construct() {
                 super.construct()
                 
-                let function = FunctionGraph { x in
-                    LaTeX.sin(x)
+                let arrow = Arrow(start: .center, end: .center.shift(1, to: .left), tip: .custom(base: Circle()))
+                
+                let line = Line(start: Point(x: -2, y: 1), end: Point(x: 0, y: -2))
+                let dot = Dot(point: Point(x: -2, y: 1))
+                
+                withAnimationGroup {
+                    dot.show(animation: .fadeIn())
+                    line.show(animation: .rotate())
                 }
+                
                 withAnimation {
-                    function.show()
+                    line.set.start(to: dot.center.attached())
+                    dot.move(to: .center)
                 }
                 
                 sleep(for: .seconds(1))
@@ -25,3 +33,4 @@ final class ManimTests: XCTestCase {
         }
     }
 }
+

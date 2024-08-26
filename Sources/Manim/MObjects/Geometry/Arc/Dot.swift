@@ -8,7 +8,7 @@
 
 
 /// A dot
-final class Dot: VMObject {
+public final class Dot: VMObject {
     
     
     /// Creates a dot

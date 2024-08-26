@@ -64,6 +64,10 @@ public final class NumberLine: Line {
             "[\(min), \(max), \(step)]"
         }
         
+        var length: Double {
+            self.max - self.min
+        }
+        
         
         /// Creates an range given its `(min, max, step)` values of the axis.
         public init(min: Double = 0, max: Double, step: Double = 1) {
