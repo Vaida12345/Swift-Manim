@@ -6,8 +6,6 @@
 //
 
 
-
-
 /// The base python class.
 public class PyObject: Equatable {
     

@@ -26,7 +26,7 @@ public final class Dot: VMObject {
             ("stroke_width", strokeWidth.description),
             ("fill_opacity", opacity.description),
             ("color", color?.pyDescription),
-            ])
+        ])
     }
     
     

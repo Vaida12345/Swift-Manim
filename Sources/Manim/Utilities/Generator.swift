@@ -25,18 +25,15 @@ public final class Generator {
         self.add("config.\(name) = \(value)", ignoresIndentGuide: true)
     }
     
-    public func generate(_ scenes: [Scene.Type], to folder: String = "\(NSHomeDirectory())/Documents/Swift Manim", configurationBuilder: (inout Configuration) -> Void = { _ in }) throws {
+    public func generate(_ scene: Scene, to folder: String = "\(NSHomeDirectory())/Documents/Swift Manim", configurationBuilder: (inout Configuration) -> Void = { _ in }) throws {
         
         self.add("", ignoresIndentGuide: true)
-        var configuration = Configuration()
+        var configuration = scene.configuration
         configurationBuilder(&configuration)
         self.add("", ignoresIndentGuide: true)
         
-        for scene in scenes {
-            let scene = scene.init()
-            scene.construct()
-            scene.configure(&configuration)
-        }
+        scene.construct()
+        scene.configure(&configuration)
         
         configuration.push()
         
@@ -88,8 +85,8 @@ public final class Generator {
         /// Frame rate in frames per second.
         public var frameRate: Int?
         
-        /// Frame width and height in **local** logical units.
-        public var localSize: CGSize?
+        /// Frame width in *local* logical units.
+        public var localWidth: Int?
         
         /// Frame width and height in pixels.
         public var size: CGSize?
@@ -132,9 +129,8 @@ public final class Generator {
             if let frameRate {
                 Generator.main.addConfiguration(name: "frame_rate", value: frameRate.description)
             }
-            if let localSize {
-                Generator.main.addConfiguration(name: "frame_height", value: Int(localSize.height).description)
-                Generator.main.addConfiguration(name: "frame_width",  value: Int(localSize.width).description)
+            if let localWidth {
+                Generator.main.addConfiguration(name: "frame_width",  value: localWidth.description)
             }
             if let size {
                 Generator.main.addConfiguration(name: "pixel_height", value: Int(size.height).description)
