@@ -35,14 +35,20 @@ extension MObject {
             AttachedAnimation(name: name, target: base.identifier, args: args)
         }
         
+        private func __setWithUpdaters(_notCheckingName: String, args: Args) -> AttachedAnimation {
+            let oldShouldUseAnimation = shouldUseAnimation
+            shouldUseAnimation = false
+            base.addUpdater { object in
+                _ = object.set.__set(name: _notCheckingName, args: args)
+            }
+            shouldUseAnimation = oldShouldUseAnimation
+            
+            return AttachedAnimation(name: _notCheckingName, target: base.identifier, args: args)
+        }
+        
         private func __setWithUpdaters<Result>(name: String, args: Args, method: Method<Result>) -> AttachedAnimation {
             if !method.isDetached {
-                let oldShouldUseAnimation = shouldUseAnimation
-                shouldUseAnimation = false
-                base.addUpdater { object in
-                    _ = object.set.__set(name: name, args: args)
-                }
-                shouldUseAnimation = oldShouldUseAnimation
+                return __setWithUpdaters(_notCheckingName: name, args: args)
             }
             
             return AttachedAnimation(name: name, target: base.identifier, args: args)
@@ -88,6 +94,16 @@ extension MObject {
         @discardableResult
         public func end(to point: Method<Point>) -> AttachedAnimation {
             __setWithUpdaters(name: "put_start_and_end_on", args: [(nil, "\(base.identifier).get_start()"), (nil, point.get())], method: point)
+        }
+        
+        @discardableResult
+        public func x(_ value: ValueTracker) -> AttachedAnimation {
+            __setWithUpdaters(_notCheckingName: "set_x", args: [(nil, "\(value.identifier).get_value()")])
+        }
+        
+        @discardableResult
+        public func y(_ value: ValueTracker) -> AttachedAnimation {
+            __setWithUpdaters(_notCheckingName: "set_x", args: [(nil, "\(value.identifier).get_value()")])
         }
         
     }

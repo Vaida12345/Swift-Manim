@@ -37,6 +37,26 @@ public class MObject: PyObject {
         Method<Point>(name: "get_start", args: [], parent: self)
     }
     
+    /// A convenience interface for ``SetAction/x(_:)``
+    public var x: ValueTracker {
+        get {
+            fatalError("\(#function) does not support a get method. This is a convenience interface for setting")
+        }
+        set {
+            self.set.x(newValue)
+        }
+    }
+    
+    /// A convenience interface for ``SetAction/y(_:)``
+    public var y: ValueTracker {
+        get {
+            fatalError("\(#function) does not support a get method. This is a convenience interface for setting")
+        }
+        set {
+            self.set.y(newValue)
+        }
+    }
+    
     
     /// Controls the states.
     public var state: State {
@@ -56,6 +76,12 @@ public class MObject: PyObject {
                                                                             ("opacity", opacity.description)])
     }
     
+    /// Set the color and opacity.
+    @discardableResult
+    public func set(color: Color) -> AttachedAnimation {
+        AttachedAnimation(name: "set_color", target: self.identifier, args: [("color", color.pyDescription)])
+    }
+    
     /// Moves to the given point.
     @discardableResult
     public func move(to point: PointLike, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
@@ -70,6 +96,16 @@ public class MObject: PyObject {
         AttachedAnimation(name: "move_to", target: self.identifier, args: [("point_or_mobject", target.identifier),
                                                                            ("aligned_edge", alignedEdges.pyDescription),
                                                                            ("coor_mask", coordinateMask.pyDescription)])
+    }
+    
+    /// Moves to the center of given object.
+    @discardableResult
+    public func move(to target: AttachedObject, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
+        target.base.addUpdater(initialCall: false) { object in
+            self.move(to: object, alignedEdges: alignedEdges, coordinateMask: coordinateMask)
+        }
+        
+        return self.move(to: target.base, alignedEdges: alignedEdges, coordinateMask: coordinateMask)
     }
     
     /// Moves the object along the border of the `path` object,
@@ -92,10 +128,61 @@ public class MObject: PyObject {
     }
     
     /// Moves the current object next to `target`.
+    @available(*, deprecated, renamed: "move(nextTo:position:padding:)")
     public func next(to target: MObject, position: Direction, padding: Double = 0) {
         self.attribute("next_to", to: [(nil, target.identifier),
                                        (nil, position.pyDescription),
                                        ("buff", padding.description)])
+    }
+    
+    /// Moves the current object next to `target`.
+    ///
+    /// - Parameters:
+    ///   - position: The position of `self` relative to `target`
+    @discardableResult
+    public func move(nextTo target: MObject, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+        AttachedAnimation(name: "next_to", target: self.identifier, args: [(nil, target.identifier),
+                                                                           (nil, position.pyDescription),
+                                                                           ("buff", padding.description)])
+    }
+    
+    /// Moves the current object next to `target`.
+    ///
+    /// - Parameters:
+    ///   - position: The position of `self` relative to `target`
+    @discardableResult
+    public func move(nextTo target: Method<Point>, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+        if !target.isDetached {
+            self.addUpdater(initialCall: false) { object in
+                self.attribute("next_to", to: [(nil, target.pyDescription),
+                                                 (nil, position.pyDescription),
+                                                 ("buff", padding.description)])
+            }
+        }
+        
+        return AttachedAnimation(name: "next_to", target: self.identifier, args: [(nil, target.pyDescription),
+                                                                           (nil, position.pyDescription),
+                                                                           ("buff", padding.description)])
+    }
+    
+    /// Moves the current object next to `target`.
+    ///
+    /// - Parameters:
+    ///   - position: The position of `self` relative to `target`
+    @discardableResult
+    public func move(nextTo target: AttachedObject, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+        AttachedAnimation(
+            name: "next_to",
+            target: self.identifier,
+            args: [(nil, target.base.identifier),
+                   (nil, position.pyDescription),
+                   ("buff", padding.description)]) {
+                       self.addUpdater(initialCall: false) { object in
+                           object.attribute("next_to", to: [(nil, target.base.identifier),
+                                                            (nil, position.pyDescription),
+                                                            ("buff", padding.description)])
+                       }
+                   }
     }
     
     /// Add `child` as sub object.

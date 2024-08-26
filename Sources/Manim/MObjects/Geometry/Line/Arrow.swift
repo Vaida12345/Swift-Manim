@@ -15,8 +15,18 @@ public class Arrow: Line {
         super.init(identifier: identifier)
     }
     
-    public init(start: any PointLike, end: any PointLike, tip: some ArrowTipShape = .default) {
-        super.init(args: [("start", start.pyDescription), ("end", end.pyDescription)] + (tip.identifier.isEmpty ? [] : [("tip_shape", tip.identifier)]))
+    /// Creates the arrow
+    ///
+    /// - Parameters:
+    ///   - padding: The distance of the arrow from its start and end points.
+    public init(start: any PointLike, end: any PointLike, padding: Double = 0, tip: some ArrowTipShape = .default) {
+        super.init(
+            args: [
+                ("start", start.pyDescription),
+                ("end", end.pyDescription),
+                ("buff", padding.description)
+            ] + (tip.identifier.isEmpty ? [] : [("tip_shape", tip.identifier)])
+        )
     }
     
     override init(base: String? = nil, args: Args) {

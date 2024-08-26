@@ -14,8 +14,8 @@ public final class Vector: Arrow {
         super.init(identifier: identifier)
     }
     
-    public init(_ vector: PointLike) {
-        super.init(args: [("direction", vector.pyDescription)])
+    public init(direction: Direction) {
+        super.init(args: [("direction", direction.pyDescription)])
     }
     
     

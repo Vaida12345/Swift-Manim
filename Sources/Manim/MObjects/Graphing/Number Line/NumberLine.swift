@@ -120,7 +120,7 @@ public final class NumberLine: Line {
         var pyDescription: String {
             switch self {
             case .linear(let scale):
-                "LinearBase(scale=\(scale))"
+                "LinearBase(scale_factor=\(scale))"
             case .log(let base):
                 "LogBase(base=\(base))"
             }

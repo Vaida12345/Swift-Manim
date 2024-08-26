@@ -5,7 +5,7 @@
 //  Created by Vaida on 2023/10/7.
 //
 
-
+import OSLog
 
 
 /// An animation.
@@ -38,11 +38,15 @@ internal class EmptyAnimation: Animation {
 ///   - animation: The style of animation
 ///   - body: The body of animation
 public func withAnimation(duration: Double? = nil, delay: Double? = nil, animation: RateFunction = .spring, @AnimationBuilder body: () -> AnimationGroup) {
+    let logger = Logger(subsystem: "Manim", category: "Animation")
+    logger.warning("Attempting to give a duration of zero. This could prevent the video from rendering.")
+    
     shouldUseAnimation = true
     let animations = body()
-    let body = animations
         .get()
         .filter { !($0 is EmptyAnimation) }
+    
+    let body = animations
         .map { animation in
             if let attached = animation as? AttachedAnimation {
                 "\(attached.target).animate.\(attached.name)\(__formArgs(attached.args))"
@@ -55,6 +59,12 @@ public func withAnimation(duration: Double? = nil, delay: Double? = nil, animati
         Generator.main.add("self.play(\(_body)\(duration != nil ? ", run_time=\(duration!+(delay ?? 0))" : "")\(delay != nil ? ", lag_ratio=\(delay!/((duration ?? 0) + delay!))" : ""), rate_func=rate_functions.\(animation.rawValue))")
     }
     shouldUseAnimation = false
+    
+    for animation in animations {
+        if let animation = animation as? AttachedAnimation {
+            animation.onFinished()
+        }
+    }
 }
 
 
@@ -68,9 +78,10 @@ public func withAnimation(duration: Double? = nil, delay: Double? = nil, animati
 public func withAnimationGroup(duration: Double? = nil, delay: Double? = nil, animation: RateFunction = .spring, @AnimationBuilder _ body: () -> AnimationGroup) {
     shouldUseAnimation = true
     let animations = body()
-    let body = animations
         .get()
         .filter { !($0 is EmptyAnimation) }
+    
+    let body = animations
         .map { animation in
             if let attached = animation as? AttachedAnimation {
                 "\(attached.target).animate.\(attached.name)\(__formArgs(attached.args))"
@@ -81,6 +92,12 @@ public func withAnimationGroup(duration: Double? = nil, delay: Double? = nil, an
         .joined(separator: ", ")
     Generator.main.add("self.play(LaggedStart(\(body)\(duration != nil ? ", run_time=\(duration!+(delay ?? 0))" : "")\(delay != nil ? ", lag_ratio=\(delay!/((duration ?? 0) + delay!))" : ""), rate_func=rate_functions.\(animation.rawValue)))")
     shouldUseAnimation = false
+    
+    for animation in animations {
+        if let animation = animation as? AttachedAnimation {
+            animation.onFinished()
+        }
+    }
 }
 
 

@@ -81,7 +81,10 @@ public class Point: PyObject, PointLike {
 extension Array: PointLike where Element == Int {
     
     public var pyDescription: String {
-        "array(\(self.description))"
+        precondition(self.count >= 0 && self.count <= 3)
+        
+        let additional = [Int](repeating: 0, count: 3 - self.count)
+        return "array(\((self + additional)))"
     }
     
 }

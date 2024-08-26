@@ -6,8 +6,6 @@
 //
 
 
-
-
 public class SVGMObject: VMObject {
     
 }

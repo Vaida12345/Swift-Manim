@@ -17,10 +17,13 @@ public class AttachedAnimation: Animation {
     
     let args: [(key: String?, value: String?)]
     
-    init(name: String, target: String, args: [(key: String?, value: String?)]) {
+    let onFinished: () -> Void
+    
+    init(name: String, target: String, args: [(key: String?, value: String?)], onFinished: @escaping () -> Void = {}) {
         self.name = name
         self.target = target
         self.args = args
+        self.onFinished = onFinished
         
         super.init()
         

@@ -107,17 +107,13 @@ extension MObject {
     /// Show the object.
     @discardableResult
     public func show(animation: ShowAnimation = .create) -> Animation {
-        if animation == .none {
+        if animation == .none || !shouldUseAnimation {
             Generator.main.add("self.add(\(self.identifier))")
+            return EmptyAnimation()
         } else {
-            if shouldUseAnimation {
-                return Animation(base: animation.name, args: [(nil, self.identifier)] + animation.args)
-            } else {
-                Generator.main.add("self.play(\(animation.name)\(__formArgs([(nil, self.identifier)] + animation.args)))")
-            }
+            return Animation(base: animation.name, args: [(nil, self.identifier)] + animation.args)
         }
         
-        return EmptyAnimation()
     }
     
 }

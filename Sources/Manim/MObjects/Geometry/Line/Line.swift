@@ -5,7 +5,7 @@
 //  Created by Vaida on 2023/10/13.
 //
 
-
+import OSLog
 
 
 public class Line: VMObject {
@@ -16,6 +16,13 @@ public class Line: VMObject {
     
     public init(start: any PointLike, end: any PointLike) {
         super.init(args: [("start", start.pyDescription), ("end", end.pyDescription)])
+        
+        if let start = start as? Method<Point> {
+            self.set.start(to: start)
+        }
+        if let end = end as? Method<Point> {
+            self.set.end(to: end)
+        }
     }
     
     override init(base: String? = nil, args: Args) {

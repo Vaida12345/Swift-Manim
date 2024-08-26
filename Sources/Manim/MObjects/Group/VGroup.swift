@@ -11,8 +11,8 @@
 /// A group of vectorized ``MObject``.
 public class VGroup: VMObject {
     
-    public func arrange(direction: Direction) {
-        Generator.main.add("\(self.identifier).arrange(\(direction.pyDescription))")
+    public func arrange(direction: Direction, spacing: Double = 1) {
+        Generator.main.add("\(self.identifier).arrange(\(direction.pyDescription), buff=\(spacing))")
     }
     
     
