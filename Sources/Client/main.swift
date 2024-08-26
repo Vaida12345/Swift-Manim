@@ -18,7 +18,7 @@ class SampleScene: Scene {
     override func construct() {
         super.construct()
         
-        Axes(domain: .init(min: -10, max: 10), range: .init(min: -10, max: 10), length: (20, 20)).show()
+        Axes(domain: .init(min: -10, max: 10), range: .init(min: -10, max: 10)).show()
         
         Dot(point: Point(x: 10, y: 10)).show()
         

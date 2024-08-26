@@ -10,6 +10,11 @@
 /// Creates a set of axes.
 public class Axes: VGroup {
     
+    public convenience init(domain: ClosedRange<Double>, range: ClosedRange<Double>) {
+        self.init(domain: NumberLine.Range(min: domain.lowerBound, max: domain.upperBound),
+                  range: NumberLine.Range(min: range.lowerBound, max: range.upperBound))
+    }
+    
     /// Creates a set of axes.
     ///
     /// Note that the axes coordinate space is the same as global coordinate space.
