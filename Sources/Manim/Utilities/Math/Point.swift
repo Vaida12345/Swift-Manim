@@ -78,6 +78,15 @@ public class Point: PyObject, PointLike {
 }
 
 
+extension Array: PointLike where Element == Int {
+    
+    public var pyDescription: String {
+        "array(\(self.description))"
+    }
+    
+}
+
+
 extension Method: PointLike where ReturnValue == Point {
     public var pyDescription: String {
         self.get()

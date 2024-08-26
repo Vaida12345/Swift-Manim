@@ -7,6 +7,9 @@
 
 
 /// The base python class.
+///
+/// This class indicates that an object is callable in python. This structure does not provide ways to declare a python class.
+@dynamicMemberLookup
 public class PyObject: Equatable {
     
     internal let identifier: String
@@ -46,10 +49,29 @@ public class PyObject: Equatable {
     public static func == (lhs: PyObject, rhs: PyObject) -> Bool {
         lhs.identifier == rhs.identifier
     }
+    
+    public subscript(dynamicMember dynamicMember: String) -> MethodCalling {
+        MethodCalling(methodName: dynamicMember)
+    }
+    
+    @dynamicCallable
+    public struct MethodCalling {
+        
+        let methodName: String
+        
+        public func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, String>) {
+            Generator.main.add("\(methodName)\(__formArgs(Array(pairs)))")
+        }
+        
+        public func dynamicallyCall(withArguments args: Args) {
+            Generator.main.add("\(methodName)\(__formArgs(args))")
+        }
+        
+    }
 }
 
 
-internal typealias Args = [(key: String?, value: String?)]
+public typealias Args = [(key: String?, value: String?)]
 
 
 internal func __formArgs(_ args: Args) -> String {
