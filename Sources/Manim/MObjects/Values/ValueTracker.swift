@@ -21,6 +21,14 @@ public class ValueTracker: MObject {
         super.init(identifier: identifier)
     }
     
+    public func getValue() -> Method<Value> {
+        Method(name: "get_value", args: [], parent: self)
+    }
+    
+    public var value: String {
+        self.getValue().get()
+    }
+    
     @discardableResult
     public func set(_ value: Double) -> AttachedAnimation {
         AttachedAnimation(
@@ -46,6 +54,11 @@ public class ValueTracker: MObject {
     @discardableResult
     public static func -= (lhs: ValueTracker, rhs: Double) -> AttachedAnimation {
         lhs += -rhs
+    }
+    
+    
+    public final class Value: PyObject {
+        
     }
     
 }

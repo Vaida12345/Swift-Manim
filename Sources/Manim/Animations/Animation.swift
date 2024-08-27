@@ -39,7 +39,9 @@ internal class EmptyAnimation: Animation {
 ///   - body: The body of animation
 public func withAnimation(duration: Double? = nil, delay: Double? = nil, animation: RateFunction = .spring, @AnimationBuilder body: () -> AnimationGroup) {
     let logger = Logger(subsystem: "Manim", category: "Animation")
-    logger.warning("Attempting to give a duration of zero. This could prevent the video from rendering.")
+    if duration == 0 {
+        logger.warning("Attempting to give a duration of zero. This could prevent the video from rendering.")
+    }
     
     shouldUseAnimation = true
     let animations = body()

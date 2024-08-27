@@ -31,8 +31,8 @@ public class Axes: VGroup {
         var args = [
             ("x_range", domain?.pyDescription),
             ("y_range", range?.pyDescription),
-            ("x_length", domain?.length.description),
-            ("y_length", range?.length.description),
+            ("x_length", "config.frame_width"),
+            ("y_length", "config.frame_height"),
             ("dimensions", dimensions?.description)
         ]
         switch style {

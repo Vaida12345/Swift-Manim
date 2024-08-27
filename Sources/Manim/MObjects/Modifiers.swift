@@ -103,7 +103,7 @@ extension MObject {
         
         @discardableResult
         public func y(_ value: ValueTracker) -> AttachedAnimation {
-            __setWithUpdaters(_notCheckingName: "set_x", args: [(nil, "\(value.identifier).get_value()")])
+            __setWithUpdaters(_notCheckingName: "set_y", args: [(nil, "\(value.identifier).get_value()")])
         }
         
     }

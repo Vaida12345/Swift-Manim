@@ -11,34 +11,122 @@ import Manim
 @main
 class Pointer: Scene {
     
+    override func configure(_ configuration: inout Generator.Configuration) {
+        configuration.format = .mp4
+    }
+    
     override func construct(width: Int?) {
         super.construct(width: width)
         
-        let line = NumberLine()
-        let pointer = Vector(direction: .down)
-        let label = MathTex("x")
+//        let plane = NumberPlane()
+//        plane.show()
         
-        let dot = Dot(point: [1, 2])
+        let dot1 = Dot([0, 0])
         
-//        label.move(nextTo: pointer, position: .down)
-//        label.addUpdater { object in
-//            object.move(nextTo: pointer, position: .down)
-//        }
+        let deltaX = ValueTracker(value: 3)
+        let deltaY = ValueTracker(value: 3)
         
-        line.show()
-        pointer.show()
-        label.show()
-        dot.show()
+        let _line = Line(start: Point(x: -10, y: -10), end: Point(x: 10, y: 10))
+        _line.show()
+        
+        let dot2 = Dot([3, 3])
+        dot2.x = deltaX
+        dot2.y = deltaY
+        
+        let dot3 = Dot([3, 0])
+        dot3.x = deltaX
+        
+        let line = Arrow(start: dot1.center.attached(), end: dot2.center.attached())
+        line.set(color: .blue)
+        
+        let raise = Arrow(start: dot3.center.attached(), end: dot2.center.attached())
+        raise.set(color: .red)
+        
+        let run = Arrow(start: dot1.center.attached(), end: dot3.center.attached())
+        run.set(color: .green)
+        
+        let raiseText = Text("Raise")
+        raiseText.set(color: .red)
+        
+        let runText = Text("Run")
+        runText.set(color: .green)
+        
+        sleep(for: .seconds(2))
         
         withAnimation {
-            pointer.move(nextTo: dot.attached(), position: .up)
+            dot1.show()
+            dot2.show()
         }
+        
+        sleep(for: .seconds(2))
+        
+        withAnimation {
+            line.show()
+            dot3.show()
+            raise.show()
+            run.show()
+        }
+        
+        withAnimationGroup {
+            raiseText.show()
+            runText.show()
+            raiseText.move(nextTo: raise.attached(), position: .right)
+            runText.move(nextTo: run.attached(), position: .down)
+        }
+        
+//        sleep(for: .seconds(2))
+//        
+//        let text = MathTex("m=\\frac{raise}{run}\\\\=\\frac{\(deltaY.value)}{\(deltaX.value)}=\(deltaY.value)/\(deltaX.value)")
+//        text.move(to: [-2, 2])
+//        text.addUpdater {
+//            $0.become(MathTex("m=\\frac{raise}{run}\\\\=\\frac{\(deltaY.value)}{\(deltaX.value)}=\(deltaY.value)/\(deltaX.value)"))
+//            $0.move(to: [-2, 2])
+//        }
+        
+//        withAnimation {
+//            text.show()
+//        }
         
         sleep(for: .seconds(1))
         
+//        withAnimationGroup {
+//            deltaX += 1
+//            deltaY += 1
+//        }
+//        
+//        withAnimationGroup(duration: 3) {
+//            deltaX -= 8
+//            deltaY -= 8
+//        }
+        
         withAnimation {
-            dot.move(to: [2, 4])
+            NumberPlane().show()
         }
+        
+        sleep(for: .seconds(3))
+        
+        withAnimationGroup(duration: 5) {
+            _line.become(Line(start: Point(x: -10, y: 10), end: Point(x: 10, y: -10)))
+            deltaY -= 6
+        }
+        
+        sleep(for: .seconds(3))
+        
+        withAnimationGroup(duration: 10) {
+            _line.become(Line(start: Point(x: -10, y: 0), end: Point(x: 10, y: 0)))
+            deltaX.set(10)
+            deltaY.set(0.01)
+        }
+        
+        sleep(for: .seconds(2))
+        
+        withAnimationGroup(duration: 10) {
+            _line.become(Line(start: Point(x: 0, y: -10), end: Point(x: 0, y: 10)))
+            deltaY.set(10)
+            deltaX.set(0.01)
+        }
+        
+        sleep(for: .seconds(3))
     }
 }
 

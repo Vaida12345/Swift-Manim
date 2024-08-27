@@ -27,6 +27,13 @@ public class Arrow: Line {
                 ("buff", padding.description)
             ] + (tip.identifier.isEmpty ? [] : [("tip_shape", tip.identifier)])
         )
+        
+        if let start = start as? Method<Point> {
+            self.set.start(to: start)
+        }
+        if let end = end as? Method<Point> {
+            self.set.end(to: end)
+        }
     }
     
     override init(base: String? = nil, args: Args) {
