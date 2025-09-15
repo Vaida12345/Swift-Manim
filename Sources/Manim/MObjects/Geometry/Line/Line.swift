@@ -14,7 +14,7 @@ public class Line: VMObject {
         super.init(identifier: identifier)
     }
     
-    public init(start: any PointLike, end: any PointLike) {
+    public init(start: any PointProtocol, end: any PointProtocol) {
         super.init(args: [("start", start.pyDescription), ("end", end.pyDescription)])
         
         if let start = start as? Method<Point> {

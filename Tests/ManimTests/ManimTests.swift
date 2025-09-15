@@ -6,8 +6,8 @@ final class ManimTests: XCTestCase {
     func testExample() throws {
         class TracedPathExample: Scene {
             
-            override func construct() {
-                super.construct()
+            override func body() {
+                super.body()
                 
                 let arrow = Arrow(start: .center, end: .center.shift(1, to: .left), tip: .custom(base: Circle()))
                 

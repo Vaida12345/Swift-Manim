@@ -9,22 +9,23 @@
 
 
 /// An object that is a point, or a method with return value of point.
-public protocol PointLike {
+public protocol PointProtocol {
     
     var pyDescription: String { get }
     
 }
 
 
-extension PointLike where Self == Point {
+extension PointProtocol where Self == Point {
     
+    /// The center of the canvas, `(0, 0, 0)`.
     public static var center: Point { Point() }
     
 }
 
 
 /// A point, with the center being (0, 0, 0).
-public class Point: PyObject, PointLike {
+public class Point: PyObject, PointProtocol, ExpressibleByArrayLiteral {
    
     let x: Double
     
@@ -38,7 +39,7 @@ public class Point: PyObject, PointLike {
     }
     
     
-    public init(x: Double = 0, y: Double = 0, z: Double = 0) {
+    public init(x: Double, y: Double, z: Double = 0) {
         self.x = x
         self.y = y
         self.z = z
@@ -52,6 +53,18 @@ public class Point: PyObject, PointLike {
         self.z = 0
         
         super.init(identifier: identifier)
+    }
+    
+    public required convenience init(arrayLiteral elements: Double...) {
+        if elements.count == 2 {
+            self.init(x: elements[0], y: elements[1])
+        } else if elements.count == 3 {
+            self.init(x: elements[0], y: elements[1], z: elements[2])
+        } else if elements.isEmpty {
+            self.init(x: 0, y: 0)
+        } else {
+            fatalError("Not enough arguments for Point")
+        }
     }
     
     static func * (lhs: Double, rhs: Point) -> Point {
@@ -78,7 +91,7 @@ public class Point: PyObject, PointLike {
 }
 
 
-extension Array: PointLike where Element == Int {
+extension Array: PointProtocol where Element == Int {
     
     public var pyDescription: String {
         precondition(self.count >= 0 && self.count <= 3)
@@ -90,7 +103,7 @@ extension Array: PointLike where Element == Int {
 }
 
 
-extension Method: PointLike where ReturnValue == Point {
+extension Method: PointProtocol where ReturnValue == Point {
     public var pyDescription: String {
         self.get()
     }

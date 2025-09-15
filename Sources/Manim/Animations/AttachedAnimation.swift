@@ -5,7 +5,7 @@
 //  Created by Vaida on 2023/10/8.
 //
 
-
+import OSLog
 
 
 /// An animation that is attached to an object, typically means it is called using `.animate.modifier()`.
@@ -18,6 +18,7 @@ public class AttachedAnimation: Animation {
     let args: [(key: String?, value: String?)]
     
     let onFinished: () -> Void
+    
     
     init(name: String, target: String, args: [(key: String?, value: String?)], onFinished: @escaping () -> Void = {}) {
         self.name = name

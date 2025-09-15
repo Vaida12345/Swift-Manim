@@ -6,9 +6,7 @@
 //
 
 
-
-
-public struct Method<ReturnValue>: Equatable where ReturnValue: PyObject {
+public class Method<ReturnValue>: Equatable {
     
     let name: String
     
@@ -62,4 +60,27 @@ public struct Method<ReturnValue>: Equatable where ReturnValue: PyObject {
         lhs.isDetached == rhs.isDetached
     }
     
+}
+
+
+public final class TrackableMethod<ReturnValue>: Method<ReturnValue> {
+    
+    let trackingName: String
+    
+    init(name: String, args: Args, parent: MObject, trackingName: String) {
+        self.trackingName = trackingName
+        
+        super.init(name: name, args: args, parent: parent)
+    }
+    
+    public func tracked() -> ValueTracker<ReturnValue> {
+        if let tracker = parent.store[name] as? ValueTracker<ReturnValue> {
+            return tracker
+        } else {
+            let value = ValueTracker(value: self)
+            let _ = parent.set.__setWithUpdaters(_notCheckingName: trackingName, args: [(nil, "\(value.identifier).get_value()")])
+            parent.store[name] = value
+            return value
+        }
+    }
 }

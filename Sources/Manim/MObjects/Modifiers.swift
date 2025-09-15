@@ -35,7 +35,7 @@ extension MObject {
             AttachedAnimation(name: name, target: base.identifier, args: args)
         }
         
-        private func __setWithUpdaters(_notCheckingName: String, args: Args) -> AttachedAnimation {
+        internal func __setWithUpdaters(_notCheckingName: String, args: Args) -> AttachedAnimation {
             let oldShouldUseAnimation = shouldUseAnimation
             shouldUseAnimation = false
             base.addUpdater { object in
@@ -97,12 +97,12 @@ extension MObject {
         }
         
         @discardableResult
-        public func x(_ value: ValueTracker) -> AttachedAnimation {
+        public func x(_ value: ValueTracker<Double>) -> AttachedAnimation {
             __setWithUpdaters(_notCheckingName: "set_x", args: [(nil, "\(value.identifier).get_value()")])
         }
         
         @discardableResult
-        public func y(_ value: ValueTracker) -> AttachedAnimation {
+        public func y(_ value: ValueTracker<Double>) -> AttachedAnimation {
             __setWithUpdaters(_notCheckingName: "set_y", args: [(nil, "\(value.identifier).get_value()")])
         }
         

@@ -11,19 +11,21 @@
 /// Different to the Manim implementation, this package allows only one scene.
 open class Scene {
     
-    var configuration: Generator.Configuration = .init()
+    /// Default stores config.
+    var config: Generator.Configuration = .init()
     
+    /// Changes the configuration for the scene.
     open func configure(_ configuration: inout Generator.Configuration) {
         
     }
     
-    /// The constructor.
+    /// The body.
     ///
     /// You *must* call `super` at the beginning of your override.
     ///
     /// ```swift
-    /// override func construct() {
-    ///     super.construct()
+    /// override func body() {
+    ///     super.body()
     ///
     ///     // Animations here
     /// }
@@ -31,11 +33,11 @@ open class Scene {
     ///
     /// - Parameters:
     ///   - width: The width of the canvas in local logical units.
-    open func construct(width: Int? = nil) {
+    open func body(width: Int? = nil) {
         Generator.main.add("\n    def construct(self):", ignoresIndentGuide: true)
         
         if let width {
-            self.configuration.localWidth = width
+            self.config.localWidth = width
         }
     }
     
@@ -46,7 +48,7 @@ open class Scene {
     
     public static func main() throws {
         let generator = Generator.main
-        try generator.generate(Self())
+        try generator.generate(Self.self)
     }
     
 }

@@ -6,8 +6,6 @@
 //
 
 
-
-
 public enum Direction: String, Equatable {
     case left
     case right
@@ -21,13 +19,13 @@ public enum Direction: String, Equatable {
     var _point: Point {
         switch self {
         case .left:
-            Point(x: -1)
+            [-1, 0]
         case .right:
-            Point(x: 1)
+            [1, 0]
         case .up:
-            Point(y: 1)
+            [0, 1]
         case .down:
-            Point(y: -1)
+            [0, -1]
         }
     }
 }

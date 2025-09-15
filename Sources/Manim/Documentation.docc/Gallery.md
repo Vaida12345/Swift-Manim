@@ -9,8 +9,8 @@
 @main
 class VectorArrow: Scene {
 
-    override func construct(width: Int?) {
-        super.construct(width: width)
+    override func body(width: Int?) {
+        super.body(width: width)
 
         let dot = Dot()
         let arrow = Arrow(start: .center, end: [2, 2])
@@ -40,8 +40,8 @@ class VectorArrow: Scene {
 @main
 class MovingDots: Scene {
 
-    override func construct(width: Int?) {
-        super.construct(width: width)
+    override func body(width: Int?) {
+        super.body(width: width)
 
         let dot1 = Dot(color: .blue)
         let dot2 = Dot(color: .green)

@@ -12,6 +12,9 @@ import SwiftUI
 /// Mathematical Object: base class for objects that can be displayed on screen.
 public class MObject: PyObject {
     
+    /// The internal store
+    internal var store: [String : Any] = [:]
+    
     /// Internal state, tracks if the object is attached by calling 
     internal var isAttached: Bool = false
     
@@ -46,24 +49,12 @@ public class MObject: PyObject {
         Method<Point>(name: "get_start", args: [], parent: self)
     }
     
-    /// A convenience interface for ``SetAction/x(_:)``
-    public var x: ValueTracker {
-        get {
-            fatalError("\(#function) does not support a get method. This is a convenience interface for setting")
-        }
-        set {
-            self.set.x(newValue)
-        }
+    public var x: TrackableMethod<Double> {
+        TrackableMethod(name: "get_x", args: [], parent: self, trackingName: "set_x")
     }
     
-    /// A convenience interface for ``SetAction/y(_:)``
-    public var y: ValueTracker {
-        get {
-            fatalError("\(#function) does not support a get method. This is a convenience interface for setting")
-        }
-        set {
-            self.set.y(newValue)
-        }
+    public var y: Method<Double> {
+        TrackableMethod(name: "get_x", args: [], parent: self, trackingName: "set_y")
     }
     
     
@@ -93,7 +84,7 @@ public class MObject: PyObject {
     
     /// Moves to the given point.
     @discardableResult
-    public func move(to point: PointLike, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
+    public func move(to point: PointProtocol, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
         AttachedAnimation(name: "move_to", target: self.identifier, args: [("point_or_mobject", point.pyDescription),
                                                                            ("aligned_edge", alignedEdges.pyDescription),
                                                                            ("coor_mask", coordinateMask.pyDescription)])
@@ -165,10 +156,22 @@ public class MObject: PyObject {
     
     /// Moves the current object next to `target`.
     ///
+    /// Use this method to align objects.
+    /// ```swift
+    /// let dot = Dot(at: .center)
+    /// let text = Text("(0, 0)")
+    ///
+    /// text.align(.down, to: dot)
+    /// ```
+    ///
+    /// ![result](align)
+    ///
+    /// - Tip: You can use ``withAnimation(duration:delay:animation:body:)`` to animate the movement of `self` from its original position.
+    ///
     /// - Parameters:
     ///   - position: The position of `self` relative to `target`
     @discardableResult
-    public func move(nextTo target: MObject, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+    public func align(_ position: Direction, to target: MObject, padding: Double = 0.25) -> AttachedAnimation {
         let args = [
             (nil, target.identifier),
             (nil, position.pyDescription),

@@ -18,8 +18,11 @@ public class Arrow: Line {
     /// Creates the arrow
     ///
     /// - Parameters:
+    ///   - start: The starting point of the arrow.
+    ///   - end: The ending point of the arrow.
     ///   - padding: The distance of the arrow from its start and end points.
-    public init(start: any PointLike, end: any PointLike, padding: Double = 0, tip: some ArrowTipShape = .default) {
+    ///   - tip: The tip shape.
+    public init(from start: any PointProtocol, to end: any PointProtocol, padding: Double = 0, tip: some ArrowTipShape = .default) {
         super.init(
             args: [
                 ("start", start.pyDescription),

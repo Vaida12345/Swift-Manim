@@ -30,7 +30,7 @@ public final class NumberLine: Line {
                 strokeWidth: Double? = nil,
                 tip: TipStyle? = nil,
                 scaling: ScaleBase = .linear(),
-                start: (any PointLike)? = nil, end: (any PointLike)? = nil
+                start: (any PointProtocol)? = nil, end: (any PointProtocol)? = nil
                 ) {
         var args: Args = [
             ("x_range", range?.pyDescription),

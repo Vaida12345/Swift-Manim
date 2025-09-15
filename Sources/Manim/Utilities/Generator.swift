@@ -5,39 +5,48 @@
 //  Created by Vaida on 2023/10/7.
 //
 
-
 import Cocoa
+import FinderItem
+import OSLog
+
 
 public final class Generator {
     
     private var components: [String]
+    
+    private let logger = Logger(subsystem: "Generator", category: "add(_:ignoresIndentGuide:)")
     
     
     public static let main = Generator()
     
     
     /// The indentation would be added automatically according to `indentCount`, unless `ignoresIndentGuide`.
-    internal func add(_ component: String, ignoresIndentGuide: Bool = false) {
+    internal func add(_ component: String, ignoresIndentGuide: Bool = false, file: String = #file, line: UInt = #line, function: StaticString = #function) {
         self.components.append((ignoresIndentGuide ? "" : [String](repeating: "    ", count: indentCount).joined())+component)
+        logger.info("Insert line from \(function) \(file):\(line):\n'\(component)'")
     }
     
     internal func addConfiguration(name: String, value: String) {
         self.add("config.\(name) = \(value)", ignoresIndentGuide: true)
     }
     
-    public func generate(_ scene: Scene, to folder: String = "\(NSHomeDirectory())/Documents/Swift Manim", configurationBuilder: (inout Configuration) -> Void = { _ in }) throws {
+    public func generate<S>(_ sceneType: S.Type = S.self, to folder: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim") throws where S: Scene {
+        let scene = S()
+        scene.body()
         
         self.add("", ignoresIndentGuide: true)
-        var configuration = scene.configuration
-        configurationBuilder(&configuration)
         self.add("", ignoresIndentGuide: true)
         
-        scene.construct()
+        var configuration = scene.config
         scene.configure(&configuration)
-        
         configuration.push()
         
-        try FileManager.default.createDirectory(atPath: folder, withIntermediateDirectories: true, attributes: nil)
+        // remove any previous output files
+        for child in try scene.config.mediaFolder.children(range: .contentsOfDirectory) where child.name.hasPrefix(configuration.destination.stem) {
+            try child.remove()
+        }
+        
+        try folder.makeDirectory()
         try self.components.joined(separator: "\n").write(toFile: "\(folder)/swiftmanim.py", atomically: true, encoding: .utf8)
         
         let command = "manim \"\(folder)/swiftmanim.py\""
@@ -45,7 +54,7 @@ public final class Generator {
         try command.write(toFile: destination, atomically: true, encoding: .utf8)
         
         let manager = ShellManager()
-        manager.run(arguments: "open \"\(destination)\"")
+        manager.run(arguments: "open \"\(destination)\"") // must use user shell to load PATH
         manager.wait()
     }
     
@@ -55,7 +64,7 @@ public final class Generator {
         return result
     }
     
-    internal func assign<T>(_ method: Method<T>) -> T {
+    internal func assign<T>(_ method: Method<T>) -> T where T: PyObject {
         self.assign(type: T.self, by: method.parent, calling: method.name, args: method.args)
     }
     
@@ -71,16 +80,16 @@ public final class Generator {
         public var background: Background?
         
         /// The output file
-        public var destination: String = "\(NSHomeDirectory())/Documents/Swift Manim/output"
+        public var destination: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim/output"
         
         /// Main output directory.
-        public var mediaFolder: String = "\(NSHomeDirectory())/Documents/Swift Manim"
+        public var mediaFolder: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim"
         
         /// Enable GUI interaction.
         public var enableGUI: Bool?
         
         /// File format
-        public var format: Format = .mov
+        public var format: Format = .mp4
         
         /// Frame rate in frames per second.
         public var frameRate: Int?
@@ -105,7 +114,9 @@ public final class Generator {
         /// Whether to save all frames in the scene as images files.
         public var renderAllImages: Bool?
         
-        public var imagesDestination: String = "\(NSHomeDirectory())/Documents/Swift Manim/Image Sequence"
+        public var imagesDestination: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim/Image Sequence"
+        
+        public var manimEngineLocation: FinderItem = "/opt/homebrew/Caskroom/miniforge/base/bin/manim"
         
         /// Push the configs to the main generator.
         func push() {

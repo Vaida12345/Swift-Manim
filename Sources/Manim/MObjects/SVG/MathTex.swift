@@ -25,14 +25,14 @@ public class MathTex: SVGMObject {
         }
         
         public init(stringLiteral value: String) {
-            self.content = "\"\(value)\""
+            self.content = "r\"\(value)\""
         }
         
         var content: String
         
         public mutating func appendLiteral(_ literal: String) {
             if !content.isEmpty {
-                self.content += "+ \"\(literal)\""
+                self.content += "+ r\"\(literal)\""
             } else {
                 self.content += "\"\(literal)\""
             }

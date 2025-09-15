@@ -16,7 +16,7 @@ public class Polygram: VMObject {
     }
     
     /// Creates a polygram by connecting the dots in sequence.
-    public init(vertices: [PointLike]) {
+    public init(vertices: [PointProtocol]) {
         super.init(args: [(nil, "[\(vertices.map(\.pyDescription).joined(separator: ", "))]")])
     }
     

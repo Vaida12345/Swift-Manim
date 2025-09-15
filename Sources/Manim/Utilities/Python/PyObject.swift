@@ -9,7 +9,7 @@
 /// The base python class.
 ///
 /// This class indicates that an object is callable in python. This structure does not provide ways to declare a python class.
-@dynamicMemberLookup
+//@dynamicMemberLookup
 public class PyObject: Equatable {
     
     internal let identifier: String
@@ -50,9 +50,9 @@ public class PyObject: Equatable {
         lhs.identifier == rhs.identifier
     }
     
-    public subscript(dynamicMember dynamicMember: String) -> MethodCalling {
-        MethodCalling(methodName: dynamicMember)
-    }
+//    public subscript(dynamicMember dynamicMember: String) -> MethodCalling {
+//        MethodCalling(methodName: dynamicMember)
+//    }
     
     @dynamicCallable
     public struct MethodCalling {

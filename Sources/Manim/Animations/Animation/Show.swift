@@ -21,9 +21,6 @@ public struct ShowAnimation: Equatable {
         self.args = args
     }
     
-    /// No animation, just show the object.
-    public static let none = ShowAnimation(name: "none", args: [])
-    
     /// The default way of creation, by drawing the borders.
     ///
     /// - SeeAlso: ``ShowAnimation/drawBorderThenFill``
@@ -107,7 +104,7 @@ extension MObject {
     /// Show the object.
     @discardableResult
     public func show(animation: ShowAnimation = .create) -> Animation {
-        if animation == .none || !shouldUseAnimation {
+        if !shouldUseAnimation {
             Generator.main.add("self.add(\(self.identifier))")
             return EmptyAnimation()
         } else {

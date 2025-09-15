@@ -4,10 +4,13 @@ The Swift Interface for Manim
 
 ## Overview
 
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
+- Warning: This package is never designed with concurrency in mind, and it contains various globally-shared states.
 
 ## Topics
 
-### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
+### Animation
 
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+- ``withAnimation(_:in:body:)``
+- ``Animation``
+- ``ActionAnimation``
+- ``AttachedAnimation``
