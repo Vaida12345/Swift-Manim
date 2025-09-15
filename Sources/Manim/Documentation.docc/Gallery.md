@@ -47,24 +47,25 @@ class MovingDots: Scene {
 
         let dot1 = Dot(color: .blue)
         let dot2 = Dot(color: .green)
-        
+
         let group = Group(dot1, dot2)
         group.arrange(direction: .right)
-        
-        let line = Line(start: dot1.center.attached(), end: dot2.center.attached())
-        line.set(color: .red)
-        
-        dot1.show(animation: .none)
-        dot2.show(animation: .none)
-        line.show(animation: .none)
-        
 
-        let x = ValueTracker()
-        let y = ValueTracker()
-        
-        dot1.set.x(x)
-        dot2.set.y(y)
-        
+        let line = Line(start: dot1.center, end: dot2.center)
+        line.set(color: .red)
+        line.addUpdater { line in
+            line.become(Line(start: dot1.center, end: dot2.center))
+            line.set(color: .red)
+        }
+
+        dot1.show()
+        dot2.show()
+        line.show()
+
+
+        let x = dot1.x.tracker()
+        let y = dot2.y.tracker()
+
         withAnimation {
             x += 4
             y += 4
