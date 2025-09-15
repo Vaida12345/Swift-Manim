@@ -49,12 +49,12 @@ public class MObject: PyObject {
         ReadableProperty(origin: self, read: Closure("get_start", []))
     }
     
-    public var x: ReadableProperty<Double> {
-        ReadableProperty(origin: self, read: Closure("get_x", []))
+    public var x: ReadWriteProperty<Double> {
+        ReadWriteProperty(origin: self, read: Closure("get_x", []), write: Closure("set_x", []))
     }
     
-    public var y: ReadableProperty<Double> {
-        ReadableProperty(origin: self, read: Closure("get_x", []))
+    public var y: ReadWriteProperty<Double> {
+        ReadWriteProperty(origin: self, read: Closure("get_y", []), write: Closure("set_y", []))
     }
     
     
@@ -222,7 +222,7 @@ public class MObject: PyObject {
     public func addUpdater(index: Int? = nil, initialCall: Bool = false, handler: (MObject) -> Void) {
         let object = MObject(identifier: __formVariableName(base: "\(MObject.self)"))
         let functionName = __formVariableName(base: "updater\(Self.self)")
-        Generator.main.add("def \(functionName)(\(object.identifier)):")
+        Generator.main.add("\ndef \(functionName)(\(object.identifier)):")
         indentCount += 1
         handler(object)
         indentCount -= 1

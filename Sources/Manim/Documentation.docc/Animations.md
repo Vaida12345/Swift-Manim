@@ -43,3 +43,22 @@ withAnimation(in: .parallel, lagRatio: 1) {
 // Let's wait 2 seconds.
 self.wait(2)
 ```
+
+## Binding
+
+It is also possible to [observe](``MObject/addUpdater(index:initialCall:handler:)``) changes.
+
+```swift
+let dot1 = Dot(at: [2, 2], color: .blue)
+let dot2 = Dot(at: .center, color: .green)
+
+dot1.show()
+dot2.show()
+
+withAnimation {
+    dot1.x.bind(to: dot2.x)
+    dot2.move(to: [-2, 0])
+}
+```
+
+In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinate of `dot2`, and `dot1` moves as `dot2` changes its `x`-coordinate.

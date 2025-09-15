@@ -1,6 +1,8 @@
 
 # Gallery
 
+Examples of using Manim.
+
 ## VectorArrow
 
 ![image](VectorArrow)

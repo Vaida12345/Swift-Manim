@@ -26,7 +26,7 @@ extension MObject {
         SetAction(base: self)
     }
     
-    public final class SetAction {
+    public final class  SetAction {
         
         let base: MObject
         
