@@ -26,7 +26,7 @@ public class Arc: VMObject {
             ("radius", radius.description),
             ("start_angle", start.radians.description),
             ("angle", angle.radians.description),
-            ("arc_center", center.pyDescription)
+            ("arc_center", center.representation)
         ])
     }
     
@@ -40,15 +40,15 @@ public class Arc: VMObject {
     ///   - angle: The degree of angle be between the central point to `start` and center to `end`.
     public init(start: Point, end: Point, angle: Angle = .degrees(45)) {
         super.init(base: "ArcBetweenPoints", args: [
-            ("start", start.pyDescription),
-            ("end", end.pyDescription),
+            ("start", start.representation),
+            ("end", end.representation),
             ("angle", angle.radians.description),
         ])
     }
     
     required init(identifier: String) { super.init(identifier: identifier) }
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     

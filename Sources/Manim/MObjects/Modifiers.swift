@@ -5,7 +5,7 @@
 //  Created by Vaida on 2023/10/13.
 //
 
-
+import MacroCollection
 
 
 extension MObject {
@@ -31,11 +31,11 @@ extension MObject {
         let base: MObject
         
         
-        private func __set(name: String, args: Args) -> AttachedAnimation {
+        private func __set(name: String, args: Closure.Arguments) -> AttachedAnimation {
             AttachedAnimation(name: name, target: base.identifier, args: args)
         }
         
-        internal func __setWithUpdaters(_notCheckingName: String, args: Args) -> AttachedAnimation {
+        internal func __setWithUpdaters(_notCheckingName: String, args: Closure.Arguments) -> AttachedAnimation {
             let oldShouldUseAnimation = shouldUseAnimation
             shouldUseAnimation = false
             base.addUpdater { object in
@@ -46,10 +46,10 @@ extension MObject {
             return AttachedAnimation(name: _notCheckingName, target: base.identifier, args: args)
         }
         
-        private func __setWithUpdaters<Result>(name: String, args: Args, method: Method<Result>) -> AttachedAnimation {
-            if !method.isDetached {
-                return __setWithUpdaters(_notCheckingName: name, args: args)
-            }
+        private func __setWithUpdaters<Result>(name: String, args: Closure.Arguments, method: ReadableProperty<Result>) -> AttachedAnimation {
+//            if !method.isDetached {
+//                return __setWithUpdaters(_notCheckingName: name, args: args)
+//            }
             
             return AttachedAnimation(name: name, target: base.identifier, args: args)
         }
@@ -64,36 +64,16 @@ extension MObject {
         ///
         /// - Note: This method is not animated.
         @discardableResult
-        public func start(to point: Point) -> AttachedAnimation {
-            __set(name: "put_start_and_end_on", args: [(nil, point.pyDescription), (nil, "\(base.identifier).get_end()")])
-        }
-        
-        /// Sets the start point.
-        ///
-        /// When an ``Method/attached()`` ``Method`` is modified, the object will be updated to match the changes.
-        ///
-        /// - Note: This method is not animated.
-        @discardableResult
-        public func start(to point: Method<Point>) -> AttachedAnimation {
-            __setWithUpdaters(name: "put_start_and_end_on", args: [(nil, point.get()), (nil, "\(base.identifier).get_end()")], method: point)
+        public func start(to point: some PointProtocol) -> AttachedAnimation {
+            __set(name: "put_start_and_end_on", args: [(nil, point.representation), (nil, "\(base.identifier).get_end()")])
         }
         
         /// Sets the end point.
         ///
         /// - Note: This method is not animated.
         @discardableResult
-        public func end(to point: Point) -> AttachedAnimation {
-            __set(name: "put_start_and_end_on", args: [(nil, "\(base.identifier).get_start()"), (nil, point.pyDescription)])
-        }
-        
-        /// Sets the end point.
-        ///
-        /// When an ``Method/attached()`` ``Method`` is modified, the object will be updated to match the changes.
-        ///
-        /// - Note: This method is not animated.
-        @discardableResult
-        public func end(to point: Method<Point>) -> AttachedAnimation {
-            __setWithUpdaters(name: "put_start_and_end_on", args: [(nil, "\(base.identifier).get_start()"), (nil, point.get())], method: point)
+        public func end(to point: some PointProtocol) -> AttachedAnimation {
+            __set(name: "put_start_and_end_on", args: [(nil, "\(base.identifier).get_start()"), (nil, point.representation)])
         }
         
         @discardableResult

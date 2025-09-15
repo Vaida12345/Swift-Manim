@@ -14,18 +14,18 @@ public class Line: VMObject {
         super.init(identifier: identifier)
     }
     
-    public init(start: any PointProtocol, end: any PointProtocol) {
-        super.init(args: [("start", start.pyDescription), ("end", end.pyDescription)])
+    public init(start: some PointProtocol, end: some PointProtocol) {
+        super.init(args: [("start", start.representation), ("end", end.representation)])
         
-        if let start = start as? Method<Point> {
+        if let start = start as? ReadableProperty<Point> {
             self.set.start(to: start)
         }
-        if let end = end as? Method<Point> {
+        if let end = end as? ReadableProperty<Point> {
             self.set.end(to: end)
         }
     }
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     

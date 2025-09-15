@@ -16,9 +16,9 @@ public final class Cutout: VMObject {
     }
     
     init(_ main: VMObject, cutouts: [VMObject]) {
-        super.init(args: [
-            (nil, main.identifier)
-        ] + cutouts.map { (nil, $0.identifier) })
+        super.init(args: Closure.Arguments([
+            Closure.Argument(nil, main.identifier)
+        ] + cutouts.map { Closure.Argument(nil, $0.identifier) }))
     }
     
 }

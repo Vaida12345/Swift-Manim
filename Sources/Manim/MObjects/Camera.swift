@@ -21,7 +21,7 @@ public class Camera: MObject {
         Generator.main.add("")
         self.attribute("frame.add_updater", to: [("update_function", functionName),
                                            ("index", index?.description),
-                                           ("call_updater", initialCall.pyDescription)])
+                                           ("call_updater", initialCall.representation)])
     }
     
     

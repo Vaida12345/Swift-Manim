@@ -24,7 +24,7 @@ public final class BackgroundRectangle: SurroundingRectangle {
     public init(base: MObject, stroke: (width: Double?, opacity: Double?)? = nil, fill: (color: Color?, opacity: Double?)? = nil) {
         super.init(args: [
             ("mobject", base.identifier),
-            ("color", fill?.color?.pyDescription),
+            ("color", fill?.color?.representation),
             ("stroke_width", stroke?.width?.description),
             ("stroke_opacity", stroke?.opacity?.description),
             ("fill_opacity", fill?.opacity?.description),

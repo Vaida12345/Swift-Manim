@@ -13,8 +13,8 @@ public final class CurvedDoubleArrow: Arc {
     
     public override init(start: Point, end: Point, angle: Angle = .degrees(45)) {
         super.init(args: [
-            ("start_point", start.pyDescription),
-            ("end_point", end.pyDescription),
+            ("start_point", start.representation),
+            ("end_point", end.representation),
             ("angle", angle.radians.description),
         ])
     }

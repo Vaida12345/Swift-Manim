@@ -6,13 +6,13 @@
 //
 
 
-public enum Direction: String, Equatable {
+public enum Direction: String, Equatable, PythonScriptConvertible {
     case left
     case right
     case up
     case down
     
-    var pyDescription: String {
+    public var representation: String {
         self.rawValue.uppercased()
     }
     

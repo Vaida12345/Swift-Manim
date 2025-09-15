@@ -51,10 +51,10 @@ public enum HideAnimation: Equatable {
         }
     }
     
-    fileprivate var args: Args {
+    fileprivate var args: Closure.Arguments {
         switch self {
         case let .fadeOut(shift, scale):
-            [("shift", shift?.pyDescription), ("scale", scale?.description)]
+            [("shift", shift?.representation), ("scale", scale?.description)]
         default:
             []
         }
@@ -74,7 +74,7 @@ extension MObject {
             if shouldUseAnimation {
                 return Animation(base: animation.name, args: [(nil, self.identifier)] + animation.args)
             } else {
-                Generator.main.add("self.play(\(animation.name)\(__formArgs([(nil, self.identifier)] + animation.args)))")
+                Generator.main.add("self.play(\(animation.name)\(([(nil, self.identifier)] + animation.args).representation))")
             }
         }
         

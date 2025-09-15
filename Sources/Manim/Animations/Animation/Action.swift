@@ -11,16 +11,13 @@ import SwiftUI
 
 public struct ActionAnimation: Equatable {
     
-    fileprivate let name: String
-    
-    fileprivate let args: Args
+    fileprivate let closure: Closure
     
     fileprivate let overrideMObject: ((String) -> String)?
     
     
-    internal init(name: String, args: Args, overrideMObject: ((String) -> String)? = nil) {
-        self.name = name
-        self.args = args
+    internal init(name: String, args: Closure.Arguments, overrideMObject: ((String) -> String)? = nil) {
+        self.closure = Closure(name, args)
         self.overrideMObject = overrideMObject
     }
     
@@ -46,7 +43,7 @@ public struct ActionAnimation: Equatable {
             ("num_lines", lineCount?.description),
             ("flash_radius", radius?.description),
             ("line_stroke_width", strokeWidth?.description),
-            ("color", color?.pyDescription),
+            ("color", color?.representation),
         ])
     }
     
@@ -58,7 +55,7 @@ public struct ActionAnimation: Equatable {
     public static func focused(opacity: Double? = nil, color: Color? = nil) -> ActionAnimation {
         ActionAnimation(name: "FocusOn", args: [
             ("opacity", opacity?.description),
-            ("color", color?.pyDescription),
+            ("color", color?.representation),
         ])
     }
     
@@ -70,7 +67,7 @@ public struct ActionAnimation: Equatable {
     public static func indicated(scale: Double? = nil, color: Color? = nil) -> ActionAnimation {
         ActionAnimation(name: "Indicate", args: [
             ("scale_factor", scale?.description),
-            ("color", color?.pyDescription),
+            ("color", color?.representation),
         ])
     }
     
@@ -90,8 +87,8 @@ public struct ActionAnimation: Equatable {
     public static func rotate(angle: Angle? = nil, axis: Axis? = nil, center: Point? = nil) -> ActionAnimation {
         ActionAnimation(name: "Rotate", args: [
             ("angle", angle?.radians.description),
-            ("axis", axis?.pyDescription),
-            ("about_point", center?.pyDescription),
+            ("axis", axis?.representation),
+            ("about_point", center?.representation),
         ])
     }
     
@@ -103,11 +100,11 @@ public struct ActionAnimation: Equatable {
     ///   - angle: The rotation angle.
     ///   - axis: The rotation axis.
     ///   - center: The rotation center.
-    public static func rotate(angle: Angle? = nil, axis: Axis? = nil, center: Method<Point>) -> ActionAnimation {
+    public static func rotate(angle: Angle? = nil, axis: Axis? = nil, center: ReadableProperty<Point>) -> ActionAnimation {
         ActionAnimation(name: "Rotate", args: [
             ("angle", angle?.radians.description),
-            ("axis", axis?.pyDescription),
-            ("about_point", center.get()),
+            ("axis", axis?.representation),
+            ("about_point", center.representation),
         ])
     }
     
@@ -134,11 +131,11 @@ public struct ActionAnimation: Equatable {
     ///   - removed: Whether the objects should be removed from the scene after the animation, by default True.
     public static func broadcast(center: Point? = nil, count: Int? = nil, opacity: (start: Double, end: Double)? = nil, removed: Bool? = nil) -> ActionAnimation {
         ActionAnimation(name: "Broadcast", args: [
-            ("focal_point", center?.pyDescription),
+            ("focal_point", center?.representation),
             ("n_mobs", count?.description),
             ("initial_opacity", opacity?.start.description),
             ("final_opacity", opacity?.end.description),
-            ("remover", removed?.pyDescription),
+            ("remover", removed?.representation),
         ])
     }
     
@@ -154,9 +151,9 @@ public struct ActionAnimation: Equatable {
     
     internal func makeAnimation(object: MObject) -> Animation {
         if shouldUseAnimation {
-            return Animation(base: self.name, args: (overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.args)
+            return Animation(base: self.closure.name, args: (overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.closure.arguments)
         } else {
-            Generator.main.add("self.play(\(self.name)\(__formArgs((overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.args)))")
+            Generator.main.add("self.play(\(self.closure.name)\(((overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.closure.arguments).representation)")
         }
         
         return EmptyAnimation()
@@ -180,12 +177,12 @@ public struct ActionAnimation: Equatable {
         ///   - delta: The time difference between the fadeIn and fadeOut.
         case lineDrawInOut(delta: Double)
         
-        fileprivate var args: Args {
+        fileprivate var args: Closure.Arguments {
             switch self {
             case .lineDrawIn:
-                [("fade_out", true.pyDescription)]
+                [("fade_out", true.representation)]
             case .lineDrawOut:
-                [("fade_in", true.pyDescription)]
+                [("fade_in", true.representation)]
             case .lineDrawInOut(let delta):
                 [("time_width", delta.description)]
             }
@@ -194,8 +191,7 @@ public struct ActionAnimation: Equatable {
     
     
     public static func == (lhs: ActionAnimation, rhs: ActionAnimation) -> Bool {
-        lhs.name == rhs.name &&
-        zip(lhs.args, rhs.args).allSatisfy { $0.key == $1.key && $0.value == $1.value }
+        lhs.closure == rhs.closure
     }
     
 }

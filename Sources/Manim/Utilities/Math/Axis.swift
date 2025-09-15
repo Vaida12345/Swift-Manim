@@ -9,7 +9,7 @@
 
 
 /// The axis.
-public struct Axis: OptionSet {
+public struct Axis: OptionSet, PythonScriptConvertible {
     
     public let rawValue: UInt8
     
@@ -24,7 +24,7 @@ public struct Axis: OptionSet {
         self.rawValue = rawValue
     }
     
-    var pyDescription: String {
+    public var representation: String {
         "array([\(self.contains(.x) ? 1 : 0), \(self.contains(.y) ? 1 : 0), \(self.contains(.z) ? 1 : 0)])"
     }
     

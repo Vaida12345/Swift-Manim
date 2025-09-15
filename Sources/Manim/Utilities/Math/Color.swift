@@ -8,7 +8,7 @@
 
 
 
-public enum Color: String {
+public enum Color: String, PythonScriptConvertible {
     case blue
     case teal
     case green
@@ -27,7 +27,7 @@ public enum Color: String {
     
     case clear
     
-    internal var pyDescription: String {
+    public var representation: String {
         self.rawValue.uppercased()
     }
 }

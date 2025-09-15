@@ -18,7 +18,7 @@ public final class FunctionGraph: VMObject {
         super.init(
             args: [
                 (nil, "lambda t: \(result.pyDescription)"),
-                ("color", color?.pyDescription),
+                ("color", color?.representation),
                 ("range", range.map { "[\($0.lowerBound), \($0.upperBound), 1]" }),
             ]
         )

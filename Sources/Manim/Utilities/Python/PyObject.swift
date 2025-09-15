@@ -10,21 +10,25 @@
 ///
 /// This class indicates that an object is callable in python. This structure does not provide ways to declare a python class.
 //@dynamicMemberLookup
-public class PyObject: Equatable {
+public class PyObject: Equatable, PythonScriptConvertible {
     
     internal let identifier: String
     
     internal let __base: String?
     
-    internal let __args: Args?
+    internal let __args: Closure.Arguments?
     
-    
-    internal func attribute(_ attributeName: String, to args: [(key: String?, value: String?)]) {
-        Generator.main.add("\(self.identifier).\(attributeName)\(__formArgs(args))")
+    public var representation: String {
+        self.identifier
     }
     
     
-    init(base: String? = nil, args: Args) {
+    internal func attribute(_ attributeName: String, to args: Closure.Arguments) {
+        Generator.main.add("\(self.identifier).\(attributeName)\(args.representation)")
+    }
+    
+    
+    init(base: String? = nil, args: Closure.Arguments) {
         let base = base ?? "\(Self.self)"
         
         if shouldOverrideInit {
@@ -33,7 +37,7 @@ public class PyObject: Equatable {
             self.__args = args
         } else {
             self.identifier = __formVariableName(base: base)
-            Generator.main.add("\(self.identifier) = \(base)\(__formArgs(args))")
+            Generator.main.add("\(self.identifier) = \(base)\(args.representation)")
             self.__base = nil
             self.__args = nil
         }
@@ -54,28 +58,20 @@ public class PyObject: Equatable {
 //        MethodCalling(methodName: dynamicMember)
 //    }
     
-    @dynamicCallable
-    public struct MethodCalling {
-        
-        let methodName: String
-        
-        public func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, String>) {
-            Generator.main.add("\(methodName)\(__formArgs(Array(pairs)))")
-        }
-        
-        public func dynamicallyCall(withArguments args: Args) {
-            Generator.main.add("\(methodName)\(__formArgs(args))")
-        }
-        
-    }
-}
-
-
-public typealias Args = [(key: String?, value: String?)]
-
-
-internal func __formArgs(_ args: Args) -> String {
-    "(\(args.filter { $0.value != nil }.map { "\($0.key == nil ? "" : "\($0.key!)=")\($0.value!)" }.joined(separator: ", ")))"
+//    @dynamicCallable
+//    public struct MethodCalling {
+//        
+//        let methodName: String
+//        
+//        public func dynamicallyCall(withKeywordArguments pairs: KeyValuePairs<String, String>) {
+//            Generator.main.add("\(methodName)\(__formArgs(Array(pairs)))")
+//        }
+//        
+//        public func dynamicallyCall(withArguments args: Args) {
+//            Generator.main.add("\(methodName)\(__formArgs(args))")
+//        }
+//        
+//    }
 }
 
 
@@ -88,12 +84,4 @@ func __formVariableName(base: String) -> String {
         base.append(index.description)
     }
     return base
-}
-
-extension Args {
-    
-    var pyDescription: String {
-        "{\(self.filter { $0.key != nil && $0.value != nil }.map { "\"\($0.key!)\":" + $0.value! }.joined(separator: ", "))}"
-    }
-    
 }

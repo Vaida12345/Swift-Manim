@@ -11,7 +11,7 @@ public class Brace: MObject {
     public init(_ object: MObject, direction: Direction = .down) {
         super.init(args: [
             (nil, object.identifier),
-            ("direction", direction.pyDescription)
+            ("direction", direction.representation)
         ])
     }
     

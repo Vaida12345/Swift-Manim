@@ -11,9 +11,10 @@ let package = Package(
         .library(name: "Manim", targets: ["Manim"]),
     ], dependencies: [
         .package(path: "/Users/vaida/Library/Mobile Documents/com~apple~CloudDocs/DataBase/Projects/Packages/deprecated/LaTeX"),
-        .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "1.2.5")
+        .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "1.2.5"),
+        .package(url: "https://github.com/Vaida12345/MacroCollection.git", from: "1.0.5"),
     ], targets: [
-        .target(name: "Manim", dependencies: ["LaTeX", "FinderItem"]),
+        .target(name: "Manim", dependencies: ["LaTeX", "FinderItem", "MacroCollection"]),
         .testTarget(name: "ManimTests", dependencies: ["Manim"]),
         .executableTarget(name: "Client", dependencies: ["Manim"])
     ], swiftLanguageModes: [.v5]

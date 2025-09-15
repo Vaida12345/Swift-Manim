@@ -6,16 +6,14 @@
 //
 
 
-
-
 public class TracedPath: VMObject {
     
     
-    public init(point: Method<Point>, width: Double = 2, color: Color = .white, duration: Double? = nil) {
+    public init(point: ReadableProperty<Point>, width: Double = 2, color: Color = .white, duration: Double? = nil) {
         super.init(args: [
-            ("traced_point_func", "\(point.parent.identifier).\(point.name)"),
+            ("traced_point_func", "\(point.origin.identifier).\(point.read.name)"),
             ("stroke_width", width.description),
-            ("stroke_color", color.pyDescription),
+            ("stroke_color", color.representation),
             ("dissipating_time", duration?.description)
         ])
     }

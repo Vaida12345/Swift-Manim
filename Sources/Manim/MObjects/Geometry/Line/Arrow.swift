@@ -22,24 +22,24 @@ public class Arrow: Line {
     ///   - end: The ending point of the arrow.
     ///   - padding: The distance of the arrow from its start and end points.
     ///   - tip: The tip shape.
-    public init(from start: any PointProtocol, to end: any PointProtocol, padding: Double = 0, tip: some ArrowTipShape = .default) {
+    public init(from start: some PointProtocol, to end: some PointProtocol, padding: Double = 0, tip: some ArrowTipShape = .default) {
         super.init(
             args: [
-                ("start", start.pyDescription),
-                ("end", end.pyDescription),
+                ("start", start.representation),
+                ("end", end.representation),
                 ("buff", padding.description)
             ] + (tip.identifier.isEmpty ? [] : [("tip_shape", tip.identifier)])
         )
         
-        if let start = start as? Method<Point> {
+        if let start = start as? ReadableProperty<Point> {
             self.set.start(to: start)
         }
-        if let end = end as? Method<Point> {
+        if let end = end as? ReadableProperty<Point> {
             self.set.end(to: end)
         }
     }
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     
@@ -111,7 +111,7 @@ public struct CustomArrowTipShape: ArrowTipShape {
         indentCount += 1
         Generator.main.add("def __init__(self, length=0.35, **kwargs):")
         indentCount += 1
-        let args = __formArgs(base.__args!).dropLast().dropFirst()
+        let args = base.__args!.representation.dropLast().dropFirst()
         Generator.main.add("\(base.__base!).__init__(self, \(args.isEmpty ? "" : "\(args), ")**kwargs)")
         Generator.main.add("self.width = length")
         Generator.main.add("self.stretch_to_fit_height(length)")

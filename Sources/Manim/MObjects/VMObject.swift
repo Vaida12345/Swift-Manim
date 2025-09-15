@@ -23,7 +23,7 @@ public class VMObject: MObject {
     }
     
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     

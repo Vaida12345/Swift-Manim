@@ -12,7 +12,7 @@
 public class VGroup: VMObject {
     
     public func arrange(direction: Direction, spacing: Double = 1) {
-        Generator.main.add("\(self.identifier).arrange(\(direction.pyDescription), buff=\(spacing))")
+        Generator.main.add("\(self.identifier).arrange(\(direction.representation), buff=\(spacing))")
     }
     
     
@@ -23,10 +23,10 @@ public class VGroup: VMObject {
     }
     
     public init(_ children: [MObject]) {
-        super.init(base: "VGroup", args: children.map(\.identifier).map { (nil, $0) })
+        super.init(base: "VGroup", args: .init(children.map(\.identifier).map { .init(nil, $0) }))
     }
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     

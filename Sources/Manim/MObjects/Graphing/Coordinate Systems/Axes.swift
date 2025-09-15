@@ -28,19 +28,19 @@ public class Axes: VGroup {
                 range: NumberLine.Range? = nil,
                 style: Style? = nil,
                 dimensions: Int? = nil) {
-        var args = [
-            ("x_range", domain?.pyDescription),
-            ("y_range", range?.pyDescription),
+        var args: Closure.Arguments = [
+            ("x_range", domain?.representation),
+            ("y_range", range?.representation),
             ("x_length", "config.frame_width"),
             ("y_length", "config.frame_height"),
             ("dimensions", dimensions?.description)
         ]
         switch style {
         case .__both(let numberLine):
-            args.append(("axis_config", numberLine.__args?.pyDescription))
+            args.append("axis_config", numberLine.__args?.representation)
         case .__individual(let x, let y):
-            args.append(("x_axis_config", x.__args?.pyDescription))
-            args.append(("y_axis_config", y.__args?.pyDescription))
+            args.append("x_axis_config", x.__args?.representation)
+            args.append("y_axis_config", y.__args?.representation)
         case nil:
             break
         }
@@ -55,9 +55,9 @@ public class Axes: VGroup {
     public func convert(_ point: Point, from source: CoordinateSpace, to destination: CoordinateSpace) -> Point {
         switch (source, destination) {
         case (.canvas, .axis):
-            Generator.main.assign(type: Point.self, by: self, calling: "coords_to_point", args: [(nil, point.pyDescription)])
+            Generator.main.assign(type: Point.self, by: self, calling: "coords_to_point", args: [(nil, point.representation)])
         case (.axis, .canvas):
-            Generator.main.assign(type: Point.self, by: self, calling: "point_to_coords", args: [(nil, point.pyDescription)])
+            Generator.main.assign(type: Point.self, by: self, calling: "point_to_coords", args: [(nil, point.representation)])
         default:
             fatalError("You're trying to convert a coordinate space to itself, this could be a logic error.")
         }

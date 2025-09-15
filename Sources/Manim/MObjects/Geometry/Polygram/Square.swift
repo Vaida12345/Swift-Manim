@@ -17,7 +17,7 @@ public final class Square: Rectangle {
     ///   - length: The length for each side.
     public init(length: Double = 2, color: Color? = nil) {
         super.init(args: [("side_length", length.description),
-                          ("color", color?.pyDescription)])
+                          ("color", color?.representation)])
     }
     
     required init(identifier: String) { super.init(args: []) }

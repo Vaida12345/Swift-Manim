@@ -25,36 +25,36 @@ public class MObject: PyObject {
     }
     
     /// The bottom point.
-    public var bottom: Method<Point> {
-        Method<Point>(name: "get_bottom", args: [], parent: self)
+    public var bottom: ReadableProperty<Point> {
+        ReadableProperty(origin: self, read: Closure("get_bottom", []))
     }
     
     /// The starting point.
-    public var origin: Method<Point> {
-        Method<Point>(name: "get_start", args: [], parent: self)
+    public var origin: ReadableProperty<Point> {
+        ReadableProperty(origin: self, read: Closure("get_start", []))
     }
     
     /// The center point.
-    public var center: Method<Point> {
-        Method<Point>(name: "get_center", args: [], parent: self)
+    public var center: ReadableProperty<Point> {
+        ReadableProperty(origin: self, read: Closure("get_center", []))
     }
     
     /// Returns the point, where the stroke that surrounds the object ends.
-    public var end: Method<Point> {
-        Method<Point>(name: "get_end", args: [], parent: self)
+    public var end: ReadableProperty<Point> {
+        ReadableProperty(origin: self, read: Closure("get_end", []))
     }
     
     /// Returns the point, where the stroke that surrounds the object starts.
-    public var start: Method<Point> {
-        Method<Point>(name: "get_start", args: [], parent: self)
+    public var start: ReadableProperty<Point> {
+        ReadableProperty(origin: self, read: Closure("get_start", []))
     }
     
-    public var x: TrackableMethod<Double> {
-        TrackableMethod(name: "get_x", args: [], parent: self, trackingName: "set_x")
+    public var x: ReadableProperty<Double> {
+        ReadableProperty(origin: self, read: Closure("get_x", []))
     }
     
-    public var y: Method<Double> {
-        TrackableMethod(name: "get_x", args: [], parent: self, trackingName: "set_y")
+    public var y: ReadableProperty<Double> {
+        ReadableProperty(origin: self, read: Closure("get_x", []))
     }
     
     
@@ -72,31 +72,31 @@ public class MObject: PyObject {
     ///   - opacity: Fill opacity.
     @discardableResult
     public func fill(_ color: Color, opacity: Double = 1) -> AttachedAnimation {
-        AttachedAnimation(name: "set_fill", target: self.identifier, args: [("color", color.pyDescription),
+        AttachedAnimation(name: "set_fill", target: self.identifier, args: [("color", color.representation),
                                                                             ("opacity", opacity.description)])
     }
     
     /// Set the color and opacity.
     @discardableResult
     public func set(color: Color) -> AttachedAnimation {
-        AttachedAnimation(name: "set_color", target: self.identifier, args: [("color", color.pyDescription)])
+        AttachedAnimation(name: "set_color", target: self.identifier, args: [("color", color.representation)])
     }
     
     /// Moves to the given point.
     @discardableResult
     public func move(to point: PointProtocol, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
-        AttachedAnimation(name: "move_to", target: self.identifier, args: [("point_or_mobject", point.pyDescription),
-                                                                           ("aligned_edge", alignedEdges.pyDescription),
-                                                                           ("coor_mask", coordinateMask.pyDescription)])
+        AttachedAnimation(name: "move_to", target: self.identifier, args: [("point_or_mobject", point.representation),
+                                                                           ("aligned_edge", alignedEdges.representation),
+                                                                           ("coor_mask", coordinateMask.representation)])
     }
     
     /// Moves to the center of given object.
     @discardableResult
     public func move(to target: MObject, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
-        let args = [
+        let args: Closure.Arguments = [
             ("point_or_mobject", target.identifier),
-            ("aligned_edge", alignedEdges.pyDescription),
-            ("coor_mask", coordinateMask.pyDescription)
+            ("aligned_edge", alignedEdges.representation),
+            ("coor_mask", coordinateMask.representation)
         ]
         
         return AttachedAnimation(name: "move_to", target: self.identifier, args: args) {
@@ -122,7 +122,7 @@ public class MObject: PyObject {
     ///   - opacity: stroke opacity.
     @discardableResult
     public func stroke(_ color: Color, width: Double = 10, opacity: Double = 1) -> AttachedAnimation {
-        AttachedAnimation(name: "set_stroke", target: self.identifier, args: [("color", color.pyDescription),
+        AttachedAnimation(name: "set_stroke", target: self.identifier, args: [("color", color.representation),
                                                                               ("opacity", opacity.description),
                                                                               ("width", width.description)])
     }
@@ -131,7 +131,7 @@ public class MObject: PyObject {
     @available(*, deprecated, renamed: "move(nextTo:position:padding:)")
     public func next(to target: MObject, position: Direction, padding: Double = 0) {
         self.attribute("next_to", to: [(nil, target.identifier),
-                                       (nil, position.pyDescription),
+                                       (nil, position.representation),
                                        ("buff", padding.description)])
     }
     
@@ -140,17 +140,17 @@ public class MObject: PyObject {
     /// - Parameters:
     ///   - position: The position of `self` relative to `target`
     @discardableResult
-    public func move(nextTo target: Method<Point>, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
-        if !target.isDetached {
-            self.addUpdater(initialCall: false) { object in
-                self.attribute("next_to", to: [(nil, target.pyDescription),
-                                                 (nil, position.pyDescription),
-                                                 ("buff", padding.description)])
-            }
-        }
+    public func move(nextTo target: some PointProtocol, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+//        if !target.isDetached {
+//            self.addUpdater(initialCall: false) { object in
+//                self.attribute("next_to", to: [(nil, target.representation),
+//                                                 (nil, position.representation),
+//                                                 ("buff", padding.description)])
+//            }
+//        }
         
-        return AttachedAnimation(name: "next_to", target: self.identifier, args: [(nil, target.pyDescription),
-                                                                           (nil, position.pyDescription),
+        return AttachedAnimation(name: "next_to", target: self.identifier, args: [(nil, target.representation),
+                                                                           (nil, position.representation),
                                                                            ("buff", padding.description)])
     }
     
@@ -172,9 +172,9 @@ public class MObject: PyObject {
     ///   - position: The position of `self` relative to `target`
     @discardableResult
     public func align(_ position: Direction, to target: MObject, padding: Double = 0.25) -> AttachedAnimation {
-        let args = [
+        let args: Closure.Arguments = [
             (nil, target.identifier),
-            (nil, position.pyDescription),
+            (nil, position.representation),
             ("buff", padding.description)
         ]
         return AttachedAnimation(
@@ -202,7 +202,7 @@ public class MObject: PyObject {
     @discardableResult
     public func rotate(angle: Angle, axis: Axis = .z) -> AttachedAnimation {
         AttachedAnimation(name: "rotate", target: self.identifier, args: [("angle", angle.radians.description),
-                                                                          ("axis", axis.pyDescription)])
+                                                                          ("axis", axis.representation)])
     }
     
     /// Scale the object by a factor.
@@ -229,7 +229,7 @@ public class MObject: PyObject {
         Generator.main.add("")
         self.attribute("add_updater", to: [("update_function", functionName),
                                            ("index", index?.description),
-                                           ("call_updater", initialCall.pyDescription)])
+                                           ("call_updater", initialCall.representation)])
     }
     
     /// Edit points, colors and sub objects to be identical to another ``MObject``.
@@ -244,12 +244,12 @@ public class MObject: PyObject {
     @discardableResult
     public func become(_ target: MObject, copyChildren: Bool = true, matchHeight: Bool = false, matchWidth: Bool = false, matchDepth: Bool = false, matchCenter: Bool = false, stretch: Bool = false) -> AttachedAnimation {
         AttachedAnimation(name: "become", target: self.identifier, args: [(nil, target.identifier),
-                                                                          ("copy_submobjects", copyChildren.pyDescription),
-                                                                          ("match_height", matchHeight.pyDescription),
-                                                                          ("match_width", matchWidth.pyDescription),
-                                                                          ("match_depth", matchDepth.pyDescription),
-                                                                          ("match_center", matchCenter.pyDescription),
-                                                                          ("stretch", stretch.pyDescription),
+                                                                          ("copy_submobjects", copyChildren.representation),
+                                                                          ("match_height", matchHeight.representation),
+                                                                          ("match_width", matchWidth.representation),
+                                                                          ("match_depth", matchDepth.representation),
+                                                                          ("match_center", matchCenter.representation),
+                                                                          ("stretch", stretch.representation),
                                                                          ])
     }
     
@@ -261,7 +261,7 @@ public class MObject: PyObject {
     /// Flips/Mirrors an object about its center.
     @discardableResult
     public func flip(axis: Axis) -> AttachedAnimation {
-        AttachedAnimation(name: "flip", target: self.identifier, args: [(nil, axis.pyDescription)])
+        AttachedAnimation(name: "flip", target: self.identifier, args: [(nil, axis.representation)])
     }
     
     

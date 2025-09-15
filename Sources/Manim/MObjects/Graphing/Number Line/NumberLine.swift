@@ -32,26 +32,26 @@ public final class NumberLine: Line {
                 scaling: ScaleBase = .linear(),
                 start: (any PointProtocol)? = nil, end: (any PointProtocol)? = nil
                 ) {
-        var args: Args = [
-            ("x_range", range?.pyDescription),
+        var args: Closure.Arguments = [
+            ("x_range", range?.representation),
             ("length", length?.description),
             ("unit_size", unitSize.description),
             ("stroke_width", strokeWidth?.description),
             ("tip_width", tip?.width?.description),
             ("tip_height", tip?.height?.description),
             ("tip_shape", tip?.shape?.identifier),
-            ("scaling", scaling.pyDescription),
-            ("start", start?.pyDescription), ("end", end?.pyDescription)
+            ("scaling", scaling.representation),
+            ("start", start?.representation), ("end", end?.representation)
         ]
-        if !include.contains(.ticks)  { args.append(("include_ticks",  false.pyDescription)) }
-        if include.contains(.numbers) { args.append(("include_numbers", true.pyDescription)) }
-        if tip != nil                 { args.append(("include_tip",     true.pyDescription)) }
+        if !include.contains(.ticks)  { args.append("include_ticks",  false.representation) }
+        if include.contains(.numbers) { args.append("include_numbers", true.representation) }
+        if tip != nil                 { args.append("include_tip",     true.representation) }
         
         super.init(args: args)
     }
     
     
-    public struct Range: ExpressibleByFloatLiteral {
+    public struct Range: ExpressibleByFloatLiteral, PythonScriptConvertible {
         
         let min: Double
         
@@ -60,7 +60,7 @@ public final class NumberLine: Line {
         let step: Double
         
         
-        var pyDescription: String {
+        public var representation: String {
             "[\(min), \(max), \(step)]"
         }
         
@@ -113,11 +113,11 @@ public final class NumberLine: Line {
         }
     }
     
-    public enum ScaleBase {
+    public enum ScaleBase: PythonScriptConvertible {
         case linear(scale: Double = 1)
         case log(base: Double = 10)
         
-        var pyDescription: String {
+        public var representation: String {
             switch self {
             case .linear(let scale):
                 "LinearBase(scale_factor=\(scale))"

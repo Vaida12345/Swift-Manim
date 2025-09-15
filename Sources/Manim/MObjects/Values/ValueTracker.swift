@@ -23,9 +23,9 @@ public class ValueTracker<T>: MObject {
         ])
     }
     
-    public init(value: Method<T>) {
+    public init(value: ReadableProperty<T>) {
         super.init(base: "ValueTracker", args: [
-            ("value", value.get())
+            ("value", value.representation)
         ])
     }
     
@@ -33,8 +33,8 @@ public class ValueTracker<T>: MObject {
         super.init(identifier: identifier)
     }
     
-    public var value: Method<T> {
-        Method(name: "get_value", args: [], parent: self)
+    public var value: ReadableProperty<T> {
+        ReadableProperty(origin: self, read: Closure("get_value", []))
     }
     
 }

@@ -24,12 +24,12 @@ public class SurroundingRectangle: MObject {
     public init(_ base: MObject, color: Color? = nil, cornerRadius: Double? = nil) {
         super.init(args: [
             ("mobject", base.identifier),
-            ("color", color?.pyDescription),
+            ("color", color?.representation),
             ("corner_radius", cornerRadius?.description),
         ])
     }
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     

@@ -18,7 +18,7 @@ public final class Cross: VGroup {
     public init(base: MObject? = nil, stroke: (color: Color?, width: Double?)? = nil) {
         super.init(args: [
             ("mobject", base?.identifier),
-            ("stroke_color", stroke?.color?.pyDescription),
+            ("stroke_color", stroke?.color?.representation),
             ("stroke_width", stroke?.width?.description),
         ])
     }

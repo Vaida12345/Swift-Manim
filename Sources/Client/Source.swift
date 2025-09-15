@@ -15,26 +15,29 @@ class VectorArrow: Scene {
         super.body(width: width)
         
         let dot1 = Dot(at: [2, 2], color: .blue)
-        let dot2 = Dot(color: .green)
+        let dot2 = Dot(at: .center, color: .green)
         
-        let line = Line(start: dot1.center.attached(), end: dot2.center.attached())
-        line.set(color: .red)
+        dot1.show()
+        dot2.show()
         
-        withAnimation(in: .parallel) {
-            dot1.show()
-                .duration(3)
-            dot2.show()
-            line.show()
-        }
-        
-        dot1.x = dot2.x.attached()
-        
-        withAnimation {
-            dot1.x += 4
-        }
-        
-        withAnimation {
-            dot1.x += 4
-        }
+//        let line = Line(start: dot1.center.attached(), end: dot2.center.attached())
+////        line.set(color: .red)
+//        
+//        withAnimation(in: .parallel) {
+//            dot1.show()
+//                .duration(3)
+//            dot2.show()
+//            line.show()
+//        }
+//        
+//        dot1.x = dot2.x.attached()
+//        
+//        withAnimation {
+//            dot1.x += 4
+//        }
+//        
+//        withAnimation {
+//            dot1.x += 4
+//        }
     }
 }

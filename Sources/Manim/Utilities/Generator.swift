@@ -58,14 +58,14 @@ public final class Generator {
         manager.wait()
     }
     
-    internal func assign<T, Parent>(type: T.Type, by parent: Parent, calling method: String, args: Args) -> T where Parent: PyObject, T: PyObject {
+    internal func assign<T, Parent>(type: T.Type, by parent: Parent, calling method: String, args: Closure.Arguments) -> T where Parent: PyObject, T: PyObject {
         let result = T(identifier: __formVariableName(base: "\(T.self)"))
-        self.add("\(result.identifier) = \(parent.identifier).\(method)\(__formArgs(args))")
+        self.add("\(result.identifier) = \(parent.identifier).\(method)\(args.representation)")
         return result
     }
     
-    internal func assign<T>(_ method: Method<T>) -> T where T: PyObject {
-        self.assign(type: T.self, by: method.parent, calling: method.name, args: method.args)
+    internal func assign<T>(_ method: ReadableProperty<T>) -> T where T: PyObject {
+        self.assign(type: T.self, by: method.origin, calling: method.read.name, args: method.read.arguments)
     }
     
     
@@ -122,7 +122,7 @@ public final class Generator {
         func push() {
             if let background {
                 if let color = background.color {
-                    Generator.main.addConfiguration(name: "background_color", value: color.pyDescription)
+                    Generator.main.addConfiguration(name: "background_color", value: color.representation)
                 }
                 if let opacity = background.opacity {
                     Generator.main.addConfiguration(name: "background_opacity", value: opacity.description)
@@ -132,9 +132,9 @@ public final class Generator {
             Generator.main.addConfiguration(name: "media_dir", value: "\"\(mediaFolder)\"")
             
             if let enableGUI {
-                Generator.main.addConfiguration(name: "enable_gui", value: enableGUI.pyDescription)
+                Generator.main.addConfiguration(name: "enable_gui", value: enableGUI.representation)
             }
-            Generator.main.addConfiguration(name: "format", value: format.pyDescription)
+            Generator.main.addConfiguration(name: "format", value: format.representation)
             Generator.main.addConfiguration(name: "movie_file_extension", value: "\".\(format.rawValue)\"")
             
             if let frameRate {
@@ -154,11 +154,11 @@ public final class Generator {
                 Generator.main.addConfiguration(name: "renderer",  value: "\"\(renderer.rawValue)\"")
             }
             if let renderAllImages {
-                Generator.main.addConfiguration(name: "save_pngs",  value: renderAllImages.pyDescription)
+                Generator.main.addConfiguration(name: "save_pngs",  value: renderAllImages.representation)
             }
             Generator.main.addConfiguration(name: "images_dir",  value: "\"\(imagesDestination)\"")
             
-            Generator.main.addConfiguration(name: "preview", value: preview.pyDescription)
+            Generator.main.addConfiguration(name: "preview", value: preview.representation)
         }
         
         
@@ -185,10 +185,10 @@ public final class Generator {
             public var opacity: Double?
         }
         
-        public enum Format: String {
+        public enum Format: String, PythonScriptConvertible {
             case png, gif, mp4, webm, mov
             
-            var pyDescription: String {
+            public var representation: String {
                 "\"\(self.rawValue)\""
             }
         }

@@ -20,7 +20,7 @@ public class Animation: PyObject {
     
     required init(identifier: String) { super.init(identifier: identifier) }
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     
@@ -100,7 +100,7 @@ public func withAnimation(_ animation: RateFunction = .spring, in method: Animat
         .map { animation in
             var body: String {
                 if let attached = animation as? AttachedAnimation {
-                    return "\(attached.target).animate.\(attached.name)\(__formArgs(attached.args))"
+                    return "\(attached.target).animate.\(attached.closure.representation)"
                 } else {
                     return animation.identifier
                 }

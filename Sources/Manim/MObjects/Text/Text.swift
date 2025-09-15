@@ -16,25 +16,25 @@ public class Text: SVGMObject {
             ("text", "\"\(text)\""),
             ("fill_opacity", opacity.description),
             ("stroke_width", strokeWidth.description),
-            ("color", color.pyDescription),
+            ("color", color.representation),
             ("font_size", fontSize.description),
             ("line_spacing", lineSpacing.description),
             ("font", font),
             ("slant", italic ? "ITALIC" : "NORMAL"),
-            ("weight", weight.pyDescription),
+            ("weight", weight.representation),
             ("height", height?.description),
             ("width", width?.description),
-            ("should_center", center.pyDescription),
+            ("should_center", center.representation),
         ])
     }
     
     required init(identifier: String) { super.init(identifier: identifier) }
     
-    public enum FontWeight: String {
+    public enum FontWeight: String, PythonScriptConvertible {
         case normal
         case bold
         
-        var pyDescription: String {
+        public var representation: String {
             self.rawValue.uppercased()
         }
     }

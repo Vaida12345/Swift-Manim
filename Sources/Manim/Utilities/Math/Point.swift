@@ -6,20 +6,37 @@
 //
 
 
-
-
-/// An object that is a point, or a method with return value of point.
-public protocol PointProtocol {
-    
-    var pyDescription: String { get }
+public protocol PointProtocol: PythonScriptConvertible {
     
 }
 
 
 extension PointProtocol where Self == Point {
     
-    /// The center of the canvas, `(0, 0, 0)`.
-    public static var center: Point { Point() }
+    public static var center: Point {
+        Point(x: 0, y: 0)
+    }
+    
+}
+
+
+extension Array<Double>: PythonScriptConvertible {
+    
+    public var representation: String {
+        if self.count == 2 {
+            Point(x: self[0], y: self[1]).representation
+        } else if self.count == 3 {
+            Point(x: self[0], y: self[1], z: self[2]).representation
+        } else {
+            fatalError("Not enough arguments for Point")
+        }
+    }
+    
+}
+
+extension Array<Double>: PointProtocol {
+    
+    
     
 }
 
@@ -27,11 +44,11 @@ extension PointProtocol where Self == Point {
 /// A point, with the center being (0, 0, 0).
 public class Point: PyObject, PointProtocol, ExpressibleByArrayLiteral {
    
-    let x: Double
+    public let x: Double
     
-    let y: Double
+    public let y: Double
     
-    let z: Double
+    public let z: Double
     
     
     public func shift(_ value: Double, to direction: Direction) -> Point {
@@ -47,15 +64,7 @@ public class Point: PyObject, PointProtocol, ExpressibleByArrayLiteral {
         super.init(identifier: __formVariableName(base: "\(Self.self)"))
     }
     
-    required init(identifier: String) {
-        self.x = 0
-        self.y = 0
-        self.z = 0
-        
-        super.init(identifier: identifier)
-    }
-    
-    public required convenience init(arrayLiteral elements: Double...) {
+    required public convenience init(arrayLiteral elements: Double...) {
         if elements.count == 2 {
             self.init(x: elements[0], y: elements[1])
         } else if elements.count == 3 {
@@ -67,44 +76,29 @@ public class Point: PyObject, PointProtocol, ExpressibleByArrayLiteral {
         }
     }
     
-    static func * (lhs: Double, rhs: Point) -> Point {
+    required init(identifier: String) {
+        fatalError("init(identifier:) has not been implemented")
+    }
+    
+    public static func * (lhs: Double, rhs: Point) -> Point {
         Point(x: lhs * rhs.x,
               y: lhs * rhs.y,
               z: lhs * rhs.z)
     }
     
-    static func + (lhs: Point, rhs: Point) -> Point {
+    public static func + (lhs: Point, rhs: Point) -> Point {
         Point(x: lhs.x + rhs.x,
               y: lhs.y + rhs.y,
               z: lhs.z + rhs.z)
     }
     
-    static func - (lhs: Point, rhs: Point) -> Point {
+    public static func - (lhs: Point, rhs: Point) -> Point {
         Point(x: lhs.x - rhs.x,
               y: lhs.y - rhs.y,
               z: lhs.z - rhs.z)
     }
     
-    public var pyDescription: String {
+    public override var representation: String {
         "array([\(self.x), \(self.y), \(self.z)])"
-    }
-}
-
-
-extension Array: PointProtocol where Element == Int {
-    
-    public var pyDescription: String {
-        precondition(self.count >= 0 && self.count <= 3)
-        
-        let additional = [Int](repeating: 0, count: 3 - self.count)
-        return "array(\((self + additional)))"
-    }
-    
-}
-
-
-extension Method: PointProtocol where ReturnValue == Point {
-    public var pyDescription: String {
-        self.get()
     }
 }

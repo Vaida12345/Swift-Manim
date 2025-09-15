@@ -17,10 +17,10 @@ public class Polygram: VMObject {
     
     /// Creates a polygram by connecting the dots in sequence.
     public init(vertices: [PointProtocol]) {
-        super.init(args: [(nil, "[\(vertices.map(\.pyDescription).joined(separator: ", "))]")])
+        super.init(args: [(nil, "[\(vertices.map(\.representation).joined(separator: ", "))]")])
     }
     
-    override init(base: String? = nil, args: Args) {
+    override init(base: String? = nil, args: Closure.Arguments) {
         super.init(base: base, args: args)
     }
     

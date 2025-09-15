@@ -11,26 +11,23 @@ import OSLog
 /// An animation that is attached to an object, typically means it is called using `.animate.modifier()`.
 public class AttachedAnimation: Animation {
     
-    let name: String
+    let closure: Closure
     
     let target: String
-    
-    let args: [(key: String?, value: String?)]
     
     let onFinished: () -> Void
     
     
-    init(name: String, target: String, args: [(key: String?, value: String?)], onFinished: @escaping () -> Void = {}) {
-        self.name = name
+    init(name: String, target: String, args: Closure.Arguments, onFinished: @escaping () -> Void = {}) {
+        self.closure = Closure(name, args)
         self.target = target
-        self.args = args
         self.onFinished = onFinished
         
         super.init()
         
         // only called when not animate
         guard !shouldUseAnimation else { return }
-        Generator.main.add("\(self.target).\(self.name)\(__formArgs(self.args))")
+        Generator.main.add("\(self.target).\(closure.representation)")
     }
     
     required init(identifier: String) {

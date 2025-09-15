@@ -5,6 +5,7 @@
 //  Created by Vaida on 2023/10/8.
 //
 
+import MacroCollection
 
 
 /// A dot
@@ -19,13 +20,13 @@ public final class Dot: VMObject {
     ///   - strokeWidth: The thickness of the outline of the dot.
     ///   - opacity: The opacity of the dot’s `color`.
     ///   - color: The color of the dot.
-    public init(at point: any PointProtocol = .center, radius: Double? = nil, strokeWidth: Double = 0, opacity: Double = 1.0, color: Color? = nil) {
+    public init(at point: some PointProtocol, radius: Double? = nil, strokeWidth: Double = 0, opacity: Double = 1.0, color: Color? = nil) {
         super.init(args: [
-            ("point", point.pyDescription),
+            ("point", point.representation),
             ("radius", radius?.description),
             ("stroke_width", strokeWidth.description),
             ("fill_opacity", opacity.description),
-            ("color", color?.pyDescription),
+            ("color", color?.representation),
         ])
     }
     

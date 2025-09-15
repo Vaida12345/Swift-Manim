@@ -15,7 +15,7 @@ public final class Vector: Arrow {
     }
     
     public init(direction: Direction) {
-        super.init(args: [("direction", direction.pyDescription)])
+        super.init(args: [("direction", direction.representation)])
     }
     
     
