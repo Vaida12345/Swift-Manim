@@ -9,6 +9,7 @@
 /// A Scene is the canvas of your animation.
 ///
 /// Different to the Manim implementation, this package allows only one scene.
+@MainActor
 open class Scene {
     
     /// Default stores config.

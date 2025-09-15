@@ -51,7 +51,7 @@ public final class NumberLine: Line {
     }
     
     
-    public struct Range: ExpressibleByFloatLiteral, PythonScriptConvertible {
+    public struct Range: @MainActor ExpressibleByFloatLiteral, PythonScriptConvertible {
         
         let min: Double
         
@@ -98,7 +98,8 @@ public final class NumberLine: Line {
         }
     }
     
-    public struct DisplayStyle: OptionSet {
+    @MainActor
+    public struct DisplayStyle: @MainActor OptionSet {
         
         public var rawValue: UInt8
         

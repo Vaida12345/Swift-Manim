@@ -42,7 +42,7 @@ extension Array<Double>: PointProtocol {
 
 
 /// A point, with the center being (0, 0, 0).
-public class Point: PyObject, PointProtocol, ExpressibleByArrayLiteral {
+public class Point: PyObject, PointProtocol, @MainActor ExpressibleByArrayLiteral {
    
     public let x: Double
     

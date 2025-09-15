@@ -7,7 +7,7 @@
 
 
 /// A property that is read-only.
-public class ReadableProperty<ReturnValue>: Equatable, PythonScriptConvertible {
+public class ReadableProperty<ReturnValue>: @MainActor Equatable, PythonScriptConvertible {
     
     /// The closure for reading a property.
     let read: Closure
@@ -27,6 +27,7 @@ public class ReadableProperty<ReturnValue>: Equatable, PythonScriptConvertible {
     }
     
     
+    @MainActor
     public static func == (_ lhs: ReadableProperty, _ rhs: ReadableProperty) -> Bool {
         lhs.origin === rhs.origin &&
         lhs.read == rhs.read

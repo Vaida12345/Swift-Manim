@@ -7,7 +7,7 @@
 
 
 /// A group of vectorized ``MObject``.
-public class Group: VMObject, Collection {
+public class Group: VMObject, @MainActor Collection {
     
     let children: [MObject]
     

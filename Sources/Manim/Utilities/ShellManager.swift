@@ -125,42 +125,6 @@ public final class ShellManager: Equatable, Hashable, Identifiable {
         }
     }
     
-    /// A hander which calls whenever a new line is generated.
-    ///
-    /// - Important: Using this method would cause ``output()-44p1x`` returning only partial results.
-    ///
-    /// - Experiment: When the `task` ``output()-44p1x`` is generated fast, the last few results may be ignored.
-    ///
-    /// - Bug: Reading from python `print` would wait until all output are generated.
-    ///
-    /// - parameters:
-    ///   - handler: The handler whose parameter is a newline generated.
-    public func onOutputChanged(_ handler: @escaping (_ newLine: String) -> Void) {
-        
-        var cache: String = ""
-        
-        func hander(newString: String) {
-            cache += newString
-            
-            let components = cache.components(separatedBy: .newlines)
-            cache = components.last ?? ""
-            
-            guard components.count != 1 else { return }
-            
-            for component in components.dropLast() {
-                guard !component.isEmpty else { continue }
-                handler(component)
-            }
-        }
-        
-        pipe.fileHandleForReading.readabilityHandler = { provider in
-            let data = provider.availableData
-            guard !data.isEmpty else { return }
-            guard let value = String(data: data, encoding: .utf8) else { return }
-            hander(newString: value)
-        }
-    }
-    
     /// Wait until exit.
     ///
     /// Blocks the process until the receiver is finished.
@@ -194,7 +158,7 @@ public final class ShellManager: Equatable, Hashable, Identifiable {
     }
     
     /// A completion block the system invokes when the task completes.
-    public func onTermination(handler: @escaping (Process) -> Void) {
+    public func onTermination(handler: @Sendable @escaping (Process) -> Void) {
         task.terminationHandler = handler
     }
     
@@ -219,81 +183,6 @@ public final class ShellManager: Equatable, Hashable, Identifiable {
     /// The implementation of dynamic callable.
     public subscript<Subject>(dynamicMember keyPath: KeyPath<Process, Subject>) -> Subject {
         self.task[keyPath: keyPath]
-    }
-    
-}
-
-
-/// A manager to manage a set of `ShellManager`s.
-public final class ShellManagers: Hashable, Identifiable {
-    
-    /// The contained managers.
-    private var contents: [ShellManager]
-    
-    /// Creates an empty manager.
-    public init() {
-        self.contents = []
-    }
-    
-    /// Adds a new manager.
-    public func addManager() -> ShellManager {
-        let newManager = ShellManager()
-        newManager.onTermination { [weak self, weak newManager] _ in
-            if self != nil && self!.contents.count > 0 { // remove the element only if it has not been released.
-                self!.contents.removeAll { $0 == newManager }
-            }
-        }
-        self.contents.append(newManager)
-        return newManager
-    }
-    
-    /// Terminates and removes a manager.
-    public func remove(manager: ShellManager) {
-        manager.terminate()
-        self.contents.removeAll { $0 == manager }
-    }
-    
-    /// Resumes execution of all tasks.
-    ///
-    /// Multiple ``pause()`` messages can be sent, but they must be balanced with an equal number of ``resume()`` messages before the task resumes execution.
-    public func resume() {
-        for i in contents {
-            i.resume()
-        }
-    }
-    
-    /// Sends a terminate signal to the all the receivers and all of their subtasks.
-    public func terminate() {
-        for i in contents {
-            i.terminate()
-        }
-    }
-    
-    /// Sends a terminate signal to the all the running receivers and all of their subtasks.
-    public func terminateIfPosible() {
-        for i in contents {
-            guard i.isRunning else { continue }
-            i.terminate()
-        }
-    }
-    
-    /// Suspends execution of all the tasks.
-    ///
-    /// Multiple ``pause()`` messages can be sent, but they must be balanced with an equal number of ``resume()`` messages before the task resumes execution.
-    public func pause() {
-        for i in contents {
-            i.pause()
-        }
-    }
-    
-    /// Creates a hash value.
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(contents)
-    }
-    
-    /// Compare two sets of managers.
-    public static func == (lhs: ShellManagers, rhs: ShellManagers) -> Bool {
-        lhs.contents == rhs.contents
     }
     
 }

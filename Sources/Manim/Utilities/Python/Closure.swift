@@ -6,7 +6,7 @@
 //
 
 
-public struct Closure: PythonScriptConvertible, Equatable {
+public struct Closure: PythonScriptConvertible, @MainActor Equatable {
     
     let name: String
     
@@ -29,7 +29,7 @@ public struct Closure: PythonScriptConvertible, Equatable {
     }
     
     
-    public struct Arguments: Equatable, Collection, ExpressibleByArrayLiteral, PythonScriptConvertible {
+    public struct Arguments: @MainActor Equatable, @MainActor Collection, @MainActor ExpressibleByArrayLiteral, PythonScriptConvertible {
         
         var contents: [Argument]
         
@@ -71,8 +71,8 @@ public struct Closure: PythonScriptConvertible, Equatable {
     }
     
     
-    
-    public struct Argument: Equatable {
+    @MainActor
+    public struct Argument: @MainActor Equatable {
         
         let key: String?
         

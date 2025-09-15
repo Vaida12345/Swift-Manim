@@ -18,6 +18,7 @@ public final class ReadWriteProperty<Value>: ReadableProperty<Value> {
     }
     
     
+    @MainActor
     public static func == (_ lhs: ReadWriteProperty, _ rhs: ReadWriteProperty) -> Bool {
         lhs.origin === rhs.origin &&
         lhs.read == rhs.read &&

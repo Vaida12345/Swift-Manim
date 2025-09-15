@@ -273,6 +273,7 @@ public class MObject: PyObject {
     }
     
     
+    @MainActor
     public final class State {
         
         let base: MObject

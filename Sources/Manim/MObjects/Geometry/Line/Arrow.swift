@@ -39,6 +39,7 @@ public class Arrow: Line {
 }
 
 
+@MainActor
 public protocol ArrowTipShape: Equatable {
     
     var identifier: String { get }

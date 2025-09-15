@@ -6,7 +6,7 @@
 //
 
 
-
+@MainActor
 public enum HideAnimation: Equatable {
     
     /// No animation, just hide the object.

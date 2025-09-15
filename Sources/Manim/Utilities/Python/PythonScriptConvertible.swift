@@ -7,6 +7,7 @@
 
 
 /// Indicating that the structure can be represented in a python script.
+@MainActor
 public protocol PythonScriptConvertible {
     
     /// Returns the equivalent of `self` in Python, expressed as raw python scripts.

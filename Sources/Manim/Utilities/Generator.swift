@@ -10,6 +10,7 @@ import FinderItem
 import OSLog
 
 
+@MainActor
 public final class Generator {
     
     private var components: [String]
@@ -74,6 +75,7 @@ public final class Generator {
     }
     
     
+    @MainActor
     public struct Configuration {
         
         /// Configures the background properties

@@ -18,7 +18,7 @@ withAnimation {
 }
 ```
 
-The blocks, or ``AttachedAnimation``s, comes with some declarations that can be attached to the blocks, for example, you can use ``AttachedAnimation/duration(_:)`` to set the duration, or ``Animation/delay(_:)`` to set the delay.
+The blocks, or ``AttachedAnimation``s, comes with some declarations that can be attached to the blocks, for example, you can use ``Animation/duration(_:)`` to set the duration, or ``Animation/delay(_:)`` to set the delay.
 ```swift
 withAnimation(in: .parallel) {
     dot.move(to: [0, -1])

@@ -63,6 +63,7 @@ public class Axes: Group {
         }
     }
     
+    @MainActor
     public enum Style {
         case __both(NumberLine)
         case __individual(x: NumberLine, y: NumberLine)

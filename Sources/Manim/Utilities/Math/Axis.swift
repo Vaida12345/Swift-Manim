@@ -9,7 +9,7 @@
 
 
 /// The axis.
-public struct Axis: OptionSet, PythonScriptConvertible {
+public struct Axis: @MainActor OptionSet, PythonScriptConvertible {
     
     public let rawValue: UInt8
     

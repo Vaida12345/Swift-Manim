@@ -9,7 +9,8 @@
 import SwiftUI
 
 
-public struct ActionAnimation: Equatable {
+@MainActor
+public struct ActionAnimation: @MainActor Equatable {
     
     fileprivate let closure: Closure
     
@@ -160,11 +161,13 @@ public struct ActionAnimation: Equatable {
     }
     
     
+    @MainActor
     public enum CircumscribeShape: String {
         case circle = "Circle"
         case rectangle = "Rectangle"
     }
     
+    @MainActor
     public enum CircumscribeStyle {
         /// Draw the line to create, and fade out.
         case lineDrawIn

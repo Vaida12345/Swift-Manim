@@ -9,7 +9,8 @@ import MacroCollection
 import SwiftUI
 
 
-public struct ShowAnimation: Equatable {
+@MainActor
+public struct ShowAnimation: @MainActor Equatable {
     
     fileprivate let closure: Closure
     

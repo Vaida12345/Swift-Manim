@@ -60,7 +60,7 @@ extension Animation {
     ///
     /// This does not influence the total runtime of the animation. Instead the runtime of individual animations is adjusted so that the complete animation has the defined run time.
     ///
-    /// [View example on MainmCE](https://docs.manim.community/en/stable/reference/manim.animation.animation.Animation.html#lagratios)
+    /// [read more](<doc:Animations>)
     public func lagRatio(_ ratio: Double) -> Self {
         self.lagRatio = ratio
         return self
@@ -88,6 +88,7 @@ internal class EmptyAnimation: Animation {
 ///     originText.align(.down, to: dot)
 /// }
 /// ```
+@MainActor
 public func withAnimation(_ animation: RateFunction = .linear, in method: Animation.Method = .serial, @_AnimationBuilder body: () -> _AnimationGroup) {
     shouldUseAnimation = true
     let animations = body()
@@ -148,6 +149,7 @@ public func withAnimation(_ animation: RateFunction = .linear, in method: Animat
 
 
 /// Internal use, for `@resultBuilder`.
+@MainActor
 @resultBuilder
 public enum _AnimationBuilder {
     
@@ -161,6 +163,7 @@ public enum _AnimationBuilder {
 }
 
 /// Internal use, for `@resultBuilder`.
+@MainActor
 public final class _AnimationGroup: Animation {
     
     let animations: [Animation]

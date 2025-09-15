@@ -10,7 +10,7 @@
 ///
 /// This class indicates that an object is callable in python. This structure does not provide ways to declare a python class.
 //@dynamicMemberLookup
-public class PyObject: Equatable, PythonScriptConvertible {
+public class PyObject: @MainActor Equatable, PythonScriptConvertible {
     
     internal let identifier: String
     
@@ -75,6 +75,7 @@ public class PyObject: Equatable, PythonScriptConvertible {
 }
 
 
+@MainActor
 func __formVariableName(base: String) -> String {
     var base = base
     base.replaceSubrange(base.startIndex..<base.index(after: base.startIndex), with: base[base.startIndex].lowercased())
