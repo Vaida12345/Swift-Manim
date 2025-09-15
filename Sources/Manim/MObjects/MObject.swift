@@ -251,9 +251,8 @@ public class MObject: PyObject {
     ///   - matchCenter: If `true`, then the transformed object will match the center of the original
     ///   - stretch: If `true`, then the transformed object will stretch to fit the proportions of the original
     @discardableResult
-    public func become(_ target: MObject, copyChildren: Bool = true, matchHeight: Bool = false, matchWidth: Bool = false, matchDepth: Bool = false, matchCenter: Bool = false, stretch: Bool = false) -> AttachedAnimation {
+    public func become(_ target: MObject, matchHeight: Bool = false, matchWidth: Bool = false, matchDepth: Bool = false, matchCenter: Bool = false, stretch: Bool = false) -> AttachedAnimation {
         AttachedAnimation(name: "become", target: self.identifier, args: [(nil, target.identifier),
-                                                                          ("copy_submobjects", copyChildren.representation),
                                                                           ("match_height", matchHeight.representation),
                                                                           ("match_width", matchWidth.representation),
                                                                           ("match_depth", matchDepth.representation),

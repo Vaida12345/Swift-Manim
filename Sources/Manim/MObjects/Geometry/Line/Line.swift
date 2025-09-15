@@ -16,13 +16,6 @@ public class Line: VMObject {
     
     public init(start: some PointProtocol, end: some PointProtocol) {
         super.init(args: [("start", start.representation), ("end", end.representation)])
-        
-        if let start = start as? ReadableProperty<Point> {
-            self.set.start(to: start)
-        }
-        if let end = end as? ReadableProperty<Point> {
-            self.set.end(to: end)
-        }
     }
     
     override init(base: String? = nil, args: Closure.Arguments) {
