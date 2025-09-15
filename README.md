@@ -1,3 +1,11 @@
+
+# Swift-Manim
+
+This package offers a Swift wrapper to Manim. This package uses [ManimCE](https://docs.manim.community/en/stable/index.html), and is essentially a interpreter from Swift to Python. It uses the engine of [ManimCE](https://docs.manim.community/en/stable/index.html).
+
+To use this package, please make sure you have [ManimCE](https://docs.manim.community/en/stable/index.html) [installed](https://docs.manim.community/en/stable/installation.html).
+
+
 # Gallery
 
 Examples of using Manim.
