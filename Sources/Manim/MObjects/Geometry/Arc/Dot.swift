@@ -20,7 +20,7 @@ public final class Dot: VMObject {
     ///   - strokeWidth: The thickness of the outline of the dot.
     ///   - opacity: The opacity of the dot’s `color`.
     ///   - color: The color of the dot.
-    public init(at point: some PointProtocol, radius: Double? = nil, strokeWidth: Double = 0, opacity: Double = 1.0, color: Color? = nil) {
+    public init(at point: some PointProtocol = Point.center, radius: Double? = nil, strokeWidth: Double = 0, opacity: Double = 1.0, color: Color? = nil) {
         super.init(args: [
             ("point", point.representation),
             ("radius", radius?.description),

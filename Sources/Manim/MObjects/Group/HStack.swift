@@ -9,11 +9,11 @@
 
 
 /// A horizontal stack
-public final class HStack: VGroup {
+public final class HStack: Group {
     
-    public init(_ children: MObject...) {
+    public init(_ children: MObject..., spacing: Double = 0.25) {
         super.init(children)
-        super.arrange(direction: .right)
+        super.arrange(direction: .right, spacing: spacing)
     }
     
     required init(identifier: String) {

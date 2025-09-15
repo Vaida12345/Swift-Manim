@@ -143,7 +143,7 @@ public struct ActionAnimation: Equatable {
     ///
     /// In particular, this means: the first object takes the place of the second object, the second one takes the place of the third object, and so on. The last object takes the place of the first one.
     ///
-    /// - Note: The action would only work on ``VGroup``.
+    /// - Note: The action would only work on ``Group``.
     public static func cyclicReplace(duration: Double? = nil) -> ActionAnimation {
         ActionAnimation(name: "CyclicReplace", args: [], overrideMObject: { "*\($0)" })
     }

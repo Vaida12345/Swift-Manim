@@ -8,7 +8,7 @@
 
 
 
-public final class Cross: VGroup {
+public final class Cross: Group {
     
     required init(identifier: String) {
         super.init(identifier: identifier)

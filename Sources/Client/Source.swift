@@ -14,40 +14,56 @@ class VectorArrow: Scene {
     override func body(width: Int?) {
         super.body(width: width)
         
-        let dot1 = Dot(at: [2, 2], color: .blue)
-        let dot2 = Dot(at: .center, color: .green)
+//        ratios = [0, 0.1, 0.5, 1, 2]  # demonstrated lag_ratios
+//        
+//        # Create dot groups
+//        group = Group(*[Dot() for _ in range(4)]).arrange_submobjects()
+//        groups = Group(*[group.copy() for _ in ratios]).arrange_submobjects(buff=1)
+//        self.add(groups)
+//        
+//        # Label groups
+//        self.add(Text("lag_ratio = ", font_size=36).next_to(groups, UP, buff=1.5))
+//        for group, ratio in zip(groups, ratios):
+//                    self.add(Text(str(ratio), font_size=36).next_to(group, UP))
+//                
+//                #Animate groups with different lag_ratios
+//                self.play(AnimationGroup(*[
+//                    group.animate(lag_ratio=ratio, run_time=1.5).shift(DOWN * 2)
+//                    for group, ratio in zip(groups, ratios)
+//                ]))
+//                
+//                # lag_ratio also works recursively on nested submobjects:
+//                    self.play(groups.animate(run_time=1, lag_ratio=0.1).shift(UP * 2))
         
-        dot1.show()
-        dot2.show()
+        let ratios = [0, 0.1, 0.5, 1]
         
-        withAnimation {
-            dot1.x.bind(to: dot2.x)
+        // Create dot groups
+        let group = HStack(Dot(), Dot(), Dot(), Dot())
+        let groups = HStack(group, group.copied(), group.copied(), group.copied(), spacing: 1)
+        
+        // Label groups
+        let label = Text("lagRatio", fontSize: 36)
+        label.move(nextTo: groups, position: .up, padding: 1.5)
+        label.show()
+        
+        for (group, ratio) in zip(groups, ratios) {
+            let text = Text("\(ratio)", fontSize: 36)
+            text.move(nextTo: group, position: .up)
+            text.show()
         }
         
-        let tracker = dot2.x.tracker()
-        
+        // Animate groups with different lag_ratios
         withAnimation {
-            tracker += 5
+            for (group, ratio) in zip(groups, ratios) {
+                group.shift(by: [0, -2, 0])
+                    .lagRatio(ratio)
+            }
         }
         
-//        let line = Line(start: dot1.center.attached(), end: dot2.center.attached())
-////        line.set(color: .red)
-//        
-//        withAnimation(in: .parallel) {
-//            dot1.show()
-//                .duration(3)
-//            dot2.show()
-//            line.show()
-//        }
-//        
-//        dot1.x = dot2.x.attached()
-//        
-//        withAnimation {
-//            dot1.x += 4
-//        }
-//        
-//        withAnimation {
-//            dot1.x += 4
-//        }
+        withAnimation {
+            groups.shift(by: [0, 2, 0])
+                .lagRatio(0.1)
+                .duration(2)
+        }
     }
 }

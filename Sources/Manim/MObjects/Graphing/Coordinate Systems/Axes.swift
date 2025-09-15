@@ -8,7 +8,7 @@
 
 
 /// Creates a set of axes.
-public class Axes: VGroup {
+public class Axes: Group {
     
     public convenience init(domain: ClosedRange<Double>, range: ClosedRange<Double>) {
         self.init(domain: NumberLine.Range(min: domain.lowerBound, max: domain.upperBound),
@@ -55,9 +55,9 @@ public class Axes: VGroup {
     public func convert(_ point: Point, from source: CoordinateSpace, to destination: CoordinateSpace) -> Point {
         switch (source, destination) {
         case (.canvas, .axis):
-            Generator.main.assign(type: Point.self, by: self, calling: "coords_to_point", args: [(nil, point.representation)])
+            Manim.Generator.main.assign(type: Point.self, by: self, calling: "coords_to_point", args: [(nil, point.representation)])
         case (.axis, .canvas):
-            Generator.main.assign(type: Point.self, by: self, calling: "point_to_coords", args: [(nil, point.representation)])
+            Manim.Generator.main.assign(type: Point.self, by: self, calling: "point_to_coords", args: [(nil, point.representation)])
         default:
             fatalError("You're trying to convert a coordinate space to itself, this could be a logic error.")
         }

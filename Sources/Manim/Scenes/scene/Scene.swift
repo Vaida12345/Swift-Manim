@@ -43,7 +43,7 @@ open class Scene {
     
     
     required public init() {
-        Generator.main.add("\nclass \(Self.self)(Scene):", ignoresIndentGuide: true)
+        Generator.main.add("\n# The main scene. \nclass \(Self.self)(Scene):", ignoresIndentGuide: true)
     }
     
     public static func main() throws {

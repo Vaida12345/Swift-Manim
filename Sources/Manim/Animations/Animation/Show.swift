@@ -33,7 +33,7 @@ public struct ShowAnimation: Equatable {
     /// The style to texts, show text letter by letter.
     public static let addTextByLetter = ShowAnimation(name: "AddTextLetterByLetter", args: [])
     
-    /// Show a ``VGroup`` with its children spiraled in. Applying this to a normal object would not work.
+    /// Show a ``Group`` with its children spiraled in. Applying this to a normal object would not work.
     public static let spiralIn = ShowAnimation(name: "SpiralIn", args: [])
     
     /// Write the text, by drawing the borders and then fill.

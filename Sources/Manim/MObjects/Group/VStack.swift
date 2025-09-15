@@ -8,11 +8,11 @@
 
 
 /// A vertical stack
-public final class VStack: VGroup {
+public final class VStack: Group {
     
-    public init(_ children: MObject...) {
+    public init(_ children: MObject..., spacing: Double = 0.25) {
         super.init(children)
-        super.arrange(direction: .down)
+        super.arrange(direction: .down, spacing: spacing)
     }
     
     required init(identifier: String) {

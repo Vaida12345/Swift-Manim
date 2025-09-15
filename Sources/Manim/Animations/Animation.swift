@@ -13,7 +13,7 @@ public class Animation: PyObject {
     
     var delay: Double = 0
     
-    var duration: Double = 2
+    var duration: Double = 1
     
     var lagRatio: Double = 0
     
@@ -88,7 +88,7 @@ internal class EmptyAnimation: Animation {
 ///     originText.align(.down, to: dot)
 /// }
 /// ```
-public func withAnimation(_ animation: RateFunction = .spring, in method: Animation.Method = .serial, @_AnimationBuilder body: () -> _AnimationGroup) {
+public func withAnimation(_ animation: RateFunction = .linear, in method: Animation.Method = .serial, @_AnimationBuilder body: () -> _AnimationGroup) {
     shouldUseAnimation = true
     let animations = body()
         .get()
@@ -98,22 +98,34 @@ public func withAnimation(_ animation: RateFunction = .spring, in method: Animat
     
     let body = animations
         .map { animation in
-            var body: String {
-                if let attached = animation as? AttachedAnimation {
-                    return "\(attached.target).animate.\(attached.closure.representation)"
-                } else {
-                    return animation.identifier
+            if let attached = animation as? AttachedAnimation {
+                var body: String {
+                    return "\(attached.target).animate(run_time=\(animation.duration), lag_ratio=\(animation.lagRatio)).\(attached.closure.representation)"
                 }
-            }
-            
-            var group: String {
-                "AnimationGroup(\(body), run_time=\(animation.duration), lag_ratio=\(animation.lagRatio))"
-            }
-            
-            if animation.delay != 0 {
-                return "Succession(Wait(\(animation.delay)), \(group))"
+                
+                if animation.delay != 0 {
+                    return "Succession(Wait(\(animation.delay)), \(body))"
+                } else {
+                    return body
+                }
             } else {
-                return group
+                var body: String {
+                    if let attached = animation as? AttachedAnimation {
+                        return "\(attached.target).animate.\(attached.closure.representation)"
+                    } else {
+                        return animation.identifier
+                    }
+                }
+                
+                var group: String {
+                    "AnimationGroup(\(body), run_time=\(animation.duration), lag_ratio=\(animation.lagRatio))"
+                }
+                
+                if animation.delay != 0 {
+                    return "Succession(Wait(\(animation.delay)), \(group))"
+                } else {
+                    return group
+                }
             }
         }
     

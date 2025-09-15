@@ -120,6 +120,7 @@ public final class Generator {
         
         /// Push the configs to the main generator.
         func push() {
+            Generator.main.add("# Manim Configurations", ignoresIndentGuide: true)
             if let background {
                 if let color = background.color {
                     Generator.main.addConfiguration(name: "background_color", value: color.representation)

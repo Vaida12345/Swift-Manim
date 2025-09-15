@@ -5,7 +5,7 @@
 //  Created by Vaida on 2023/10/7.
 //
 
-
+import MacroCollection
 import SwiftUI
 
 
@@ -84,10 +84,16 @@ public class MObject: PyObject {
     
     /// Moves to the given point.
     @discardableResult
-    public func move(to point: PointProtocol, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
+    public func move(to point: some PointProtocol, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
         AttachedAnimation(name: "move_to", target: self.identifier, args: [("point_or_mobject", point.representation),
                                                                            ("aligned_edge", alignedEdges.representation),
                                                                            ("coor_mask", coordinateMask.representation)])
+    }
+    
+    /// Moves to the given point.
+    @discardableResult
+    public func shift(by point: some PointProtocol) -> AttachedAnimation {
+        AttachedAnimation(name: "shift", target: self.identifier, args: [(nil, point.representation)])
     }
     
     /// Moves to the center of given object.
@@ -110,8 +116,8 @@ public class MObject: PyObject {
     
     /// Moves the object along the border of the `path` object,
     @discardableResult
-    public func move(along path: MObject) -> Animation {
-        ActionAnimation(name: "MoveAlongPath", args: [(nil, path.identifier)]).makeAnimation(object: self)
+    public func moveAlong(pathOf object: MObject) -> Animation {
+        ActionAnimation(name: "MoveAlongPath", args: [(nil, object.identifier)]).makeAnimation(object: self)
     }
     
     /// Set the stroke color and stroke opacity.
@@ -139,8 +145,10 @@ public class MObject: PyObject {
     ///
     /// - Parameters:
     ///   - position: The position of `self` relative to `target`
+    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
+    @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
-    public func move(nextTo target: some PointProtocol, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+    public func move(nextTo target: Point, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
 //        if !target.isDetached {
 //            self.addUpdater(initialCall: false) { object in
 //                self.attribute("next_to", to: [(nil, target.representation),
@@ -222,7 +230,8 @@ public class MObject: PyObject {
     public func addUpdater(index: Int? = nil, initialCall: Bool = false, handler: (MObject) -> Void) {
         let object = MObject(identifier: __formVariableName(base: "\(MObject.self)"))
         let functionName = __formVariableName(base: "updater\(Self.self)")
-        Generator.main.add("\ndef \(functionName)(\(object.identifier)):")
+        Generator.main.add("")
+        Generator.main.add("def \(functionName)(\(object.identifier)):")
         indentCount += 1
         handler(object)
         indentCount -= 1

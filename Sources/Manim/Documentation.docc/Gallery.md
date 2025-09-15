@@ -48,7 +48,7 @@ class MovingDots: Scene {
         let dot1 = Dot(color: .blue)
         let dot2 = Dot(color: .green)
         
-        let group = VGroup(dot1, dot2)
+        let group = Group(dot1, dot2)
         group.arrange(direction: .right)
         
         let line = Line(start: dot1.center.attached(), end: dot2.center.attached())
@@ -73,3 +73,8 @@ class MovingDots: Scene {
 }
 ```
 
+## Different Lag Ratios
+
+![video](lagRatio)
+
+View source code in [animation.md](<doc:Animations>)
