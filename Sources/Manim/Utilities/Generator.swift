@@ -116,8 +116,6 @@ public final class Generator {
         
         public var imagesDestination: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim/Image Sequence"
         
-        public var manimEngineLocation: FinderItem = "/opt/homebrew/Caskroom/miniforge/base/bin/manim"
-        
         /// Push the configs to the main generator.
         func push() {
             Generator.main.add("# Manim Configurations", ignoresIndentGuide: true)

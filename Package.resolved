@@ -1,5 +1,5 @@
 {
-  "originHash" : "4d2434e5608af19fe75b538a452aadcac75a4e34fab5166660ba41de21dc1370",
+  "originHash" : "cdb7abd9bc9bc923fbeb358759668164c0bf1b21f427ce69c71773ec1511fa3b",
   "pins" : [
     {
       "identity" : "detaileddescription",
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "43dd79407e69c26b0384c7880462b2d74cdb3ac2",
         "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "swift-latex",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Vaida12345/Swift-LaTeX.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7c3442d0439b56fe4d4aded9701e821f404d3773"
       }
     },
     {
