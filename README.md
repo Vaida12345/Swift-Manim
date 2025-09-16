@@ -89,7 +89,7 @@ let ratios = [0, 0.1, 0.5, 1]
 
 // Create dot groups
 let group = HStack(Dot(), Dot(), Dot(), Dot())
-let groups = HStack(group, group.copied(), group.copied(), group.copied(), spacing: 1)
+let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
 
 // Label groups
 let label = Text("lagRatio", fontSize: 36)
