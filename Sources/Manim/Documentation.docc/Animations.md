@@ -103,3 +103,16 @@ withAnimation {
 ```
 
 In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinate of `dot2`, and `dot1` moves as `dot2` changes its `x`-coordinate.
+
+## Topics
+
+### Functions
+- ``withAnimation(_:in:body:)``
+- ``MObject/action(_:)``
+- ``MObject/transform(to:option:)``
+
+### Structures
+- ``Animation``
+- ``ActionAnimation``
+- ``AttachedAnimation``
+- ``Transform``

@@ -169,7 +169,7 @@ public class MObject: PyObject {
     ///
     /// ![result](align)
     ///
-    /// - Tip: You can use ``withAnimation(duration:delay:animation:body:)`` to animate the movement of `self` from its original position.
+    /// - Tip: You can use ``withAnimation(_:in:body:)`` to animate the movement of `self` from its original position.
     ///
     /// - Parameters:
     ///   - position: The position of `self` relative to `target`

@@ -16,6 +16,7 @@ private class ReplacementTransform: Transform {
 
 extension MObject {
     
-    func replacementTransform(to target: MObject) -> Animation { ReplacementTransform(from: self, to: target, option: nil) }
+    /// Replaces and morphs a ``MObject`` into a target ``MObject``.
+    public func replacementTransform(to target: MObject) -> Animation { ReplacementTransform(from: self, to: target, option: nil) }
     
 }

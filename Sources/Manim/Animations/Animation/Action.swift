@@ -9,6 +9,9 @@
 import SwiftUI
 
 
+/// An animation that represents an action by a ``MObject``.
+///
+/// You can call an `ActionAnimation` using ``MObject/action(_:)``.
 @MainActor
 public struct ActionAnimation: @MainActor Equatable {
     
@@ -63,7 +66,7 @@ public struct ActionAnimation: @MainActor Equatable {
     /// Indicate an object by temporarily resizing and recoloring it.
     ///
     /// - Parameters:
-    ///   - indicated: The factor by which the object will be temporally scaled
+    ///   - scale: The factor by which the object will be temporally scaled
     ///   - color: The color the object temporally takes.
     public static func indicated(scale: Double? = nil, color: Color? = nil) -> ActionAnimation {
         ActionAnimation(name: "Indicate", args: [
@@ -79,8 +82,6 @@ public struct ActionAnimation: @MainActor Equatable {
     
     /// Animation that rotates an object.
     ///
-    /// - Note: You may want to change the `animation` parameter of ``withAnimation``.
-    ///
     /// - Parameters:
     ///   - angle: The rotation angle.
     ///   - axis: The rotation axis.
@@ -94,8 +95,6 @@ public struct ActionAnimation: @MainActor Equatable {
     }
     
     /// Animation that rotates an object.
-    ///
-    /// - Note: You may want to change the `animation` parameter of ``withAnimation``.
     ///
     /// - Parameters:
     ///   - angle: The rotation angle.
@@ -111,7 +110,7 @@ public struct ActionAnimation: @MainActor Equatable {
     
     /// Show only a sliver of the object each frame.
     ///
-    /// The effect is similar to ``circumscribe``.
+    /// The effect is similar to ``circumscribe(shape:style:)``.
     ///
     /// - Note: The action would remove the object prior and after.
     ///
@@ -202,7 +201,7 @@ public struct ActionAnimation: @MainActor Equatable {
 
 extension MObject {
     
-    /// Animate the object.
+    /// Calls an action animation.
     @discardableResult
     public func action(_ animation: ActionAnimation) -> Animation {
         animation.makeAnimation(object: self)

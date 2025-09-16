@@ -13,6 +13,9 @@ public final class RoundedRectangle: Rectangle {
     /// Creates a rectangle.
     ///
     /// - Parameters:
+    ///   - height: The height of the rectangle
+    ///   - width: The width of the rectangle
+    ///   - cornerRadius: The corner radius of the rectangle
     ///   - gridStep: Space between horizontal and vertical grid lines.
     public init(height: Double = 2, width: Double = 4, cornerRadius: Double? = nil, gridStep: (x: Double?, y: Double?)?) {
         super.init(args: [("height", height.description),

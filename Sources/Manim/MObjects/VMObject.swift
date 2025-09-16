@@ -15,8 +15,9 @@ public class VMObject: MObject {
     /// Set the offset
     ///
     /// - Parameters:
-    ///   - x: The offset in x.
-    ///   - y: The offset in y.
+    ///   - x: The offset in x-axis.
+    ///   - y: The offset in y-axis.
+    ///   - z: The offset in z-axis.
     @discardableResult
     public func offset(x: Double? = nil, y: Double? = nil, z: Double? = nil) -> AttachedAnimation {
         AttachedAnimation(name: "shift", target: self.identifier, args: [(nil, "\(x ?? 0) * RIGHT + \(y ?? 0) * UP + \(z ?? 0) * OUT")])

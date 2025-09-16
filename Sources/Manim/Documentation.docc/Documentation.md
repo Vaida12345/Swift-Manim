@@ -4,13 +4,40 @@ The Swift Interface for Manim
 
 ## Overview
 
-- Warning: This package is never designed with concurrency in mind, and it contains various globally-shared states.
+Create beautiful mathematical animations.
+
+![Example](VectorArrow)
+
+With Swift-native API.
+
+```swift
+@main
+class VectorArrow: Scene {
+
+    override func body(width: Int?) {
+        super.body(width: width)
+
+        let dot = Dot()
+        let arrow = Arrow(start: .center, end: [2, 2])
+        let numberPlane = NumberPlane()
+
+        let originText = Text("(0, 0)")
+        originText.move(nextTo: dot, position: .down)
+
+        let tipText = Text("(2, 2)")
+        tipText.move(nextTo: arrow.end, position: .right)
+
+        dot.show()
+        arrow.show()
+        numberPlane.show()
+        originText.show()
+        tipText.show()
+    }
+}
+```
 
 ## Topics
 
 ### Animation
 
-- ``withAnimation(_:in:body:)``
-- ``Animation``
-- ``ActionAnimation``
-- ``AttachedAnimation``
+- <doc:Animations>

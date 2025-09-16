@@ -6,9 +6,9 @@
 //
 
 
-
-
 /// A Transform transforms a ``MObject`` into a target ``MObject``.
+///
+/// You can use the ``MObject/transform(to:option:)`` to create a transform.
 public class Transform: Animation {
     
     init(from object: MObject, to target: MObject, option: Option?) {
@@ -32,6 +32,7 @@ public class Transform: Animation {
     required init(identifier: String) { super.init(identifier: identifier) }
     
     
+    /// Transform option, specifies how to transform.
     public enum Option {
         
         /// Performs the transform in an arc instead of straight line.
@@ -61,6 +62,6 @@ extension MObject {
     /// - Parameters:
     ///   - target: The destination.
     ///   - option: Additional setups.
-    func transform(to target: MObject, option: Transform.Option? = nil) -> Animation { Transform(from: self, to: target, option: option) }
+    public func transform(to target: MObject, option: Transform.Option? = nil) -> Animation { Transform(from: self, to: target, option: option) }
     
 }
