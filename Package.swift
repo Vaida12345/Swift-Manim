@@ -7,14 +7,26 @@ let package = Package(
     name: "Manim",
     platforms: [
         .macOS(.v14)
-    ], products: [
+    ],
+    products: [
         .library(name: "Manim", targets: ["Manim"]),
-    ], dependencies: [
+    ],
+    dependencies: [
         .package(url: "https://github.com/Vaida12345/Swift-LaTeX.git", branch: "main"),
         .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "1.2.5"),
         .package(url: "https://github.com/Vaida12345/MacroCollection.git", from: "1.0.5"),
-    ], targets: [
-        .target(name: "Manim", dependencies: [.product(name: "LaTeX", package: "Swift-Latex"), "FinderItem", "MacroCollection"]),
+        .package(url: "https://github.com/swiftlang/swift-subprocess.git", branch: "main")
+    ],
+    targets: [
+        .target(
+            name: "Manim",
+            dependencies: [
+                .product(name: "LaTeX", package: "Swift-Latex"),
+                "FinderItem",
+                "MacroCollection",
+                .product(name: "Subprocess", package: "swift-subprocess")
+            ]
+        ),
         .testTarget(name: "ManimTests", dependencies: ["Manim"]),
         .executableTarget(name: "Client", dependencies: ["Manim"])
     ]

@@ -8,6 +8,8 @@
 import Cocoa
 import FinderItem
 import OSLog
+import Subprocess
+import System
 
 
 @MainActor
@@ -31,7 +33,7 @@ public final class Generator {
         self.add("config.\(name) = \(value)", ignoresIndentGuide: true)
     }
     
-    public func generate<S>(_ sceneType: S.Type = S.self, to folder: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim") throws where S: Scene {
+    public func generate<S>(_ sceneType: S.Type = S.self, to folder: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim") async throws where S: Scene {
         let scene = S()
         scene.body()
         
@@ -42,21 +44,23 @@ public final class Generator {
         scene.configure(&configuration)
         configuration.push()
         
-        // remove any previous output files
-        for child in try scene.config.mediaFolder.children(range: .contentsOfDirectory) where child.name.hasPrefix(configuration.destination.stem) {
-            try child.remove()
+        if !folder.exists {
+            // check user has manim installed.
+            let status = try await run(.path("/bin/zsh"), arguments: ["-i", "-l", "-c", "which manim"], output: .string(limit: 128))
+            precondition(status.standardOutput!.hasPrefix("/"), "Please make sure you have Manim installed. See https://docs.manim.community/en/stable/installation.html.")
+            
+            try folder.makeDirectory()
+        } else {
+            // remove any previous output files
+            for child in try scene.config.mediaFolder.children(range: .contentsOfDirectory) where child.name.hasPrefix(configuration.destination.stem) {
+                try child.remove()
+            }
         }
         
-        try folder.makeDirectory()
         try self.components.joined(separator: "\n").write(toFile: "\(folder)/swiftmanim.py", atomically: true, encoding: .utf8)
         
-        let command = "manim \"\(folder)/swiftmanim.py\""
-        let destination = "\(folder)/run.command"
-        try command.write(toFile: destination, atomically: true, encoding: .utf8)
-        
-        let manager = ShellManager()
-        manager.run(arguments: "open \"\(destination)\"") // must use user shell to load PATH
-        manager.wait()
+        let status = try await run(.path("/bin/zsh"), arguments: ["-i", "-l", "-c", "manim \"\(folder)/swiftmanim.py\""], workingDirectory: FilePath(folder.path), output: .standardOutput)
+        precondition(status.terminationStatus == .exited(0), "Failed to run subprocess.")
     }
     
     internal func assign<T, Parent>(type: T.Type, by parent: Parent, calling method: String, args: Closure.Arguments) -> T where Parent: PyObject, T: PyObject {

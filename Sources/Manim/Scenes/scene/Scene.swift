@@ -47,9 +47,9 @@ open class Scene {
         Generator.main.add("\n# The main scene. \nclass \(Self.self)(Scene):", ignoresIndentGuide: true)
     }
     
-    public static func main() throws {
+    public static func main() async throws {
         let generator = Generator.main
-        try generator.generate(Self.self)
+        try await generator.generate(Self.self)
     }
     
 }
