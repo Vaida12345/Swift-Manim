@@ -52,7 +52,7 @@ public final class Generator {
             try folder.makeDirectory()
         } else {
             // remove any previous output files
-            for child in try scene.config.mediaFolder.children(range: .contentsOfDirectory) where child.name.hasPrefix(configuration.destination.stem) {
+            for child in try scene.config.mediaFolder.children(range: .contentsOfDirectory) where child.name.hasPrefix(configuration.fileName) {
                 try child.remove()
             }
         }
@@ -61,6 +61,9 @@ public final class Generator {
         
         let status = try await run(.path("/bin/zsh"), arguments: ["-i", "-l", "-c", "manim \"\(folder)/swiftmanim.py\""], workingDirectory: FilePath(folder.path), output: .standardOutput)
         precondition(status.terminationStatus == .exited(0), "Failed to run subprocess.")
+        
+        let result = try scene.config.mediaFolder.children(range: .contentsOfDirectory).first(where: { $0.stem == configuration.fileName })
+        try await result?.open()
     }
     
     internal func assign<T, Parent>(type: T.Type, by parent: Parent, calling method: String, args: Closure.Arguments) -> T where Parent: PyObject, T: PyObject {
@@ -85,8 +88,8 @@ public final class Generator {
         /// Configures the background properties
         public var background: Background?
         
-        /// The output file
-        public var destination: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim/output"
+        /// The output filename
+        public var fileName: String = "output"
         
         /// Main output directory.
         public var mediaFolder: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim"
@@ -107,7 +110,7 @@ public final class Generator {
         public var size: CGSize?
         
         /// Whether to play the rendered movie.
-        var preview: Bool = true
+        var preview: Bool = false
         
         /// Video quality.
         ///
@@ -133,7 +136,7 @@ public final class Generator {
                     Generator.main.addConfiguration(name: "background_opacity", value: opacity.description)
                 }
             }
-            Generator.main.addConfiguration(name: "output_file", value: "\"\(destination)\"")
+            Generator.main.addConfiguration(name: "output_file", value: "\"\(mediaFolder)/\(fileName)\"")
             Generator.main.addConfiguration(name: "media_dir", value: "\"\(mediaFolder)\"")
             
             if let enableGUI {
