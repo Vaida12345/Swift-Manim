@@ -19,7 +19,11 @@ public class Group: VMObject, @MainActor Collection {
     }
     
     public func arrange(direction: Direction, spacing: Double = 0.25) {
-        Manim.Generator.main.add("\(self.identifier).arrange(\(direction.representation), buff=\(spacing))")
+        var arguments = Closure.Arguments()
+        arguments.append(nil, direction.representation)
+        arguments.append("buff", spacing.description, when: .notEqual("0.25"))
+        
+        Manim.Generator.main.add("\(self.identifier).arrange\(arguments.representation)")
     }
     
     
@@ -28,13 +32,13 @@ public class Group: VMObject, @MainActor Collection {
         super.init(identifier: identifier)
     }
     
-    public convenience init(_ children: MObject...) {
-        self.init(children)
-    }
-    
     public init(_ children: [MObject]) {
         self.children = children
         super.init(base: "Group", args: .init(children.map(\.identifier).map { .init(nil, $0) }))
+    }
+    
+    public convenience init(_ children: MObject...) {
+        self.init(children)
     }
     
     override init(base: String? = nil, args: Closure.Arguments) {

@@ -108,7 +108,7 @@ public class MObject: PyObject {
         return AttachedAnimation(name: "move_to", target: self.identifier, args: args) {
             if target.isAttached {
                 self.addUpdater(initialCall: false) { object in
-                    object.attribute("move_to", to: args)
+                    object.call("move_to", arguments: args)
                 }
             }
         }
@@ -136,7 +136,7 @@ public class MObject: PyObject {
     /// Moves the current object next to `target`.
     @available(*, deprecated, renamed: "move(nextTo:position:padding:)")
     public func next(to target: MObject, position: Direction, padding: Double = 0) {
-        self.attribute("next_to", to: [(nil, target.identifier),
+        self.call("next_to", arguments: [(nil, target.identifier),
                                        (nil, position.representation),
                                        ("buff", padding.description)])
     }
@@ -149,17 +149,12 @@ public class MObject: PyObject {
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
     public func move(nextTo target: Point, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
-//        if !target.isDetached {
-//            self.addUpdater(initialCall: false) { object in
-//                self.attribute("next_to", to: [(nil, target.representation),
-//                                                 (nil, position.representation),
-//                                                 ("buff", padding.description)])
-//            }
-//        }
+        var arguments = Closure.Arguments()
+        arguments.append(nil, target)
+        arguments.append(nil, position)
+        arguments.append("buff", padding.description, when: .notEqual("0.25"))
         
-        return AttachedAnimation(name: "next_to", target: self.identifier, args: [(nil, target.representation),
-                                                                           (nil, position.representation),
-                                                                           ("buff", padding.description)])
+        return AttachedAnimation(name: "next_to", target: self.identifier, args: arguments)
     }
     
     /// Moves the current object next to `target`.
@@ -191,7 +186,7 @@ public class MObject: PyObject {
             args: args) {
                 if target.isAttached {
                     self.addUpdater(initialCall: false) { object in
-                        object.attribute("next_to", to: args)
+                        object.call("next_to", arguments: args)
                     }
                 }
             }
@@ -199,7 +194,7 @@ public class MObject: PyObject {
     
     /// Add `child` as sub object.
     public func add(_ child: MObject) {
-        self.attribute("add", to: [(nil, child.identifier)])
+        self.call("add", arguments: [(nil, child.identifier)])
     }
     
     /// Rotates the object about a certain point.
@@ -232,13 +227,17 @@ public class MObject: PyObject {
         let functionName = __formVariableName(base: "updater\(Self.self)")
         Generator.main.add("")
         Generator.main.add("def \(functionName)(\(object.identifier)):")
-        indentCount += 1
+        Generator.main.indentCount += 1
         handler(object)
-        indentCount -= 1
+        Generator.main.indentCount -= 1
         Generator.main.add("")
-        self.attribute("add_updater", to: [("update_function", functionName),
-                                           ("index", index?.description),
-                                           ("call_updater", initialCall.representation)])
+        
+        var arguments = Closure.Arguments()
+        arguments.append("update_function", functionName)
+        arguments.append("index", index?.description)
+        arguments.append("call_updater", initialCall, when: .notEqual(false))
+        
+        self.call("add_updater", arguments: arguments)
     }
     
     /// Edit points, colors and sub objects to be identical to another ``MObject``.
@@ -252,13 +251,15 @@ public class MObject: PyObject {
     ///   - stretch: If `true`, then the transformed object will stretch to fit the proportions of the original
     @discardableResult
     public func become(_ target: MObject, matchHeight: Bool = false, matchWidth: Bool = false, matchDepth: Bool = false, matchCenter: Bool = false, stretch: Bool = false) -> AttachedAnimation {
-        AttachedAnimation(name: "become", target: self.identifier, args: [(nil, target.identifier),
-                                                                          ("match_height", matchHeight.representation),
-                                                                          ("match_width", matchWidth.representation),
-                                                                          ("match_depth", matchDepth.representation),
-                                                                          ("match_center", matchCenter.representation),
-                                                                          ("stretch", stretch.representation),
-                                                                         ])
+        var arguments = Closure.Arguments()
+        arguments.append(nil, target.identifier)
+        arguments.append("match_height", matchHeight, when: .notEqual(false))
+        arguments.append("match_width",  matchWidth,  when: .notEqual(false))
+        arguments.append("match_depth",  matchDepth,  when: .notEqual(false))
+        arguments.append("match_center", matchCenter, when: .notEqual(false))
+        arguments.append("stretch",      stretch,     when: .notEqual(false))
+        
+        return AttachedAnimation(name: "become", target: self.identifier, args: arguments)
     }
     
     /// Create and return an identical copy of the object including all children.

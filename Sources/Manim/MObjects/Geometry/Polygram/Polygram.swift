@@ -30,7 +30,7 @@ public class Polygram: VMObject {
     ///   - radius: The curvature of the corners of the Polygram.
     public func roundCorners(radius: Double? = nil) -> Polygram {
         let polygram = self.copied()
-        polygram.attribute("round_corners", to: [("radius", radius?.description)])
+        polygram.call("round_corners", arguments: [("radius", radius?.description)])
         return polygram
     }
     

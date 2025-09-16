@@ -19,6 +19,9 @@ public final class Generator {
     
     private let logger = Logger(subsystem: "Generator", category: "add(_:ignoresIndentGuide:)")
     
+    /// The indentation count.
+    var indentCount: Int = 2
+    
     
     public static let main = Generator()
     
@@ -61,9 +64,6 @@ public final class Generator {
         
         let status = try await run(.path("/bin/zsh"), arguments: ["-i", "-l", "-c", "manim \"\(folder)/swiftmanim.py\""], workingDirectory: FilePath(folder.path), output: .standardOutput)
         precondition(status.terminationStatus == .exited(0), "Failed to run subprocess.")
-        
-        let result = try scene.config.mediaFolder.children(range: .contentsOfDirectory).first(where: { $0.stem == configuration.fileName })
-        try await result?.open()
     }
     
     internal func assign<T, Parent>(type: T.Type, by parent: Parent, calling method: String, args: Closure.Arguments) -> T where Parent: PyObject, T: PyObject {
@@ -109,8 +109,8 @@ public final class Generator {
         /// Frame width and height in pixels.
         public var size: CGSize?
         
-        /// Whether to play the rendered movie.
-        var preview: Bool = false
+        /// Whether to play the rendered movie on render completion.
+        var preview: Bool = true
         
         /// Video quality.
         ///

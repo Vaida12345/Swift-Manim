@@ -8,10 +8,11 @@
 
 /// The base python class.
 ///
-/// This class indicates that an object is callable in python. This structure does not provide ways to declare a python class.
+/// Each instance of this class represents an instance that exists in Python script.
 //@dynamicMemberLookup
 public class PyObject: @MainActor Equatable, PythonScriptConvertible {
     
+    /// The identifier of the Python instance.
     internal let identifier: String
     
     internal let __base: String?
@@ -23,11 +24,19 @@ public class PyObject: @MainActor Equatable, PythonScriptConvertible {
     }
     
     
-    internal func attribute(_ attributeName: String, to args: Closure.Arguments) {
+    /// Makes a python function call.
+    internal func call(_ attributeName: String, arguments args: Closure.Arguments) {
         Generator.main.add("\(self.identifier).\(attributeName)\(args.representation)")
     }
     
     
+    /// Creates an instance with the initializer.
+    ///
+    /// - Parameters:
+    ///   - base: The class name in Python. Pass `nil` if you want to use the Swift class name.
+    ///   - args: The arguments passed to the Python class initializer.
+    ///
+    /// This initializer creates an identifier of the newly created Python instance for you.
     init(base: String? = nil, args: Closure.Arguments) {
         let base = base ?? "\(Self.self)"
         
@@ -43,6 +52,7 @@ public class PyObject: @MainActor Equatable, PythonScriptConvertible {
         }
     }
     
+    /// Links the instance with an existing Python instance using its identifier.
     required init(identifier: String) {
         self.identifier = identifier
         self.__base = nil

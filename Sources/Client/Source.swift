@@ -14,30 +14,37 @@ class VectorArrow: Scene {
     override func body(width: Int?) {
         super.body(width: width)
         
-        let dot1 = Dot(color: .blue)
-        let dot2 = Dot(color: .green)
+        let ratios = [0, 0.1, 0.5, 1]
         
-        let group = Group(dot1, dot2)
-        group.arrange(direction: .right)
+        // Create dot groups
+        let group = HStack(Dot(), Dot(), Dot(), Dot())
+        let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
         
-        let line = Line(start: dot1.center, end: dot2.center)
-        line.set(color: .red)
-        line.addUpdater { line in
-            line.become(Line(start: dot1.center, end: dot2.center))
-            line.set(color: .red)
+        groups.show()
+        
+        // Label groups
+        let label = Text("lagRatio", fontSize: 36)
+        label.move(nextTo: groups, position: .up, padding: 1.5)
+        label.show()
+        
+        for (group, ratio) in zip(groups, ratios) {
+            let text = Text("\(ratio)", fontSize: 36)
+            text.move(nextTo: group, position: .up)
+            text.show()
         }
         
-        dot1.show()
-        dot2.show()
-        line.show()
-        
-        
-        let x = dot1.x.tracker()
-        let y = dot2.y.tracker()
+        // Animate groups with different lag_ratios
+        withAnimation {
+            for (group, ratio) in zip(groups, ratios) {
+                group.shift(by: [0, -2, 0])
+                    .lagRatio(ratio)
+            }
+        }
         
         withAnimation {
-            x += 4
-            y += 4
+            groups.shift(by: [0, 2, 0])
+                .lagRatio(0.1)
+                .duration(2)
         }
     }
 }

@@ -44,6 +44,8 @@ extension Animation {
     }
     
     /// Specifies the duration of the animation.
+    ///
+    /// By default, the duration is `1`.
     public func duration(_ seconds: Double) -> Self {
         if duration == 0 {
             let logger = Logger(subsystem: "Manim", category: "Animation.duration(_:)")
@@ -101,7 +103,11 @@ public func withAnimation(_ animation: RateFunction = .linear, in method: Animat
         .map { animation in
             if let attached = animation as? AttachedAnimation {
                 var body: String {
-                    return "\(attached.target).animate(run_time=\(animation.duration), lag_ratio=\(animation.lagRatio)).\(attached.closure.representation)"
+                    var arguments = Closure.Arguments()
+                    arguments.append("run_time", animation.duration.description, when: .notEqual("1.0"))
+                    arguments.append("lag_ratio", animation.lagRatio.description, when: .notEqual("0.0"))
+                    
+                    return "\(attached.target).animate\(arguments.representation).\(attached.closure.representation)"
                 }
                 
                 if animation.delay != 0 {
@@ -119,7 +125,12 @@ public func withAnimation(_ animation: RateFunction = .linear, in method: Animat
                 }
                 
                 var group: String {
-                    "AnimationGroup(\(body), run_time=\(animation.duration), lag_ratio=\(animation.lagRatio))"
+                    var arguments = Closure.Arguments()
+                    arguments.append(nil, body)
+                    arguments.append("run_time", animation.duration.description, when: .notEqual("1.0"))
+                    arguments.append("lag_ratio", animation.lagRatio.description, when: .notEqual("0.0"))
+                    
+                    return "AnimationGroup\(arguments)"
                 }
                 
                 if animation.delay != 0 {
@@ -130,12 +141,25 @@ public func withAnimation(_ animation: RateFunction = .linear, in method: Animat
             }
         }
     
-    switch method {
-    case .serial:
-        Generator.main.add("self.play(Succession(\(body.joined(separator: ", "))), rate_func=rate_functions.\(animation.rawValue))")
-        
-    case .parallel:
-        Generator.main.add("self.play(AnimationGroup(\(body.joined(separator: ", "))), rate_func=rate_functions.\(animation.rawValue))")
+    let rateFunction: String
+    if animation == .linear {
+        rateFunction = ""
+    } else {
+        rateFunction = ", rate_func=rate_functions.\(animation.rawValue)"
+    }
+    
+    if body.count == 1 {
+        Generator.main.add("self.play(\(body.first!)\(rateFunction))")
+    } else {
+        switch method {
+        case .serial:
+            for animation in body {
+                Generator.main.add("self.play(\(animation)\(rateFunction))")
+            }
+            
+        case .parallel:
+            Generator.main.add("self.play(AnimationGroup(\(body.joined(separator: ", ")))\(rateFunction))")
+        }
     }
     
     shouldUseAnimation = false

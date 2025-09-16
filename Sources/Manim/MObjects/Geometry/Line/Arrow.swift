@@ -102,14 +102,14 @@ public struct CustomArrowTipShape: ArrowTipShape {
         self.identifier = className
         
         Generator.main.add("class \(className)(ArrowTip, \(base.__base!)):")
-        indentCount += 1
+        Generator.main.indentCount += 1
         Generator.main.add("def __init__(self, length=0.35, **kwargs):")
-        indentCount += 1
+        Generator.main.indentCount += 1
         let args = base.__args!.representation.dropLast().dropFirst()
         Generator.main.add("\(base.__base!).__init__(self, \(args.isEmpty ? "" : "\(args), ")**kwargs)")
         Generator.main.add("self.width = length")
         Generator.main.add("self.stretch_to_fit_height(length)")
-        indentCount -= 2
+        Generator.main.indentCount -= 2
         Generator.main.add("")
     }
     

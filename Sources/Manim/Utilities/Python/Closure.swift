@@ -41,12 +41,36 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
             get { contents[position] }
             set { contents[position] = newValue }
         }
+        @_disfavoredOverload
         public mutating func append(_ newValue: Argument) {
             self.contents.append(newValue)
         }
         
-        public mutating func append(_ key: String?, _ value: String?) {
-            self.contents.append(Argument(key, value))
+        /// - Note: `nil` values are ignored by default.
+        public mutating func append(_ key: String? = nil, _ value: String?, when condition: Condition<String>? = nil) {
+            switch condition {
+            case .notEqual(let string):
+                if string != value {
+                    fallthrough
+                } else {
+                    return
+                }
+                
+            default:
+                self.contents.append(Argument(key, value))
+            }
+        }
+        
+        public mutating func append<T>(_ key: String? = nil, _ value: (T)?, when condition: Condition<T>? = nil) where T: PythonScriptConvertible {
+            let transform: Condition<String>?
+            switch condition {
+            case .notEqual(let t):
+                transform = .notEqual(t.representation)
+            case nil:
+                transform = nil
+            }
+            
+            self.append(key, value?.representation, when: transform)
         }
         
         
@@ -55,7 +79,7 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
         }
         
         
-        public init(_ contents: [Argument]) {
+        public init(_ contents: [Argument] = []) {
             self.contents = contents
         }
         
@@ -66,6 +90,11 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
         
         public static func + (lhs: Arguments, rhs: Arguments) -> Arguments {
             Arguments(lhs.contents + rhs.contents)
+        }
+        
+        
+        public enum Condition<T> {
+            case notEqual(T)
         }
         
     }

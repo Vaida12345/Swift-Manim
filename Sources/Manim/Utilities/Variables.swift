@@ -7,20 +7,16 @@
 
 
 
+/// Tracks whether the code is executed in `withAnimation` block.
 @MainActor
 var shouldUseAnimation = false
 
-@MainActor
-var indentCount: Int = 2
-
+/// Counter for each variable, used to form variable names.
 @MainActor
 var variableCounter: [String: Int] = [:]
 
-@MainActor
-var shouldUseAnimationBuffer: Bool = false
-@MainActor
-var animationBuffer: [Animation] = []
-
 /// If `true`, when calling PyObject.init(base:args:), store the initializer instead of creating the class.
+///
+/// Use this to support user creating their own classes.
 @MainActor
 var shouldOverrideInit = false
