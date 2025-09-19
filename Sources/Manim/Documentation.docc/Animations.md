@@ -45,12 +45,14 @@ let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.cop
 groups.show()
 
 // Label groups
-let label = Text("lagRatio", fontSize: 36)
+let label = Text("lagRatio")
+label.fontSize = 36
 label.move(nextTo: groups, position: .up, padding: 1.5)
 label.show()
 
 for (group, ratio) in zip(groups, ratios) {
-    let text = Text("\(ratio)", fontSize: 36)
+    let text = Text("\(ratio)")
+    text.fontSize = 36
     text.move(nextTo: group, position: .up)
     text.show()
 }

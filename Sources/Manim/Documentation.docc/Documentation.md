@@ -18,7 +18,7 @@ class VectorArrow: Scene {
         super.body(width: width)
 
         let dot = Dot()
-        let arrow = Arrow(start: .center, end: [2, 2])
+        let arrow = Arrow(from: .center, to: [2, 2])
         let numberPlane = NumberPlane()
 
         let originText = Text("(0, 0)")

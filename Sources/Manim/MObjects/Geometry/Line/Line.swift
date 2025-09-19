@@ -10,7 +10,7 @@ import OSLog
 
 public class Line: VMObject {
     
-    public init(start: some PointProtocol, end: some PointProtocol) {
+    public init(from start: some PointProtocol, to end: some PointProtocol) {
         super.init(arguments: [("start", start.representation), ("end", end.representation)])
     }
     

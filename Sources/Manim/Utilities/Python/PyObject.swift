@@ -48,7 +48,7 @@ public class PyObject: @MainActor Equatable, PythonScriptConvertible {
             self.arguments = arguments
         } else {
             self.identifier = __formVariableName(base: base)
-            Generator.main.add("\(self.identifier) = \(base)\(arguments.representation)")
+            Generator.main.declare(variable: self.identifier, initializer: Closure(base, arguments))
             self.typeIdentifier = nil
             self.arguments = nil
         }

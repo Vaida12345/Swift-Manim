@@ -15,9 +15,7 @@ import System
 @MainActor
 public final class Generator {
     
-    private var components: [String]
-    
-    private let logger = Logger(subsystem: "Generator", category: "add(_:ignoresIndentGuide:)")
+    var components: [Component]
     
     /// The indentation count.
     var indentCount: Int = 2
@@ -27,9 +25,16 @@ public final class Generator {
     
     
     /// The indentation would be added automatically according to `indentCount`, unless `ignoresIndentGuide`.
-    internal func add(_ component: String, ignoresIndentGuide: Bool = false, file: String = #file, line: UInt = #line, function: StaticString = #function) {
-        self.components.append((ignoresIndentGuide ? "" : [String](repeating: "    ", count: indentCount).joined())+component)
-        logger.info("Insert line from \(function) \(file):\(line):\n'\(component)'")
+    internal func add(_ component: String, ignoresIndentGuide: Bool = false) {
+        self.components.append(.line(indentation: ignoresIndentGuide ? 0 : indentCount, component))
+    }
+    
+    internal func newLine() {
+        self.components.append(.newLine)
+    }
+    
+    internal func declare(variable name: String, initializer: Closure) {
+        self.components.append(.declaration(indentation: self.indentCount, name: name, initializer: initializer))
     }
     
     internal func addConfiguration(name: String, value: String) {
@@ -60,7 +65,7 @@ public final class Generator {
             }
         }
         
-        try self.components.joined(separator: "\n").write(toFile: "\(folder)/swiftmanim.py", atomically: true, encoding: .utf8)
+        try self.components.map(\.string).joined(separator: "\n").write(toFile: "\(folder)/swiftmanim.py", atomically: true, encoding: .utf8)
         
         let status = try await run(.path("/bin/zsh"), arguments: ["-i", "-l", "-c", "manim \"\(folder)/swiftmanim.py\""], workingDirectory: FilePath(folder.path), output: .standardOutput, error: .standardError)
         precondition(status.terminationStatus == .exited(0), "Failed to run subprocess.")
@@ -77,8 +82,31 @@ public final class Generator {
     }
     
     
+    @MainActor
+    enum Component {
+        case raw(String)
+        case line(indentation: Int, String)
+        case newLine
+        case declaration(indentation: Int, name: String, initializer: Closure)
+        
+        
+        var string: String {
+            switch self {
+            case let .raw(string):
+                return string
+            case let .line(indentation, string):
+                return ([String](repeating: "    ", count: indentation).joined()) + string
+            case .newLine:
+                return ""
+            case let .declaration(indentation, name, initializer):
+                return ([String](repeating: "    ", count: indentation).joined()) + "\(name) = \(initializer.representation)"
+            }
+        }
+    }
+    
+    
     private init() {
-        self.components = ["from manim import *", "from numpy import *", ""]
+        self.components = [.raw("from manim import *"), .raw("from numpy import *"), .newLine]
     }
     
     

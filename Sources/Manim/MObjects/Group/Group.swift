@@ -31,6 +31,7 @@ public class Group: VMObject, @MainActor Collection {
         super.init("Group", arguments: .init(children.map(\.identifier).map { .init(nil, $0) }))
     }
     
+    @_disfavoredOverload
     public convenience init(_ children: MObject...) {
         self.init(children)
     }

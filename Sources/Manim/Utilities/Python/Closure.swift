@@ -10,7 +10,7 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
     
     let name: String
     
-    let arguments: Arguments
+    var arguments: Arguments
     
     
     init(name: String, arguments: Arguments) {

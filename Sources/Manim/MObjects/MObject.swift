@@ -222,12 +222,12 @@ public class MObject: PyObject {
     public func addUpdater(index: Int? = nil, initialCall: Bool = false, handler: (MObject) -> Void) {
         let object = MObject(identifier: __formVariableName(base: "\(MObject.self)"))
         let functionName = __formVariableName(base: "updater\(Self.self)")
-        Generator.main.add("")
+        Generator.main.newLine()
         Generator.main.add("def \(functionName)(\(object.identifier)):")
         Generator.main.indentCount += 1
         handler(object)
         Generator.main.indentCount -= 1
-        Generator.main.add("")
+        Generator.main.newLine()
         
         var arguments = Closure.Arguments()
         arguments.append("update_function", functionName)
