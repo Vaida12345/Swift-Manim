@@ -80,6 +80,8 @@ public struct ShowAnimation: @MainActor Equatable {
 extension MObject {
     
     /// Show the object.
+    ///
+    /// To animate the action, you must wrap it with ``withAnimation(_:in:body:)``.
     @discardableResult
     public func show(animation: ShowAnimation = .create) -> Animation {
         if !shouldUseAnimation {
