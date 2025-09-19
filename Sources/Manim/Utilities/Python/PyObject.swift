@@ -15,9 +15,11 @@ public class PyObject: @MainActor Equatable, PythonScriptConvertible {
     /// The identifier of the Python instance.
     internal let identifier: String
     
-    internal let __base: String?
+    /// The identifier of the type
+    internal let typeIdentifier: String?
     
-    internal let __args: Closure.Arguments?
+    /// The arguments to construct the type.
+    internal let arguments: Closure.Arguments?
     
     public var representation: String {
         self.identifier
@@ -37,26 +39,32 @@ public class PyObject: @MainActor Equatable, PythonScriptConvertible {
     ///   - args: The arguments passed to the Python class initializer.
     ///
     /// This initializer creates an identifier of the newly created Python instance for you.
-    init(base: String? = nil, args: Closure.Arguments) {
-        let base = base ?? "\(Self.self)"
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) {
+        let base = typeIdentifier ?? "\(Self.self)"
         
         if shouldOverrideInit {
             self.identifier = ""
-            self.__base = base
-            self.__args = args
+            self.typeIdentifier = base
+            self.arguments = arguments
         } else {
             self.identifier = __formVariableName(base: base)
-            Generator.main.add("\(self.identifier) = \(base)\(args.representation)")
-            self.__base = nil
-            self.__args = nil
+            Generator.main.add("\(self.identifier) = \(base)\(arguments.representation)")
+            self.typeIdentifier = nil
+            self.arguments = nil
         }
     }
     
     /// Links the instance with an existing Python instance using its identifier.
     required init(identifier: String) {
         self.identifier = identifier
-        self.__base = nil
-        self.__args = nil
+        self.typeIdentifier = nil
+        self.arguments = nil
+    }
+    
+    internal init(identifier: String, typeIdentifier: String? = nil, arguments: Closure.Arguments? = nil) {
+        self.identifier = identifier
+        self.typeIdentifier = typeIdentifier
+        self.arguments = arguments
     }
     
     

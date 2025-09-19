@@ -10,19 +10,13 @@
 
 /// A generalized Polygon, allowing for disconnected sets of edges.
 public class Polygram: VMObject {
-    
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     /// Creates a polygram by connecting the dots in sequence.
     public init(vertices: [PointProtocol]) {
-        super.init(args: [(nil, "[\(vertices.map(\.representation).joined(separator: ", "))]")])
+        super.init(arguments: [(nil, "[\(vertices.map(\.representation).joined(separator: ", "))]")])
     }
     
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
+    required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
     /// Rounds off the corners of the Polygram.
     ///

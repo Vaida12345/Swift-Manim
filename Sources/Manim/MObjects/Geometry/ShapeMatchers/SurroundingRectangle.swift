@@ -11,10 +11,6 @@
 /// A rectangle surrounding an object
 public class SurroundingRectangle: MObject {
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     /// Creates the rectangle.
     ///
     /// - Parameters:
@@ -22,15 +18,14 @@ public class SurroundingRectangle: MObject {
     ///   - color: The color of stroke.
     ///   - cornerRadius: The color radius of stroke.
     public init(_ base: MObject, color: Color? = nil, cornerRadius: Double? = nil) {
-        super.init(args: [
+        super.init(arguments: [
             ("mobject", base.identifier),
             ("color", color?.representation),
             ("corner_radius", cornerRadius?.description),
         ])
     }
     
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
+    required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
 }

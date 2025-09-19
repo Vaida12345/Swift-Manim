@@ -23,11 +23,4 @@ public class VMObject: MObject {
         AttachedAnimation(name: "shift", target: self.identifier, args: [(nil, "\(x ?? 0) * RIGHT + \(y ?? 0) * UP + \(z ?? 0) * OUT")])
     }
     
-    
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
-    
-    required init(identifier: String) { super.init(identifier: identifier) }
-    
 }

@@ -11,26 +11,22 @@
 /// Not meant to be displayed. Instead the position encodes some number, often one which another animation or continual\_animation uses for its update function, and by treating it as a mobject it can still be animated and manipulated just like anything else.
 public class ValueTracker<T>: MObject {
     
-    public init(double: Double) where T == Double {
-        super.init(base: "ValueTracker", args: [
+    public convenience init(double: Double) where T == Double {
+        self.init("ValueTracker", arguments: [
             ("value", double.description)
         ])
     }
     
-    public init(value: T) where T: PyObject {
-        super.init(base: "ValueTracker", args: [
+    public convenience init(value: T) where T: PyObject {
+        self.init("ValueTracker", arguments: [
             ("value", value.identifier)
         ])
     }
     
-    public init(value: ReadableProperty<T>) {
-        super.init(base: "ValueTracker", args: [
+    public convenience init(value: ReadableProperty<T>) {
+        self.init("ValueTracker", arguments: [
             ("value", value.representation)
         ])
-    }
-    
-    required init(identifier: String) {
-        super.init(identifier: identifier)
     }
     
     public var value: ReadableProperty<T> {

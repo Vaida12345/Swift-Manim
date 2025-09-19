@@ -11,12 +11,8 @@
 /// A shape with smaller cutouts.
 public final class Cutout: VMObject {
     
-    public required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
-    init(_ main: VMObject, cutouts: [VMObject]) {
-        super.init(args: Closure.Arguments([
+    convenience init(_ main: VMObject, cutouts: [VMObject]) {
+        self.init(arguments: Closure.Arguments([
             Closure.Argument(nil, main.identifier)
         ] + cutouts.map { Closure.Argument(nil, $0.identifier) }))
     }

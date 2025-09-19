@@ -37,18 +37,19 @@ public class Axes: Group {
         ]
         switch style {
         case .__both(let numberLine):
-            args.append("axis_config", numberLine.__args?.representation)
+            args.append("axis_config", numberLine.arguments?.representation)
         case .__individual(let x, let y):
-            args.append("x_axis_config", x.__args?.representation)
-            args.append("y_axis_config", y.__args?.representation)
+            args.append("x_axis_config", x.arguments?.representation)
+            args.append("y_axis_config", y.arguments?.representation)
         case nil:
             break
         }
         
-        super.init(args: args)
+        super.init(arguments: args)
     }
     
     required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
     
     /// Accepts coordinates and returns a point with respect to the `destination`.

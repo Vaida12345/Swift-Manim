@@ -10,16 +10,11 @@ import OSLog
 
 public class Line: VMObject {
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     public init(start: some PointProtocol, end: some PointProtocol) {
-        super.init(args: [("start", start.representation), ("end", end.representation)])
+        super.init(arguments: [("start", start.representation), ("end", end.representation)])
     }
     
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
+    required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
 }

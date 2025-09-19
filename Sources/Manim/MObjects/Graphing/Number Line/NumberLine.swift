@@ -9,10 +9,6 @@
 /// Creates a number line with tick marks.
 public final class NumberLine: Line {
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     /// Creates a number line with tick marks.
     ///
     /// - Parameters:
@@ -23,7 +19,7 @@ public final class NumberLine: Line {
     ///   - strokeWidth: The thickness of the line.
     ///   - tip: The properties of the tip.
     ///   - scaling: The way the `range` is value is scaled.
-    public init(range: Range? = nil,
+    public convenience init(range: Range? = nil,
                 length: Double? = nil,
                 unitSize: Double = 1,
                 include: DisplayStyle = [],
@@ -47,7 +43,7 @@ public final class NumberLine: Line {
         if include.contains(.numbers) { args.append("include_numbers", true.representation) }
         if tip != nil                 { args.append("include_tip",     true.representation) }
         
-        super.init(args: args)
+        self.init(arguments: args)
     }
     
     

@@ -9,17 +9,13 @@
 public class TracedPath: VMObject {
     
     
-    public init(point: ReadableProperty<Point>, width: Double = 2, color: Color = .white, duration: Double? = nil) {
-        super.init(args: [
+    public convenience init(point: ReadableProperty<Point>, width: Double = 2, color: Color = .white, duration: Double? = nil) {
+        self.init(arguments: [
             ("traced_point_func", "\(point.origin.identifier).\(point.read.name)"),
             ("stroke_width", width.description),
             ("stroke_color", color.representation),
             ("dissipating_time", duration?.description)
         ])
-    }
-    
-    required init(identifier: String) {
-        fatalError("init() has not been implemented")
     }
     
 }

@@ -19,17 +19,14 @@ public class Rectangle: Polygon {
     ///   - width: The width of the rectangle
     ///   - gridStep: Space between horizontal and vertical grid lines.
     public init(height: Double = 2, width: Double = 4, gridStep: (x: Double?, y: Double?)?) {
-        super.init(args: [("height", height.description),
+        super.init(arguments: [("height", height.description),
                           ("width", width.description),
                           ("grid_xstep", gridStep?.x?.description),
                           ("grid_ystep", gridStep?.y?.description),
                          ])
     }
     
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
-    
     required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
 }

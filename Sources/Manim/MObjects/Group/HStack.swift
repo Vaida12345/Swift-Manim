@@ -9,17 +9,13 @@
 /// A horizontal stack
 public final class HStack: Group {
     
-    public init(spacing: Double = 0.25, _ children: [MObject]) {
-        super.init(children)
+    public convenience init(spacing: Double = 0.25, _ children: [MObject]) {
+        self.init(children)
         super.arrange(direction: .right, spacing: spacing)
     }
     
     public convenience init(spacing: Double = 0.25, _ children: MObject...) {
         self.init(spacing: spacing, children)
-    }
-    
-    required init(identifier: String) {
-        super.init(identifier: identifier)
     }
     
 }

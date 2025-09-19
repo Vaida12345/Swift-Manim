@@ -16,11 +16,9 @@ public final class Square: Rectangle {
     /// - Parameters:
     ///   - length: The length for each side.
     ///   - color: The fill color.
-    public init(length: Double = 2, color: Color? = nil) {
-        super.init(args: [("side_length", length.description),
+    public convenience init(length: Double = 2, color: Color? = nil) {
+        self.init(arguments: [("side_length", length.description),
                           ("color", color?.representation)])
     }
-    
-    required init(identifier: String) { super.init(args: []) }
     
 }

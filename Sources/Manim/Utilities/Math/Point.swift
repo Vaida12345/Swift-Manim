@@ -42,7 +42,7 @@ extension Array<Double>: PointProtocol {
 
 
 /// A point, with the center being (0, 0, 0).
-public class Point: PyObject, PointProtocol, @MainActor ExpressibleByArrayLiteral {
+public final class Point: PyObject, PointProtocol, @MainActor ExpressibleByArrayLiteral {
    
     public let x: Double
     
@@ -76,9 +76,8 @@ public class Point: PyObject, PointProtocol, @MainActor ExpressibleByArrayLitera
         }
     }
     
-    required init(identifier: String) {
-        fatalError("init(identifier:) has not been implemented")
-    }
+    required init(identifier: String) { fatalError() }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { fatalError() }
     
     public static func * (lhs: Double, rhs: Point) -> Point {
         Point(x: lhs * rhs.x,

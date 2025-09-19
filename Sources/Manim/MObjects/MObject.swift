@@ -12,9 +12,6 @@ import SwiftUI
 /// Mathematical Object: base class for objects that can be displayed on screen.
 public class MObject: PyObject {
     
-    /// The internal store
-    internal var store: [String : Any] = [:]
-    
     /// Internal state, tracks if the object is attached by calling 
     internal var isAttached: Bool = false
     
@@ -272,6 +269,27 @@ public class MObject: PyObject {
     public func flip(axis: Axis) -> AttachedAnimation {
         AttachedAnimation(name: "flip", target: self.identifier, args: [(nil, axis.representation)])
     }
+    
+    
+//    /// Creates an instance with the initializer.
+//    ///
+//    /// - Parameters:
+//    ///   - base: The class name in Python. Pass `nil` if you want to use the Swift class name.
+//    ///   - args: The arguments passed to the Python class initializer.
+//    ///
+//    /// This initializer creates an identifier of the newly created Python instance for you.
+//    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) {
+//        let base = typeIdentifier ?? "\(Self.self)"
+//        
+//        if shouldOverrideInit {
+//            super.init(identifier: "", typeIdentifier: typeIdentifier, arguments: arguments)
+//        } else {
+//            let identifier = __formVariableName(base: base)
+//            super.init(identifier: identifier, typeIdentifier: typeIdentifier, arguments: arguments)
+//        }
+//    }
+//    
+//    required init(identifier: String) { super.init(identifier: identifier) }
     
     
     @MainActor

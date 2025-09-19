@@ -12,13 +12,11 @@
 public final class Ellipse: Circle {
     
     
-    public init(width: Double? = nil, height: Double? = nil) {
-        super.init(args: [
+    public convenience init(width: Double? = nil, height: Double? = nil) {
+        self.init(arguments: [
             ("width",  width?.description),
             ("height", height?.description)
         ])
     }
-    
-    required init(identifier: String) { super.init(identifier: identifier) }
     
 }

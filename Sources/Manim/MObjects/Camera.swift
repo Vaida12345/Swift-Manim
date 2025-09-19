@@ -9,15 +9,10 @@
 
 
 /// The camera of the scene.
-public class Camera: MObject {
+public final class Camera: MObject {
     
-    
-    required init(identifier: String) {
-        fatalError()
-    }
-    
-    init() {
-        super.init(identifier: "self.camera")
+    convenience init() {
+        self.init(identifier: "self.camera")
     }
     
 }

@@ -9,13 +9,12 @@
 public class MathTex: SVGMObject {
     
     public init(_ latex: TextInterpolation) {
-        super.init(args: [(nil, latex.content)])
+        super.init(arguments: [(nil, latex.content)])
     }
     
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
+    required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
     
     public struct TextInterpolation: StringInterpolationProtocol, ExpressibleByStringInterpolation {

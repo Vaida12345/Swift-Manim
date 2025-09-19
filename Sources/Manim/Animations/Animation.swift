@@ -18,15 +18,12 @@ public class Animation: PyObject {
     var lagRatio: Double = 0
     
     
-    required init(identifier: String) { super.init(identifier: identifier) }
-    
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
-    
     init() {
         super.init(identifier: __formVariableName(base: "\(Self.self)"))
     }
+    
+    required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
     
     public enum Method {
@@ -209,5 +206,6 @@ public final class _AnimationGroup: Animation {
     }
     
     required init(identifier: String) { fatalError() }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { fatalError() }
     
 }

@@ -11,10 +11,6 @@
 /// An arrow.
 public class Arrow: Line {
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     /// Creates the arrow
     ///
     /// - Parameters:
@@ -24,7 +20,7 @@ public class Arrow: Line {
     ///   - tip: The tip shape.
     public init(from start: some PointProtocol, to end: some PointProtocol, padding: Double = 0, tip: some ArrowTipShape = .default) {
         super.init(
-            args: [
+            arguments: [
                 ("start", start.representation),
                 ("end", end.representation),
                 ("buff", padding.description)
@@ -32,9 +28,8 @@ public class Arrow: Line {
         )
     }
     
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
+    required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
 }
 
@@ -94,19 +89,19 @@ public struct CustomArrowTipShape: ArrowTipShape {
         let base = base()
         shouldOverrideInit = false
         
-        guard base.__base != nil else {
+        guard base.typeIdentifier != nil else {
             fatalError("Cannot form a CustomArrowTipShape, as you did not initialize it within CustomArrowTipShape(base:)")
         }
         
-        let className = __formVariableName(base: "\(base.__base!)ArrowTip")
+        let className = __formVariableName(base: "\(base.typeIdentifier!)ArrowTip")
         self.identifier = className
         
-        Generator.main.add("class \(className)(ArrowTip, \(base.__base!)):")
+        Generator.main.add("class \(className)(ArrowTip, \(base.typeIdentifier!)):")
         Generator.main.indentCount += 1
         Generator.main.add("def __init__(self, length=0.35, **kwargs):")
         Generator.main.indentCount += 1
-        let args = base.__args!.representation.dropLast().dropFirst()
-        Generator.main.add("\(base.__base!).__init__(self, \(args.isEmpty ? "" : "\(args), ")**kwargs)")
+        let args = base.arguments!.representation.dropLast().dropFirst()
+        Generator.main.add("\(base.typeIdentifier!).__init__(self, \(args.isEmpty ? "" : "\(args), ")**kwargs)")
         Generator.main.add("self.width = length")
         Generator.main.add("self.stretch_to_fit_height(length)")
         Generator.main.indentCount -= 2

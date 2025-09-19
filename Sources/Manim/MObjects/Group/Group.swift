@@ -26,24 +26,16 @@ public class Group: VMObject, @MainActor Collection {
         Manim.Generator.main.add("\(self.identifier).arrange\(arguments.representation)")
     }
     
-    
-    required init(identifier: String) {
-        self.children = []
-        super.init(identifier: identifier)
-    }
-    
     public init(_ children: [MObject]) {
         self.children = children
-        super.init(base: "Group", args: .init(children.map(\.identifier).map { .init(nil, $0) }))
+        super.init("Group", arguments: .init(children.map(\.identifier).map { .init(nil, $0) }))
     }
     
     public convenience init(_ children: MObject...) {
         self.init(children)
     }
     
-    override init(base: String? = nil, args: Closure.Arguments) {
-        self.children = []
-        super.init(base: base, args: args)
-    }
+    required init(identifier: String) { self.children = []; super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { self.children = []; super.init(typeIdentifier, arguments: arguments) }
     
 }

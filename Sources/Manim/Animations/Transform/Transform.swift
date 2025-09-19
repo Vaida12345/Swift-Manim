@@ -14,22 +14,23 @@ public class Transform: Animation {
     init(from object: MObject, to target: MObject, option: Option?) {
         switch option {
         case nil:
-            super.init(args: [(nil, object.identifier),
+            super.init(arguments: [(nil, object.identifier),
                               (nil, target.identifier)])
         case .clockwise:
-            super.init(base: "ClockwiseTransform", args: [(nil, object.identifier), (nil, target.identifier)])
+            super.init("ClockwiseTransform", arguments: [(nil, object.identifier), (nil, target.identifier)])
         case .counterClockwise:
-            super.init(base: "CounterclockwiseTransform", args: [(nil, object.identifier), (nil, target.identifier)])
+            super.init("CounterclockwiseTransform", arguments: [(nil, object.identifier), (nil, target.identifier)])
             
         case .matchShapes:
-            super.init(base: "TransformMatchingShapes", args: [(nil, object.identifier), (nil, target.identifier)])
+            super.init("TransformMatchingShapes", arguments: [(nil, object.identifier), (nil, target.identifier)])
             
         case .matchTex:
-            super.init(base: "TransformMatchingTex", args: [(nil, object.identifier), (nil, target.identifier)])
+            super.init("TransformMatchingTex", arguments: [(nil, object.identifier), (nil, target.identifier)])
         }
     }
     
     required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
     
     /// Transform option, specifies how to transform.

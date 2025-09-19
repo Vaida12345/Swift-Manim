@@ -9,13 +9,8 @@
 /// A vector, with the `start` being `.zero`.
 public final class Vector: Arrow {
     
-    
-    public required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
-    public init(direction: Direction) {
-        super.init(args: [("direction", direction.representation)])
+    public convenience init(direction: Direction) {
+        self.init(arguments: [("direction", direction.representation)])
     }
     
     

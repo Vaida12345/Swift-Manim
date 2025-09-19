@@ -26,10 +26,11 @@ public class Text: SVGMObject {
         arguments.append("width", width?.description)
         arguments.append("center", center, when: .notEqual(true))
         
-        super.init(args: arguments)
+        super.init(arguments: arguments)
     }
     
     required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
     public enum FontWeight: String, PythonScriptConvertible {
         case normal

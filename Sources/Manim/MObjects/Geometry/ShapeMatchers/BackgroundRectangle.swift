@@ -11,18 +11,14 @@
 /// A background rectangle. Its default color is the background color of the scene.
 public final class BackgroundRectangle: SurroundingRectangle {
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     /// Creates a background rectangle.
     ///
     /// - Parameters:
     ///   - base: The attached object.
     ///   - stroke: The stroke width and opacity.
     ///   - fill: The fill color and opacity.
-    public init(base: MObject, stroke: (width: Double?, opacity: Double?)? = nil, fill: (color: Color?, opacity: Double?)? = nil) {
-        super.init(args: [
+    public convenience init(base: MObject, stroke: (width: Double?, opacity: Double?)? = nil, fill: (color: Color?, opacity: Double?)? = nil) {
+        self.init(arguments: [
             ("mobject", base.identifier),
             ("color", fill?.color?.representation),
             ("stroke_width", stroke?.width?.description),

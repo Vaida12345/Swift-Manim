@@ -62,7 +62,7 @@ public final class Generator {
         
         try self.components.joined(separator: "\n").write(toFile: "\(folder)/swiftmanim.py", atomically: true, encoding: .utf8)
         
-        let status = try await run(.path("/bin/zsh"), arguments: ["-i", "-l", "-c", "manim \"\(folder)/swiftmanim.py\""], workingDirectory: FilePath(folder.path), output: .standardOutput)
+        let status = try await run(.path("/bin/zsh"), arguments: ["-i", "-l", "-c", "manim \"\(folder)/swiftmanim.py\""], workingDirectory: FilePath(folder.path), output: .standardOutput, error: .standardError)
         precondition(status.terminationStatus == .exited(0), "Failed to run subprocess.")
     }
     

@@ -7,16 +7,11 @@
 
 
 
-
 public final class Cross: Group {
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     /// Creates a cross.
-    public init(base: MObject? = nil, stroke: (color: Color?, width: Double?)? = nil) {
-        super.init(args: [
+    public convenience init(base: MObject? = nil, stroke: (color: Color?, width: Double?)? = nil) {
+        self.init(arguments: [
             ("mobject", base?.identifier),
             ("stroke_color", stroke?.color?.representation),
             ("stroke_width", stroke?.width?.description),

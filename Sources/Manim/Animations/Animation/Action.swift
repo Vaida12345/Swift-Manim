@@ -151,7 +151,7 @@ public struct ActionAnimation: @MainActor Equatable {
     
     internal func makeAnimation(object: MObject) -> Animation {
         if shouldUseAnimation {
-            return Animation(base: self.closure.name, args: (overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.closure.arguments)
+            return Animation(self.closure.name, arguments: (overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.closure.arguments)
         } else {
             Generator.main.add("self.play(\(self.closure.name)\(((overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.closure.arguments).representation)")
         }

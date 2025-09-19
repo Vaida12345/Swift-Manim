@@ -12,10 +12,6 @@ import SwiftUI
 /// A Polygram with regularly spaced vertices.
 public class RegularPolygram: Polygram {
     
-    required init(identifier: String) {
-        super.init(identifier: identifier)
-    }
-    
     /// Creates a ``RegularPolygram``.
     ///
     /// - Parameters:
@@ -24,7 +20,7 @@ public class RegularPolygram: Polygram {
     ///   - radius: The radius of the circle that the vertices are placed on.
     ///   - startAngle: The angle the vertices start at; the rotation of the ``RegularPolygram``.
     public init(count: Int, density: Int? = nil, radius: Double? = nil, startAngle: Angle? = nil) {
-        super.init(args: [
+        super.init(arguments: [
             ("num_vertices", count.description),
             ("density", density?.description),
             ("radius", radius?.description),
@@ -32,8 +28,7 @@ public class RegularPolygram: Polygram {
         ])
     }
     
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
-    }
+    required init(identifier: String) { super.init(identifier: identifier) }
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
 }

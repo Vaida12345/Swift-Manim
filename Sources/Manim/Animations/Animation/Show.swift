@@ -82,13 +82,15 @@ extension MObject {
     /// Show the object.
     ///
     /// To animate the action, you must wrap it with ``withAnimation(_:in:body:)``.
+    ///
+    /// - Important: Starting from `v0.2`, you must call this method to show an object before using it.
     @discardableResult
     public func show(animation: ShowAnimation = .create) -> Animation {
         if !shouldUseAnimation {
             Generator.main.add("self.add(\(self.identifier))")
             return EmptyAnimation()
         } else {
-            return Animation(base: animation.closure.name, args: [(nil, self.identifier)] + animation.closure.arguments)
+            return Animation(animation.closure.name, arguments: [(nil, self.identifier)] + animation.closure.arguments)
         }
         
     }

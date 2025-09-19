@@ -34,4 +34,8 @@ public class AttachedAnimation: Animation {
         fatalError("init() has not been implemented")
     }
     
+    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) {
+        fatalError("init(_:arguments:) has not been implemented")
+    }
+    
 }

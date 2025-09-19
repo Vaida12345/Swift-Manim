@@ -10,12 +10,8 @@
 
 public class FullScreenRectangle: VMObject {
     
-    init() {
-        super.init(args: [("stroke_width", 0.description)])
-    }
-    
-    required init(identifier: String) {
-        super.init(identifier: identifier)
+    convenience init() {
+        self.init(arguments: [("stroke_width", 0.description)])
     }
     
 }

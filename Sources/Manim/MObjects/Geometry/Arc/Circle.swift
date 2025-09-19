@@ -11,15 +11,9 @@
 public class Circle: Arc {
     
     
-    public init(radius: Double? = nil, strokeColor: Color? = nil) {
-        super.init(args: [("radius", radius?.description),
-                          ("color", strokeColor?.representation)])
-    }
-    
-    required init(identifier: String) { super.init(identifier: identifier) }
-    
-    override init(base: String? = nil, args: Closure.Arguments) {
-        super.init(base: base, args: args)
+    public convenience init(radius: Double? = nil, strokeColor: Color? = nil) {
+        self.init(arguments: [("radius", radius?.description),
+                              ("color", strokeColor?.representation)])
     }
     
 }

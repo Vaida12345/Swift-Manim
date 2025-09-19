@@ -9,22 +9,34 @@ import Manim
 
 
 @main
-class VectorArrow: Scene {
+class MovingDots: Scene {
     
     override func body(width: Int?) {
         super.body(width: width)
         
-        let red = Dot(color: .red)
-        let green = Dot(color: .green)
-        let blue = Dot(color: .blue)
-        let yellow = Dot(color: .yellow)
+        let dot1 = Dot(color: .blue)
+        let dot2 = Dot(color: .green)
         
-        red.show()
-        green.show()
-        blue.show()
-        yellow.show()
+        let group = Group(dot1, dot2)
+        group.arrange(direction: .right)
         
-        let _ = VStack(green, yellow)
-        let _ = HStack(red, green, blue)
+        let line = Line(start: dot1.center, end: dot2.center)
+        line.set(color: .red)
+        line.addUpdater { line in
+            line.become(Line(start: dot1.center, end: dot2.center))
+            line.set(color: .red)
+        }
+        
+        dot1.show()
+        dot2.show()
+        line.show()
+        
+        let x = dot1.x.tracker()
+        let y = dot2.y.tracker()
+        
+        withAnimation {
+            x += 4
+            y += 4
+        }
     }
 }

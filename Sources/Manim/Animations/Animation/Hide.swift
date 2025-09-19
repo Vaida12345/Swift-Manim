@@ -72,7 +72,7 @@ extension MObject {
             Generator.main.add("self.remove(\(self.identifier))")
         } else {
             if shouldUseAnimation {
-                return Animation(base: animation.name, args: [(nil, self.identifier)] + animation.args)
+                return Animation(animation.name, arguments: [(nil, self.identifier)] + animation.args)
             } else {
                 Generator.main.add("self.play(\(animation.name)\(([(nil, self.identifier)] + animation.args).representation))")
             }
