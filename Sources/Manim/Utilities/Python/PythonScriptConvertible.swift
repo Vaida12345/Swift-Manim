@@ -23,3 +23,13 @@ extension Bool: PythonScriptConvertible {
     }
     
 }
+
+
+@MainActor
+func representation(of value: Any) -> String {
+    if let value = value as? PythonScriptConvertible {
+        return value.representation
+    } else {
+        return String(describing: value)
+    }
+}

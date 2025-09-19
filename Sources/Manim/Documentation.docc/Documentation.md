@@ -22,10 +22,10 @@ class VectorArrow: Scene {
         let numberPlane = NumberPlane()
 
         let originText = Text("(0, 0)")
-        originText.move(nextTo: dot, position: .down)
+        originText.move(nextTo: dot, placing: .down)
 
         let tipText = Text("(2, 2)")
-        tipText.move(nextTo: arrow.end, position: .right)
+        tipText.move(nextTo: arrow.end, placing: .right)
 
         dot.show()
         arrow.show()
@@ -41,3 +41,21 @@ class VectorArrow: Scene {
 ### Animation
 
 - <doc:Animations>
+
+
+### Main Objects
+- ``MObject``
+- ``ReadWriteProperty``
+
+### Common Structures
+- ``Point``
+- ``Color``
+
+
+### Python Generation
+These structures are developed to facilitate Python Script generation.
+
+- ``PyObject``
+- ``PythonScriptConvertible``
+- ``Closure``
+- ``Generator``

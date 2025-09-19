@@ -9,6 +9,16 @@
 /// A mobject that can be used for tracking (real-valued) parameters. Useful for animating parameter changes.
 ///
 /// Not meant to be displayed. Instead the position encodes some number, often one which another animation or continual\_animation uses for its update function, and by treating it as a mobject it can still be animated and manipulated just like anything else.
+///
+/// You can use `tracker` to change any property of an object. For example, you can change the `x`-coordinate of a dot.
+///
+/// ```swift
+/// let tracker = dot2.x.tracker()
+///
+/// withAnimation {
+///     tracker += 5
+/// }
+/// ```
 public class ValueTracker<T>: MObject {
     
     public convenience init(double: Double) where T == Double {

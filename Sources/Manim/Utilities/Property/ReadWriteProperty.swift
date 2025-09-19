@@ -9,20 +9,53 @@
 /// Properties that can both read from and write to.
 public final class ReadWriteProperty<Value>: ReadableProperty<Value> {
     
-    /// The closure for writing a property.
-    let write: Closure
+    /// The function name for writing a property.
+    let write: String
     
-    init(origin: MObject, read: Closure, write: Closure) {
+    /// The presence of a value means it is a user-set compile-time constant Swift value.
+    let value: Value?
+    
+    
+    public override var representation: String {
+        if let value {
+            Manim.representation(of: value)
+        } else {
+            super.representation
+        }
+    }
+    
+    
+    init(origin: MObject, read: Closure, write: String) {
         self.write = write
+        self.value = nil
         super.init(origin: origin, read: read)
+    }
+    
+    init(constant: Value) {
+        self.value = constant
+        self.write = ""
+        super.init(origin: MObject(identifier: ""), read: Closure("", []))
     }
     
     
     @MainActor
     public static func == (_ lhs: ReadWriteProperty, _ rhs: ReadWriteProperty) -> Bool {
-        lhs.origin === rhs.origin &&
+        var valuesEqual: Bool {
+            if let lhs = lhs.value {
+                if let rhs = rhs.value {
+                    return Manim.representation(of: lhs) == Manim.representation(of: rhs)
+                } else {
+                    return false
+                }
+            } else {
+                return rhs.value == nil
+            }
+        }
+        
+        return lhs.origin === rhs.origin &&
         lhs.read == rhs.read &&
-        lhs.write == rhs.write
+        lhs.write == rhs.write &&
+        valuesEqual
     }
     
 }
@@ -30,11 +63,22 @@ public final class ReadWriteProperty<Value>: ReadableProperty<Value> {
 
 extension ReadWriteProperty {
     
+    /// Updates this property to `other`.
+    @discardableResult
+    public func update(to newValue: Value) -> AttachedAnimation {
+        assert(value == nil, "You should not modify a constant.")
+        
+        let args = Closure.Arguments([Closure.Argument(nil, Manim.representation(of: newValue))])
+        return AttachedAnimation(name: self.write, target: self.origin.identifier, args: args)
+    }
+    
     /// Updates this property to the current value of `other`.
     @discardableResult
     public func update(to other: ReadableProperty<Value>) -> AttachedAnimation {
-        let args = Closure.Arguments([Closure.Argument(nil, "\(other.origin.identifier).\(other.read.representation)")] + self.write.arguments)
-        return AttachedAnimation(name: self.write.name, target: self.origin.identifier, args: args)
+        assert(value == nil, "You should not modify a constant.")
+        
+        let args = Closure.Arguments([Closure.Argument(nil, other.representation)])
+        return AttachedAnimation(name: self.write, target: self.origin.identifier, args: args)
     }
     
     /// Binds and continuous updates this property to the value of `other`.
@@ -57,11 +101,14 @@ extension ReadWriteProperty {
     /// In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinate of `dot2`, and `dot1` moves as `dot2` changes its `x`-coordinate.
     @discardableResult
     public func bind(to other: ReadableProperty<Value>) -> AttachedAnimation {
-        let args = Closure.Arguments([Closure.Argument(nil, "\(other.origin.identifier).\(other.read.representation)")] + self.write.arguments)
+        assert(value == nil, "You should not modify a constant.")
+        assert(!(other is ReadWriteProperty<Value>) || (other as! ReadWriteProperty<Value>).value == nil, "You should not bind to a constant.")
+        
+        let args = Closure.Arguments([Closure.Argument(nil, other.representation)])
         self.origin.addUpdater { object in
-            Generator.main.add("\(self.origin.identifier).\(self.write.name)\(args.representation)")
+            Generator.main.add("\(self.origin.identifier).\(self.write)\(args.representation)")
         }
-        return AttachedAnimation(name: self.write.name, target: self.origin.identifier, args: args)
+        return AttachedAnimation(name: self.write, target: self.origin.identifier, args: args)
     }
     
 }
@@ -81,12 +128,13 @@ extension ReadWriteProperty {
     /// }
     /// ```
     public func tracker() -> ValueTracker<Value> {
+        assert(value == nil, "You should not track (and hence modify) a constant.")
+        
         let tracker = ValueTracker(value: self)
-        let args = Closure.Arguments([Closure.Argument(nil, "\(tracker.value.representation)")] + self.write.arguments)
+        let args = Closure.Arguments([Closure.Argument(nil, "\(tracker.value.representation)")])
         self.origin.addUpdater { object in
-            Generator.main.add("\(self.origin.identifier).\(self.write.name)\(args.representation)")
+            Generator.main.add("\(self.origin.identifier).\(self.write)\(args.representation)")
         }
         return tracker
     }
-    
 }

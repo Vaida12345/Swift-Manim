@@ -47,11 +47,11 @@ public class MObject: PyObject {
     }
     
     public var x: ReadWriteProperty<Double> {
-        ReadWriteProperty(origin: self, read: Closure("get_x", []), write: Closure("set_x", []))
+        ReadWriteProperty(origin: self, read: Closure("get_x", []), write: "set_x")
     }
     
     public var y: ReadWriteProperty<Double> {
-        ReadWriteProperty(origin: self, read: Closure("get_y", []), write: Closure("set_y", []))
+        ReadWriteProperty(origin: self, read: Closure("get_y", []), write: "set_x")
     }
     
     
@@ -131,7 +131,7 @@ public class MObject: PyObject {
     }
     
     /// Moves the current object next to `target`.
-    @available(*, deprecated, renamed: "move(nextTo:position:padding:)")
+    @available(*, deprecated, renamed: "move(nextTo:placing:padding:)")
     public func next(to target: MObject, position: Direction, padding: Double = 0) {
         self.call("next_to", arguments: [(nil, target.identifier),
                                        (nil, position.representation),
@@ -145,13 +145,42 @@ public class MObject: PyObject {
     @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
-    public func move(nextTo target: Point, position: Direction, padding: Double = 0.25) -> AttachedAnimation {
+    public func move(nextTo target: Point, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
         var arguments = Closure.Arguments()
         arguments.append(nil, target)
-        arguments.append(nil, position)
+        arguments.append(nil, placing)
         arguments.append("buff", padding.description, when: .notEqual("0.25"))
         
         return AttachedAnimation(name: "next_to", target: self.identifier, args: arguments)
+    }
+    
+    
+    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
+    @varyArgumentType(Point.self, variation: MObject.self)
+    @discardableResult
+    public func move(below target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .down, padding: padding)
+    }
+    
+    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
+    @varyArgumentType(Point.self, variation: MObject.self)
+    @discardableResult
+    public func move(above target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .up, padding: padding)
+    }
+    
+    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
+    @varyArgumentType(Point.self, variation: MObject.self)
+    @discardableResult
+    public func move(leftOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .left, padding: padding)
+    }
+    
+    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
+    @varyArgumentType(Point.self, variation: MObject.self)
+    @discardableResult
+    public func move(rightOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .right, padding: padding)
     }
     
     /// Moves the current object next to `target`.

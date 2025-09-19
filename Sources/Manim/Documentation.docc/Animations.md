@@ -47,13 +47,13 @@ groups.show()
 // Label groups
 let label = Text("lagRatio")
 label.fontSize = 36
-label.move(nextTo: groups, position: .up, padding: 1.5)
+label.move(nextTo: groups, placing: .up, padding: 1.5)
 label.show()
 
 for (group, ratio) in zip(groups, ratios) {
     let text = Text("\(ratio)")
     text.fontSize = 36
-    text.move(nextTo: group, position: .up)
+    text.move(nextTo: group, placing: .up)
     text.show()
 }
 
@@ -118,3 +118,5 @@ In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinat
 - ``ActionAnimation``
 - ``AttachedAnimation``
 - ``Transform``
+- ``HideAnimation``
+- ``RateFunction``

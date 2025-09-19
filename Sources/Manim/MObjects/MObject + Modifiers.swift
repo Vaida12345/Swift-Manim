@@ -35,16 +35,20 @@ extension MObject {
     }
     
     
-    /// Write-only property for setting color.
-    public var color: Color {
-        get { fatalError("Does not support GET") }
-        set { self.addInitializerArgument("color", newValue) }
+    public var color: ReadWriteProperty<Color> {
+        get {
+            ReadWriteProperty(origin: self, read: Closure("get_color", []), write: "set_color")
+        }
+        set {
+            let property = ReadWriteProperty<Color>(origin: self, read: Closure("get_color", []), write: "set_color")
+            property.update(to: newValue)
+        }
     }
     
     /// Write-only property for setting zIndex.
     public var zIndex: Int {
         get { fatalError("Does not support GET") }
-        set { self.addInitializerArgument("zIndex", newValue.description) }
+        set { self.call("set_z_index", arguments: [(nil, newValue.description)]) }
     }
     
 }

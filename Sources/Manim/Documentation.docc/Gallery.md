@@ -19,10 +19,10 @@ class VectorArrow: Scene {
         let numberPlane = NumberPlane()
         
         let originText = Text("(0, 0)")
-        originText.move(nextTo: dot, position: .down)
+        originText.move(nextTo: dot, placing: .down)
         
         let tipText = Text("(2, 2)")
-        tipText.move(nextTo: arrow.end, position: .right)
+        tipText.move(nextTo: arrow.end, placing: .right)
         
         dot.show()
         arrow.show()
