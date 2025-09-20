@@ -35,6 +35,20 @@ extension ReadWriteProperty: @MainActor ExpressibleByIntegerLiteral where Value 
     
 }
 
+extension ReadWriteProperty<Point> {
+    
+    public static let center = ReadWriteProperty(constant: Point.center)
+    
+}
+
+extension ReadWriteProperty<Point>: @MainActor ExpressibleByArrayLiteral {
+    
+    public convenience init(arrayLiteral elements: Double...) {
+        self.init(constant: Point(elements))
+    }
+    
+}
+
 
 extension ReadWriteProperty<Color> {
     

@@ -13,14 +13,17 @@ class VectorArrow: Scene {
     override func body(width: Int?) {
         super.body(width: width)
         
-        let first = Dot()
-        first.color = .blue
+        NumberPlane().show()
         
-        let second = Dot()
-        second.move(nextTo: first, placing: .right)
-        second.color = first.color
+        let rectangle = Rectangle(width: 4, height: 2)
+        rectangle.origin.update(to: [2, 4])
+        rectangle.show()
         
-        first.show()
-        second.show()
+        let originText = Text("origin")
+        originText.move(rightOf: rectangle.origin)
+        
+        Dot(at: rectangle.origin).show()
+        rectangle.show()
+        originText.show()
     }
 }

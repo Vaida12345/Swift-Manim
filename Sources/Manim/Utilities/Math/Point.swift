@@ -65,6 +65,10 @@ public final class Point: PyObject, PointProtocol, @MainActor ExpressibleByArray
     }
     
     required public convenience init(arrayLiteral elements: Double...) {
+        self.init(elements)
+    }
+    
+    public convenience init(_ elements: [Double]) {
         if elements.count == 2 {
             self.init(x: elements[0], y: elements[1])
         } else if elements.count == 3 {
@@ -72,7 +76,7 @@ public final class Point: PyObject, PointProtocol, @MainActor ExpressibleByArray
         } else if elements.isEmpty {
             self.init(x: 0, y: 0)
         } else {
-            fatalError("Not enough arguments for Point")
+            fatalError("Not enough arguments to unpack for Point")
         }
     }
     

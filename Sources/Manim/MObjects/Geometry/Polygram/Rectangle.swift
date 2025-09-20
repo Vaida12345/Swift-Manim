@@ -6,8 +6,6 @@
 //
 
 
-
-
 /// A Rectangle
 public class Rectangle: Polygon {
     
@@ -15,15 +13,17 @@ public class Rectangle: Polygon {
     /// Creates a rectangle.
     ///
     /// - Parameters:
-    ///   - height: The height of the rectangle
     ///   - width: The width of the rectangle
+    ///   - height: The height of the rectangle
     ///   - gridStep: Space between horizontal and vertical grid lines.
-    public init(height: Double = 2, width: Double = 4, gridStep: (x: Double?, y: Double?)?) {
-        super.init(arguments: [("height", height.description),
-                          ("width", width.description),
-                          ("grid_xstep", gridStep?.x?.description),
-                          ("grid_ystep", gridStep?.y?.description),
-                         ])
+    public init( width: Double, height: Double, gridStep: (x: Double?, y: Double?)? = nil) {
+        var arguments = Closure.Arguments()
+        arguments.append("width", width.description)
+        arguments.append("height", height.description)
+        arguments.append("grid_xstep", gridStep?.x?.description)
+        arguments.append("grid_ystep", gridStep?.y?.description)
+        
+        super.init(arguments: arguments)
     }
     
     required init(identifier: String) { super.init(identifier: identifier) }

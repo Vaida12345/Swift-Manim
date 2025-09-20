@@ -3,6 +3,22 @@
 
 APIs for positioning and moving ``MObject``s.
 
+## Origin
+
+Imagine yourself working in a math world, and that's Manim.
+
+![example](VectorArrow)
+
+The [center](PointProtocol/center) of the canvas is `(0, 0)`. Points in top-right quadrant have positive axis values.
+
+
+### Object Origin
+
+Follow the same guideline, the ``MObject/origin`` of an object is defined to be its center point.
+
+![example](origin)
+
+
 
 ## Topics
 

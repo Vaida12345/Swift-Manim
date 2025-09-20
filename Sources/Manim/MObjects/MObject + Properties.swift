@@ -64,14 +64,14 @@ extension MObject {
         ReadableProperty(origin: self, read: Closure("get_right", []))
     }
     
-    /// The starting point.
-    public var origin: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_start", []))
+    /// The origin, defined as the center point.
+    public var origin: ReadWriteProperty<Point> {
+        self.center
     }
     
     /// The center point.
-    public var center: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_center", []))
+    public var center: ReadWriteProperty<Point> {
+        ReadWriteProperty(origin: self, read: Closure("get_center", []), write: "move_to")
     }
     
     /// Returns the point, where the stroke that surrounds the object ends.
