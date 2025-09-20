@@ -11,4 +11,3 @@ Imagine yourself working in a math world, and that's Manim.
 
 The [center](PointProtocol/center) of the canvas is `(0, 0)`. Points in top-right quadrant have positive axis values.
 
-

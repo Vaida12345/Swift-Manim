@@ -6,8 +6,7 @@
 //
 
 
-
-
+/// A preset of colors.
 public enum Color: String, PythonScriptConvertible {
     case blue
     case teal

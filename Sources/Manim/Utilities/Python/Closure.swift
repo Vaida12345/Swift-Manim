@@ -6,7 +6,7 @@
 //
 
 
-public struct Closure: PythonScriptConvertible, @MainActor Equatable {
+struct Closure: PythonScriptConvertible, @MainActor Equatable {
     
     let name: String
     
@@ -24,30 +24,30 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
     }
     
     
-    public var representation: String {
+    var representation: String {
         return self.name + self.arguments.representation
     }
     
     
-    public struct Arguments: @MainActor Equatable, @MainActor Collection, @MainActor ExpressibleByArrayLiteral, PythonScriptConvertible {
+    struct Arguments: @MainActor Equatable, @MainActor Collection, @MainActor ExpressibleByArrayLiteral, PythonScriptConvertible {
         
         var contents: [Argument]
         
         
-        public var startIndex: Int { 0 }
-        public var endIndex: Int { contents.endIndex }
-        public func index(after i: Int) -> Int { i + 1 }
-        public subscript(position: Int) -> Argument {
+        var startIndex: Int { 0 }
+        var endIndex: Int { contents.endIndex }
+        func index(after i: Int) -> Int { i + 1 }
+        subscript(position: Int) -> Argument {
             get { contents[position] }
             set { contents[position] = newValue }
         }
         @_disfavoredOverload
-        public mutating func append(_ newValue: Argument) {
+        mutating func append(_ newValue: Argument) {
             self.contents.append(newValue)
         }
         
         /// - Note: `nil` values are ignored by default.
-        public mutating func append(_ key: String? = nil, _ value: String?, when condition: Condition<String>? = nil) {
+        mutating func append(_ key: String? = nil, _ value: String?, when condition: Condition<String>? = nil) {
             switch condition {
             case .notEqual(let string):
                 if string != value {
@@ -61,7 +61,7 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
             }
         }
         
-        public mutating func append<T>(_ key: String? = nil, _ value: (T)?, when condition: Condition<T>? = nil) where T: PythonScriptConvertible {
+        mutating func append<T>(_ key: String? = nil, _ value: (T)?, when condition: Condition<T>? = nil) where T: PythonScriptConvertible {
             let transform: Condition<String>?
             switch condition {
             case .notEqual(let t):
@@ -74,26 +74,26 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
         }
         
         
-        public var representation: String {
+        var representation: String {
             "(\(self.filter { $0.value != nil }.map { "\($0.key == nil ? "" : "\($0.key!)=")\($0.value!)" }.joined(separator: ", ")))"
         }
         
         
-        public init(_ contents: [Argument] = []) {
+        init(_ contents: [Argument] = []) {
             self.contents = contents
         }
         
-        public init(arrayLiteral elements: (String?, String?)...) {
+        init(arrayLiteral elements: (String?, String?)...) {
             contents = elements.map({ Argument(key: $0, value: $1) })
         }
         
         
-        public static func + (lhs: Arguments, rhs: Arguments) -> Arguments {
+        static func + (lhs: Arguments, rhs: Arguments) -> Arguments {
             Arguments(lhs.contents + rhs.contents)
         }
         
         
-        public enum Condition<T> {
+        enum Condition<T> {
             case notEqual(T)
         }
         
@@ -101,7 +101,7 @@ public struct Closure: PythonScriptConvertible, @MainActor Equatable {
     
     
     @MainActor
-    public struct Argument: @MainActor Equatable {
+    struct Argument: @MainActor Equatable {
         
         let key: String?
         

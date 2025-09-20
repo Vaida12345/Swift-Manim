@@ -21,47 +21,6 @@ public class MObject: PyObject {
         return self
     }
     
-    /// The bottom point.
-    public var bottom: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_bottom", []))
-    }
-    
-    /// The starting point.
-    public var origin: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_start", []))
-    }
-    
-    /// The center point.
-    public var center: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_center", []))
-    }
-    
-    /// Returns the point, where the stroke that surrounds the object ends.
-    public var end: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_end", []))
-    }
-    
-    /// Returns the point, where the stroke that surrounds the object starts.
-    public var start: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_start", []))
-    }
-    
-    public var x: ReadWriteProperty<Double> {
-        ReadWriteProperty(origin: self, read: Closure("get_x", []), write: "set_x")
-    }
-    
-    public var y: ReadWriteProperty<Double> {
-        ReadWriteProperty(origin: self, read: Closure("get_y", []), write: "set_x")
-    }
-    
-    
-    /// Controls the states.
-    public var state: State {
-        State(base: self)
-    }
-    
-    
-    
     /// Set the fill color and fill opacity.
     ///
     /// - Parameters:
@@ -79,145 +38,6 @@ public class MObject: PyObject {
         AttachedAnimation(name: "set_color", target: self.identifier, args: [("color", color.representation)])
     }
     
-    /// Moves to the given point.
-    @discardableResult
-    public func move(to point: some PointProtocol, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
-        AttachedAnimation(name: "move_to", target: self.identifier, args: [("point_or_mobject", point.representation),
-                                                                           ("aligned_edge", alignedEdges.representation),
-                                                                           ("coor_mask", coordinateMask.representation)])
-    }
-    
-    /// Moves to the given point.
-    @discardableResult
-    public func shift(by point: some PointProtocol) -> AttachedAnimation {
-        AttachedAnimation(name: "shift", target: self.identifier, args: [(nil, point.representation)])
-    }
-    
-    /// Moves to the center of given object.
-    @discardableResult
-    public func move(to target: MObject, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
-        let args: Closure.Arguments = [
-            ("point_or_mobject", target.identifier),
-            ("aligned_edge", alignedEdges.representation),
-            ("coor_mask", coordinateMask.representation)
-        ]
-        
-        return AttachedAnimation(name: "move_to", target: self.identifier, args: args) {
-            if target.isAttached {
-                self.addUpdater(initialCall: false) { object in
-                    object.call("move_to", arguments: args)
-                }
-            }
-        }
-    }
-    
-    /// Moves the object along the border of the `path` object,
-    @discardableResult
-    public func moveAlong(pathOf object: MObject) -> Animation {
-        ActionAnimation(name: "MoveAlongPath", args: [(nil, object.identifier)]).makeAnimation(object: self)
-    }
-    
-    /// Set the stroke color and stroke opacity.
-    ///
-    /// - Parameters:
-    ///   - color: stroke color.
-    ///   - width: stroke color width.
-    ///   - opacity: stroke opacity.
-    @discardableResult
-    public func stroke(_ color: Color, width: Double = 10, opacity: Double = 1) -> AttachedAnimation {
-        AttachedAnimation(name: "set_stroke", target: self.identifier, args: [("color", color.representation),
-                                                                              ("opacity", opacity.description),
-                                                                              ("width", width.description)])
-    }
-    
-    /// Moves the current object next to `target`.
-    @available(*, deprecated, renamed: "move(nextTo:placing:padding:)")
-    public func next(to target: MObject, position: Direction, padding: Double = 0) {
-        self.call("next_to", arguments: [(nil, target.identifier),
-                                       (nil, position.representation),
-                                       ("buff", padding.description)])
-    }
-    
-    /// Moves the current object next to `target`.
-    ///
-    /// - Parameters:
-    ///   - position: The position of `self` relative to `target`
-    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
-    @varyArgumentType(Point.self, variation: MObject.self)
-    @discardableResult
-    public func move(nextTo target: Point, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
-        var arguments = Closure.Arguments()
-        arguments.append(nil, target)
-        arguments.append(nil, placing)
-        arguments.append("buff", padding.description, when: .notEqual("0.25"))
-        
-        return AttachedAnimation(name: "next_to", target: self.identifier, args: arguments)
-    }
-    
-    
-    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
-    @varyArgumentType(Point.self, variation: MObject.self)
-    @discardableResult
-    public func move(below target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .down, padding: padding)
-    }
-    
-    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
-    @varyArgumentType(Point.self, variation: MObject.self)
-    @discardableResult
-    public func move(above target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .up, padding: padding)
-    }
-    
-    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
-    @varyArgumentType(Point.self, variation: MObject.self)
-    @discardableResult
-    public func move(leftOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .left, padding: padding)
-    }
-    
-    @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
-    @varyArgumentType(Point.self, variation: MObject.self)
-    @discardableResult
-    public func move(rightOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .right, padding: padding)
-    }
-    
-    /// Moves the current object next to `target`.
-    ///
-    /// Use this method to align objects.
-    /// ```swift
-    /// let dot = Dot(at: .center)
-    /// let text = Text("(0, 0)")
-    ///
-    /// text.align(.down, to: dot)
-    /// ```
-    ///
-    /// ![result](align)
-    ///
-    /// - Tip: You can use ``withAnimation(_:in:body:)`` to animate the movement of `self` from its original position.
-    ///
-    /// - Parameters:
-    ///   - position: The position of `self` relative to `target`
-    @discardableResult
-    public func align(_ position: Direction, to target: MObject, padding: Double = 0.25) -> AttachedAnimation {
-        let args: Closure.Arguments = [
-            (nil, target.identifier),
-            (nil, position.representation),
-            ("buff", padding.description)
-        ]
-        return AttachedAnimation(
-            name: "next_to",
-            target: self.identifier,
-            args: args) {
-                if target.isAttached {
-                    self.addUpdater(initialCall: false) { object in
-                        object.call("next_to", arguments: args)
-                    }
-                }
-            }
-    }
-    
     /// Add `child` as sub object.
     public func add(_ child: MObject) {
         self.call("add", arguments: [(nil, child.identifier)])
@@ -232,6 +52,19 @@ public class MObject: PyObject {
     public func rotate(angle: Angle, axis: Axis = .z) -> AttachedAnimation {
         AttachedAnimation(name: "rotate", target: self.identifier, args: [("angle", angle.radians.description),
                                                                           ("axis", axis.representation)])
+    }
+    
+    /// Set the stroke color and stroke opacity.
+    ///
+    /// - Parameters:
+    ///   - color: stroke color.
+    ///   - width: stroke color width.
+    ///   - opacity: stroke opacity.
+    @discardableResult
+    public func stroke(_ color: Color, width: Double = 10, opacity: Double = 1) -> AttachedAnimation {
+        AttachedAnimation(name: "set_stroke", target: self.identifier, args: [("color", color.representation),
+                                                                              ("opacity", opacity.description),
+                                                                              ("width", width.description)])
     }
     
     /// Scale the object by a factor.
@@ -319,28 +152,5 @@ public class MObject: PyObject {
 //    }
 //    
 //    required init(identifier: String) { super.init(identifier: identifier) }
-    
-    
-    @MainActor
-    public final class State {
-        
-        let base: MObject
-        
-        init(base: MObject) {
-            self.base = base
-        }
-        
-        /// Save the states of the object.
-        public func save() {
-            Generator.main.add("\(base.identifier).save_state()")
-        }
-        
-        /// Transforms an object to its last saved state, ``save()``.
-        @discardableResult
-        public func restore() -> Animation {
-            ActionAnimation(name: "Restore", args: []).makeAnimation(object: base)
-        }
-        
-    }
     
 }

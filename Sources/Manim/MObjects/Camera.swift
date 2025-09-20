@@ -6,8 +6,6 @@
 //
 
 
-
-
 /// The camera of the scene.
 public final class Camera: MObject {
     

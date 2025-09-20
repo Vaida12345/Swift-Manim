@@ -45,7 +45,7 @@ class VectorArrow: Scene {
 
 ### Main Objects
 - ``MObject``
-- ``ReadWriteProperty``
+- ``Scene``
 
 ### Common Structures
 - ``Point``
@@ -57,5 +57,4 @@ These structures are developed to facilitate Python Script generation.
 
 - ``PyObject``
 - ``PythonScriptConvertible``
-- ``Closure``
 - ``Generator``
