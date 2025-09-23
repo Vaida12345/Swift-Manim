@@ -92,7 +92,6 @@ extension MObject {
         } else {
             return Animation(animation.closure.name, arguments: [(nil, self.identifier)] + (animation.closure.arguments ?? []))
         }
-        
     }
     
 }

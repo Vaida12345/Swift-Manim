@@ -27,11 +27,7 @@ class VectorArrow: Scene {
         let tipText = Text("(2, 2)")
         tipText.move(nextTo: arrow.end, placing: .right)
 
-        dot.show()
-        arrow.show()
-        numberPlane.show()
-        originText.show()
-        tipText.show()
+        self.add(dot, arrow, numberPlane, originText, tipText)
     }
 }
 ```
