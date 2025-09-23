@@ -6,6 +6,15 @@
 //
 
 
+/// A LaTeX text.
+///
+/// > Tip:
+/// > You can use ``{{}}`` to separate a tex into groups.
+/// > ```swift
+/// > MathTex("{{5}}+{{14}}")
+/// > ```
+/// >
+/// > In this way, you can use ``MObject/children`` to access the sub objects.
 public class MathTex: SVGMObject {
     
     public init(_ latex: TextInterpolation) {

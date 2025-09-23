@@ -17,11 +17,11 @@ public final class Star: Polygram {
     /// - Parameters:
     ///   - count: How many points on the Star.
     ///   - radius: The radius of the circle that the inner / outer vertices are placed on.
-    public convenience init(count: Int? = nil, radius: (inner: Double?, outer: Double?)? = nil, startAngle: Angle? = nil) {
+    public convenience init(count: Int? = nil, radius: (inner: (any Number)?, outer: (any Number)?)? = nil, startAngle: Angle? = nil) {
         self.init(arguments: [
             ("n", count?.description),
-            ("outer_radius", radius?.outer?.description),
-            ("inner_radius", radius?.outer?.description),
+            ("outer_radius", radius?.outer?.representation),
+            ("inner_radius", radius?.outer?.representation),
             ("start_angle", startAngle?.radians.description),
         ])
     }

@@ -24,8 +24,6 @@ public enum Color: String, PythonScriptConvertible {
     case gray
     case black
     
-    case clear
-    
     public var representation: String {
         self.rawValue.uppercased()
     }

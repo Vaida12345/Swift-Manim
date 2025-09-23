@@ -84,4 +84,12 @@ extension MObject {
         ReadableProperty(origin: self, read: Closure("get_start", []))
     }
     
+    public var width: ReadableProperty<Double> {
+        ReadableProperty(origin: self, read: Closure("width", nil))
+    }
+    
+    public var height: ReadableProperty<Double> {
+        ReadableProperty(origin: self, read: Closure("height", nil))
+    }
+    
 }

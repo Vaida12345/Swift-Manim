@@ -12,11 +12,11 @@ public enum HideAnimation: Equatable {
     /// No animation, just hide the object.
     case none
     
-    /// Fade In.
+    /// Fade Out.
     ///
     /// - Parameters:
-    ///   - shift: Fade in with shift, with the direction being `shift`.
-    ///   - scale: Fade in with scale. `scale` defines the initial scaling.
+    ///   - shift: Fade out with shift, with the direction being `shift`.
+    ///   - scale: Fade out with scale. `scale` defines the initial scaling.
     case fadeOut(shift: Direction? = nil, scale: Double? = nil)
     
     /// The default way of un-creation, by un-drawing the borders.
@@ -68,14 +68,10 @@ extension MObject {
     /// Hide the object.
     @discardableResult
     public func hide(animation: HideAnimation = .uncreate) -> Animation {
-        if animation == .none {
-            Generator.main.add("self.remove(\(self.identifier))")
+        if shouldUseAnimation && animation != .none {
+            return Animation(animation.name, arguments: [(nil, self.identifier)] + animation.args)
         } else {
-            if shouldUseAnimation {
-                return Animation(animation.name, arguments: [(nil, self.identifier)] + animation.args)
-            } else {
-                Generator.main.add("self.play(\(animation.name)\(([(nil, self.identifier)] + animation.args).representation))")
-            }
+            Generator.main.add("self.play(\(animation.name)\(([(nil, self.identifier)] + animation.args).representation))")
         }
         
         return EmptyAnimation()

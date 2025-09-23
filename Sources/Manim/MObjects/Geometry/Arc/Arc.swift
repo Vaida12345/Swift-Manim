@@ -21,9 +21,9 @@ public class Arc: VMObject {
     ///   - start: The start angle. When `start` is `0`, the line an arrow from (0, 0) to (1, 0)
     ///   - angle: The angle length.
     ///   - center: The center position.
-    public convenience init(radius: Double = 1, start: Angle = .zero, angle: Angle, center: Point = .center) {
+    public convenience init(radius: (any Number) = 1, start: Angle = .zero, angle: Angle, center: Point = .center) {
         self.init(arguments: [
-            ("radius", radius.description),
+            ("radius", radius.representation),
             ("start_angle", start.radians.description),
             ("angle", angle.radians.description),
             ("arc_center", center.representation)

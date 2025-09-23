@@ -90,7 +90,7 @@ extension MObject {
             Generator.main.add("self.add(\(self.identifier))")
             return EmptyAnimation()
         } else {
-            return Animation(animation.closure.name, arguments: [(nil, self.identifier)] + animation.closure.arguments)
+            return Animation(animation.closure.name, arguments: [(nil, self.identifier)] + (animation.closure.arguments ?? []))
         }
         
     }

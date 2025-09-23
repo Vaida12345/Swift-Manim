@@ -144,16 +144,16 @@ public struct ActionAnimation: @MainActor Equatable {
     /// In particular, this means: the first object takes the place of the second object, the second one takes the place of the third object, and so on. The last object takes the place of the first one.
     ///
     /// - Note: The action would only work on ``Group``.
-    public static func cyclicReplace(duration: Double? = nil) -> ActionAnimation {
+    public static func cyclicReplace() -> ActionAnimation {
         ActionAnimation(name: "CyclicReplace", args: [], overrideMObject: { "*\($0)" })
     }
     
     
     internal func makeAnimation(object: MObject) -> Animation {
         if shouldUseAnimation {
-            return Animation(self.closure.name, arguments: (overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.closure.arguments)
+            return Animation(self.closure.name, arguments: (overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + (self.closure.arguments ?? []))
         } else {
-            Generator.main.add("self.play(\(self.closure.name)\(((overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + self.closure.arguments).representation)")
+            Generator.main.add("self.play(\(self.closure.name)\(((overrideMObject != nil ? [(nil, overrideMObject!(object.identifier))] : [(nil, object.identifier)]) + (self.closure.arguments ?? [])).representation)")
         }
         
         return EmptyAnimation()

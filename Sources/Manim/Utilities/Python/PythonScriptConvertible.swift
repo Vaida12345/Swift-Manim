@@ -30,6 +30,10 @@ func representation(of value: Any) -> String {
     if let value = value as? PythonScriptConvertible {
         return value.representation
     } else {
-        return String(describing: value)
+        if let value = value as? String, value.isEmpty {
+            return #""""#
+        } else {
+            return String(describing: value)
+        }
     }
 }

@@ -40,10 +40,10 @@ extension MObject {
     
     /// Moves the current object next to `target`.
     @available(*, deprecated, renamed: "move(nextTo:placing:padding:)")
-    public func next(to target: MObject, position: Direction, padding: Double = 0) {
+    public func next(to target: MObject, position: Direction, padding: (any Number) = 0) {
         self.call("next_to", arguments: [(nil, target.identifier),
                                          (nil, position.representation),
-                                         ("buff", padding.description)])
+                                         ("buff", padding.representation)])
     }
     
     /// Moves the current object next to `target`.
@@ -53,11 +53,11 @@ extension MObject {
     @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
-    public func move(nextTo target: Point, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
+    public func move(nextTo target: Point, placing: Direction, padding: (any Number) = 0.25) -> AttachedAnimation {
         var arguments = Closure.Arguments()
         arguments.append(nil, target)
         arguments.append(nil, placing)
-        arguments.append("buff", padding.description, when: .notEqual("0.25"))
+        arguments.append("buff", padding.representation, when: .notEqual("0.25"))
         
         return AttachedAnimation(name: "next_to", target: self.identifier, args: arguments)
     }
@@ -67,7 +67,7 @@ extension MObject {
     @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
-    public func move(below target: Point, padding: Double = 0.25) -> AttachedAnimation {
+    public func move(below target: Point, padding: (any Number) = 0.25) -> AttachedAnimation {
         self.move(nextTo: target, placing: .down, padding: padding)
     }
     
@@ -75,7 +75,7 @@ extension MObject {
     @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
-    public func move(above target: Point, padding: Double = 0.25) -> AttachedAnimation {
+    public func move(above target: Point, padding: (any Number) = 0.25) -> AttachedAnimation {
         self.move(nextTo: target, placing: .up, padding: padding)
     }
     
@@ -83,7 +83,7 @@ extension MObject {
     @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
-    public func move(leftOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
+    public func move(leftOf target: Point, padding: (any Number) = 0.25) -> AttachedAnimation {
         self.move(nextTo: target, placing: .left, padding: padding)
     }
     
@@ -91,7 +91,7 @@ extension MObject {
     @varyArgumentType(Point.self, variation: ReadableProperty<Point>.self)
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
-    public func move(rightOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
+    public func move(rightOf target: Point, padding: (any Number) = 0.25) -> AttachedAnimation {
         self.move(nextTo: target, placing: .right, padding: padding)
     }
     

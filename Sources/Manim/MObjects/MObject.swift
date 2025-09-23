@@ -27,9 +27,9 @@ public class MObject: PyObject {
     ///   - color: Fill color.
     ///   - opacity: Fill opacity.
     @discardableResult
-    public func fill(_ color: Color, opacity: Double = 1) -> AttachedAnimation {
+    public func fill(_ color: Color, opacity: (any Number) = 1) -> AttachedAnimation {
         AttachedAnimation(name: "set_fill", target: self.identifier, args: [("color", color.representation),
-                                                                            ("opacity", opacity.description)])
+                                                                            ("opacity", opacity.representation)])
     }
     
     /// Set the color and opacity.
@@ -41,6 +41,13 @@ public class MObject: PyObject {
     /// Add `child` as sub object.
     public func add(_ child: MObject) {
         self.call("add", arguments: [(nil, child.identifier)])
+    }
+    
+    /// Remove `child` as sub object.
+    ///
+    /// - Note: This has no effect if `child` is not a children of `self`.
+    public func remove(_ child: MObject) {
+        self.call("remove", arguments: [(nil, child.identifier)])
     }
     
     /// Rotates the object about a certain point.
@@ -61,16 +68,16 @@ public class MObject: PyObject {
     ///   - width: stroke color width.
     ///   - opacity: stroke opacity.
     @discardableResult
-    public func stroke(_ color: Color, width: Double = 10, opacity: Double = 1) -> AttachedAnimation {
+    public func stroke(_ color: Color, width: (any Number) = 2, opacity: (any Number) = 1) -> AttachedAnimation {
         AttachedAnimation(name: "set_stroke", target: self.identifier, args: [("color", color.representation),
-                                                                              ("opacity", opacity.description),
-                                                                              ("width", width.description)])
+                                                                              ("opacity", opacity.representation),
+                                                                              ("width", width.representation)])
     }
     
     /// Scale the object by a factor.
     @discardableResult
-    public func scale(factor: Double) -> AttachedAnimation {
-        AttachedAnimation(name: "scale", target: self.identifier, args: [(nil, factor.description)])
+    public func scale(factor: some Number) -> AttachedAnimation {
+        AttachedAnimation(name: "scale", target: self.identifier, args: [(nil, factor.representation)])
     }
     
     /// Add an update function to this object.

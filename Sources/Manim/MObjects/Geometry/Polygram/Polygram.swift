@@ -22,9 +22,9 @@ public class Polygram: VMObject {
     ///
     /// - Parameters:
     ///   - radius: The curvature of the corners of the Polygram.
-    public func roundCorners(radius: Double? = nil) -> Polygram {
+    public func roundCorners(radius: (any Number)? = nil) -> Polygram {
         let polygram = self.copied()
-        polygram.call("round_corners", arguments: [("radius", radius?.description)])
+        polygram.call("round_corners", arguments: [("radius", radius?.representation)])
         return polygram
     }
     

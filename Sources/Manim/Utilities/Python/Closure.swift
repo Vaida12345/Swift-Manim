@@ -10,22 +10,27 @@ struct Closure: PythonScriptConvertible, @MainActor Equatable {
     
     let name: String
     
-    var arguments: Arguments
+    /// `nil` means it is not callable.
+    var arguments: Arguments?
     
     
-    init(name: String, arguments: Arguments) {
+    init(name: String, arguments: Arguments?) {
         self.name = name
         self.arguments = arguments
     }
     
-    init(_ name: String, _ arguments: Arguments) {
+    init(_ name: String, _ arguments: Arguments?) {
         self.name = name
         self.arguments = arguments
     }
     
     
     var representation: String {
-        return self.name + self.arguments.representation
+        if let arguments {
+            return self.name + arguments.representation
+        } else {
+            return self.name
+        }
     }
     
     

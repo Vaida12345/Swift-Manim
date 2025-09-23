@@ -6,7 +6,7 @@
 //
 
 
-/// A property that is read-only.
+/// A property that is readable.
 public class ReadableProperty<ReturnValue>: @MainActor Equatable, PythonScriptConvertible {
     
     /// The closure for reading a property.
@@ -37,3 +37,22 @@ public class ReadableProperty<ReturnValue>: @MainActor Equatable, PythonScriptCo
 
 
 extension ReadableProperty<Point>: PointProtocol { }
+extension ReadableProperty<Double>: Number { }
+
+
+extension ReadableProperty<Array<MObject>> {
+    
+    public subscript(index: Int) -> ReturnValue.Element {
+        ReturnValue.Element(identifier: "\(self.representation)[\(index)]")
+    }
+    
+}
+
+
+extension ReadableProperty<Array<Group>> {
+    
+    public subscript(index: Int) -> ReturnValue.Element {
+        ReturnValue.Element(identifier: "\(self.representation)[\(index)]")
+    }
+    
+}

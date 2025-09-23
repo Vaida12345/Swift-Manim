@@ -9,12 +9,14 @@
 
 
 /// Display (non-LaTeX) text.
+///
+/// - SeeAlso: ``MathTex`` for LaTeX text.
 public class Text: SVGMObject {
     
     /// Write-only property for setting fontSize.
-    public var fontSize: Double {
+    public var fontSize: (any Number) {
         get { fatalError("Does not support GET") }
-        set { self.addInitializerArgument("font_size", newValue.description) }
+        set { self.addInitializerArgument("font_size", newValue.representation) }
     }
     
     /// Write-only property for setting font.
@@ -36,12 +38,12 @@ public class Text: SVGMObject {
     }
     
     
-    public init(_ text: String, lineSpacing: Double = -1, height: Double? = nil, width: Double? = nil, center: Bool = true) {
+    public init(_ text: String, lineSpacing: (any Number) = -1, height: (any Number)? = nil, width: (any Number)? = nil, center: Bool = true) {
         var arguments = Closure.Arguments()
         arguments.append("text", "\"\(text)\"")
-        arguments.append("line_spacing", lineSpacing.description, when: .notEqual("-1.0"))
-        arguments.append("height", height?.description)
-        arguments.append("width", width?.description)
+        arguments.append("line_spacing", lineSpacing.representation, when: .notEqual("-1.0"))
+        arguments.append("height", height?.representation)
+        arguments.append("width", width?.representation)
         arguments.append("center", center, when: .notEqual(true))
         
         super.init(arguments: arguments)

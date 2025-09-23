@@ -16,12 +16,12 @@ public class Rectangle: Polygon {
     ///   - width: The width of the rectangle
     ///   - height: The height of the rectangle
     ///   - gridStep: Space between horizontal and vertical grid lines.
-    public init( width: Double, height: Double, gridStep: (x: Double?, y: Double?)? = nil) {
+    public init(width: some Number, height: some Number, gridStep: (x: (any Number)?, y: (any Number)?)? = nil) {
         var arguments = Closure.Arguments()
-        arguments.append("width", width.description)
-        arguments.append("height", height.description)
-        arguments.append("grid_xstep", gridStep?.x?.description)
-        arguments.append("grid_ystep", gridStep?.y?.description)
+        arguments.append("width", width.representation)
+        arguments.append("height", height.representation)
+        arguments.append("grid_xstep", gridStep?.x?.representation)
+        arguments.append("grid_ystep", gridStep?.y?.representation)
         
         super.init(arguments: arguments)
     }

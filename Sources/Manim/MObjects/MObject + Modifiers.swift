@@ -28,7 +28,7 @@ extension MObject {
         
         var declaration = Generator.main.components[declarationIndex]
         switch declaration {
-        case let .declaration(indentation, name, initializer): declaration = .declaration(indentation: indentation, name: name, initializer: Closure(initializer.name, Closure.Arguments(initializer.arguments.contents + [Closure.Argument(key, value)])))
+        case let .declaration(indentation, name, initializer): declaration = .declaration(indentation: indentation, name: name, initializer: Closure(initializer.name, Closure.Arguments((initializer.arguments ?? []).contents + [Closure.Argument(key, value)])))
         default: return
         }
         Generator.main.components[declarationIndex] = declaration

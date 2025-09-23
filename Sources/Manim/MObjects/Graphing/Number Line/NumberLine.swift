@@ -20,19 +20,19 @@ public final class NumberLine: Line {
     ///   - tip: The properties of the tip.
     ///   - scaling: The way the `range` is value is scaled.
     public convenience init(range: Range? = nil,
-                length: Double? = nil,
-                unitSize: Double = 1,
+                length: (any Number)? = nil,
+                unitSize: (any Number) = 1,
                 include: DisplayStyle = [],
-                strokeWidth: Double? = nil,
+                strokeWidth: (any Number)? = nil,
                 tip: TipStyle? = nil,
                 scaling: ScaleBase = .linear(),
                 start: (any PointProtocol)? = nil, end: (any PointProtocol)? = nil
                 ) {
         var args: Closure.Arguments = [
             ("x_range", range?.representation),
-            ("length", length?.description),
-            ("unit_size", unitSize.description),
-            ("stroke_width", strokeWidth?.description),
+            ("length", length?.representation),
+            ("unit_size", unitSize.representation),
+            ("stroke_width", strokeWidth?.representation),
             ("tip_width", tip?.width?.description),
             ("tip_height", tip?.height?.description),
             ("tip_shape", tip?.shape?.identifier),

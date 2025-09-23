@@ -127,7 +127,11 @@ public func withAnimation(_ animation: RateFunction = .linear, in method: Animat
                     arguments.append("run_time", animation.duration.description, when: .notEqual("1.0"))
                     arguments.append("lag_ratio", animation.lagRatio.description, when: .notEqual("0.0"))
                     
-                    return "AnimationGroup\(arguments)"
+                    if animation.duration == 1 && animation.lagRatio == 0 {
+                        return body
+                    } else {
+                        return "AnimationGroup\(arguments.representation)"
+                    }
                 }
                 
                 if animation.delay != 0 {

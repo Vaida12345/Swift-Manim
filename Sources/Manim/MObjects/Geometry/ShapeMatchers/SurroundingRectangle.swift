@@ -17,11 +17,11 @@ public class SurroundingRectangle: MObject {
     ///   - base: The attached object.
     ///   - color: The color of stroke.
     ///   - cornerRadius: The color radius of stroke.
-    public init(_ base: MObject, color: Color? = nil, cornerRadius: Double? = nil) {
+    public init(_ base: MObject, color: Color? = nil, cornerRadius: (any Number)? = nil) {
         super.init(arguments: [
             ("mobject", base.identifier),
             ("color", color?.representation),
-            ("corner_radius", cornerRadius?.description),
+            ("corner_radius", cornerRadius?.representation),
         ])
     }
     

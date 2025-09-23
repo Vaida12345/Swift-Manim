@@ -78,7 +78,7 @@ public final class Generator {
     }
     
     internal func assign<T>(_ method: ReadableProperty<T>) -> T where T: PyObject {
-        self.assign(type: T.self, by: method.origin, calling: method.read.name, args: method.read.arguments)
+        self.assign(type: T.self, by: method.origin, calling: method.read.name, args: method.read.arguments ?? [])
     }
     
     
@@ -202,8 +202,14 @@ public final class Generator {
             case example = "example_quality"
             case low = "low_quality"
             case medium = "medium_quality"
+            
+            /// 1080p @60fps
             case high = "high_quality"
+            
+            /// 1440p @60fps
             case production = "production_quality"
+            
+            /// 4k @60fps
             case best = "fourk_quality"
         }
         

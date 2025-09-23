@@ -11,10 +11,10 @@
 final class Underline: Line {
     
     /// Creates an underline.
-    public init(base: MObject, padding: Double? = nil) {
+    public init(base: MObject, padding: (any Number)? = nil) {
         super.init(arguments: [
             ("mobject", base.identifier),
-            ("buff", padding?.description),
+            ("buff", padding?.representation),
         ])
     }
     
@@ -25,7 +25,7 @@ final class Underline: Line {
 
 extension MObject {
     
-    func underline(padding: Double? = nil) -> Underline {
+    func underline(padding: (any Number)? = nil) -> Underline {
         Underline(base: self, padding: padding)
     }
     

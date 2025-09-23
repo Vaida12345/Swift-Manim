@@ -12,10 +12,10 @@
 public final class Ellipse: Circle {
     
     
-    public convenience init(width: Double? = nil, height: Double? = nil) {
+    public convenience init(width: (any Number)? = nil, height: (any Number)? = nil) {
         self.init(arguments: [
-            ("width",  width?.description),
-            ("height", height?.description)
+            ("width",  width?.representation),
+            ("height", height?.representation)
         ])
     }
     

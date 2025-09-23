@@ -65,6 +65,5 @@ extension ReadWriteProperty<Color> {
     public static let white = ReadWriteProperty<Color>(constant: .white)
     public static let gray = ReadWriteProperty<Color>(constant: .gray)
     public static let black = ReadWriteProperty<Color>(constant: .black)
-    public static let clear = ReadWriteProperty<Color>(constant: .clear)
     
 }

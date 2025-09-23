@@ -19,11 +19,11 @@ public class RegularPolygram: Polygram {
     ///   - density: Can be thought of as how many vertices to hop to draw a line between them. Every `density`-th vertex is connected.
     ///   - radius: The radius of the circle that the vertices are placed on.
     ///   - startAngle: The angle the vertices start at; the rotation of the ``RegularPolygram``.
-    public init(count: Int, density: Int? = nil, radius: Double? = nil, startAngle: Angle? = nil) {
+    public init(count: Int, density: Int? = nil, radius: (any Number)? = nil, startAngle: Angle? = nil) {
         super.init(arguments: [
             ("num_vertices", count.description),
             ("density", density?.description),
-            ("radius", radius?.description),
+            ("radius", radius?.representation),
             ("start_angle", startAngle?.radians.description),
         ])
     }

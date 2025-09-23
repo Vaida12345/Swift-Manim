@@ -18,12 +18,12 @@ public class Arrow: Line {
     ///   - end: The ending point of the arrow.
     ///   - padding: The distance of the arrow from its start and end points.
     ///   - tip: The tip shape.
-    public init(from start: some PointProtocol, to end: some PointProtocol, padding: Double = 0, tip: some ArrowTipShape = .default) {
+    public init(from start: some PointProtocol, to end: some PointProtocol, padding: (any Number) = 0, tip: some ArrowTipShape = .default) {
         super.init(
             arguments: [
                 ("start", start.representation),
                 ("end", end.representation),
-                ("buff", padding.description)
+                ("buff", padding.representation)
             ] + (tip.identifier.isEmpty ? [] : [("tip_shape", tip.identifier)])
         )
     }

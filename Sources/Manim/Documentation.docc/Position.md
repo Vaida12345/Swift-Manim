@@ -19,6 +19,11 @@ Follow the same guideline, the ``MObject/origin`` of an object is defined to be 
 ![example](origin)
 
 
+## Positioning
+
+Although you can use ``MObject/origin`` or ``MObject/move(to:alignedEdges:coordinateMask:)-(PointProtocol,_,_)`` to retrieve and move objects using its absolute coordinate, which you can use the ``NumberPlane`` as a reference. It is suggested to use relative layouts, such as ``MObject/move(nextTo:placing:padding:)`` or ``Scene/arrange``.
+
+
 
 ## Topics
 
@@ -51,3 +56,8 @@ Follow the same guideline, the ``MObject/origin`` of an object is defined to be 
 ### Implicit Move
 - ``MObject/shift(by:)``
 - ``MObject/moveAlong(pathOf:)``
+
+### Arrangecment
+- ``Scene/arrange``
+- ``HStack``
+- ``VStack``
