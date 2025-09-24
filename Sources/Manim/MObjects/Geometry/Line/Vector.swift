@@ -5,18 +5,19 @@
 //  Created by Vaida on 2023/10/14.
 //
 
+import PythonKit
 
-/// A vector, with the `start` being `.zero`.
-//public final class Vector: Arrow {
-//    
-//    public convenience init(direction: Direction) {
-//        self.init(arguments: [("direction", direction.representation)])
-//    }
-//    
-//    
-//    /// The coordinates label of this object.
-//    public func coordinatesLabel() -> MObject {
-//        MObject(identifier: "\(self.identifier).coordinate_label()")
-//    }
-//    
-//}
+
+/// A Arrow, with the `start` being `.zero`.
+public final class Vector: Arrow {
+    
+    /// - Parameters:
+    ///   - direction: The direction of the arrow.
+    ///   - padding: The distance of the vector from its endpoints.
+    public init(_ direction: Point, padding: Double = 0, strokeWidth: Double = 6, color: Color = .white, tip: ArrowTipShape? = nil) {
+        super.init(manim.Vector(direction: direction, color: color, buff: padding, stroke_width: strokeWidth, tip_shape: tip))
+    }
+    
+    public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+}

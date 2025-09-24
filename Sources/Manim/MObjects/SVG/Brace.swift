@@ -5,17 +5,18 @@
 //  Created by Vaida on 8/27/24.
 //
 
+import PythonKit
 
-//public class Brace: MObject {
-//    
-//    public init(_ object: MObject, direction: Direction = .down) {
-//        super.init(arguments: [
-//            (nil, object.identifier),
-//            ("direction", direction.representation)
-//        ])
-//    }
-//    
-//    required init(identifier: String) { super.init(identifier: identifier) }
-//    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
-//    
-//}
+
+/// Takes a ``MObject`` and draws a brace adjacent to it.
+public class Brace: MObject {
+    
+    /// - Parameters:
+    ///   - direction: Passing a direction vector determines the direction from which the brace is drawn.
+    public init(_ object: MObject, direction: Direction = .down) {
+        super.init(manim.Brace(object, direction: direction))
+    }
+    
+    public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+}

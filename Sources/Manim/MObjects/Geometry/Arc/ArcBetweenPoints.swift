@@ -1,17 +1,16 @@
 //
-//  Arc.swift
-//  swiftManim
+//  ArcBetweenPoints.swift
+//  Manim
 //
-//  Created by Vaida on 2023/10/13.
+//  Created by Vaida on 2025-09-24.
 //
 
-import Foundation
-import PythonKit
 import SwiftUI
+import PythonKit
 
 
-/// An Arc
-public class Arc: TipableVMobject {
+/// Inherits from Arc and additionally takes 2 points between which the arc is spanned.
+public class ArcBetweenPoints: TipableVMobject {
     
     /// Creates an arc.
     ///
@@ -23,7 +22,7 @@ public class Arc: TipableVMobject {
     ///   - angle: The angle length.
     ///   - center: The center position.
     public init(radius: Double = 1, start: Angle = .zero, angle: Angle, center: Point = .center, color: Color = .yellow) {
-        let object = manim.Arc(radius: radius, start_angle: start.radians, angle: angle.radians, arc_center: center, color: color)
+        let object = manim.ArcBetweenPoints(radius: radius, start_angle: start.radians, angle: angle.radians, arc_center: center, color: color)
         super.init(object)
     }
     
@@ -36,7 +35,7 @@ public class Arc: TipableVMobject {
     ///   - end: The end point.
     ///   - angle: The degree of angle be between the central point to `start` and center to `end`.
     public init(start: Point, end: Point, angle: Angle = .degrees(45), color: Color = .yellow) {
-        let object = manim.Arc(start: start, end: end, angle: angle.radians, color: color)
+        let object = manim.ArcBetweenPoints(start: start, end: end, angle: angle.radians, color: color)
         super.init(object)
     }
     

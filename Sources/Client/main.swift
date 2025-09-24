@@ -10,14 +10,13 @@ import Foundation
 
 
 try await withManim { scene in
-    let dot = Dot(color: .blue)
-    dot.show()
+//    NumberPlane(domain: .init(max: 3, step: 2)).show()
     
-    let x = dot.track(\.x)
+//    let graph = FunctionGraph(range: .init(max: 3, step: 2)) { x in
+//        x + 2
+//    }
     
-    withAnimation {
-        x += 1
-    }
+//    graph.show()
 } configuration: { configuration in
     configuration.preview = false
     configuration.disableCache = true

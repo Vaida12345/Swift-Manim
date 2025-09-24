@@ -6,6 +6,9 @@
 //
 
 
-//public class SVGMObject: VMObject {
-//    
-//}
+/// A vectorized ``MObject`` created from importing an SVG file.
+public class SVGMObject: VMObject {
+    
+    
+    
+}

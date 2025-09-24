@@ -6,22 +6,30 @@
 //
 
 import Foundation
-import LaTeX
+import PythonKit
 
 
-//public final class FunctionGraph: VMObject {
-//    
-//    public convenience init(color: Color? = nil, range: ClosedRange<Double>? = nil, function: (_ x: String) -> some LaTeXComponent) {
-//        let symbol = "t"
-//        let result = function(symbol)
-//        
-//        self.init(
-//            arguments: [
-//                (nil, "lambda t: \(result.pyDescription)"),
-//                ("color", color?.representation),
-//                ("range", range.map { "[\($0.lowerBound), \($0.upperBound), 1]" }),
-//            ]
-//        )
-//    }
-//    
-//}
+/// A ``ParametricFunction`` that spans the length of the scene by default.
+///
+/// ```swift
+/// let graph = FunctionGraph { x in
+///     x + 2
+/// }
+///
+/// graph.show()
+/// ```
+///
+/// ![preview](FunctionGraph)
+public final class FunctionGraph: ParametricFunction {
+    
+    public init(color: Color = .yellow, range: Range? = nil, function: @escaping (Double) -> Double) {
+        let function = PythonFunction { object in
+            function(Double(object)!)
+        }
+        
+        super.init(manim.FunctionGraph(function, color: color, x_range: range))
+    }
+    
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+}

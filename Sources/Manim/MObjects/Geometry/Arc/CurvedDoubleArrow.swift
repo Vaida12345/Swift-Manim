@@ -5,18 +5,17 @@
 //  Created by Vaida on 2023/10/13.
 //
 
+import PythonKit
+import SwiftUI
 
-//import SwiftUI
-//
-//
-//public final class CurvedDoubleArrow: Arc {
-//    
-//    public convenience init(start: Point, end: Point, angle: Angle = .degrees(45)) {
-//        self.init(arguments: [
-//            ("start_point", start.representation),
-//            ("end_point", end.representation),
-//            ("angle", angle.radians.description),
-//        ])
-//    }
-//    
-//}
+
+public final class CurvedDoubleArrow: CurvedArrow {
+    
+    public override init(start: Point, end: Point, angle: Angle = .degrees(45)) {
+        super.init(manim.CurvedDoubleArrow(start_point: start, end_point: end, angle: angle.radians))
+    }
+    
+    
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+}

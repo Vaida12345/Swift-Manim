@@ -8,6 +8,6 @@
 /// Creates a number plane that spans the entire screen.
 ///
 /// ![example](VectorArrow)
-//public class NumberPlane: Axes {
-//    
-//}
+public class NumberPlane: Axes {
+    
+}

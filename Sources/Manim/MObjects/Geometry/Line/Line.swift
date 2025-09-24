@@ -6,15 +6,15 @@
 //
 
 import OSLog
+import PythonKit
 
 
-//public class Line: VMObject {
-//    
-//    public init(from start: some PointProtocol, to end: some PointProtocol) {
-//        super.init(arguments: [("start", start.representation), ("end", end.representation)])
-//    }
-//    
-//    required init(identifier: String) { super.init(identifier: identifier) }
-//    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
-//    
-//}
+public class Line: VMObject {
+    
+    public init(from start: Point, to end: Point) {
+        super.init(manim.Line(start: start, end: end))
+    }
+    
+    public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+}

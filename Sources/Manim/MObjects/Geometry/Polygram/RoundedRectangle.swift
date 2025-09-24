@@ -5,25 +5,29 @@
 //  Created by Vaida on 2023/10/14.
 //
 
+import PythonKit
 
 
-
-//public final class RoundedRectangle: Rectangle {
-//    
-//    /// Creates a rectangle.
-//    ///
-//    /// - Parameters:
-//    ///   - height: The height of the rectangle
-//    ///   - width: The width of the rectangle
-//    ///   - cornerRadius: The corner radius of the rectangle
-//    ///   - gridStep: Space between horizontal and vertical grid lines.
-//    public convenience init(height: (some Number), width: (some Number), cornerRadius: (any Number)? = nil, gridStep: (x: (any Number)?, y: (any Number)?)?) {
-//        self.init(arguments: [("height", height.representation),
-//                          ("width", width.representation),
-//                          ("corner_radius", cornerRadius?.representation),
-//                          ("grid_xstep", gridStep?.x?.representation),
-//                          ("grid_ystep", gridStep?.y?.representation),
-//                         ])
-//    }
-//    
-//}
+public class RoundedRectangle: Rectangle {
+    
+    /// Creates a rectangle.
+    ///
+    /// - Parameters:
+    ///   - height: The height of the rectangle
+    ///   - width: The width of the rectangle
+    ///   - cornerRadius: The corner radius of the rectangle
+    ///   - gridStep: Space between horizontal and vertical grid lines.
+    public init(width: Double, height: Double, cornerRadius: Double = 0.5, gridStep: (x: Double?, y: Double?)? = nil) {
+        var arguments = Closure.Arguments()
+        arguments.append("width", width)
+        arguments.append("height", height)
+        arguments.append("corner_radius", cornerRadius)
+        arguments.append("grid_xstep", gridStep?.x)
+        arguments.append("grid_ystep", gridStep?.y)
+        
+        super.init(manim.RoundedRectangle.dynamicallyCall(withKeywordArguments: arguments))
+    }
+    
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+}

@@ -14,8 +14,8 @@ public class Circle: Arc {
     
     /// - Parameters:
     ///   - color: The color of the shape.
-    public init(radius: Double? = nil, strokeColor: Color? = nil) {
-        let object = manim.Circle(radius: radius, color: strokeColor)
+    public init(radius: Double? = nil, color: Color = .yellow) {
+        let object = manim.Circle(radius: radius, color: color)
         super.init(object)
     }
     

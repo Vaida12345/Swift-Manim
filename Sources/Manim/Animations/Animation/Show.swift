@@ -69,7 +69,7 @@ public struct ShowAnimation {
     /// - Parameters:
     ///   - angle: The amount of spinning before object reaches its full size. E.g. 2*PI means that the object will do one full spin before being fully introduced.
     ///   - initialColor: the initial color of the point that grows into the object.
-    public static func rotate(angle: Angle = .degrees(90), initialColor: Color? = nil) -> ShowAnimation {
+    public static func rotate(angle: Angle = .degrees(90), initialColor: Color = .yellow) -> ShowAnimation {
         ShowAnimation(caller: manim.SpinInFromNothing, arguments: [("angle", angle.radians), ("point_color", initialColor)])
     }
 }

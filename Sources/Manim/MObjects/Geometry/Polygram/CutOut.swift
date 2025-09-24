@@ -5,26 +5,31 @@
 //  Created by Vaida on 2023/10/14.
 //
 
+import PythonKit
 
 
+/// A shape with smaller cutouts.
+public final class Cutout: VMObject {
+    
+    init(_ base: VMObject, cutouts: [VMObject]) {
+        super.init(manim.Cutout(base, cutouts))
+    }
+    
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+}
 
-///// A shape with smaller cutouts.
-//public final class Cutout: VMObject {
-//    
-//    convenience init(_ main: VMObject, cutouts: [VMObject]) {
-//        self.init(arguments: Closure.Arguments([
-//            Closure.Argument(nil, main.identifier)
-//        ] + cutouts.map { Closure.Argument(nil, $0.identifier) }))
-//    }
-//    
-//}
-//
-//
-//extension VMObject {
-//    
-//    /// Creates a cutout using the given sub objects.
-//    public func cut(out: [VMObject]) -> Cutout {
-//        Cutout(self, cutouts: out)
-//    }
-//    
-//}
+
+extension VMObject {
+    
+    /// Creates a cutout using the given sub objects.
+    public func cutout(_ objects: [VMObject]) -> Cutout {
+        Cutout(self, cutouts: objects)
+    }
+    
+    /// Creates a cutout using the given sub objects.
+    public func cutout(_ objects: VMObject...) -> Cutout {
+        self.cutout(objects)
+    }
+    
+}
