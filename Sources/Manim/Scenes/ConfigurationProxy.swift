@@ -58,7 +58,7 @@ public final class ConfigurationProxy {
     public var fileName: String = "output"
     
     /// File format
-    public var format: Format = .mp4
+    public var format: Format = .mov
     
     /// Frame width and height in pixels.
     public var size: CGSize?

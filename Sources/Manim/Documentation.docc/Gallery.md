@@ -59,3 +59,7 @@ try await withManim { scene in
 ![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mov)
 
 View source code in [animation.md](<doc:Animations>)
+
+## Matmul
+
+<doc:matmul>
