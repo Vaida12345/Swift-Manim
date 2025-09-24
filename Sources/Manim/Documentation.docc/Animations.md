@@ -33,7 +33,7 @@ You can explore ``withAnimation(_:in:body:)`` for more options.
 
 Please refer to the video for details.
 
-![Video](lagRatio)
+![Video](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mov)
 
 ```swift
 try await withManim { scene in

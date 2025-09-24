@@ -105,6 +105,10 @@ try await withManim { scene in
 } 
 ```
 
+## Matrix Multiplication
+
+[See Here](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/matmul.md)
+
 
 ## Getting Started
 
