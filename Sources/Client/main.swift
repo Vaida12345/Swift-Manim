@@ -13,6 +13,8 @@ try await withManim { scene in
     let dot1 = Dot(at: [0, 2], color: .blue)
     let dot2 = Dot(at: .center, color: .green)
     
+    print(dot1.color)
+    
 } configuration: {
     $0.preview = false
 }

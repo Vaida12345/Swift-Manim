@@ -10,9 +10,25 @@ import PythonKit
 
 /// A preset of colors.
 @MainActor
-public struct Color: Equatable, @MainActor PythonConvertible, @MainActor ConvertibleFromPython {
+public struct Color: Equatable, @MainActor PythonConvertible, @MainActor ConvertibleFromPython, @MainActor CustomStringConvertible {
     
     let box: Box
+    
+    public var description: String {
+        switch box {
+        case .predefined(let string):
+            return "Color.\(string)"
+        case .hex(let string, let alpha):
+            var string = "Color(\(string.uppercased())"
+            if alpha != 1 {
+                string += ", alpha: \(alpha)"
+            }
+            string += ")"
+            return string
+        case .rgba(let r, let g, let b, let a):
+            return "Color(\(r, format: .percent.precision(0)), \(g, format: .percent.precision(0)), \(b, format: .percent.precision(0)), \(a, format: .percent.precision(0)))"
+        }
+    }
     
     enum Box: Equatable {
         case predefined(String)
@@ -20,19 +36,23 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
         case rgba(Double, Double, Double, Double)
     }
     
-    public static let blue = Color(box: .predefined("blue".uppercased()))
-    public static let teal = Color(box: .predefined("teal".uppercased()))
-    public static let green = Color(box: .predefined("green".uppercased()))
-    public static let yellow = Color(box: .predefined("yellow".uppercased()))
-    public static let gold = Color(box: .predefined("gold".uppercased()))
-    public static let red = Color(box: .predefined("red".uppercased()))
-    public static let maroon = Color(box: .predefined("maroon".uppercased()))
-    public static let purple = Color(box: .predefined("purple".uppercased()))
-    public static let pink = Color(box: .predefined("pink".uppercased()))
-    public static let orange = Color(box: .predefined("orange".uppercased()))
-    public static let white = Color(box: .predefined("white".uppercased()))
-    public static let gray = Color(box: .predefined("gray".uppercased()))
-    public static let black = Color(box: .predefined("black".uppercased()))
+    public static let blue = Color(box: .predefined("blue"))
+    public static let teal = Color(box: .predefined("teal"))
+    public static let green = Color(box: .predefined("green"))
+    public static let yellow = Color(box: .predefined("yellow"))
+    public static let gold = Color(box: .predefined("gold"))
+    public static let red = Color(box: .predefined("red"))
+    public static let maroon = Color(box: .predefined("maroon"))
+    public static let purple = Color(box: .predefined("purple"))
+    public static let pink = Color(box: .predefined("pink"))
+    public static let orange = Color(box: .predefined("orange"))
+    public static let white = Color(box: .predefined("white"))
+    public static let gray = Color(box: .predefined("gray"))
+    public static let black = Color(box: .predefined("black"))
+    
+    public static let predefinedColors: [Color] = [
+        blue, teal, green, yellow, gold, red, maroon, purple, pink, orange, white, gray, black
+    ]
     
     public static func hex(_ hex: String, alpha: Double = 1) -> Color {
         Color(box: .hex(hex, alpha: alpha))
@@ -46,7 +66,18 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
         self.box = box
     }
     
+    public init(_ hex: String, alpha: Double = 1) {
+        self.box = .hex(hex, alpha: alpha)
+    }
+    
     public init?(_ object: PythonObject) {
+        for color in Color.predefinedColors {
+            if object == manim.ManimColor.parse(color) {
+                self = color
+                return
+            }
+        }
+        
         let rgba = object.to_rgba()
         guard rgba.count == 4 else { return nil }
         guard let array = Array<Double>(rgba) else { return nil }
@@ -57,9 +88,9 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
     public var pythonObject: PythonObject {
         switch self.box {
         case .predefined(let string):
-            string.pythonObject
+            string.uppercased().pythonObject
         case .hex(let string, let alpha):
-            manim.ManimColor.from_hex(string, alpha: alpha)
+            manim.ManimColor.from_hex(string.uppercased(), alpha: alpha)
         case let .rgba(r, g, b, a):
             manim.ManimColor.from_rgba([r, g, b, a])
         }
