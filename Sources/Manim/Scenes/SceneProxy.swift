@@ -1,24 +1,30 @@
 //
-//  Scene + Methods.swift
+//  SceneProxy.swift
 //  Manim
 //
-//  Created by Vaida on 2025-09-15.
+//  Created by Vaida on 2025-09-24.
 //
 
 import Foundation
+import PythonKit
 
 
-extension Scene {
+/// The proxy for scene.
+@MainActor
+public final class SceneProxy {
     
-    /// Freeze animation for `duration`.
-    @available(*, deprecated, renamed: "sleep")
-    public func wait(_ duration: Double = 2) {
-        Generator.main.add("self.wait(\(duration))")
+    let scene: PythonObject
+    
+    
+    init(scene: PythonObject) {
+        self.scene = scene
     }
+    
     
     /// Freeze animation for `duration`.
     public func sleep(for duration: Duration) {
-        Generator.main.add("self.wait(\(Double(duration.components.attoseconds) / pow(10, 18) + Double(duration.components.seconds)))")
+        let duration = Double(duration.components.attoseconds) / pow(10, 18) + Double(duration.components.seconds)
+        scene.wait(duration)
     }
     
     public func arrange(_ targets: [MObject], direction: Direction, spacing: Double = 0.25) {
@@ -35,7 +41,8 @@ extension Scene {
     /// - SeeAlso: ``MObject/show(animation:)`` to add objects with animations.
     public func add(_ targets: MObject...) {
         for target in targets {
-            Generator.main.add("self.add(\(target.identifier))")
+            scene.add(target)
         }
     }
+    
 }

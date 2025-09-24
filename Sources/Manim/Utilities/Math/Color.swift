@@ -5,9 +5,11 @@
 //  Created by Vaida on 2023/10/7.
 //
 
+import PythonKit
+
 
 /// A preset of colors.
-public enum Color: String, PythonScriptConvertible {
+public enum Color: String, PythonScriptConvertible, @MainActor PythonConvertible {
     case blue
     case teal
     case green
@@ -26,5 +28,9 @@ public enum Color: String, PythonScriptConvertible {
     
     public var representation: String {
         self.rawValue.uppercased()
+    }
+    
+    public var pythonObject: PythonObject {
+        self.rawValue.uppercased().pythonObject
     }
 }
