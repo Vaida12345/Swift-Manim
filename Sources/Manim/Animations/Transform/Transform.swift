@@ -6,63 +6,63 @@
 //
 
 
-/// A Transform transforms a ``MObject`` into a target ``MObject``.
-///
-/// You can use the ``MObject/transform(to:option:)`` to create a transform.
-public class Transform: Animation {
-    
-    init(from object: MObject, to target: MObject, option: Option?) {
-        switch option {
-        case nil:
-            super.init(arguments: [(nil, object.identifier),
-                              (nil, target.identifier)])
-        case .clockwise:
-            super.init("ClockwiseTransform", arguments: [(nil, object.identifier), (nil, target.identifier)])
-        case .counterClockwise:
-            super.init("CounterclockwiseTransform", arguments: [(nil, object.identifier), (nil, target.identifier)])
-            
-        case .matchShapes:
-            super.init("TransformMatchingShapes", arguments: [(nil, object.identifier), (nil, target.identifier)])
-            
-        case .matchTex:
-            super.init("TransformMatchingTex", arguments: [(nil, object.identifier), (nil, target.identifier)])
-        }
-    }
-    
-    required init(identifier: String) { super.init(identifier: identifier) }
-    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
-    
-    
-    /// Transform option, specifies how to transform.
-    public enum Option {
-        
-        /// Performs the transform in an arc instead of straight line.
-        case clockwise
-        
-        /// Performs the transform in an arc instead of straight line.
-        case counterClockwise
-        
-        /// An animation trying to transform groups by matching the shape of their sub-objects.
-        ///
-        /// This method is similar to Magic Move, match characters.
-        case matchShapes
-        
-        /// A transformation trying to transform rendered LaTeX strings.
-        ///
-        /// Two sub-objects match if their components matches.
-        case matchTex
-    }
-    
-}
-
-
-extension MObject {
-    
-    /// Creates a transformation.
-    ///
-    /// - Parameters:
-    ///   - target: The destination.
-    ///   - option: Additional setups.
-    public func transform(to target: MObject, option: Transform.Option? = nil) -> Animation { Transform(from: self, to: target, option: option) }
-    
-}
+///// A Transform transforms a ``MObject`` into a target ``MObject``.
+/////
+///// You can use the ``MObject/transform(to:option:)`` to create a transform.
+//public class Transform: Animation {
+//    
+//    init(from object: MObject, to target: MObject, option: Option?) {
+//        switch option {
+//        case nil:
+//            super.init(arguments: [(nil, object.identifier),
+//                              (nil, target.identifier)])
+//        case .clockwise:
+//            super.init("ClockwiseTransform", arguments: [(nil, object.identifier), (nil, target.identifier)])
+//        case .counterClockwise:
+//            super.init("CounterclockwiseTransform", arguments: [(nil, object.identifier), (nil, target.identifier)])
+//            
+//        case .matchShapes:
+//            super.init("TransformMatchingShapes", arguments: [(nil, object.identifier), (nil, target.identifier)])
+//            
+//        case .matchTex:
+//            super.init("TransformMatchingTex", arguments: [(nil, object.identifier), (nil, target.identifier)])
+//        }
+//    }
+//    
+//    required init(identifier: String) { super.init(identifier: identifier) }
+//    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
+//    
+//    
+//    /// Transform option, specifies how to transform.
+//    public enum Option {
+//        
+//        /// Performs the transform in an arc instead of straight line.
+//        case clockwise
+//        
+//        /// Performs the transform in an arc instead of straight line.
+//        case counterClockwise
+//        
+//        /// An animation trying to transform groups by matching the shape of their sub-objects.
+//        ///
+//        /// This method is similar to Magic Move, match characters.
+//        case matchShapes
+//        
+//        /// A transformation trying to transform rendered LaTeX strings.
+//        ///
+//        /// Two sub-objects match if their components matches.
+//        case matchTex
+//    }
+//    
+//}
+//
+//
+//extension MObject {
+//    
+//    /// Creates a transformation.
+//    ///
+//    /// - Parameters:
+//    ///   - target: The destination.
+//    ///   - option: Additional setups.
+//    public func transform(to target: MObject, option: Transform.Option? = nil) -> Animation { Transform(from: self, to: target, option: option) }
+//    
+//}

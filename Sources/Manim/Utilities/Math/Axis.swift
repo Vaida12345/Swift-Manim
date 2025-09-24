@@ -5,11 +5,12 @@
 //  Created by Vaida on 2023/10/8.
 //
 
-
+import PythonKit
 
 
 /// The axis.
-public struct Axis: @MainActor OptionSet, PythonScriptConvertible {
+@MainActor
+public struct Axis: @MainActor OptionSet, @MainActor PythonConvertible {
     
     public let rawValue: UInt8
     
@@ -24,8 +25,8 @@ public struct Axis: @MainActor OptionSet, PythonScriptConvertible {
         self.rawValue = rawValue
     }
     
-    public var representation: String {
-        "array([\(self.contains(.x) ? 1 : 0), \(self.contains(.y) ? 1 : 0), \(self.contains(.z) ? 1 : 0)])"
+    public var pythonObject: PythonObject {
+        [self.contains(.x) ? 1 : 0, self.contains(.y) ? 1 : 0, self.contains(.z) ? 1 : 0]
     }
     
 }

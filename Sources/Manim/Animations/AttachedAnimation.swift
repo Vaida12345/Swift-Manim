@@ -5,37 +5,51 @@
 //  Created by Vaida on 2023/10/8.
 //
 
-import OSLog
+import PythonKit
 
 
 /// An animation that is attached to an object, typically means it is called using `.animate.modifier()`.
-public class AttachedAnimation: Animation {
+///
+/// > Declaration:
+/// > ```swift
+/// > AttachedAnimation(base: self, closure: Closure(<#name#>, <#args#>))
+/// > ```
+public final class AttachedAnimation: Animation {
+    
+    let base: PythonObject
     
     let closure: Closure
     
-    let target: String
-    
-    let onFinished: () -> Void
+    let completionHandler: () -> Void
     
     
-    init(name: String, target: String, args: Closure.Arguments, onFinished: @escaping () -> Void = {}) {
-        self.closure = Closure(name, args)
-        self.target = target
-        self.onFinished = onFinished
+    override func callAsFunction() -> PythonObject {
+        var body: PythonObject {
+            self.base.animate(run_time: self.duration, lag_ratio: self.lagRatio)[dynamicMember: self.closure.name].dynamicallyCall(withKeywordArguments: self.closure.arguments)
+        }
+        
+        if self.delay != 0 {
+            return manim.Succession(manim.Wait(self.delay, body))
+        } else {
+            return body
+        }
+    }
+    
+    
+    init(base: PythonObject, closure: Closure, completionHandler: @escaping () -> Void = {}) {
+        self.base = base
+        self.closure = closure
+        self.completionHandler = completionHandler
         
         super.init()
         
-        // only called when not animate
-        guard !shouldUseAnimation else { return }
-        Generator.main.add("\(self.target).\(closure.representation)")
+        if !shouldUseAnimation {
+            self.base[dynamicMember: self.closure.name].dynamicallyCall(withKeywordArguments: self.closure.arguments)
+        }
     }
     
-    required init(identifier: String) {
-        fatalError("init() has not been implemented")
-    }
-    
-    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) {
-        fatalError("init(_:arguments:) has not been implemented")
+    convenience init(base: MObject, closure: Closure, completionHandler: @escaping () -> Void = {}) {
+        self.init(base: base.pythonObject, closure: closure, completionHandler: completionHandler)
     }
     
 }

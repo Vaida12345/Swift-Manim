@@ -6,10 +6,12 @@
 //
 
 import OSLog
+import PythonKit
 
 
 /// An animation.
-public class Animation: PyObject {
+@MainActor
+public class Animation {
     
     var delay: Double = 0
     
@@ -18,12 +20,9 @@ public class Animation: PyObject {
     var lagRatio: Double = 0
     
     
-    init() {
-        super.init(identifier: __formVariableName(base: "\(Self.self)"))
+    func callAsFunction() -> PythonObject {
+        fatalError()
     }
-    
-    required init(identifier: String) { super.init(identifier: identifier) }
-    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { super.init(typeIdentifier, arguments: arguments) }
     
     
     public enum Method {
@@ -68,7 +67,7 @@ extension Animation {
 }
 
 
-internal class EmptyAnimation: Animation {
+internal final class EmptyAnimation: Animation {
     
 }
 
@@ -87,87 +86,31 @@ internal class EmptyAnimation: Animation {
 ///     originText.align(.down, to: dot)
 /// }
 /// ```
+///
+/// - Warning: Starting from `PythonKit` branch, animations happen in ``Animation/Method/parallel`` by default.
 @MainActor
-public func withAnimation(_ animation: RateFunction = .linear, in method: Animation.Method = .serial, @_AnimationBuilder body: () -> _AnimationGroup) {
+public func withAnimation(_ animation: RateFunction = .linear, in method: Animation.Method = .parallel, @_AnimationBuilder body: () -> _AnimationGroup) {
     shouldUseAnimation = true
     let animations = body()
         .get()
         .filter { !($0 is EmptyAnimation) }
+     shouldUseAnimation = false
     
     guard !animations.isEmpty else { return }
     
-    let body = animations
-        .map { animation in
-            if let attached = animation as? AttachedAnimation {
-                var body: String {
-                    var arguments = Closure.Arguments()
-                    arguments.append("run_time", animation.duration.description, when: .notEqual("1.0"))
-                    arguments.append("lag_ratio", animation.lagRatio.description, when: .notEqual("0.0"))
-                    
-                    return "\(attached.target).animate\(arguments.representation).\(attached.closure.representation)"
-                }
-                
-                if animation.delay != 0 {
-                    return "Succession(Wait(\(animation.delay)), \(body))"
-                } else {
-                    return body
-                }
-            } else {
-                var body: String {
-                    if let attached = animation as? AttachedAnimation {
-                        return "\(attached.target).animate.\(attached.closure.representation)"
-                    } else {
-                        return animation.identifier
-                    }
-                }
-                
-                var group: String {
-                    var arguments = Closure.Arguments()
-                    arguments.append(nil, body)
-                    arguments.append("run_time", animation.duration.description, when: .notEqual("1.0"))
-                    arguments.append("lag_ratio", animation.lagRatio.description, when: .notEqual("0.0"))
-                    
-                    if animation.duration == 1 && animation.lagRatio == 0 {
-                        return body
-                    } else {
-                        return "AnimationGroup\(arguments.representation)"
-                    }
-                }
-                
-                if animation.delay != 0 {
-                    return "Succession(Wait(\(animation.delay)), \(group))"
-                } else {
-                    return group
-                }
-            }
+    switch method {
+    case .serial:
+        for ani in animations {
+            scene.play(ani(), rate_func: animation)
         }
-    
-    let rateFunction: String
-    if animation == .linear {
-        rateFunction = ""
-    } else {
-        rateFunction = ", rate_func=rate_functions.\(animation.rawValue)"
+        
+    case .parallel:
+        scene.play(manim.AnimationGroup(animations.map({ $0() })), rate_func: animation)
     }
-    
-    if body.count == 1 {
-        Generator.main.add("self.play(\(body.first!)\(rateFunction))")
-    } else {
-        switch method {
-        case .serial:
-            for animation in body {
-                Generator.main.add("self.play(\(animation)\(rateFunction))")
-            }
-            
-        case .parallel:
-            Generator.main.add("self.play(AnimationGroup(\(body.joined(separator: ", ")))\(rateFunction))")
-        }
-    }
-    
-    shouldUseAnimation = false
     
     for animation in animations {
         if let animation = animation as? AttachedAnimation {
-            animation.onFinished()
+            animation.completionHandler()
         }
     }
 }
@@ -208,8 +151,5 @@ public final class _AnimationGroup: Animation {
         
         super.init()
     }
-    
-    required init(identifier: String) { fatalError() }
-    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { fatalError() }
     
 }

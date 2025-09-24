@@ -6,6 +6,6 @@
 //
 
 
-public class SVGMObject: VMObject {
-    
-}
+//public class SVGMObject: VMObject {
+//    
+//}

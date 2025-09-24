@@ -43,7 +43,7 @@ public func withManim(
     _manim = try Python.attemptImport("manim")
     defer { _manim = nil }
     
-    // FIXME: configure here
+    
     let config = manim.config
     config["background_color"] = configProxy.backgroundColor.pythonObject
     config["background_opacity"] = configProxy.backgroundOpacity.pythonObject
@@ -68,6 +68,8 @@ public func withManim(
         config["quality"] = quality.rawValue.pythonObject
     }
     config["renderer"] = configProxy.renderer.rawValue.pythonObject
+    config["disable_caching"] = configProxy.disableCache.pythonObject
+    
     
     // MARK: - Global scene
     let constructFunc: PythonFunction = PythonFunction { args, kwargs in
@@ -76,8 +78,8 @@ public func withManim(
     
     // Use Python's type() to create a subclass of Scene
     let DynamicScene = Python.type(
-        "DynamicScene",
-        Python.tuple([manim.Scene]), // base classes
+        "DynamicScene", // name
+        Python.tuple([manim.MovingCameraScene]), // base classes
         ["construct": constructFunc]  // methods
     )
     

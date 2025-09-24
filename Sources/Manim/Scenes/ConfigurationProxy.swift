@@ -56,7 +56,10 @@ public final class ConfigurationProxy {
     public var localWidth: Int?
     
     /// Whether to play the rendered movie on render completion.
-    var preview: Bool = true
+    public var preview: Bool = true
+    
+    /// Whether to disable cache, for debugging purposes.
+    public var disableCache: Bool = false
     
     /// Video quality.
     ///

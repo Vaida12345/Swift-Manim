@@ -8,14 +8,14 @@
 
 
 
-extension MObject {
-    
-    /// Applies the transition matrix.
-    public func apply(matrix: [[Double]], center: (some PointProtocol)? = nil) -> Animation {
-        ActionAnimation(name: "ApplyMatrix", args: [
-            ("about_point", center?.representation),
-            ("matrix", matrix.description),
-        ]).makeAnimation(object: self)
-    }
-    
-}
+//extension MObject {
+//    
+//    /// Applies the transition matrix.
+//    public func apply(matrix: [[Double]], center: (some PointProtocol)? = nil) -> Animation {
+//        ActionAnimation(name: "ApplyMatrix", args: [
+//            ("about_point", center?.representation),
+//            ("matrix", matrix.description),
+//        ]).makeAnimation(object: self)
+//    }
+//    
+//}

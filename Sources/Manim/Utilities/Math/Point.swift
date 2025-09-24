@@ -5,45 +5,12 @@
 //  Created by Vaida on 2023/10/8.
 //
 
-
-public protocol PointProtocol: PythonScriptConvertible {
-    
-}
-
-
-extension PointProtocol where Self == Point {
-    
-    public static var center: Point {
-        Point(x: 0, y: 0)
-    }
-    
-}
-
-
-extension Array<Double>: PythonScriptConvertible {
-    
-    public var representation: String {
-        if self.count == 2 {
-            Point(x: self[0], y: self[1]).representation
-        } else if self.count == 3 {
-            Point(x: self[0], y: self[1], z: self[2]).representation
-        } else {
-            fatalError("Not enough arguments for Point")
-        }
-    }
-    
-}
-
-extension Array<Double>: PointProtocol {
-    
-    
-    
-}
+import PythonKit
 
 
 /// A point, with the center being (0, 0, 0).
-public final class Point: PyObject, PointProtocol, @MainActor ExpressibleByArrayLiteral {
-   
+public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConvertible, @MainActor ConvertibleFromPython {
+    
     public let x: Double
     
     public let y: Double
@@ -52,23 +19,46 @@ public final class Point: PyObject, PointProtocol, @MainActor ExpressibleByArray
     
     
     public func shift(_ value: Double, to direction: Direction) -> Point {
-        self + value * direction._point
+        self + value * Point(direction)
     }
     
+    public var pythonObject: PythonObject {
+        [self.x, self.y, self.z].pythonObject
+    }
+    
+    public static var center: Point {
+        Point(x: 0, y: 0)
+    }
+    
+    public init?(_ object: PythonKit.PythonObject) {
+        guard let array = Array<Double>(object) else { return nil }
+        self.init(array)
+    }
     
     public init(x: Double, y: Double, z: Double = 0) {
         self.x = x
         self.y = y
         self.z = z
-        
-        super.init(identifier: __formVariableName(base: "\(Self.self)"))
     }
     
-    required public convenience init(arrayLiteral elements: Double...) {
+    init(_ direction: Direction) {
+        switch direction {
+        case .left:
+            self = [-1, 0]
+        case .right:
+            self = [1, 0]
+        case .up:
+            self =  [0, 1]
+        case .down:
+            self = [0, -1]
+        }
+    }
+    
+    public init(arrayLiteral elements: Double...) {
         self.init(elements)
     }
     
-    public convenience init(_ elements: [Double]) {
+    public init(_ elements: [Double]) {
         if elements.count == 2 {
             self.init(x: elements[0], y: elements[1])
         } else if elements.count == 3 {
@@ -80,8 +70,6 @@ public final class Point: PyObject, PointProtocol, @MainActor ExpressibleByArray
         }
     }
     
-    required init(identifier: String) { fatalError() }
-    required init(_ typeIdentifier: String? = nil, arguments: Closure.Arguments) { fatalError() }
     
     public static func * (lhs: Double, rhs: Point) -> Point {
         Point(x: lhs * rhs.x,
@@ -99,9 +87,5 @@ public final class Point: PyObject, PointProtocol, @MainActor ExpressibleByArray
         Point(x: lhs.x - rhs.x,
               y: lhs.y - rhs.y,
               z: lhs.z - rhs.z)
-    }
-    
-    public override var representation: String {
-        "array([\(self.x), \(self.y), \(self.z)])"
     }
 }

@@ -9,7 +9,7 @@ import PythonKit
 
 
 /// A preset of colors.
-public enum Color: String, PythonScriptConvertible, @MainActor PythonConvertible {
+public enum Color: String, @MainActor PythonConvertible {
     case blue
     case teal
     case green
@@ -26,9 +26,6 @@ public enum Color: String, PythonScriptConvertible, @MainActor PythonConvertible
     case gray
     case black
     
-    public var representation: String {
-        self.rawValue.uppercased()
-    }
     
     public var pythonObject: PythonObject {
         self.rawValue.uppercased().pythonObject

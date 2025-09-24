@@ -5,60 +5,44 @@
 //  Created by Vaida on 2023/10/8.
 //
 
+import PythonKit
+
 
 @MainActor
-public enum HideAnimation: Equatable {
+public struct HideAnimation {
     
-    /// No animation, just hide the object.
-    case none
+    let caller: PythonObject
+    
+    let arguments: Closure.Arguments
+    
+    init(caller: PythonObject, arguments: Closure.Arguments = []) {
+        self.caller = caller
+        self.arguments = arguments
+    }
     
     /// Fade Out.
     ///
     /// - Parameters:
     ///   - shift: Fade out with shift, with the direction being `shift`.
     ///   - scale: Fade out with scale. `scale` defines the initial scaling.
-    case fadeOut(shift: Direction? = nil, scale: Double? = nil)
+    public static func fadeOut(shift: Direction? = nil, scale: Double? = nil) -> HideAnimation {
+        HideAnimation(caller: manim.FadeOut, arguments: [("shift", shift), ("scale", scale)])
+    }
     
     /// The default way of un-creation, by un-drawing the borders.
-    case uncreate
+    public static let uncreate = HideAnimation(caller: manim.UnCreate)
     
     /// The style to texts, remove text letter by letter.
-    case removeTextByLetter
+    public static let removeTextByLetter = HideAnimation(caller: manim.RemoveTextLetterByLetter)
     
     /// Unwrite the text, by drawing the borders and then fill.
-    case unwrite
+    public static let unwrite = HideAnimation(caller: manim.Unwrite)
     
     /// Animation that makes am object shrink to the object's center.
-    case shrinkToCenter
+    public static let shrinkToCenter = HideAnimation(caller: manim.ShrinkToCenter)
     
     /// Fade Out.
-    static let fadeOut: HideAnimation = .fadeOut()
-    
-    fileprivate var name: String {
-        switch self {
-        case .none:
-            "none"
-        case .fadeOut:
-            "FadeOut"
-        case .uncreate:
-            "Uncreate"
-        case .removeTextByLetter:
-            "RemoveTextLetterByLetter"
-        case .unwrite:
-            "Unwrite"
-        case .shrinkToCenter:
-            "ShrinkToCenter"
-        }
-    }
-    
-    fileprivate var args: Closure.Arguments {
-        switch self {
-        case let .fadeOut(shift, scale):
-            [("shift", shift?.representation), ("scale", scale?.description)]
-        default:
-            []
-        }
-    }
+    public static let fadeOut: HideAnimation = .fadeOut()
     
 }
 
@@ -67,14 +51,16 @@ extension MObject {
     
     /// Hide the object.
     @discardableResult
-    public func hide(animation: HideAnimation = .uncreate) -> Animation {
-        if shouldUseAnimation && animation != .none {
-            return Animation(animation.name, arguments: [(nil, self.identifier)] + animation.args)
+    public func hide(animation: HideAnimation = .unwrite) -> Animation {
+        if !shouldUseAnimation {
+            withAnimation {
+                self.hide().duration(0)
+            }
+            
+            return EmptyAnimation()
         } else {
-            Generator.main.add("self.play(\(animation.name)\(([(nil, self.identifier)] + animation.args).representation))")
+            return WrappedAnimation(base: self.pythonObject, caller: animation.caller, arguments: animation.arguments)
         }
-        
-        return EmptyAnimation()
     }
     
 }

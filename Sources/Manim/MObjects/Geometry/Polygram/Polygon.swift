@@ -8,9 +8,9 @@
 
 
 
-/// A shape consisting of one closed loop of vertices.
-public class Polygon: Polygram {
-    
-    
-    
-}
+///// A shape consisting of one closed loop of vertices.
+//public class Polygon: Polygram {
+//    
+//    
+//    
+//}

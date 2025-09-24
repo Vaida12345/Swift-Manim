@@ -9,87 +9,74 @@
 extension MObject {
     
     // MARK: - read write
-    private var _color: ReadWriteProperty<Color> {
-        ReadWriteProperty(origin: self, read: Closure("get_color", []), write: "set_color")
-    }
-    /// The primary color of the object.
-    public var color: ReadWriteProperty<Color> {
-        get { _color }
-        set { _color.update(to: newValue) }
-    }
-    
-    private var _x: ReadWriteProperty<Double> {
-        ReadWriteProperty(origin: self, read: Closure("get_x", []), write: "set_x")
-    }
     /// The `x`-coordinate
-    public var x: ReadWriteProperty<Double> {
-        get { _x }
-        set { _x.update(to: newValue) }
+    public var x: Double {
+        get { Double(self.pythonObject.get_x())! }
+        set { self.pythonObject.set_x(newValue) }
     }
     
-    private var _y: ReadWriteProperty<Double> {
-        ReadWriteProperty(origin: self, read: Closure("get_y", []), write: "set_y")
-    }
     /// The `y`-coordinate
-    public var y: ReadWriteProperty<Double> {
-        get { _y }
-        set { _y.update(to: newValue) }
+    public var y: Double {
+        get { Double(self.pythonObject.get_y())! }
+        set { self.pythonObject.set_y(newValue) }
     }
-    
+
     // MARK: - write only
     /// Write-only property for setting zIndex.
-    public var zIndex: Int {
+    public var zIndex: Double {
         get { fatalError("Does not support GET") }
-        set { self.call("set_z_index", arguments: [(nil, newValue.description)]) }
+        set { self.pythonObject.set_z_index(newValue) }
     }
     
     // MARK: - read only
     /// The bottom point.
-    public var bottom: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_bottom", []))
+    public var bottom: Point {
+        Point(self.pythonObject.get_bottom())!
     }
     
     /// The top point.
-    public var top: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_top", []))
+    public var top: Point {
+        Point(self.pythonObject.get_top())!
     }
     
     /// The left point.
-    public var left: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_left", []))
+    public var left: Point {
+        Point(self.pythonObject.get_left())!
     }
     
     /// The right point.
-    public var right: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_right", []))
+    public var right: Point{
+        Point(self.pythonObject.get_right())!
     }
     
     /// The origin, defined as the center point.
-    public var origin: ReadWriteProperty<Point> {
-        self.center
+    public var origin: Point {
+        get { self.center }
+        set { self.center = newValue }
     }
     
     /// The center point.
-    public var center: ReadWriteProperty<Point> {
-        ReadWriteProperty(origin: self, read: Closure("get_center", []), write: "move_to")
+    public var center: Point {
+        get { Point(self.pythonObject.get_center())! }
+        set { self.move(to: newValue) }
     }
     
     /// Returns the point, where the stroke that surrounds the object ends.
-    public var end: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_end", []))
+    public var end: Point {
+        Point(self.pythonObject.get_end())!
     }
     
     /// Returns the point, where the stroke that surrounds the object starts.
-    public var start: ReadableProperty<Point> {
-        ReadableProperty(origin: self, read: Closure("get_start", []))
+    public var start: Point {
+        Point(self.pythonObject.get_start())!
     }
     
-    public var width: ReadableProperty<Double> {
-        ReadableProperty(origin: self, read: Closure("width", nil))
+    public var width: Double {
+        Double(self.pythonObject.width)!
     }
     
-    public var height: ReadableProperty<Double> {
-        ReadableProperty(origin: self, read: Closure("height", nil))
+    public var height: Double {
+        Double(self.pythonObject.height)!
     }
     
 }

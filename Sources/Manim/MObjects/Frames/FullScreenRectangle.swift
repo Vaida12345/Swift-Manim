@@ -8,10 +8,10 @@
 
 
 
-public class FullScreenRectangle: VMObject {
-    
-    convenience init() {
-        self.init(arguments: [("stroke_width", 0.description)])
-    }
-    
-}
+//public class FullScreenRectangle: VMObject {
+//    
+//    convenience init() {
+//        self.init(arguments: [("stroke_width", 0.description)])
+//    }
+//    
+//}

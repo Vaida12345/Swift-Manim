@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PythonKit
 import SwiftUI
 
 
@@ -21,13 +22,9 @@ public class Arc: VMObject {
     ///   - start: The start angle. When `start` is `0`, the line an arrow from (0, 0) to (1, 0)
     ///   - angle: The angle length.
     ///   - center: The center position.
-    public convenience init(radius: (any Number) = 1, start: Angle = .zero, angle: Angle, center: Point = .center) {
-        self.init(arguments: [
-            ("radius", radius.representation),
-            ("start_angle", start.radians.description),
-            ("angle", angle.radians.description),
-            ("arc_center", center.representation)
-        ])
+    public init(radius: Double = 1, start: Angle = .zero, angle: Angle, center: Point = .center) {
+        let object = manim.Arc(radius: radius, start_angle: start.radians, angle: angle.radians, arc_center: center)
+        super.init(object)
     }
     
     /// Creates an arc.
@@ -38,12 +35,11 @@ public class Arc: VMObject {
     ///   - start: The starting point.
     ///   - end: The end point.
     ///   - angle: The degree of angle be between the central point to `start` and center to `end`.
-    public convenience init(start: Point, end: Point, angle: Angle = .degrees(45)) {
-        self.init("ArcBetweenPoints", arguments: [
-            ("start", start.representation),
-            ("end", end.representation),
-            ("angle", angle.radians.description),
-        ])
+    public init(start: Point, end: Point, angle: Angle = .degrees(45)) {
+        let object = manim.Arc(start: start, end: end, angle: angle.radians)
+        super.init(object)
     }
+    
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

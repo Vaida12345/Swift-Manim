@@ -8,15 +8,15 @@
 
 
 
-/// Am ellipse
-public final class Ellipse: Circle {
-    
-    
-    public convenience init(width: (any Number)? = nil, height: (any Number)? = nil) {
-        self.init(arguments: [
-            ("width",  width?.representation),
-            ("height", height?.representation)
-        ])
-    }
-    
-}
+///// Am ellipse
+//public final class Ellipse: Circle {
+//    
+//    
+//    public convenience init(width: (any Number)? = nil, height: (any Number)? = nil) {
+//        self.init(arguments: [
+//            ("width",  width?.representation),
+//            ("height", height?.representation)
+//        ])
+//    }
+//    
+//}

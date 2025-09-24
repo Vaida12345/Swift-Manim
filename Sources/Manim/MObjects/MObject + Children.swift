@@ -8,20 +8,9 @@
 
 extension MObject {
     
-    public var children: Children {
-        Children(base: self)
-    }
-    
-    
-    @MainActor
-    public struct Children {
-        
-        let base: MObject
-        
-        public subscript(index: Int) -> MObject {
-            MObject(identifier: "\(base.representation).submobjects[\(index)]")
-        }
-        
+    /// The contained objects
+    public var children: [MObject] {
+        Array(self.pythonObject.submobjects)!
     }
     
 }

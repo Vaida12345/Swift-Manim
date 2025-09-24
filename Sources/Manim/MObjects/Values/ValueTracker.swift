@@ -5,6 +5,8 @@
 //  Created by Vaida on 8/26/24.
 //
 
+import PythonKit
+
 
 /// A mobject that can be used for tracking (real-valued) parameters. Useful for animating parameter changes.
 ///
@@ -13,34 +15,58 @@
 /// You can use `tracker` to change any property of an object. For example, you can change the `x`-coordinate of a dot.
 ///
 /// ```swift
-/// let tracker = dot2.x.tracker()
+/// let dot = Dot(color: .blue)
+/// dot.show()
+///
+/// @ValueTracker
+/// var x = 0.0
+/// dot.addUpdater { dot.x = x }
 ///
 /// withAnimation {
-///     tracker += 5
+///     $x += 1
 /// }
 /// ```
-public class ValueTracker<T>: MObject {
+///
+/// Even better, you can use ``MObject/track(_:)`` that comes with syncing.
+///
+/// ```swift
+/// let dot = Dot(color: .blue)
+/// dot.show()
+///
+/// let x = dot.track(\.x)
+/// withAnimation {
+///     x += 1
+/// }
+/// ```
+@propertyWrapper
+public class ValueTracker<T>: MObject where T: PythonConvertible & ConvertibleFromPython {
     
-    public convenience init(double: Double) where T == Double {
-        self.init("ValueTracker", arguments: [
-            ("value", double.description)
-        ])
+    public var wrappedValue: T {
+        get { T(self.pythonObject.get_value())! }
+        set { self.pythonObject.set_value(newValue) }
     }
     
-    public convenience init(value: T) where T: PyObject {
-        self.init("ValueTracker", arguments: [
-            ("value", value.identifier)
-        ])
+    public var projectedValue: ValueTracker<T> {
+        self
     }
     
-    public convenience init(value: ReadableProperty<T>) {
-        self.init("ValueTracker", arguments: [
-            ("value", value.representation)
-        ])
+    public init(wrappedValue value: T) {
+        let object = manim.ValueTracker(value)
+        super.init(object)
     }
     
-    public var value: ReadableProperty<T> {
-        ReadableProperty(origin: self, read: Closure("get_value", []))
+    required public init(_ pythonObject: PythonObject) {
+        super.init(pythonObject)
+    }
+    
+}
+
+extension ValueTracker {
+    
+    /// Set the new value using an animation.
+    @discardableResult
+    public func become(_ value: Double) -> AttachedAnimation {
+        AttachedAnimation(base: self.pythonObject, closure: Closure("set_value", [("", value)]))
     }
     
 }
@@ -49,25 +75,8 @@ public class ValueTracker<T>: MObject {
 extension ValueTracker where T == Double {
     
     @discardableResult
-    public func set(_ value: Double) -> AttachedAnimation {
-        AttachedAnimation(
-            name: "set_value",
-            target: self.identifier,
-            args: [
-                (nil, value.description)
-            ]
-        )
-    }
-    
-    @discardableResult
     public static func += (lhs: ValueTracker, rhs: Double) -> AttachedAnimation {
-        AttachedAnimation(
-            name: "increment_value",
-            target: lhs.identifier,
-            args: [
-                (nil, rhs.description)
-            ]
-        )
+        AttachedAnimation(base: lhs.pythonObject, closure: Closure("increment_value", [("", rhs)]))
     }
     
     @discardableResult

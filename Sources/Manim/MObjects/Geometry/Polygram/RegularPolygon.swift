@@ -7,7 +7,7 @@
 
 
 
-/// An n-sided regular Polygon.
-public class RegularPolygon: RegularPolygram {
-    
-}
+///// An n-sided regular Polygon.
+//public class RegularPolygon: RegularPolygram {
+//    
+//}

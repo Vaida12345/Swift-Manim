@@ -7,16 +7,16 @@
 
 
 /// A vector, with the `start` being `.zero`.
-public final class Vector: Arrow {
-    
-    public convenience init(direction: Direction) {
-        self.init(arguments: [("direction", direction.representation)])
-    }
-    
-    
-    /// The coordinates label of this object.
-    public func coordinatesLabel() -> MObject {
-        MObject(identifier: "\(self.identifier).coordinate_label()")
-    }
-    
-}
+//public final class Vector: Arrow {
+//    
+//    public convenience init(direction: Direction) {
+//        self.init(arguments: [("direction", direction.representation)])
+//    }
+//    
+//    
+//    /// The coordinates label of this object.
+//    public func coordinatesLabel() -> MObject {
+//        MObject(identifier: "\(self.identifier).coordinate_label()")
+//    }
+//    
+//}
