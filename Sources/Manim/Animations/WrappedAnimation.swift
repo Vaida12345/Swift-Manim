@@ -22,6 +22,10 @@ public class WrappedAnimation: Animation {
         self.base = base
         self.caller = caller
         self.arguments = arguments
+        
+        if !shouldUseAnimation {
+            self.caller.dynamicallyCall(withKeywordArguments: arguments)
+        }
     }
     
     

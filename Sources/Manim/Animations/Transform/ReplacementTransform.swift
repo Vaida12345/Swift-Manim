@@ -7,16 +7,11 @@
 
 
 
-
-///// Replaces and morphs a ``MObject`` into a target ``MObject``.
-//private class ReplacementTransform: Transform {
-//    
-//}
-//
-//
-//extension MObject {
-//    
-//    /// Replaces and morphs a ``MObject`` into a target ``MObject``.
-//    public func replacementTransform(to target: MObject) -> Animation { ReplacementTransform(from: self, to: target, option: nil) }
-//    
-//}
+extension MObject {
+    
+    /// Replaces and morphs a ``MObject`` into a target ``MObject``.
+    public func replacementTransform(to target: MObject) -> WrappedAnimation {
+        WrappedAnimation(base: self.pythonObject, caller: manim.ReplacementTransform, arguments: [("", target)]) 
+    }
+    
+}

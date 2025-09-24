@@ -10,13 +10,12 @@ import Foundation
 
 
 try await withManim { scene in
-//    NumberPlane(domain: .init(max: 3, step: 2)).show()
+    let text = Text("Circumscribe")
+    scene.add(text)
     
-//    let graph = FunctionGraph(range: .init(max: 3, step: 2)) { x in
-//        x + 2
-//    }
-    
-//    graph.show()
+    withAnimation {
+        text.circumscribe()
+    }
 } configuration: { configuration in
     configuration.preview = false
     configuration.disableCache = true

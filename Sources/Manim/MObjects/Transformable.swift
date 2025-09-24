@@ -105,7 +105,7 @@ extension Transformable {
     
     /// Scale the object by a factor.
     @discardableResult
-    public func scale(factor: Double) -> AttachedAnimation {
+    public func scale(_ factor: Double) -> AttachedAnimation {
         AttachedAnimation(base: self.transformable, closure: Closure("scale", [("", factor)]))
     }
     
