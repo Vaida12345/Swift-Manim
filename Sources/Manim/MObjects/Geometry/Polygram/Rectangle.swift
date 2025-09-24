@@ -18,6 +18,7 @@ public class Rectangle: Polygon {
     ///   - width: The width of the rectangle
     ///   - height: The height of the rectangle
     ///   - gridStep: Space between horizontal and vertical grid lines.
+    ///   - color: The stroke color.
     public init(width: Double, height: Double, color: Color = .yellow, gridStep: (x: Double?, y: Double?)? = nil) {
         var arguments = Closure.Arguments()
         arguments.append("width", width)

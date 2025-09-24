@@ -75,7 +75,7 @@ try await withManim { scene in
 
 ## Wait
 
-You can freeze the scene using ``SceneProxy/wait(_:)`` function.
+You can freeze the scene using ``SceneProxy/sleep(for:)`` function.
 
 ```swift
 withAnimation(in: .parallel, lagRatio: 1) {

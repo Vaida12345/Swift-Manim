@@ -12,7 +12,7 @@ import PythonKit
 public final class Triangle: RegularPolygon {
     
     /// - Parameters:
-    ///   - n: The number of sides of the RegularPolygon.
+    ///   - color: The stroke color.
     public init(color: Color) {
         super.init(manim.Triangle(color: color))
     }

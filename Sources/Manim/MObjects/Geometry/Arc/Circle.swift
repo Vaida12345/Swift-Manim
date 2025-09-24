@@ -13,7 +13,8 @@ public class Circle: Arc {
     
     
     /// - Parameters:
-    ///   - color: The color of the shape.
+    ///   - color: The stroke color.
+    ///   - radius: The radius of the circle.
     public init(radius: Double? = nil, color: Color = .yellow) {
         let object = manim.Circle(radius: radius, color: color)
         super.init(object)

@@ -21,7 +21,7 @@ Follow the same guideline, the ``MObject/origin`` of an object is defined to be 
 
 ## Positioning
 
-Although you can use ``MObject/origin`` or ``MObject/move(to:alignedEdges:coordinateMask:)-(PointProtocol,_,_)`` to retrieve and move objects using its absolute coordinate, which you can use the ``NumberPlane`` as a reference. It is suggested to use relative layouts, such as ``MObject/move(nextTo:placing:padding:)`` or ``Scene/arrange``.
+Although you can use ``MObject/origin`` or ``MObject/move(to:alignedEdges:coordinateMask:)`` to retrieve and move objects using its absolute coordinate, which you can use the ``NumberPlane`` as a reference. It is suggested to use relative layouts, such as ``MObject/move(nextTo:placing:padding:)`` or ``SceneProxy/arrange(_:direction:spacing:)-(MObject,_,_)``.
 
 
 
@@ -44,20 +44,18 @@ Although you can use ``MObject/origin`` or ``MObject/move(to:alignedEdges:coordi
 - ``MObject/end``
 
 ### Move Suite
-- ``MObject/move(to:alignedEdges:coordinateMask:)-(PointProtocol,_,_)``
-- ``MObject/move(to:alignedEdges:coordinateMask:)-(MObject,_,_)``
+- ``MObject/move(to:alignedEdges:coordinateMask:)``
 - ``MObject/move(nextTo:placing:padding:)``
 - ``MObject/move(above:padding:)``
 - ``MObject/move(below:padding:)``
 - ``MObject/move(leftOf:padding:)``
 - ``MObject/move(rightOf:padding:)``
-- ``MObject/next(to:position:padding:)``
 
 ### Implicit Move
 - ``MObject/shift(by:)``
 - ``MObject/moveAlong(pathOf:)``
 
-### Arrangecment
-- ``Scene/arrange``
+### Arrangement
+- ``SceneProxy/arrange(_:direction:spacing:)-(MObject,_,_)``
 - ``HStack``
 - ``VStack``

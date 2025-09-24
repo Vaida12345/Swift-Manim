@@ -51,7 +51,7 @@ public class Axes: Group {
     
     
     public enum CoordinateSpace {
-        /// The coordinate on the canvas, ie, the ``Scene``.
+        /// The coordinate on the canvas, ie, the ``SceneProxy``.
         case canvas
         
         /// The coordinate on the ``Axes``.

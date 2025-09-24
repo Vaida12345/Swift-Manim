@@ -17,11 +17,23 @@ public final class DoubleArrow: Arrow {
     ///   - start: The starting point of the arrow.
     ///   - end: The ending point of the arrow.
     ///   - padding: The distance of the arrow from its start and end points.
+    ///   - strokeWidth: Stroke Width
+    ///   - color: The stroke color.
     ///   - tip: The tip shape, `nil` for the default arrow shape.
     public override init(from start: Point, to end: Point, padding: Double = 0.25, strokeWidth: Double = 6, color: Color = .white, tip: ArrowTipShape? = nil) {
         super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape: tip))
     }
     
+    /// Creates the arrow
+    ///
+    /// - Parameters:
+    ///   - start: The starting point of the arrow.
+    ///   - end: The ending point of the arrow.
+    ///   - padding: The distance of the arrow from its start and end points.
+    ///   - strokeWidth: Stroke Width
+    ///   - color: The stroke color.
+    ///   - startTip: The tip shape for `start`, `nil` for the default arrow shape.
+    ///   - endTip: The tip shape for `end`, `nil` for the default arrow shape.
     public init(from start: Point, to end: Point, padding: Double = 0.25, strokeWidth: Double = 6, color: Color = .white, startTip: ArrowTipShape? = nil, endTip: ArrowTipShape? = nil) {
         super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape_start: startTip, tip_shape_end: endTip))
     }

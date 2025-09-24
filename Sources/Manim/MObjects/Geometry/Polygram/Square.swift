@@ -15,7 +15,8 @@ public final class Square: Rectangle {
     ///
     /// - Parameters:
     ///   - length: The length for each side.
-    ///   - color: The fill color.
+    ///   - color: The stroke color.
+    ///   - gridStep: Space between horizontal and vertical grid lines.
     public init(length: Double, color: Color = .yellow, gridStep: (x: Double?, y: Double?)? = nil) {
         super.init(manim.Square(side_length: length, color: color, grid_xstep: gridStep?.x, grid_ystep: gridStep?.y))
     }

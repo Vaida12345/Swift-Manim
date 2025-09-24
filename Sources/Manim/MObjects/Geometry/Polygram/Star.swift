@@ -17,6 +17,7 @@ public final class Star: Polygram {
     /// - Parameters:
     ///   - n: How many points on the Star.
     ///   - radius: The radius of the circle that the inner / outer vertices are placed on.
+    ///   - color: The stroke color.
     public init(n: Int = 5, innerRadius: Double? = nil, outerRadius: Double = 1, startAngle: Angle = .radians(1.5707963267948966), color: Color = .yellow) {
         super.init(manim.Star(n: n, inner_radius: innerRadius, outer_radius: outerRadius, start_angle: startAngle.radians, color: color))
     }

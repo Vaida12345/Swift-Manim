@@ -14,6 +14,7 @@ public class RegularPolygon: RegularPolygram {
     
     /// - Parameters:
     ///   - n: The number of sides of the RegularPolygon.
+    ///   - color: The stroke color.
     public init(n: Int, color: Color) {
         super.init(manim.RegularPolygon(n: n, color: color))
     }

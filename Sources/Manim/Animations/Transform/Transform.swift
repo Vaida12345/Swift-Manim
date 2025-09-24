@@ -10,7 +10,7 @@ import PythonKit
 
 /// A Transform transforms a ``MObject`` into a target ``MObject``.
 ///
-/// You can use the ``MObject/transform(to:option:)`` to create a transform.
+/// You can use the ``MObject/transform(to:transform:)`` to create a transform.
 @MainActor
 public enum Transform {
     
@@ -49,7 +49,7 @@ extension MObject {
     ///
     /// - Parameters:
     ///   - target: The destination.
-    ///   - option: Additional setups.
+    ///   - transform: The transform used.
     public func transform(to target: MObject, transform: Transform = .matchShapes) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: transform.pythonObject, arguments: [("", target)])
     }
