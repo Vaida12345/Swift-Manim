@@ -52,12 +52,16 @@ struct Closure {
         }
         
         /// - Note: `nil` values are ignored by default.
-        mutating func append(_ key: String, _ value: any PythonConvertible) {
-            self.contents.append(Argument(key, value))
+        mutating func append(_ key: String, _ value: (any PythonConvertible)?) {
+            if let value {
+                self.contents.append(Argument(key, value))
+            }
         }
         
-        mutating func insert(_ key: String, _ value: any PythonConvertible, at i: Int) {
-            self.contents.insert(Argument(key, value), at: i)
+        mutating func insert(_ key: String, _ value: (any PythonConvertible)?, at i: Int) {
+            if let value {
+                self.contents.insert(Argument(key, value), at: i)
+            }
         }
         
         
@@ -65,8 +69,8 @@ struct Closure {
             self.contents = contents
         }
         
-        init(arrayLiteral elements: (String, any PythonConvertible)...) {
-            contents = elements.map({ Argument(key: $0, value: $1) })
+        init(arrayLiteral elements: (String, (any PythonConvertible)?)...) {
+            contents = elements.filter({ $0.1 != nil }).map({ Argument(key: $0, value: $1!) })
         }
         
         

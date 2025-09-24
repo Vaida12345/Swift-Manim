@@ -13,7 +13,7 @@ import PythonKit
 @MainActor
 public protocol Transformable {
     
-    var transformable: PythonObject { get }
+    var _transformable: PythonObject { get }
     
 }
 
@@ -31,7 +31,7 @@ extension Transformable {
         closure.append("point_or_mobject", target)
         closure.append("aligned_edge", alignedEdges)
         closure.append("coor_mask", coordinateMask)
-        return AttachedAnimation(base: self.transformable, closure: closure)
+        return AttachedAnimation(base: self._transformable, closure: closure)
     }
 
     /// Moves the current object next to `target`.
@@ -46,7 +46,7 @@ extension Transformable {
         closure.append("", placing)
         closure.append("buff", padding)
         
-        return AttachedAnimation(base: self.transformable, closure: closure)
+        return AttachedAnimation(base: self._transformable, closure: closure)
     }
     
     
@@ -78,19 +78,25 @@ extension Transformable {
         self.move(nextTo: target, placing: .right, padding: padding)
     }
     
+    /// Moves the ``start`` and ``end``.
+    @discardableResult
+    public func moveTo(start: Point, end: Point) -> AttachedAnimation {
+        AttachedAnimation(base: self._transformable, closure: Closure("put_start_and_end_on", [("", start), ("", end)]))
+    }
+    
     
     // MARK: - Implicit Move
     
-    /// Moves to the given point.
+    /// Shifts by the given vector.
     @discardableResult
     public func shift(by point: Point) -> AttachedAnimation {
-        return AttachedAnimation(base: self.transformable, closure: Closure("shift", [("", point)]))
+        AttachedAnimation(base: self._transformable, closure: Closure("shift", [("", point)]))
     }
     
     /// Moves the object along the border of the `path` object,
     @discardableResult
     public func moveAlong(pathOf object: MObject) -> WrappedAnimation {
-        WrappedAnimation(base: self.transformable, caller: manim.MoveAlongPath, arguments: [("", object)])
+        WrappedAnimation(base: self._transformable, caller: manim.MoveAlongPath, arguments: [("", object)])
     }
     
     /// Rotates the object about a certain point.
@@ -100,19 +106,19 @@ extension Transformable {
     ///   - axis: The rotation axis.
     @discardableResult
     public func rotate(angle: Angle, axis: Axis = .z) -> AttachedAnimation {
-        AttachedAnimation(base: self.transformable, closure: Closure("rotate", [("angle", angle.radians), ("axis", axis)]))
+        AttachedAnimation(base: self._transformable, closure: Closure("rotate", [("angle", angle.radians), ("axis", axis)]))
     }
     
     /// Scale the object by a factor.
     @discardableResult
     public func scale(_ factor: Double) -> AttachedAnimation {
-        AttachedAnimation(base: self.transformable, closure: Closure("scale", [("", factor)]))
+        AttachedAnimation(base: self._transformable, closure: Closure("scale", [("", factor)]))
     }
     
     /// Flips/Mirrors an object about its center.
     @discardableResult
     public func flip(axis: Axis) -> AttachedAnimation {
-        AttachedAnimation(base: self.transformable, closure: Closure("flip", [("", axis)]))
+        AttachedAnimation(base: self._transformable, closure: Closure("flip", [("", axis)]))
     }
     
 }

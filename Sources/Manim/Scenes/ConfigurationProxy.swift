@@ -26,7 +26,21 @@ public final class ConfigurationProxy {
     public var pythonLibraryPath: FinderItem? = "/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/libpython3.13.dylib"
     
     /// If specified, it will search python packages in the given path.
+    ///
+    /// To setup a `venv`, use
+    /// ```sh
+    /// /opt/homebrew/opt/python@3.13/bin/python3.13 -m venv ~/manim-venv
+    /// source ~/manim-venv/bin/activate
+    /// pip install manim numpy
+    /// ```
+    ///
+    /// 
+    ///
+    /// - Experiment: It may take time to setup when calling it for the first time.
     public var pythonPackagesPath: FinderItem? = "\(NSHomeDirectory())/manim-venv/lib/python3.13/site-packages"
+    
+    public var latexPath: FinderItem? = "/Library/TeX/texbin/latex"
+    public var dvisvgmPath: FinderItem? = "/Library/TeX/texbin/dvisvgm"
     
     /// Background color of the scene.
     public var backgroundColor: Color = .black

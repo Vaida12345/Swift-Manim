@@ -32,6 +32,7 @@ public class Matrix: VMObject {
         super.init(manim.Matrix(lists, left_bracket: leftBracket, right_bracket: rightBracket))
     }
     
+    @_disfavoredOverload
     public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

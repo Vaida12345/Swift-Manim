@@ -11,24 +11,18 @@ Create beautiful mathematical animations.
 With Swift-native API.
 
 ```swift
-@main
-class VectorArrow: Scene {
+try await withManim { scene in
+    let dot = Dot()
+    let arrow = Vector([2, 2])
+    let numberPlane = NumberPlane()
 
-    override func body(width: Int?) {
-        super.body(width: width)
+    let originText = Text("(0, 0)")
+    originText.move(below: dot)
 
-        let dot = Dot()
-        let arrow = Arrow(from: .center, to: [2, 2])
-        let numberPlane = NumberPlane()
+    let tipText = Text("(2, 2)")
+    tipText.move(rightOf: arrow.end)
 
-        let originText = Text("(0, 0)")
-        originText.move(nextTo: dot, placing: .down)
-
-        let tipText = Text("(2, 2)")
-        tipText.move(nextTo: arrow.end, placing: .right)
-
-        self.add(dot, arrow, numberPlane, originText, tipText)
-    }
+    scene.add(dot, arrow, numberPlane, originText, tipText)
 }
 ```
 

@@ -14,7 +14,7 @@ originText.align(.down, to: dot)
 
 // animated
 withAnimation {
-    originText.align(.down, to: dot)
+    originText.move(below: dot)
 }
 ```
 
@@ -36,40 +36,40 @@ Please refer to the video for details.
 ![Video](lagRatio)
 
 ```swift
-let ratios = [0, 0.1, 0.5, 1]
+try await withManim { scene in
+    let ratios = [0, 0.1, 0.5, 1]
 
-// Create dot groups
-let group = HStack(Dot(), Dot(), Dot(), Dot())
-let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
+    // Create dot groups
+    let group = HStack(Dot(), Dot(), Dot(), Dot())
+    let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
 
-groups.show()
+    groups.show()
 
-// Label groups
-let label = Text("lagRatio")
-label.fontSize = 36
-label.move(nextTo: groups, placing: .up, padding: 1.5)
-label.show()
+    // Label groups
+    let label = Text("lagRatio", fontSize: 36)
+    label.move(above: group, padding: 1.5)
+    label.show()
 
-for (group, ratio) in zip(groups, ratios) {
-    let text = Text("\(ratio)")
-    text.fontSize = 36
-    text.move(nextTo: group, placing: .up)
-    text.show()
-}
-
-// Animate groups with different lag_ratios
-withAnimation {
-    for (group, ratio) in zip(groups, ratios) {
-        group.shift(by: [0, -2, 0])
-            .lagRatio(ratio)
+    for (group, ratio) in zip(groups.children, ratios) {
+        let text = Text("\(ratio)", fontSize: 36)
+        text.move(above: group)
+        text.show()
     }
-}
 
-withAnimation {
-    groups.shift(by: [0, 2, 0])
-        .lagRatio(0.1)
-        .duration(2)
-}
+    // Animate groups with different lag_ratios
+    withAnimation(in: .serial) {
+        for (group, ratio) in zip(groups.children, ratios) {
+            group.shift(by: [0, -2, 0])
+                .lagRatio(ratio)
+        }
+    }
+
+    withAnimation {
+        groups.shift(by: [0, 2, 0])
+            .lagRatio(0.1)
+            .duration(2)
+    }
+} 
 ```
 
 
@@ -92,15 +92,15 @@ self.wait(2)
 It is also possible to [observe](``MObject/addUpdater(index:initialCall:handler:)``) changes.
 
 ```swift
-let dot1 = Dot(at: [2, 2], color: .blue)
+let dot1 = Dot(at: [0, 2], color: .blue)
 let dot2 = Dot(at: .center, color: .green)
 
-dot1.show()
-dot2.show()
+scene.add(dot1, dot2)
+
+dot1.bind(\.x, to: dot2, \.x)
 
 withAnimation {
-    dot1.x.bind(to: dot2.x)
-    dot2.move(to: [-2, 0])
+    dot2.move(to: [2, 0])
 }
 ```
 

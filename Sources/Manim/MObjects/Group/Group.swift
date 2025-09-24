@@ -12,11 +12,11 @@ import PythonKit
 public class Group: VMObject {
     
     public func arrange(direction: Direction, spacing: Double = 0.25) {
-        scene.arrange(direction, buff: spacing)
+        self.pythonObject.arrange(direction, buff: spacing)
     }
     
     public init(_ children: [MObject]) {
-        let object = manim.Group(children)
+        let object = manim.Group.dynamicallyCall(withArguments: children)
         super.init(object)
     }
     

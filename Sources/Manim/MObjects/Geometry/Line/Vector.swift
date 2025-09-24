@@ -18,6 +18,7 @@ public final class Vector: Arrow {
         super.init(manim.Vector(direction: direction, color: color, buff: padding, stroke_width: strokeWidth, tip_shape: tip))
     }
     
+    @_disfavoredOverload
     public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

@@ -8,24 +8,18 @@ Examples of using Manim.
 ![image](VectorArrow)
 
 ```swift
-@main
-class VectorArrow: Scene {
+try await withManim { scene in
+    let dot = Dot()
+    let arrow = Vector([2, 2])
+    let numberPlane = NumberPlane()
 
-    override func body(width: Int?) {
-        super.body(width: width)
+    let originText = Text("(0, 0)")
+    originText.move(below: dot)
 
-        let dot = Dot()
-        let arrow = Arrow(from: .center, to: [2, 2])
-        let numberPlane = NumberPlane()
-        
-        let originText = Text("(0, 0)")
-        originText.move(nextTo: dot, placing: .down)
-        
-        let tipText = Text("(2, 2)")
-        tipText.move(nextTo: arrow.end, placing: .right)
-        
-        self.add(dot, arrow, numberPlane, originText, tipText)
-    }
+    let tipText = Text("(2, 2)")
+    tipText.move(rightOf: arrow.end)
+
+    scene.add(dot, arrow, numberPlane, originText, tipText)
 }
 ```
 
@@ -35,38 +29,28 @@ class VectorArrow: Scene {
 ![video](MovingDots.mov)
 
 ```swift
-@main
-class MovingDots: Scene {
+try await withManim { scene in
+    let dot1 = Dot(color: .blue)
+    let dot2 = Dot(color: .green)
 
-    override func body(width: Int?) {
-        super.body(width: width)
+    scene.arrange(dot1, dot2, direction: .right)
 
-        let dot1 = Dot(color: .blue)
-        let dot2 = Dot(color: .green)
-
-        let group = Group(dot1, dot2)
-        group.arrange(direction: .right)
-
-        let line = Line(start: dot1.center, end: dot2.center)
-        line.set(color: .red)
-        line.addUpdater { line in
-            line.become(Line(start: dot1.center, end: dot2.center))
-            line.set(color: .red)
-        }
-
-        dot1.show()
-        dot2.show()
-        line.show()
-
-
-        let x = dot1.x.tracker()
-        let y = dot2.y.tracker()
-
-        withAnimation {
-            x += 4
-            y += 4
-        }
+    let line = Line(from: dot1.center, to: dot2.center, color: .red)
+        line.addUpdater(initialCall: true) {
+        line.moveTo(start: dot1.center, end: dot2.center)
     }
+
+    scene.add(dot1, dot2, line)
+
+    let x = dot1.track(\.x)
+    let y = dot2.track(\.y)
+
+    withAnimation(in: .serial) {
+        x += 4
+        y += 4
+    }
+} configuration: {
+    $0.preview = false
 }
 ```
 

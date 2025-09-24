@@ -26,7 +26,7 @@ public final class MovingCamera: Transformable, @MainActor ConvertibleFromPython
     
     public var pythonObject: PythonObject
     
-    public var transformable: PythonObject {
+    public var _transformable: PythonObject {
         pythonObject.frame
     }
     

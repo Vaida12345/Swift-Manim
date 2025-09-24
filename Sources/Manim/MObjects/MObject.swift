@@ -20,7 +20,7 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
         "\(type(of: self as Any))(\(self.pythonObject))"
     }
     
-    public var transformable: PythonObject {
+    public var _transformable: PythonObject {
         self.pythonObject
     }
     
@@ -78,23 +78,22 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     ///
     /// - Experiment: You must update `self` in `handler`.
     public func addUpdater(index: Int? = nil, initialCall: Bool = false, handler: @escaping () -> Void) {
+        let uniqueName = "helper_\(UUID().uuidString.replacingOccurrences(of: "-", with: "_"))"
+        let bridgeName = "_swift_bridge_\(UUID().uuidString.replacingOccurrences(of: "-", with: "_"))"
+        
         let code = """
-        def helper(obj):
-            _swift_bridge(obj)
+        def \(uniqueName)(obj):
+            \(bridgeName)(obj)
         """
         
-        // Expose the Swift closure to Python
         let main = Python.import("__main__")
-        main._swift_bridge = PythonObject(PythonFunction({ object in
+        main.__dict__[bridgeName] = PythonObject(PythonFunction({ object in
             handler()
             return Python.None
         }))
-        
-        // Evaluate the function
         Python.exec(code, main.__dict__)
-        
-        // Get the helper function
-        self.pythonObject.add_updater(main.helper, index: index, call_updater: initialCall)
+        self.pythonObject.add_updater(main.__dict__[uniqueName], index: index, call_updater: initialCall)
+
     }
     
     /// Edit points, colors and sub objects to be identical to another ``MObject``.

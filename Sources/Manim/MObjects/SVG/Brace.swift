@@ -17,6 +17,7 @@ public class Brace: MObject {
         super.init(manim.Brace(object, direction: direction))
     }
     
+    @_disfavoredOverload
     public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

@@ -29,7 +29,7 @@ public final class AttachedAnimation: Animation {
         }
         
         if self.delay != 0 {
-            return manim.Succession(manim.Wait(self.delay, body))
+            return manim.Succession(manim.Wait(self.delay), body)
         } else {
             return body
         }

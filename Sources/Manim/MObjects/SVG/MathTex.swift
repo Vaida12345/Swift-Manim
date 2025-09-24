@@ -23,7 +23,7 @@ public class MathTex: SVGMObject {
         super.init(manim.MathTex(latex.content))
     }
     
-    
+    @_disfavoredOverload
     public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     
@@ -34,21 +34,17 @@ public class MathTex: SVGMObject {
         }
         
         public init(stringLiteral value: String) {
-            self.content = "r\"\(value)\""
+            self.content = value
         }
         
         var content: String
         
         public mutating func appendLiteral(_ literal: String) {
-            if !content.isEmpty {
-                self.content += "+ r\"\(literal)\""
-            } else {
-                self.content += "\"\(literal)\""
-            }
+            self.content += literal
         }
         
         public mutating func appendInterpolation(_ value: Any) {
-            self.content += "+ f\"{\(value)}\""
+            self.content += "\(value)"
         }
         
         

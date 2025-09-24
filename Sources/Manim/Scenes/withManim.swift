@@ -35,6 +35,27 @@ public func withManim(
         PythonLibrary.useLibrary(at: libraryPath.path)
     }
     
+    let code = """
+    import subprocess
+    from functools import wraps
+    
+    # Save original subprocess.run
+    _original_run = subprocess.run
+    
+    # Patch subprocess.run
+    def patched_run(args, *popenargs, **kwargs):
+        if args[0] == "latex":
+            args[0] = "\(configProxy.latexPath?.path ?? "latex")"
+        elif args[0] == "dvisvgm":
+            args[0] = "\(configProxy.dvisvgmPath?.path ?? "dvisvgm")"
+        return _original_run(args, *popenargs, **kwargs)
+    
+    subprocess.run = patched_run
+    """
+    
+    let main = Python.import("__main__")
+    Python.exec(code, main.__dict__)
+    
     let sys = Python.import("sys")
     if let packagesPath = configProxy.pythonPackagesPath {
         sys.path.append(packagesPath.path)

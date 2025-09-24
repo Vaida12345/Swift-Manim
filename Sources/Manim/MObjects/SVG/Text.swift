@@ -13,7 +13,7 @@ import PythonKit
 /// - SeeAlso: ``MathTex`` for LaTeX text.
 public class Text: SVGMObject {
     
-    public init(_ text: String, opacity: Double = 1, strokeWidth: Double = 0, color: Color = .white, fontSize: Double = 48, lineSpacing: Double = -1, font: String = "", italic: Bool = false, weight: FontWeight = .normal, height: Double? = nil, width: Double? = nil) {
+    public init(_ text: String, opacity: Double = 1, strokeWidth: Double = 0, color: Color = .white, fontSize: Double = 48, lineSpacing: Double = -1, font: String = "", italic: Bool = false, weight: FontWeight = .normal) {
         var arguments = Closure.Arguments()
         arguments.append("text", text)
         arguments.append("fill_opacity", opacity)
@@ -24,12 +24,11 @@ public class Text: SVGMObject {
         arguments.append("font", font)
         arguments.append("slant", italic ? "ITALIC" : "NORMAL")
         arguments.append("weight", weight)
-        arguments.append("height", height)
-        arguments.append("width", width)
         
         super.init(manim.Text.dynamicallyCall(withKeywordArguments: arguments))
     }
     
+    @_disfavoredOverload
     public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     public enum FontWeight: String, PythonConvertible {

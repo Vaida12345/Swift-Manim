@@ -52,3 +52,34 @@ extension MObject {
     }
     
 }
+
+
+extension MObject {
+    
+    /// Binds `keyPath` to `object`.`onKeyPath`.
+    ///
+    /// You can use `bind` to ensure two properties are always in sync.
+    ///
+    /// ```swift
+    /// let dot1 = Dot(at: [0, 2], color: .blue)
+    /// let dot2 = Dot(at: .center, color: .green)
+    ///
+    /// scene.add(dot1, dot2)
+    ///
+    /// dot1.bind(\.x, to: dot2, \.x)
+    ///
+    /// withAnimation {
+    ///     dot2.move(to: [2, 0])
+    /// }
+    /// ```
+    public func bind<T>(
+        _ keyPath: ReferenceWritableKeyPath<MObject, T>,
+        to object: MObject,
+        _ onKeyPath: KeyPath<MObject, T>
+    ) where T: PythonConvertible & ConvertibleFromPython {
+        self.addUpdater {
+            self[keyPath: keyPath] = object[keyPath: onKeyPath]
+        }
+    }
+    
+}
