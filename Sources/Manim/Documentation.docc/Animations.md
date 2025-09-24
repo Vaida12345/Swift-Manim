@@ -75,7 +75,7 @@ try await withManim { scene in
 
 ## Wait
 
-You can freeze the scene using ``Scene/wait(_:)`` function.
+You can freeze the scene using ``SceneProxy/wait(_:)`` function.
 
 ```swift
 withAnimation(in: .parallel, lagRatio: 1) {
@@ -110,13 +110,15 @@ In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinat
 
 ### Functions
 - ``withAnimation(_:in:body:)``
-- ``MObject/action(_:)``
-- ``MObject/transform(to:option:)``
+- ``MObject/transform(to:transform:)`
+- ``MObject/replacementTransform(to:)`
 
 ### Structures
+- ``ValueTracker``
 - ``Animation``
-- ``ActionAnimation``
 - ``AttachedAnimation``
+- ``WrappedAnimation``
 - ``Transform``
+- ``ShowAnimation``
 - ``HideAnimation``
 - ``RateFunction``

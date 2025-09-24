@@ -33,6 +33,7 @@ public class Axes: Group {
         super.init(manim.Axes.dynamicallyCall(withKeywordArguments: args))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     

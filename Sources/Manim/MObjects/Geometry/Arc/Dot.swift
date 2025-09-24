@@ -24,6 +24,7 @@ public final class Dot: Circle {
         super.init(object)
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

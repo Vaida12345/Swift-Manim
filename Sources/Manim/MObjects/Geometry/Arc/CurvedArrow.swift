@@ -15,7 +15,7 @@ public class CurvedArrow: ArcBetweenPoints {
         super.init(manim.CurvedArrow(start_point: start, end_point: end, angle: angle.radians))
     }
     
-    
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

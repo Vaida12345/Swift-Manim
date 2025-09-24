@@ -16,6 +16,7 @@ public final class Ellipse: Circle {
         super.init(manim.Ellipse(width: width, height: height, color: color))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

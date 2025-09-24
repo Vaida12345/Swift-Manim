@@ -25,6 +25,7 @@ public class Group: VMObject {
         self.init(children)
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

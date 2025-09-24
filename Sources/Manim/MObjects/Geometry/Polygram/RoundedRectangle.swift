@@ -28,6 +28,7 @@ public class RoundedRectangle: Rectangle {
         super.init(manim.RoundedRectangle.dynamicallyCall(withKeywordArguments: arguments))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

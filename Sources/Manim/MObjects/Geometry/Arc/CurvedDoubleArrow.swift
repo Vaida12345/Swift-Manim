@@ -15,7 +15,7 @@ public final class CurvedDoubleArrow: CurvedArrow {
         super.init(manim.CurvedDoubleArrow(start_point: start, end_point: end, angle: angle.radians))
     }
     
-    
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

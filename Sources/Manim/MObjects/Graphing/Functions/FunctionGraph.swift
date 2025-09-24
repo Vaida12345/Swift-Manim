@@ -30,6 +30,7 @@ public final class FunctionGraph: ParametricFunction {
         super.init(manim.FunctionGraph(function, color: color, x_range: range))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

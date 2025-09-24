@@ -29,6 +29,7 @@ public class Rectangle: Polygon {
         super.init(manim.Rectangle.dynamicallyCall(withKeywordArguments: arguments))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

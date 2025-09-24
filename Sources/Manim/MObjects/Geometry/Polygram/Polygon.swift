@@ -16,6 +16,7 @@ public class Polygon: Polygram {
         super.init(manim.Polygon(vertices, color: color))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

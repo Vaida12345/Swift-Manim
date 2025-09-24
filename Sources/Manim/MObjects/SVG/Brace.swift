@@ -18,6 +18,6 @@ public class Brace: MObject {
     }
     
     @_disfavoredOverload
-    public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

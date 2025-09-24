@@ -18,6 +18,7 @@ public class RegularPolygon: RegularPolygram {
         super.init(manim.RegularPolygon(n: n, color: color))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

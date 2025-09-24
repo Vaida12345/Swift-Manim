@@ -18,6 +18,7 @@ public final class Cross: Group {
         super.init(manim.Cross(mobject: base, stroke_color: strokeStyle.color, stroke_width: strokeStyle.lineWidth))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     

@@ -40,6 +40,7 @@ public class Arc: TipableVMobject {
         super.init(object)
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

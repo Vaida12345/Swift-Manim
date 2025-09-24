@@ -15,6 +15,7 @@ public final class Underline: Line {
         super.init(manim.Underline(base, buff: padding))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
 }
 

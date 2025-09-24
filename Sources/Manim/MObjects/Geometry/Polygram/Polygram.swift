@@ -16,6 +16,7 @@ public class Polygram: VMObject {
         super.init(manim.Polygram(vertices, color: color))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     /// Rounds off the corners of the Polygram.

@@ -26,6 +26,7 @@ public final class DoubleArrow: Arrow {
         super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape_start: startTip, tip_shape_end: endTip))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

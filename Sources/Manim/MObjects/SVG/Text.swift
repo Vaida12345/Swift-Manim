@@ -29,7 +29,7 @@ public class Text: SVGMObject {
     }
     
     @_disfavoredOverload
-    public required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     public enum FontWeight: String, PythonConvertible {
         case normal

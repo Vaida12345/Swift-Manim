@@ -20,6 +20,7 @@ public class Circle: Arc {
     }
     
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

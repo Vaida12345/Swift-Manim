@@ -21,6 +21,7 @@ public final class Star: Polygram {
         super.init(manim.Star(n: n, inner_radius: innerRadius, outer_radius: outerRadius, start_angle: startAngle.radians, color: color))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

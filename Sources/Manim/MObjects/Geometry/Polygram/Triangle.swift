@@ -17,6 +17,7 @@ public final class Triangle: RegularPolygon {
         super.init(manim.Triangle(color: color))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

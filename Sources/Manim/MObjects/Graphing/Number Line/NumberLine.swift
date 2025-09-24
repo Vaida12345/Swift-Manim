@@ -44,6 +44,7 @@ public final class NumberLine: Line {
         super.init(manim.NumberLine.dynamicallyCall(withKeywordArguments: args))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     

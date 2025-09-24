@@ -15,6 +15,7 @@ public final class Cutout: VMObject {
         super.init(manim.Cutout(base, cutouts))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

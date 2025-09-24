@@ -21,6 +21,7 @@ public class SurroundingRectangle: RoundedRectangle {
         super.init(manim.SurroundingRectangle(base, color: color, corner_radius: cornerRadius))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

@@ -96,7 +96,7 @@ extension MObject {
     /// - Parameters:
     ///   - opacity: The opacity of the spotlight.
     ///   - color: The color of the spotlight.
-    public func focuse(opacity: Double = 0.2, color: Color = .gray) -> WrappedAnimation {
+    public func focus(opacity: Double = 0.2, color: Color = .gray) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.FocusOn, arguments: [
             ("opacity", opacity),
             ("color", color),
@@ -122,7 +122,7 @@ extension MObject {
     
     /// Show only a sliver of the object each frame.
     ///
-    /// The effect is similar to ``circumscribe(shape:style:)``.
+    /// The effect is similar to ``circumscribe(shape:style:color:)``.
     ///
     /// - Note: The action would remove the object prior and after. During the animation, it will only show the object (and path) partially.
     ///

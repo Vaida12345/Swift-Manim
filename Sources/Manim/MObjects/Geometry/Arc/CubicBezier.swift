@@ -23,6 +23,7 @@ final class CubicBezier: VMObject {
         
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

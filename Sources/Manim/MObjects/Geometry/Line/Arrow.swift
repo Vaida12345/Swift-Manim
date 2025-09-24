@@ -24,6 +24,7 @@ public class Arrow: Line {
         super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape: tip))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

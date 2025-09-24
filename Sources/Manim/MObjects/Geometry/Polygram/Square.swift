@@ -20,6 +20,7 @@ public final class Square: Rectangle {
         super.init(manim.Square(side_length: length, color: color, grid_xstep: gridStep?.x, grid_ystep: gridStep?.y))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

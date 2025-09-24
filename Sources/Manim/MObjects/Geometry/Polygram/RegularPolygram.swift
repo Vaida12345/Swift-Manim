@@ -23,6 +23,7 @@ public class RegularPolygram: Polygram {
         super.init(manim.RegularPolygram(num_vertices: n, density: density, radius: radius, start_angle: startAngle?.radians, color: color))
     }
     
+    @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }

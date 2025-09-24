@@ -10,6 +10,7 @@ import SwiftUI
 import PythonKit
 
 
+/// A protocol indicating that it can be moved.
 @MainActor
 public protocol Transformable {
     

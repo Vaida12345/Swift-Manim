@@ -36,18 +36,16 @@ try await withManim { scene in
 - <doc:Animations>
 
 
-### Main Objects
+### Entry
+- ``withManim(scene:configuration:)``
 - ``MObject``
-- ``Scene``
+- ``MObject``
+- ``SceneProxy``
+- ``ConfigurationProxy``
 
 ### Common Structures
 - ``Point``
 - ``Color``
-
-
-### Python Generation
-These structures are developed to facilitate Python Script generation.
-
-- ``PyObject``
-- ``PythonScriptConvertible``
-- ``Generator``
+- ``Axis``
+- ``Direction``
+- ``Range``
