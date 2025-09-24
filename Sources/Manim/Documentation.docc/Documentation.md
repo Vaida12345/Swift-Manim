@@ -4,7 +4,10 @@ The Swift Interface for Manim
 
 ## Overview
 
-Create beautiful mathematical animations.
+A Swift wrapper to Manim, framework for creating beautiful mathematical animations.
+
+This package uses the engine of [ManimCE](https://docs.manim.community/en/stable/index.html) and [PythonKit](https://github.com/pvieito/PythonKit) for Python interoperation.
+
 
 ![Example](VectorArrow)
 

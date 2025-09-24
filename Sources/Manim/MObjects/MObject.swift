@@ -93,7 +93,6 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
         }))
         Python.exec(code, main.__dict__)
         self.pythonObject.add_updater(main.__dict__[uniqueName], index: index, call_updater: initialCall)
-
     }
     
     /// Edit points, colors and sub objects to be identical to another ``MObject``.
