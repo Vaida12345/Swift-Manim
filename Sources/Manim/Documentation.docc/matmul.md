@@ -4,7 +4,7 @@
 
 ## Matrix Multiplication
 
-![Video](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Resources/matmul.mp4)
+![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/matmul.mov)
 
 ```swift
 try await withManim { scene in

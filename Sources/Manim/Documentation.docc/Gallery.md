@@ -26,7 +26,7 @@ try await withManim { scene in
 
 ## Moving Dots
 
-![video](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Resources/MovingDots.mov)
+![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/MovingDots.mov)
 
 ```swift
 try await withManim { scene in
@@ -56,6 +56,6 @@ try await withManim { scene in
 
 ## Different Lag Ratios
 
-![video](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mp4)
+![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mov)
 
 View source code in [animation.md](<doc:Animations>)
