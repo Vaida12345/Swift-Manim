@@ -79,12 +79,6 @@ extension Transformable {
         self.move(nextTo: target, placing: .right, padding: padding)
     }
     
-    /// Moves the ``MObject/start`` and ``MObject/end``.
-    @discardableResult
-    public func moveTo(start: Point, end: Point) -> AttachedAnimation {
-        AttachedAnimation(base: self._transformable, closure: Closure("put_start_and_end_on", [("", start), ("", end)]))
-    }
-    
     
     // MARK: - Implicit Move
     

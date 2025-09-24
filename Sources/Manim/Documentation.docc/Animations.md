@@ -97,7 +97,7 @@ let dot2 = Dot(at: .center, color: .green)
 
 scene.add(dot1, dot2)
 
-dot1.bind(\.x, to: dot2, \.x)
+dot1.bind(\.x, to: dot2.x)
 
 withAnimation {
     dot2.move(to: [2, 0])

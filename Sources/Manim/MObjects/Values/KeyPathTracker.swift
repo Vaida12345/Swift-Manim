@@ -66,7 +66,7 @@ extension MObject {
     ///
     /// scene.add(dot1, dot2)
     ///
-    /// dot1.bind(\.x, to: dot2, \.x)
+    /// dot1.bind(\.x, to: dot2.x)
     ///
     /// withAnimation {
     ///     dot2.move(to: [2, 0])
@@ -74,12 +74,19 @@ extension MObject {
     /// ```
     public func bind<T>(
         _ keyPath: ReferenceWritableKeyPath<MObject, T>,
-        to object: MObject,
-        _ onKeyPath: KeyPath<MObject, T>
+        to target: @autoclosure @escaping () -> T,
     ) where T: PythonConvertible & ConvertibleFromPython {
         self.addUpdater {
-            self[keyPath: keyPath] = object[keyPath: onKeyPath]
+            self[keyPath: keyPath] = target()
         }
+    }
+    
+    @available(*, deprecated, renamed: "bind")
+    public func link<T>(
+        _ keyPath: ReferenceWritableKeyPath<MObject, T>,
+        to target: @autoclosure @escaping () -> T,
+    ) where T: PythonConvertible & ConvertibleFromPython {
+        self.bind(keyPath, to: target())
     }
     
 }

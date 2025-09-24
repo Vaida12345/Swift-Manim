@@ -22,6 +22,7 @@ public final class Cross: Group {
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
     
+    @MainActor
     public struct StrokeStyle {
         
         let color: Color

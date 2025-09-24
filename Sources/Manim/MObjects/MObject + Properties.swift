@@ -20,6 +20,11 @@ extension MObject {
         get { Double(self.pythonObject.get_y())! }
         set { self.pythonObject.set_y(newValue) }
     }
+    
+    public var color: Color {
+        get { Color(self.pythonObject.color)! }
+        set { self.pythonObject.color = newValue.pythonObject }
+    }
 
     // MARK: - write only
     /// Write-only property for setting zIndex.

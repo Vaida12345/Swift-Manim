@@ -42,4 +42,4 @@
 ### Updater
 - ``MObject/addUpdater(index:initialCall:handler:)``
 - ``MObject/track(_:)``
-- ``MObject/bind(_:to:_:)``
+- ``MObject/bind(_:to:)``
