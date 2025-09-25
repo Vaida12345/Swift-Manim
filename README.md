@@ -134,7 +134,7 @@ https://github.com/Vaida12345/Swift-Manim.git
 
 `Swift-Manim` uses Python [ManimCE](https://docs.manim.community/en/stable/index.html) as its engine, hence it is essential to setup Python and let `Swift-Manim` know where to look.
 
-Please follow [this guide](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Documentation.md) to setup your environment.
+Please follow [this guide](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Setup.md) to setup your environment.
 
 ## Documentation
 
