@@ -33,6 +33,8 @@ public struct ShowAnimation {
     /// The style to texts, show text letter by letter.
     public static let addTextByLetter = ShowAnimation(caller: manim.AddTextLetterByLetter)
     
+    public static let addTextByLetter = ShowAnimation(caller: manim.AddTextLetterByLetter)
+    
     /// Show a ``Group`` with its children spiraled in. Applying this to a normal object would not work.
     public static let spiralIn = ShowAnimation(caller: manim.SpiralIn)
     

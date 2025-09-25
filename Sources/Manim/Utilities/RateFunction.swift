@@ -18,6 +18,8 @@ public enum RateFunction: @MainActor PythonConvertible {
     case spring
     case linear
     case smooth
+    case elastic
+    case elasticSpring
     
     public var pythonObject: PythonObject {
         switch self {
@@ -27,6 +29,8 @@ public enum RateFunction: @MainActor PythonConvertible {
         case .spring: manim.rate_functions.exponential_decay
         case .linear: manim.rate_functions.linear
         case .smooth: manim.rate_functions.smooth
+        case .elastic: manim.rate_functions.ease_in_out_elastic
+        case .elasticSpring: manim.rate_functions.ease_out_elastic
         }
     }
     
