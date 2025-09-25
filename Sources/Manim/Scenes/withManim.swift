@@ -76,6 +76,9 @@ public func withManim(
     _manim = try Python.attemptImport("manim")
     defer { _manim = nil }
     
+    _numpy = try Python.attemptImport("numpy")
+    defer { _numpy = nil }
+    
     
     let config = manim.config
     config["background_color"] = configProxy.backgroundColor.pythonObject

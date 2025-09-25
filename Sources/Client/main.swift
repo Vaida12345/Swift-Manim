@@ -9,9 +9,19 @@ import Manim
 
 
 try await withManim { scene in
-    let matrix = Matrix([[1, 2, 3]])
-    print(matrix.brackets)
-    print(matrix.entries)
+    
+    let dot = Dot(at: [2, 0])
+    let trace = dot.trace(\.center, dissipatingTime: 0.5)
+    scene.add(dot, trace)
+    
+    withAnimation(in: .serial) {
+        dot.shift(by: [-2, 0])
+            .path(.arc(.degrees(45)))
+        dot.shift(by: [-2, 0])
+            .path(.arc(.degrees(-45)))
+    }
+    
+    scene.sleep()
 } configuration: {
     $0.quality = .medium
     $0.preview = false

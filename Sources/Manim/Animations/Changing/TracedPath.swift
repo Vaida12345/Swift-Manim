@@ -11,6 +11,8 @@ import PythonKit
 /// Traces the path of a point returned by a function call.
 public final class TracedPath: VMObject {
     
+    /// Traces the path of a point returned by a function call.
+    ///
     /// - Parameters:
     ///   - function: The function to be traced.
     ///   - color: The color of the trace.
@@ -18,10 +20,17 @@ public final class TracedPath: VMObject {
     ///   - dissipatingTime: The time taken for the path to dissipate. Default set to `nil` which disables dissipation.
     public init<T>(_ callable: @autoclosure @escaping () -> T, color: Color = .white, width: Double = 2, dissipatingTime: Double? = nil) where T: PythonConvertible {
         let method = PythonFunction { _ in
-            callable()
+            return callable()
         }
         
-        super.init(manim.TracedPath(traced_point_func: method, stroke_width: width, stroke_opacity: color.alpha, stroke_color: color, dissipating_time: dissipatingTime))
+        let opacity: PythonObject
+        if color.alpha == 1 && dissipatingTime != nil {
+            opacity = [0, 1]
+        } else {
+            opacity = color.alpha.pythonObject
+        }
+        
+        super.init(manim.TracedPath(traced_point_func: method, stroke_width: width, stroke_opacity: opacity, stroke_color: color, dissipating_time: dissipatingTime))
     }
     
     @_disfavoredOverload
@@ -30,7 +39,30 @@ public final class TracedPath: VMObject {
 }
 
 
-//traced_point_func (Callable) – The function to be traced.
-//stroke_width (float) – The width of the trace.
-//stroke_color (ParsableManimColor | None) – The color of the trace.
-//dissipating_time (float | None) – The time taken for the path to dissipate. Default set to None which disables dissipation.
+extension MObject {
+    
+    /// Traces the path of a point returned by a function call.
+    ///
+    /// ![Preview](trace)
+    ///
+    /// ```swift
+    /// let dot = Dot(at: [2, 0])
+    /// let trace = dot.trace(\.center, dissipatingTime: 0.5)
+    /// scene.add(dot, trace)
+    ///
+    /// withAnimation(in: .serial) {
+    ///     dot.shift(by: [-2, 0])
+    ///         .path(.arc(.degrees(45)))
+    /// }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - function: The function to be traced.
+    ///   - color: The color of the trace.
+    ///   - width: The width of the trace.
+    ///   - dissipatingTime: The time taken for the path to dissipate. Default set to `nil` which disables dissipation.
+    public func trace<T>(_ keyPath: KeyPath<MObject, T>, color: Color = .white, width: Double = 2, dissipatingTime: Double? = nil) -> TracedPath where T: PythonConvertible {
+        TracedPath(self[keyPath: keyPath], color: color, width: width, dissipatingTime: dissipatingTime)
+    }
+    
+}

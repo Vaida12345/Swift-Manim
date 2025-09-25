@@ -26,7 +26,7 @@ public struct Axis: @MainActor OptionSet, @MainActor PythonConvertible {
     }
     
     public var pythonObject: PythonObject {
-        [self.contains(.x) ? 1 : 0, self.contains(.y) ? 1 : 0, self.contains(.z) ? 1 : 0]
+        numpy.array([self.contains(.x) ? 1 : 0, self.contains(.y) ? 1 : 0, self.contains(.z) ? 1 : 0])
     }
     
 }

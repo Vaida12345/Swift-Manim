@@ -20,7 +20,7 @@ public struct Range: @MainActor PythonConvertible {
     
     
     public var pythonObject: PythonObject {
-        [min, max, step].pythonObject
+        numpy.array([min, max, step])
     }
     
     var length: Double {

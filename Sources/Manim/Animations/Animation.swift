@@ -120,7 +120,7 @@ internal final class EmptyAnimation: Animation {
 ///
 /// - Warning: Starting from `PythonKit` branch, animations happen in ``Animation/Method/parallel`` by default.
 @MainActor
-public func withAnimation(_ animation: RateFunction = .easeInOut, in method: Animation.Method = .parallel, @_AnimationBuilder body: () -> _AnimationGroup) {
+public func withAnimation(_ animation: RateFunction = .smooth, in method: Animation.Method = .parallel, @_AnimationBuilder body: () -> _AnimationGroup) {
     shouldUseAnimation = true
     let animations = body()
         .get()

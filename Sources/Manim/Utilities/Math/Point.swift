@@ -9,6 +9,7 @@ import PythonKit
 
 
 /// A point, with the center being (0, 0, 0).
+@MainActor
 public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConvertible, @MainActor ConvertibleFromPython {
     
     public let x: Double
@@ -23,7 +24,7 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
     }
     
     public var pythonObject: PythonObject {
-        [self.x, self.y, self.z].pythonObject
+        numpy.array([self.x, self.y, self.z])
     }
     
     public static var center: Point {

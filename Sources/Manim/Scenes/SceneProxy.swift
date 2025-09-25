@@ -37,7 +37,7 @@ public final class SceneProxy {
     
     
     /// Freeze animation for `duration`.
-    public func sleep(for duration: Duration) {
+    public func sleep(for duration: Duration = .seconds(1)) {
         let duration = Double(duration.components.attoseconds) / pow(10, 18) + Double(duration.components.seconds)
         scene.wait(duration)
     }

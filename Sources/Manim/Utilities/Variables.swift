@@ -19,6 +19,15 @@ var manim: PythonObject {
     }
     return manim
 }
+@MainActor var _numpy: PythonObject? = nil
+/// The shared `numpy` package instance.
+@MainActor
+var numpy: PythonObject {
+    guard let numpy = _numpy else {
+        fatalError("Please make sure all logics are implemented within `withManim(scene:configuration:)`.")
+    }
+    return numpy
+}
 @MainActor var _scene: PythonObject? = nil
 /// The shared scene
 @MainActor
