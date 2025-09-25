@@ -1,5 +1,5 @@
 {
-  "originHash" : "744ced895c872c1d9bae4fe6cc400dc86c994f084288dd72b8303425cf2207dd",
+  "originHash" : "15aca1434cb42da2270293d3798799ff73cdb91a5a631332e5d0698160bbb10f",
   "pins" : [
     {
       "identity" : "detaileddescription",
@@ -29,48 +29,12 @@
       }
     },
     {
-      "identity" : "macrocollection",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Vaida12345/MacroCollection.git",
-      "state" : {
-        "revision" : "72315013716a9a60c1b8fccfd192b5c9e8246bd1",
-        "version" : "1.0.5"
-      }
-    },
-    {
-      "identity" : "macroessentials",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Vaida12345/MacroEssentials.git",
-      "state" : {
-        "revision" : "43dd79407e69c26b0384c7880462b2d74cdb3ac2",
-        "version" : "1.0.1"
-      }
-    },
-    {
       "identity" : "pythonkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pvieito/PythonKit.git",
       "state" : {
         "branch" : "master",
         "revision" : "d030b5193d1e4e770156deb27865773b64c5695f"
-      }
-    },
-    {
-      "identity" : "swift-latex",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Vaida12345/Swift-LaTeX.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "7c3442d0439b56fe4d4aded9701e821f404d3773"
-      }
-    },
-    {
-      "identity" : "swift-syntax",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-syntax.git",
-      "state" : {
-        "revision" : "f99ae8aa18f0cf0d53481901f88a0991dc3bd4a2",
-        "version" : "601.0.1"
       }
     }
   ],

@@ -5,7 +5,6 @@
 //  Created by Vaida on 2023/10/8.
 //
 
-import MacroCollection
 import SwiftUI
 import PythonKit
 
@@ -55,13 +54,25 @@ public struct ShowAnimation {
         ShowAnimation(caller: manim.FadeIn, arguments: [("shift", shift), ("scale", scale)])
     }
     
-    /// Grow the object form the given edge.
+    /// Grow the object form the given object.
     ///
     /// The animation is a scaling from the given edge.
-    @varyArgumentType(Direction.self, variation: Point.self)
-    @varyArgumentType(Direction.self, variation: MObject.self)
     public static func grow(from edge: Direction) -> ShowAnimation {
-        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("edge", edge.pythonObject)])
+        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("", edge)])
+    }
+    
+    /// Grow the object form the given object.
+    ///
+    /// The animation is a scaling from the given point.
+    public static func grow(from point: Point) -> ShowAnimation {
+        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("", point)])
+    }
+    
+    /// Grow the object form the given object.
+    ///
+    /// The animation is a scaling from the given object.
+    public static func grow(from object: MObject) -> ShowAnimation {
+        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("", object.pythonObject)])
     }
     
     /// Scale and rotate.

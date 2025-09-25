@@ -12,22 +12,17 @@ let package = Package(
         .library(name: "Manim", targets: ["Manim"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Vaida12345/Swift-LaTeX.git", branch: "main"),
         .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "1.2.5"),
-        .package(url: "https://github.com/Vaida12345/MacroCollection.git", from: "1.0.5"),
         .package(url: "https://github.com/pvieito/PythonKit.git", branch: "master")
     ],
     targets: [
         .target(
             name: "Manim",
             dependencies: [
-                .product(name: "LaTeX", package: "Swift-Latex"),
                 "FinderItem",
-                "MacroCollection",
                 "PythonKit"
             ]
         ),
-        .testTarget(name: "ManimTests", dependencies: ["Manim"]),
         .executableTarget(name: "Client", dependencies: ["Manim"])
     ]
 )

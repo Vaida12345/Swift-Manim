@@ -5,7 +5,6 @@
 //  Created by Vaida on 2023/10/7.
 //
 
-import MacroCollection
 import SwiftUI
 import PythonKit
 

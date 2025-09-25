@@ -8,8 +8,12 @@
 import Manim
 
 
-try await withManim { (scene: SceneProxy) in
+try await withManim { scene in
+    let dot = Dot()
     
+    withAnimation {
+        dot.show()
+    }
 } configuration: {
     $0.preview = false
 }
