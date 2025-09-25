@@ -30,16 +30,6 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     }
     
     
-    /// Set the fill color and fill opacity.
-    ///
-    /// - Parameters:
-    ///   - color: Fill color.
-    ///   - opacity: Fill opacity.
-    @discardableResult
-    public func fill(_ color: Color, opacity: Double = 1) -> AttachedAnimation {
-        AttachedAnimation(base: self, closure: Closure("set_fill", [("color", color), ("opacity", opacity)]))
-    }
-    
     /// Set the color and opacity.
     @discardableResult
     public func set(color: Color) -> AttachedAnimation {
@@ -56,17 +46,6 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     /// - Note: This has no effect if `child` is not a children of `self`.
     public func remove(_ child: MObject) {
         self.pythonObject.remove(child)
-    }
-    
-    /// Set the stroke color and stroke opacity.
-    ///
-    /// - Parameters:
-    ///   - color: stroke color.
-    ///   - width: stroke color width.
-    ///   - opacity: stroke opacity.
-    @discardableResult
-    public func stroke(_ color: Color, width: Double = 2, opacity: Double = 1) -> AttachedAnimation {
-        AttachedAnimation(base: self, closure: Closure("set_stroke", [("color", color), ("opacity", opacity), ("width", width)]))
     }
     
     /// Add an update function to this object.

@@ -41,3 +41,22 @@ public class Text: SVGMObject {
     }
     
 }
+
+extension Text {
+    
+    public var fontSize: Int {
+        get { Int(self.pythonObject.font_size)! }
+        set { self.pythonObject.font_size = newValue.pythonObject }
+    }
+    
+    public var font: String {
+        get { String(self.pythonObject.font)! }
+        set { self.pythonObject.font = newValue.pythonObject }
+    }
+    
+    public var weight: Int {
+        get { Int(self.pythonObject.weight)! }
+        set { self.pythonObject.weight = newValue.pythonObject }
+    }
+    
+}

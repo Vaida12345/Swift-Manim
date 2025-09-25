@@ -15,6 +15,12 @@ try await withManim { scene in
     
     print(dot1.color)
     
+    dot1.color = .red
+    
+    scene.add(dot1, dot2)
+    
+    MathTex("1234").show()
+    
 } configuration: {
     $0.preview = false
 }

@@ -119,6 +119,9 @@ dependencies: [
 ]
 ```
 and then adding the appropriate module to your target dependencies.
+```swift
+.product(name: "Manim", package: "Swift-Manim"),
+```
 
 ### Using Xcode Package support
 
@@ -126,6 +129,12 @@ You can add this framework as a dependency to your Xcode project by clicking Fil
 ```
 https://github.com/Vaida12345/Swift-Manim.git
 ```
+
+### Setup Environment
+
+`Swift-Manim` uses Python [ManimCE](https://docs.manim.community/en/stable/index.html) as its engine, hence it is essential to setup Python and let `Swift-Manim` know where to look.
+
+Please follow [this guide](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Documentation.md) to setup your environment.
 
 ## Documentation
 

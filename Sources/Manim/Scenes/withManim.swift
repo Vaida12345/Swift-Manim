@@ -6,6 +6,7 @@
 //
 
 import PythonKit
+import OSLog
 
 
 /// The entry point for all `Manim` animations.
@@ -27,14 +28,30 @@ public func withManim(
     configuration: (ConfigurationProxy) async throws -> Void = { _ in },
 ) async throws {
     
+    let logger = Logger(subsystem: "Manim", category: "Initialization")
+    
     // MARK: - Configuration
     
     let configProxy = ConfigurationProxy()
     try await configuration(configProxy)
     if let libraryPath = configProxy.pythonLibraryPath {
+        precondition(libraryPath.exists, "Cannot find Python library at \(libraryPath), please double check the file path.")
         PythonLibrary.useLibrary(at: libraryPath.path)
     }
     
+    logger.info("Using Python \(Python.version)")
+    
+    let sys = Python.import("sys")
+    if let packagesPath = configProxy.pythonPackagesPath {
+        precondition(packagesPath.exists, "Cannot find any packages, please follow README to setup environment.")
+        sys.path.append(packagesPath.path)
+    }
+    
+    if let latex = configProxy.latexPath {
+        precondition(latex.exists, "Cannot find latex compiler, please follow README to setup environment.")
+    }
+    
+    // override latex path
     let code = """
     import subprocess
     from functools import wraps
@@ -55,11 +72,6 @@ public func withManim(
     
     let main = Python.import("__main__")
     Python.exec(code, main.__dict__)
-    
-    let sys = Python.import("sys")
-    if let packagesPath = configProxy.pythonPackagesPath {
-        sys.path.append(packagesPath.path)
-    }
     
     _manim = try Python.attemptImport("manim")
     defer { _manim = nil }

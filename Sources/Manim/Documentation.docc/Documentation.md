@@ -31,6 +31,9 @@ try await withManim { scene in
 
 ## Topics
 
+### Getting Started
+- <doc:Setup>
+
 ### Animation
 
 - <doc:Animations>
