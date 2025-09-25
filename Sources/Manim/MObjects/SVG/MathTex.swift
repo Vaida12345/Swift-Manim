@@ -11,16 +11,16 @@ import PythonKit
 /// A LaTeX text.
 ///
 /// > Tip:
-/// > You can use `{{}}` to separate a tex into groups.
+/// > You can use the variadic argument to specify groups.
 /// > ```swift
-/// > MathTex("{{5}}+{{14}}")
+/// > MathTex("5", "14")
 /// > ```
 /// >
 /// > In this way, you can use ``MObject/children`` to access the sub objects.
 public class MathTex: SVGMObject {
     
-    public init(_ latex: String) {
-        super.init(manim.MathTex(latex))
+    public init(_ latex: String...) {
+        super.init(manim.MathTex(latex.map({ "{{\($0)}}" }).joined()))
     }
     
     @_disfavoredOverload

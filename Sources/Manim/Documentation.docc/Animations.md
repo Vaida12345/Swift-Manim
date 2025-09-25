@@ -57,7 +57,7 @@ try await withManim { scene in
     }
 
     // Animate groups with different lag_ratios
-    withAnimation(in: .serial) {
+    withAnimation {
         for (group, ratio) in zip(groups.children, ratios) {
             group.shift(by: [0, -2, 0])
                 .lagRatio(ratio)

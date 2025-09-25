@@ -50,13 +50,12 @@ public struct HideAnimation {
 extension MObject {
     
     /// Hide the object.
+    ///
+    /// - Warning: Hiding an object outside ``withAnimation(_:in:body:)`` may not work if `self` is not a child of ``SceneProxy``. In this case, use ``VMObject/set(opacity:)`` instead.
     @discardableResult
     public func hide(animation: HideAnimation = .unwrite) -> Animation {
         if !shouldUseAnimation {
-            withAnimation {
-                self.hide().duration(0)
-            }
-            
+            scene.remove(self.pythonObject)
             return EmptyAnimation()
         } else {
             return WrappedAnimation(base: self.pythonObject, caller: animation.caller, arguments: animation.arguments)

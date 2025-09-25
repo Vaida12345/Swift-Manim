@@ -50,7 +50,7 @@ extension MObject {
     /// let trace = dot.trace(\.center, dissipatingTime: 0.5)
     /// scene.add(dot, trace)
     ///
-    /// withAnimation(in: .serial) {
+    /// withAnimation {
     ///     dot.shift(by: [-2, 0])
     ///         .path(.arc(.degrees(45)))
     /// }

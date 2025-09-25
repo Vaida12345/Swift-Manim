@@ -12,8 +12,8 @@ import PythonKit
 public enum Direction: Equatable, @MainActor PythonConvertible {
     case left
     case right
-    case top
-    case bottom
+    case top, up
+    case bottom, down
     
     case topLeft
     case topRight
@@ -26,9 +26,9 @@ public enum Direction: Equatable, @MainActor PythonConvertible {
             manim.LEFT
         case .right:
             manim.RIGHT
-        case .top:
+        case .up, .top:
             manim.UP
-        case .bottom:
+        case .down, .bottom:
             manim.DOWN
             
         case .topLeft:

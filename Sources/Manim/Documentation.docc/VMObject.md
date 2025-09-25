@@ -10,3 +10,4 @@
 - ``VMObject/stroke(_:width:)``
 - ``VMObject/fill(_:)``
 - ``MObject/set(color:)``
+- ``VMObject/set(opacity:)``

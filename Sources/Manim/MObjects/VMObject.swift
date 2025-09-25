@@ -105,4 +105,12 @@ extension VMObject {
         AttachedAnimation(base: self, closure: Closure("set_sheen", [("", factor)]))
     }
     
+    /// Sets opacity.
+    ///
+    /// You can also use ``MObject/set(color:)`` to set color.
+    @discardableResult
+    public func set(opacity: Double) -> Animation {
+        AttachedAnimation(base: self, closure: Closure("set_opacity", [("opacity", opacity)]))
+    }
+    
 }

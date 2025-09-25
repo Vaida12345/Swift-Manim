@@ -45,7 +45,7 @@ try await withManim { scene in
     let x = dot1.track(\.x)
     let y = dot2.track(\.y)
 
-    withAnimation(in: .serial) {
+    withAnimation {
         x += 4
         y += 4
     }

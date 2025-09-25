@@ -48,9 +48,9 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
             self = [-1, 0]
         case .right:
             self = [1, 0]
-        case .top:
+        case .top, .up:
             self =  [0, 1]
-        case .bottom:
+        case .bottom, .down:
             self = [0, -1]
             
         case .bottomLeft:

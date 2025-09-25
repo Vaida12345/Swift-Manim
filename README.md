@@ -56,7 +56,7 @@ try await withManim { scene in
     let x = dot1.track(\.x)
     let y = dot2.track(\.y)
     
-    withAnimation(in: .serial) {
+    withAnimation {
         x += 4
         y += 4
     }
@@ -90,7 +90,7 @@ try await withManim { scene in
     }
     
     // Animate groups with different lag_ratios
-    withAnimation(in: .serial) {
+    withAnimation {
         for (group, ratio) in zip(groups.children, ratios) {
             group.shift(by: [0, -2, 0])
                 .lagRatio(ratio)

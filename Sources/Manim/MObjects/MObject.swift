@@ -32,7 +32,7 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     
     /// Sets the color.
     ///
-    /// Sets both the ``fillColor`` and ``strokeColor``.
+    /// Sets both the ``fillColor`` and ``strokeColor``. This method also calls ``VMObject/set(opacity:)`` internally.
     @discardableResult
     public func set(color: Color) -> Animation {
         _AnimationGroup(animations: [

@@ -11,7 +11,7 @@ import PythonKit
 
 /// The proxy for scene.
 @MainActor
-public final class SceneProxy {
+public struct SceneProxy {
     
     let scene: PythonObject
     

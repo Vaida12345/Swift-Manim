@@ -27,6 +27,8 @@ public class WrappedAnimation: Animation {
         
         if !shouldUseAnimation {
             self.preAction()
+            var arguments = self.arguments
+            arguments.insert("", self.base, at: 0)
             self.caller.dynamicallyCall(withKeywordArguments: arguments)
             self.completionHandler()
         }

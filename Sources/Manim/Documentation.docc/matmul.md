@@ -8,9 +8,8 @@
 
 ```swift
 try await withManim { scene in
+	// MARK: - initial scene
     
-    // MARK: - initial scene
-    // lhs
     let lhs = Matrix([[1, 2], [3, 4]])
     let multiplication = MathTex(#"\times"#)
     let rhs = Matrix([[5, 6], [7, 8]])
@@ -32,16 +31,18 @@ try await withManim { scene in
     
     scene.sleep(for: .seconds(2))
     
+    
     // MARK: - move rhs, remove title, add result matrix
+    
     let result = Matrix([[19, 22], [43, 50]])
     result.move(to: rhs)
     for i in 0..<4 {
-        result.entries[i].set(color: .black)
+        result.entries[i].set(opacity: 0)
     }
     
     withAnimation(in: .parallel) {
         title.hide(animation: .fadeOut(shift: .up))
-        multiplication.set(color: .black)
+        multiplication.set(opacity: 0)
             .delay(0.1)
         rhs.shift(by: [0, 2.25])
             .delay(0.5)
@@ -58,7 +59,7 @@ try await withManim { scene in
     
     // MARK: - first box
     
-    let addition = MathTex("{{5}}{{14}}")
+    let addition = MathTex("5", "14")
     addition.move(to: result.entries[0])
     
     let topLeftEntryBox = Rectangle(width: addition.width, height: addition.height)
@@ -78,14 +79,14 @@ try await withManim { scene in
         rhs.entries[3].fill(.gray.opacity(0.5))
     }
     
-    scene.sleep(for: .seconds(1))
+    scene.sleep()
     
     withAnimation(in: .parallel) {
         lhs.entries[0].copied().replacementTransform(to: addition.children[0])
         rhs.entries[0].copied().replacementTransform(to: addition.children[0])
     }
     
-    scene.sleep(for: .seconds(1))
+    scene.sleep()
     
     withAnimation(in: .parallel) {
         lhs.entries[1].copied().replacementTransform(to: addition.children[1])
@@ -98,7 +99,7 @@ try await withManim { scene in
         topLeftEntryBox.hide(animation: .fadeOut())
     }
     
-    scene.sleep(for: .seconds(1))
+    scene.sleep()
     
     // MARK: - other entries
     for i in 1...3 {
@@ -116,9 +117,9 @@ try await withManim { scene in
         }
         let addition = {
             switch i {
-            case 1: MathTex("{{6}}{{16}}")
-            case 2: MathTex("{{15}}{{28}}")
-            case 3: MathTex("{{18}}{{32}}")
+            case 1: MathTex("6", "16")
+            case 2: MathTex("15", "28")
+            case 3: MathTex("18", "32")
             default: fatalError()
             }
         }()
