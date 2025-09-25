@@ -15,7 +15,7 @@ public final class Cross: Group {
     /// - Parameters:
     ///   - base: The object linked to this instance. It fits the mobject when specified.
     public init(base: MObject? = nil, strokeStyle: StrokeStyle) {
-        super.init(manim.Cross(mobject: base, stroke_color: strokeStyle.color, stroke_width: strokeStyle.lineWidth))
+        super.init(manim.Cross(mobject: base?.pythonObject, stroke_color: strokeStyle.color, stroke_width: strokeStyle.lineWidth))
     }
     
     @_disfavoredOverload

@@ -12,9 +12,9 @@ import PythonKit
 
 /// Mathematical Object: base class for objects that can be displayed on screen.
 @MainActor
-public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConvertible, @MainActor ConvertibleFromPython, @MainActor Transformable {
+public class MObject: @MainActor CustomStringConvertible, @MainActor Transformable {
     
-    public var pythonObject: PythonKit.PythonObject
+    internal var pythonObject: PythonKit.PythonObject
     
     public var description: String {
         "\(type(of: self as Any))(\(self.pythonObject))"
@@ -25,7 +25,7 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     }
     
     /// Creates an instance with the initializer.
-    required public init(_ pythonObject: PythonObject) {
+    internal required init(_ pythonObject: PythonObject) {
         self.pythonObject = pythonObject
     }
     
@@ -43,14 +43,14 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     
     /// Add `child` as sub object.
     public func add(_ child: MObject) {
-        self.pythonObject.add(child)
+        self.pythonObject.add(child.pythonObject)
     }
     
     /// Remove `child` as sub object.
     ///
     /// - Note: This has no effect if `child` is not a children of `self`.
     public func remove(_ child: MObject) {
-        self.pythonObject.remove(child)
+        self.pythonObject.remove(child.pythonObject)
     }
     
     /// Edit points, colors and sub objects to be identical to another ``MObject``.
@@ -65,7 +65,7 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     @discardableResult
     public func become(_ target: MObject, matchHeight: Bool = false, matchWidth: Bool = false, matchDepth: Bool = false, matchCenter: Bool = false, stretch: Bool = false) -> AttachedAnimation {
         var closure = Closure("become")
-        closure.append("", target)
+        closure.append("", target.pythonObject)
         closure.append("match_height", matchHeight)
         closure.append("match_width",  matchWidth)
         closure.append("match_depth",  matchDepth)

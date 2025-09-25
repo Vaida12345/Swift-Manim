@@ -61,7 +61,7 @@ public struct ShowAnimation {
     @varyArgumentType(Direction.self, variation: Point.self)
     @varyArgumentType(Direction.self, variation: MObject.self)
     public static func grow(from edge: Direction) -> ShowAnimation {
-        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("edge", edge)])
+        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("edge", edge.pythonObject)])
     }
     
     /// Scale and rotate.
@@ -83,7 +83,7 @@ extension MObject {
     @discardableResult
     public func show(animation: ShowAnimation = .write) -> Animation {
         if !shouldUseAnimation {
-            scene.add(self)
+            scene.add(self.pythonObject)
             return EmptyAnimation()
         } else {
             return WrappedAnimation(base: self.pythonObject, caller: animation.caller, arguments: animation.arguments)

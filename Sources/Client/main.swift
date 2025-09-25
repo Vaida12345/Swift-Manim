@@ -9,11 +9,9 @@ import Manim
 
 
 try await withManim { scene in
-    let circle = Circle()
-    circle.fill(.red)
-    circle.stroke(.clear)
-    circle.sheen(factor: -0.3, direction: .bottomRight)
-    scene.add(circle)
+    let matrix = Matrix([[1, 2, 3]])
+    print(matrix.brackets)
+    print(matrix.entries)
 } configuration: {
     $0.quality = .medium
     $0.preview = false

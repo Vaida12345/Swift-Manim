@@ -12,7 +12,7 @@ public final class Underline: Line {
     
     /// Creates an underline.
     init(base: MObject, padding: Double = 0.25) {
-        super.init(manim.Underline(base, buff: padding))
+        super.init(manim.Underline(base.pythonObject, buff: padding))
     }
     
     @_disfavoredOverload

@@ -29,7 +29,7 @@ extension Transformable {
     @discardableResult
     public func move(to target: Point, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
         var closure = Closure(name: "move_to")
-        closure.append("point_or_mobject", target)
+        closure.append("point_or_mobject", target.pythonObject)
         closure.append("aligned_edge", alignedEdges)
         closure.append("coor_mask", coordinateMask)
         return AttachedAnimation(base: self._transformable, closure: closure)
@@ -43,7 +43,7 @@ extension Transformable {
     @discardableResult
     public func move(nextTo target: Point, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
         var closure = Closure(name: "next_to")
-        closure.append("", target)
+        closure.append("", target.pythonObject)
         closure.append("", placing)
         closure.append("buff", padding)
         
@@ -91,7 +91,7 @@ extension Transformable {
     /// Moves the object along the border of the `path` object,
     @discardableResult
     public func moveAlong(pathOf object: MObject) -> WrappedAnimation {
-        WrappedAnimation(base: self._transformable, caller: manim.MoveAlongPath, arguments: [("", object)])
+        WrappedAnimation(base: self._transformable, caller: manim.MoveAlongPath, arguments: [("", object.pythonObject)])
     }
     
     /// Rotates the object about a certain point.

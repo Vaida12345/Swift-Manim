@@ -63,7 +63,7 @@ public final class SceneProxy {
     /// - SeeAlso: ``MObject/show(animation:)`` to add objects with animations.
     public func add(_ targets: [MObject]) {
         for target in targets {
-            scene.add(target)
+            scene.add(target.pythonObject)
         }
     }
     
@@ -79,7 +79,7 @@ public final class SceneProxy {
     /// - Note: This has no effect if `targets` is not a children of `self`.
     public func remove(_ targets: [MObject]) {
         for target in targets {
-            scene.remove(target)
+            scene.remove(target.pythonObject)
         }
     }
     

@@ -51,7 +51,7 @@ extension MObject {
     ///   - target: The destination.
     ///   - transform: The transform used.
     public func transform(to target: MObject, transform: Transform = .matchShapes) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: transform.pythonObject, arguments: [("", target)])
+        WrappedAnimation(base: self.pythonObject, caller: transform.pythonObject, arguments: [("", target.pythonObject)])
     }
     
 }

@@ -11,7 +11,7 @@ extension MObject {
     
     /// Replaces and morphs a ``MObject`` into a target ``MObject``.
     public func replacementTransform(to target: MObject) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: manim.ReplacementTransform, arguments: [("", target)]) 
+        WrappedAnimation(base: self.pythonObject, caller: manim.ReplacementTransform, arguments: [("", target.pythonObject)]) 
     }
     
 }

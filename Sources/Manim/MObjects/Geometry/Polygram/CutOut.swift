@@ -12,7 +12,7 @@ import PythonKit
 public final class Cutout: VMObject {
     
     init(_ base: VMObject, cutouts: [VMObject]) {
-        super.init(manim.Cutout(base, cutouts))
+        super.init(manim.Cutout(base.pythonObject, cutouts.map(\.pythonObject)))
     }
     
     @_disfavoredOverload

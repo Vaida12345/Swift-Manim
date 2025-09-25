@@ -18,7 +18,7 @@ public class SurroundingRectangle: RoundedRectangle {
     ///   - color: The color of stroke.
     ///   - cornerRadius: The color radius of stroke.
     public init(_ base: MObject, color: Color = .yellow, cornerRadius: Double = 0.5) {
-        super.init(manim.SurroundingRectangle(base, color: color, corner_radius: cornerRadius))
+        super.init(manim.SurroundingRectangle(base.pythonObject, color: color, corner_radius: cornerRadius))
     }
     
     @_disfavoredOverload

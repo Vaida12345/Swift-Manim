@@ -10,7 +10,7 @@ extension MObject {
     
     /// The contained objects
     public var children: [MObject] {
-        Array(self.pythonObject.submobjects)!
+        self.pythonObject.submobjects.map({ MObject($0) })
     }
     
 }
