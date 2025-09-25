@@ -15,11 +15,6 @@ public class VMObject: MObject {
 
 extension VMObject {
     
-    public var color: Color {
-        get { Color(self.pythonObject.color)! }
-        set { self.pythonObject.color = newValue.pythonObject }
-    }
-    
     public var fillColor: Color {
         get {
             let color = Color(self.pythonObject.fill_color)!
@@ -27,8 +22,7 @@ extension VMObject {
             return color.opacity(opacity)
         }
         set {
-            self.pythonObject.fill_color = newValue.pythonObject
-            self.pythonObject.fill_opacity = newValue.alpha.pythonObject
+            self.fill(newValue)
         }
     }
     
@@ -39,8 +33,7 @@ extension VMObject {
             return color.opacity(opacity)
         }
         set {
-            self.pythonObject.stroke_color = newValue.pythonObject
-            self.pythonObject.stroke_opacity = newValue.alpha.pythonObject
+            self.stroke(newValue)
         }
     }
     
@@ -89,8 +82,27 @@ extension VMObject {
     ///   - color: stroke color.
     ///   - width: stroke color width.
     @discardableResult
-    public func stroke(_ color: Color, width: Double = 2) -> AttachedAnimation {
+    public func stroke(_ color: Color, width: Double? = nil) -> AttachedAnimation {
         AttachedAnimation(base: self, closure: Closure("set_stroke", [("color", color), ("opacity", color.alpha), ("width", width)]))
+    }
+    
+    /// Applies a color gradient from a direction.
+    ///
+    /// ```swift
+    /// let circle = Circle()
+    /// circle.fill(.red)
+    /// circle.stroke(.clear)
+    /// circle.sheen(factor: -0.3, direction: .bottomRight)
+    /// scene.add(circle)
+    /// ```
+    /// ![Preview](sheen)
+    ///
+    /// - Parameters:
+    ///   - factor: The extent of lustre/gradient to apply. If negative, the gradient starts from black, if positive the gradient starts from white and changes to the current color.
+    ///   - direction: Direction from where the gradient is applied.
+    @discardableResult
+    public func sheen(factor: Double, direction: Direction) -> AttachedAnimation {
+        AttachedAnimation(base: self, closure: Closure("set_sheen", [("", factor)]))
     }
     
 }

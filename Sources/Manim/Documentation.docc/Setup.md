@@ -3,6 +3,8 @@
 
 Guides to setup the Python and Latex environment for Manim.
 
+## Overview
+
 `Swift-Manim` uses Python [ManimCE](https://docs.manim.community/en/stable/index.html) as its engine, hence it is essential to setup Python and let `Swift-Manim` know where to look.
 
 ### Setup Python

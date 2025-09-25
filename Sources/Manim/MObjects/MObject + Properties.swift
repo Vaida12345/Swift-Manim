@@ -27,6 +27,14 @@ extension MObject {
         set { self.pythonObject.z_index = newValue.pythonObject }
     }
     
+    /// Sets both the ``fillColor`` and ``strokeColor``.
+    ///
+    /// If `fillColor` is not `nil`, returns `fillColor`. Otherwise `strokeColor`.
+    public var color: Color {
+        get { Color(self.pythonObject.color)! }
+        set { self.pythonObject.color = newValue.pythonObject }
+    }
+    
     // MARK: - read only
     /// The bottom point.
     public var bottom: Point {

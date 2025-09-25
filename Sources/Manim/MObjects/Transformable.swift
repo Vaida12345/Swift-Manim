@@ -55,14 +55,14 @@ extension Transformable {
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
     public func move(below target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .down, padding: padding)
+        self.move(nextTo: target, placing: .bottom, padding: padding)
     }
     
     /// Move `self` above `target`.
     @varyArgumentType(Point.self, variation: MObject.self)
     @discardableResult
     public func move(above target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .up, padding: padding)
+        self.move(nextTo: target, placing: .top, padding: padding)
     }
     
     /// Move `self` to the left of `target`.
@@ -105,9 +105,13 @@ extension Transformable {
     }
     
     /// Scale the object by a factor.
+    ///
+    /// - Parameters:
+    ///   - factor: The scale factor.
+    ///   - stroke: Whether to scale the stroke width as well.
     @discardableResult
-    public func scale(_ factor: Double) -> AttachedAnimation {
-        AttachedAnimation(base: self._transformable, closure: Closure("scale", [("", factor)]))
+    public func scale(_ factor: Double, stroke: Bool = false) -> AttachedAnimation {
+        AttachedAnimation(base: self._transformable, closure: Closure("scale", [("", factor), ("scale_stroke", stroke)]))
     }
     
     /// Flips/Mirrors an object about its center.

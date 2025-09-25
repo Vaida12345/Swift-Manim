@@ -47,10 +47,19 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
             self = [-1, 0]
         case .right:
             self = [1, 0]
-        case .up:
+        case .top:
             self =  [0, 1]
-        case .down:
+        case .bottom:
             self = [0, -1]
+            
+        case .bottomLeft:
+            self = [-1, -1]
+        case .bottomRight:
+            self = [1, -1]
+        case .topLeft:
+            self = [-1, 1]
+        case .topRight:
+            self = [1, 1]
         }
     }
     

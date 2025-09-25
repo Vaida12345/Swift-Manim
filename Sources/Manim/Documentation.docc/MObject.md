@@ -41,5 +41,10 @@
 
 ### Updater
 - ``MObject/addUpdater(index:initialCall:handler:)``
+- ``MObject/Updater``
 - ``MObject/track(_:)``
 - ``MObject/bind(_:to:)``
+
+### Color
+- ``MObject/color``
+- ``MObject/set(color:)``

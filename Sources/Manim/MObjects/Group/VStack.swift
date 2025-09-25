@@ -11,7 +11,7 @@ public final class VStack: Group {
     
     public convenience init(spacing: Double = 0.25, _ children: [MObject]) {
         self.init(children)
-        super.arrange(direction: .down, spacing: spacing)
+        super.arrange(direction: .bottom, spacing: spacing)
     }
     
     public convenience init(spacing: Double = 0.25, _ children: MObject...) {

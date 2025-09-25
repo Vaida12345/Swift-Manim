@@ -9,13 +9,11 @@ import Manim
 
 
 try await withManim { scene in
-    let arc = Arc(radius: 1, startAngle: .degrees(0), angle: .degrees(90), color: .green)
-    arc.addTip(at: .start)
-    withAnimation(in: .serial) {
-        arc.show()
-    }
-    
-    scene.sleep(for: .seconds(1))
+    let circle = Circle()
+    circle.fill(.red)
+    circle.stroke(.clear)
+    circle.sheen(factor: -0.3, direction: .bottomRight)
+    scene.add(circle)
 } configuration: {
     $0.quality = .medium
     $0.preview = false

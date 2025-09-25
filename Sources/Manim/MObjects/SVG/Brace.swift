@@ -13,7 +13,7 @@ public class Brace: MObject {
     
     /// - Parameters:
     ///   - direction: Passing a direction vector determines the direction from which the brace is drawn.
-    public init(_ object: MObject, direction: Direction = .down) {
+    public init(_ object: MObject, direction: Direction = .bottom) {
         super.init(manim.Brace(object, direction: direction))
     }
     

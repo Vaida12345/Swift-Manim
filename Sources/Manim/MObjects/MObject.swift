@@ -32,12 +32,13 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     
     /// Sets the color.
     ///
-    /// Here it just recurses to ``children``, but in subclasses this should be further implemented based on the the inner workings of color.
-    ///
-    /// - Warning: The `opacity` is ignored.
+    /// Sets both the ``fillColor`` and ``strokeColor``.
     @discardableResult
-    public func set(color: Color) -> AttachedAnimation {
-        AttachedAnimation(base: self, closure: Closure("set_color", [("color", color)]))
+    public func set(color: Color) -> Animation {
+        _AnimationGroup(animations: [
+            AttachedAnimation(base: self, closure: Closure("set_color", [("color", color)])),
+            AttachedAnimation(base: self, closure: Closure("set_opacity", [("opacity", color.alpha)])),
+        ])
     }
     
     /// Add `child` as sub object.
@@ -50,32 +51,6 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     /// - Note: This has no effect if `child` is not a children of `self`.
     public func remove(_ child: MObject) {
         self.pythonObject.remove(child)
-    }
-    
-    /// Add an update function to this object.
-    ///
-    /// - Parameters:
-    ///   - index: The index at which the new updater should be added.
-    ///   - initialCall: Whether or not to call the updater initially.
-    ///   - handler: The update handler.
-    ///
-    /// - Experiment: You must update `self` in `handler`.
-    public func addUpdater(index: Int? = nil, initialCall: Bool = false, handler: @escaping () -> Void) {
-        let uniqueName = "helper_\(UUID().uuidString.replacingOccurrences(of: "-", with: "_"))"
-        let bridgeName = "_swift_bridge_\(UUID().uuidString.replacingOccurrences(of: "-", with: "_"))"
-        
-        let code = """
-        def \(uniqueName)(obj):
-            \(bridgeName)(obj)
-        """
-        
-        let main = Python.import("__main__")
-        main.__dict__[bridgeName] = PythonObject(PythonFunction({ object in
-            handler()
-            return Python.None
-        }))
-        Python.exec(code, main.__dict__)
-        self.pythonObject.add_updater(main.__dict__[uniqueName], index: index, call_updater: initialCall)
     }
     
     /// Edit points, colors and sub objects to be identical to another ``MObject``.
@@ -103,6 +78,18 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     /// Create and return an identical copy of the object including all children.
     public func copied() -> Self {
         Self(self.pythonObject.copy())
+    }
+    
+    /// Scales the instance to fit the `height` while keeping width/depth proportional.
+    @discardableResult
+    public func scaleToFit(height: Double) -> AttachedAnimation {
+        AttachedAnimation(base: self, closure: Closure("scale_to_fit_height", [("", height)]))
+    }
+    
+    /// Scales the instance to fit the `width` while keeping width/depth proportional.
+    @discardableResult
+    public func scaleToFit(width: Double) -> AttachedAnimation {
+        AttachedAnimation(base: self, closure: Closure("scale_to_fit_width", [("", width)]))
     }
     
 }

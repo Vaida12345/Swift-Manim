@@ -13,6 +13,10 @@ public class TipableVMObject: VMObject {
 
 extension TipableVMObject {
     
+    public var length: Double {
+        Double(self.pythonObject.get_length())!
+    }
+    
     /// Returns a ``Group`` (collection of ``VMObject``s) containing the the instance’s tips.
     public var tips: Group {
         Group(self.pythonObject.get_tips())
