@@ -10,7 +10,7 @@ import PythonKit
 
 
 /// Inherits from Arc and additionally takes 2 points between which the arc is spanned.
-public class ArcBetweenPoints: TipableVMobject {
+public class ArcBetweenPoints: TipableVMObject {
     
     /// Creates an arc.
     ///

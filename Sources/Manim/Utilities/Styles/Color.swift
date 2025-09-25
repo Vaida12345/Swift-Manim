@@ -30,6 +30,27 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
         }
     }
     
+    public var alpha: Double {
+        switch self.box {
+        case .predefined: 1
+        case .hex(_, let alpha): alpha
+        case .rgba(_, _, _, let a): a
+        }
+    }
+    
+    public func opacity(_ opacity: Double) -> Color {
+        switch self.box {
+        case .predefined(let string):
+            let rgba = manim.ManimColor.parse(string).to_rgba()
+            let array = Array<Double>(rgba)!
+            return Color(box: .rgba(array[0], array[1], array[2], opacity))
+        case .hex(let string, _):
+            return Color(box: .hex(string, alpha: opacity))
+        case .rgba(let r, let g, let b, _):
+            return Color(box: .rgba(r, g, b, opacity))
+        }
+    }
+    
     enum Box: Equatable {
         case predefined(String)
         case hex(String, alpha: Double)
@@ -49,6 +70,7 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
     public static let white = Color(box: .predefined("white"))
     public static let gray = Color(box: .predefined("gray"))
     public static let black = Color(box: .predefined("black"))
+    public static let clear = Color(box: .rgba(1, 1, 1, 0))
     
     public static let predefinedColors: [Color] = [
         blue, teal, green, yellow, gold, red, maroon, purple, pink, orange, white, gray, black

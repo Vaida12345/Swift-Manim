@@ -23,8 +23,12 @@ public class WrappedAnimation: Animation {
         self.caller = caller
         self.arguments = arguments
         
+        super.init()
+        
         if !shouldUseAnimation {
+            self.preAction()
             self.caller.dynamicallyCall(withKeywordArguments: arguments)
+            self.completionHandler()
         }
     }
     

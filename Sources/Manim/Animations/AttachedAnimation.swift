@@ -20,8 +20,6 @@ public final class AttachedAnimation: Animation {
     
     let closure: Closure
     
-    let completionHandler: () -> Void
-    
     
     override func callAsFunction() -> PythonObject {
         var body: PythonObject {
@@ -36,20 +34,21 @@ public final class AttachedAnimation: Animation {
     }
     
     
-    init(base: PythonObject, closure: Closure, completionHandler: @escaping () -> Void = {}) {
+    init(base: PythonObject, closure: Closure) {
         self.base = base
         self.closure = closure
-        self.completionHandler = completionHandler
         
         super.init()
         
         if !shouldUseAnimation {
+            self.preAction()
             self.base[dynamicMember: self.closure.name].dynamicallyCall(withKeywordArguments: self.closure.arguments)
+            self.completionHandler()
         }
     }
     
-    convenience init(base: MObject, closure: Closure, completionHandler: @escaping () -> Void = {}) {
-        self.init(base: base.pythonObject, closure: closure, completionHandler: completionHandler)
+    convenience init(base: MObject, closure: Closure) {
+        self.init(base: base.pythonObject, closure: closure)
     }
     
 }

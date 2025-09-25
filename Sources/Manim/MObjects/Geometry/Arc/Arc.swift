@@ -11,7 +11,7 @@ import SwiftUI
 
 
 /// An Arc
-public class Arc: TipableVMobject {
+public class Arc: TipableVMObject {
     
     /// Creates an arc.
     ///
@@ -23,8 +23,8 @@ public class Arc: TipableVMobject {
     ///   - angle: The angle length.
     ///   - center: The center position.
     ///   - color: The stroke color.
-    public init(radius: Double = 1, start: Angle = .zero, angle: Angle, center: Point = .center, color: Color = .yellow) {
-        let object = manim.Arc(radius: radius, start_angle: start.radians, angle: angle.radians, arc_center: center, color: color)
+    public init(radius: Double = 1, startAngle: Angle = .zero, angle: Angle, center: Point = .center, color: Color = .yellow) {
+        let object = manim.Arc(radius: radius, start_angle: startAngle.radians, angle: angle.radians, arc_center: center, color: color)
         super.init(object)
     }
     

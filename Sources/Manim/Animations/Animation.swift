@@ -19,6 +19,9 @@ public class Animation {
     
     var lagRatio: Double = 0
     
+    var completionHandler: () -> Void = { }
+    
+    var preAction: () -> Void = { }
     
     func callAsFunction() -> PythonObject {
         fatalError()
@@ -64,6 +67,34 @@ extension Animation {
         return self
     }
     
+    /// Specifies a completion handler.
+    ///
+    /// - Warning: When not executed in ``withAnimation(_:in:body:)``, `onCompletion` and `preAction` may be executed in any order.
+    public func onCompletion(_ body: @escaping () -> Void) -> Self {
+        if shouldUseAnimation {
+            let oldHandler = self.completionHandler
+            self.completionHandler = { oldHandler(); body() }
+            return self
+        } else {
+            body()
+            return self
+        }
+    }
+    
+    /// Specifies an action that is executed right before the animation.
+    ///
+    /// - Warning: When not executed in ``withAnimation(_:in:body:)``, `onCompletion` and `preAction` may be executed in any order.
+    public func preAction(_ body: @escaping () -> Void) -> Self {
+        if shouldUseAnimation {
+            let oldPreAction = self.preAction
+            self.preAction = { oldPreAction(); body() }
+            return self
+        } else {
+            body()
+            return self
+        }
+    }
+    
 }
 
 
@@ -96,20 +127,20 @@ public func withAnimation(_ animation: RateFunction = .easeInOut, in method: Ani
         .filter { !($0 is EmptyAnimation) }
      shouldUseAnimation = false
     
-    guard !animations.isEmpty else { return }
-    
     switch method {
     case .serial:
         for ani in animations {
+            ani.preAction()
             scene.play(ani(), rate_func: animation)
+            ani.completionHandler()
         }
         
     case .parallel:
+        for animation in animations {
+            animation.preAction()
+        }
         scene.play(manim.AnimationGroup(animations.map({ $0() })), rate_func: animation)
-    }
-    
-    for animation in animations {
-        if let animation = animation as? AttachedAnimation {
+        for animation in animations {
             animation.completionHandler()
         }
     }

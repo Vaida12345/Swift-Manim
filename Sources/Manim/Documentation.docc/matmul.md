@@ -67,15 +67,15 @@ try await withManim { scene in
     
     withAnimation(in: .parallel) {
         topLeftEntryBox.show(animation: .drawBorderThenFill)
-        resultText.fill(.gray, opacity: 0.5)
+        resultText.fill(.gray.opacity(0.5))
             .delay(0.5)
     }
     
     withAnimation(in: .parallel) {
-        lhs.entries[2].fill(.gray, opacity: 0.5)
-        lhs.entries[3].fill(.gray, opacity: 0.5)
-        rhs.entries[1].fill(.gray, opacity: 0.5)
-        rhs.entries[3].fill(.gray, opacity: 0.5)
+        lhs.entries[2].fill(.gray.opacity(0.5))
+        lhs.entries[3].fill(.gray.opacity(0.5))
+        rhs.entries[1].fill(.gray.opacity(0.5))
+        rhs.entries[3].fill(.gray.opacity(0.5))
     }
     
     scene.sleep(for: .seconds(1))
@@ -124,14 +124,14 @@ try await withManim { scene in
         }()
         
         withAnimation(in: .parallel) {
-            result.entries[i - 1].fill(.gray, opacity: 0.5)
+            result.entries[i - 1].fill(.gray.opacity(0.5))
             for i in nonlhsEntries {
-                lhs.entries[i].fill(.gray, opacity: 0.5)
-                lhs.entries[i].fill(.gray, opacity: 0.5)
+                lhs.entries[i].fill(.gray.opacity(0.5))
+                lhs.entries[i].fill(.gray.opacity(0.5))
             }
             for i in nonrhsEntries {
-                rhs.entries[i].fill(.gray, opacity: 0.5)
-                rhs.entries[i].fill(.gray, opacity: 0.5)
+                rhs.entries[i].fill(.gray.opacity(0.5))
+                rhs.entries[i].fill(.gray.opacity(0.5))
             }
             for i in lhsEntries {
                 lhs.entries[i].fill(.white)
@@ -166,8 +166,8 @@ try await withManim { scene in
     withAnimation(in: .parallel) {
         for i in 0..<4 {
             result.entries[i].fill(.white)
-            lhs.entries[i].fill(.gray, opacity: 0.5)
-            rhs.entries[i].fill(.gray, opacity: 0.5)
+            lhs.entries[i].fill(.gray.opacity(0.5))
+            rhs.entries[i].fill(.gray.opacity(0.5))
         }
     }
     

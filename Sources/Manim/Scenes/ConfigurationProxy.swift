@@ -47,9 +47,6 @@ public final class ConfigurationProxy {
     /// Background color of the scene.
     public var backgroundColor: Color = .black
     
-    /// A number between 0.0 (fully transparent) and 1.0 (fully opaque).
-    public var backgroundOpacity: Double = 1
-    
     /// The directory to place all medias.
     public var mediaDirectory: FinderItem = "\(NSHomeDirectory())/Documents/Swift Manim"
     
@@ -85,6 +82,9 @@ public final class ConfigurationProxy {
     /// The currently active renderer.
     public var renderer: Renderer = .Cairo
     
+    /// Logger verbosity
+    public var verbosity: Verbosity = .info
+    
     
     /// Video Format
     public enum Format: String {
@@ -109,6 +109,10 @@ public final class ConfigurationProxy {
     public enum Renderer: String {
         case Cairo = "cairo"
         case OpenGL = "opengl"
+    }
+    
+    public enum Verbosity: String {
+        case debug, info, warning, error, critical
     }
     
 }

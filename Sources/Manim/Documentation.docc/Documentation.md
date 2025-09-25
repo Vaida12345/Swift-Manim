@@ -15,7 +15,7 @@ With Swift-native API.
 
 ```swift
 try await withManim { scene in
-    let dot = Dot()
+    let dot = Dot(color: .blue.opacity(0.5))
     let arrow = Vector([2, 2])
     let numberPlane = NumberPlane()
 

@@ -55,6 +55,13 @@ public final class SceneProxy {
     ///
     /// - SeeAlso: ``MObject/show(animation:)`` to add objects with animations.
     public func add(_ targets: MObject...) {
+        self.add(targets)
+    }
+    
+    /// Add the objects without animation.
+    ///
+    /// - SeeAlso: ``MObject/show(animation:)`` to add objects with animations.
+    public func add(_ targets: [MObject]) {
         for target in targets {
             scene.add(target)
         }
@@ -64,6 +71,13 @@ public final class SceneProxy {
     ///
     /// - Note: This has no effect if `targets` is not a children of `self`.
     public func remove(_ targets: MObject...) {
+        self.remove(targets)
+    }
+    
+    /// Remove `targets` as sub object.
+    ///
+    /// - Note: This has no effect if `targets` is not a children of `self`.
+    public func remove(_ targets: [MObject]) {
         for target in targets {
             scene.remove(target)
         }

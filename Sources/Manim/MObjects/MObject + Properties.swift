@@ -21,11 +21,10 @@ extension MObject {
         set { self.pythonObject.set_y(newValue) }
     }
 
-    // MARK: - write only
-    /// Write-only property for setting zIndex.
+    /// The z index for controlling layer.
     public var zIndex: Double {
-        get { fatalError("Does not support GET") }
-        set { self.pythonObject.set_z_index(newValue) }
+        get { Double(self.pythonObject.z_index)! }
+        set { self.pythonObject.z_index = newValue.pythonObject }
     }
     
     // MARK: - read only

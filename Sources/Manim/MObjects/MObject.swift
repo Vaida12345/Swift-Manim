@@ -30,7 +30,11 @@ public class MObject: @MainActor PythonConvertible, @MainActor CustomStringConve
     }
     
     
-    /// Set the color and opacity.
+    /// Sets the color.
+    ///
+    /// Here it just recurses to ``children``, but in subclasses this should be further implemented based on the the inner workings of color.
+    ///
+    /// - Warning: The `opacity` is ignored.
     @discardableResult
     public func set(color: Color) -> AttachedAnimation {
         AttachedAnimation(base: self, closure: Closure("set_color", [("color", color)]))

@@ -9,7 +9,7 @@ import OSLog
 import PythonKit
 
 
-public class Line: VMObject {
+public class Line: TipableVMObject {
     
     public init(from start: Point, to end: Point, color: Color) {
         super.init(manim.Line(start: start, end: end, color: color))

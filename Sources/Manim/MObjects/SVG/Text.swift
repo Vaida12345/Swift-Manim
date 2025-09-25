@@ -13,10 +13,10 @@ import PythonKit
 /// - SeeAlso: ``MathTex`` for LaTeX text.
 public class Text: SVGMObject {
     
-    public init(_ text: String, opacity: Double = 1, strokeWidth: Double = 0, color: Color = .white, fontSize: Double = 48, lineSpacing: Double = -1, font: String = "", italic: Bool = false, weight: FontWeight = .normal) {
+    public init(_ text: String, strokeWidth: Double = 0, color: Color = .white, fontSize: Double = 48, lineSpacing: Double = -1, font: String = "", italic: Bool = false, weight: FontWeight = .normal) {
         var arguments = Closure.Arguments()
         arguments.append("text", text)
-        arguments.append("fill_opacity", opacity)
+        arguments.append("fill_opacity", color.alpha)
         arguments.append("stroke_width", strokeWidth)
         arguments.append("color", color)
         arguments.append("font_size", fontSize)

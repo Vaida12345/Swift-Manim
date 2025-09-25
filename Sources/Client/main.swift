@@ -9,18 +9,14 @@ import Manim
 
 
 try await withManim { scene in
+    let arc = Arc(radius: 1, startAngle: .degrees(0), angle: .degrees(90), color: .green)
+    arc.addTip(at: .start)
+    withAnimation(in: .serial) {
+        arc.show()
+    }
     
-    let dot1 = Dot(at: [0, 2], color: .blue)
-    let dot2 = Dot(at: .center, color: .green)
-    
-    print(dot1.color)
-    
-    dot1.color = .red
-    
-    scene.add(dot1, dot2)
-    
-    MathTex("1234").show()
-    
+    scene.sleep(for: .seconds(1))
 } configuration: {
+    $0.quality = .medium
     $0.preview = false
 }

@@ -94,11 +94,10 @@ extension MObject {
     /// Shrink a spotlight to a position.
     ///
     /// - Parameters:
-    ///   - opacity: The opacity of the spotlight.
     ///   - color: The color of the spotlight.
-    public func focus(opacity: Double = 0.2, color: Color = .gray) -> WrappedAnimation {
+    public func focus(color: Color = .gray.opacity(0.2)) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.FocusOn, arguments: [
-            ("opacity", opacity),
+            ("opacity", color.alpha),
             ("color", color),
         ])
     }

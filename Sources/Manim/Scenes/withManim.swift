@@ -79,7 +79,7 @@ public func withManim(
     
     let config = manim.config
     config["background_color"] = configProxy.backgroundColor.pythonObject
-    config["background_opacity"] = configProxy.backgroundOpacity.pythonObject
+    config["background_opacity"] = configProxy.backgroundColor.alpha.pythonObject
     
     config["media_dir"] = configProxy.mediaDirectory.path.pythonObject
     config["save_sections"] = configProxy.saveSections.pythonObject
@@ -102,6 +102,7 @@ public func withManim(
     }
     config["renderer"] = configProxy.renderer.rawValue.pythonObject
     config["disable_caching"] = configProxy.disableCache.pythonObject
+    config["verbosity"] = configProxy.verbosity.rawValue.uppercased().pythonObject
     
     
     // MARK: - Global scene
