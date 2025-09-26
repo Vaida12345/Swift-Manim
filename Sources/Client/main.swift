@@ -10,11 +10,15 @@ import Foundation
 
 
 try await withManim { scene in
-    let text = Text("Circumscribe")
-    scene.add(text)
+    let dot1 = Dot(at: [0, 2], color: .blue)
+    let dot2 = Dot(at: .center, color: .green)
+    
+    scene.add(dot1, dot2)
+    
+    dot1.bind(\.x, to: dot2.x)
     
     withAnimation {
-        text.circumscribe()
+        dot2.move(to: [2, 0])
     }
 } configuration: {
     $0.preview = false

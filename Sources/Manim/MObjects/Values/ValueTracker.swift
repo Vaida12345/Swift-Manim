@@ -38,6 +38,8 @@ import PythonKit
 ///     x += 1
 /// }
 /// ```
+///
+/// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/track.mov)
 @propertyWrapper
 public class ValueTracker<T>: MObject where T: PythonConvertible & ConvertibleFromPython {
     

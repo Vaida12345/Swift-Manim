@@ -25,7 +25,7 @@ final class KeyPathTracker<T>: ValueTracker<T> where T: PythonConvertible & Conv
         }
     }
     
-    required public init(_ pythonObject: PythonObject) {
+    required init(_ pythonObject: PythonObject) {
         fatalError()
     }
     
@@ -44,9 +44,14 @@ extension MObject {
     ///
     /// let x = dot.track(\.x)
     /// withAnimation {
-    ///     x += 1
+    ///     x += 4
     /// }
     /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/track.mov)
+    ///
+    /// - Parameters:
+    ///   - keyPath: The key path of the property to be tracked.
     public func track<T>(_ keyPath: ReferenceWritableKeyPath<MObject, T>) -> ValueTracker<T> where T: PythonConvertible & ConvertibleFromPython {
         KeyPathTracker(base: self, keyPath: keyPath)
     }
@@ -56,7 +61,7 @@ extension MObject {
 
 extension MObject {
     
-    /// Binds `keyPath` to `object`.`onKeyPath`.
+    /// Binds `keyPath` to `target`.
     ///
     /// You can use `bind` to ensure two properties are always in sync.
     ///
@@ -72,6 +77,12 @@ extension MObject {
     ///     dot2.move(to: [2, 0])
     /// }
     /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/bind.mov)
+    ///
+    /// - Parameters:
+    ///   - keyPath: The key path of the property to be bind to `target`.
+    ///   - target: The target property.
     public func bind<T>(
         _ keyPath: ReferenceWritableKeyPath<MObject, T>,
         to target: @autoclosure @escaping () -> T,
@@ -81,6 +92,7 @@ extension MObject {
         }
     }
     
+    /// Binds `keyPath` to `object`.`onKeyPath`.
     @available(*, deprecated, renamed: "bind")
     public func link<T>(
         _ keyPath: ReferenceWritableKeyPath<MObject, T>,
