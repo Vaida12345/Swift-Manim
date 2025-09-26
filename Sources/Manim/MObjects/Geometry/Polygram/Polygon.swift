@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// A shape consisting of one closed loop of vertices.
+///
+/// ```swift
+/// let polygon = Polygon(vertices: [[1, 1], [2, 2], [1, 2]])
+/// ```
+///
+/// ![Preview](Polygon)
 public class Polygon: Polygram {
     
     /// Creates a shape.
@@ -20,8 +26,8 @@ public class Polygon: Polygram {
     ///   - fill: The color used to fill the shape's interior.
     ///
     /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
-    public convenience init(vertices: [Point], stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
-        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+    public init(vertices: [Point], stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.insert("", vertices, at: 0)
         }
     }

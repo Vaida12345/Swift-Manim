@@ -8,16 +8,21 @@
 import PythonKit
 
 /// Creates a cross mark.
+///
+/// ```swift
+/// let cross = Cross()
+/// ```
+///
+/// ![Preview](Cross)
 public final class Cross: Group {
     
     /// Creates a cross.
     ///
     /// - Parameters:
-    ///   - base: The object linked to this instance. It fits the mobject when specified.
     ///   - color: The stroke color
     ///   - width: The stroke width
-    public init(base: MObject? = nil, color: Color = .red, width: Double = 6) {
-        super.init(manim.Cross(mobject: base?.pythonObject, stroke_color: color, stroke_width: width))
+    public init(color: Color = .red, width: Double = 6) {
+        super.init(manim.Cross(stroke_color: color, stroke_width: width))
     }
     
     

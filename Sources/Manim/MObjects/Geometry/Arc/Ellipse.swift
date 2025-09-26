@@ -27,8 +27,8 @@ public final class Ellipse: Circle {
     ///   - fill: The color used to fill the shape's interior.
     ///
     /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
-    public convenience init(width: Double, height: Double, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
-        self.init("Ellipse", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+    public init(width: Double, height: Double, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.append("width", width)
             arguments.append("height", height)
         }

@@ -11,6 +11,27 @@ import PythonKit
 extension VMObject {
     
     /// A style that determines how the ends of lines are rendered when drawing stroked paths.
+    ///
+    /// See the example below for a visual illustration of the different cap styles.
+    ///
+    /// ![Preview](capStyle)
+    ///
+    /// ```swift
+    /// let arcs = CapStyle.allCases.map { style in
+    ///     let arc = Arc(radius: 1, startAngle: .degrees(0), angle: .degrees(90), color: .green)
+    ///     arc.strokeWidth = 20
+    ///     arc.capStyle = style
+    ///     return arc
+    /// }
+    /// scene.arrange(arcs, direction: .right, spacing: 1)
+    /// scene.add(arcs)
+    ///
+    /// for arc in arcs {
+    ///     let label = Text(arc.capStyle.description, fontSize: 24)
+    ///     label.move(below: arc)
+    ///     scene.add(label)
+    /// }
+    /// ```
     @MainActor
     public enum CapStyle: @MainActor PythonConvertible, @MainActor ConvertibleFromPython, CaseIterable, @MainActor CustomStringConvertible {
         case auto, round, butt, square

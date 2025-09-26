@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// A square.
+///
+/// ```swift
+/// let square = Square(length: 2)
+/// ```
+///
+/// ![Preview](Square)
 public final class Square: Rectangle {
     
     /// Creates a shape.
@@ -20,8 +26,8 @@ public final class Square: Rectangle {
     ///   - fill: The color used to fill the shape's interior.
     ///
     /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
-    public convenience init(length: Double, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
-        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+    public init(length: Double, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.insert("side_length", length, at: 0)
         }
     }

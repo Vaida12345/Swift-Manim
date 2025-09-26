@@ -11,7 +11,9 @@ Regular & common shapes
 - ``Ellipse``
 - ``Star``
 - ``Triangle``
-- ``RoundedRectangle``
+
+### Other Shapes
+- ``Cross``
 
 ### Generic
 - ``Polygon``
@@ -21,7 +23,6 @@ Regular & common shapes
 - ``Cutout``
 
 ### Shape Matchers
-- ``Cross``
 - ``SurroundingRectangle``
 - ``Underline``
 - ``Brace``

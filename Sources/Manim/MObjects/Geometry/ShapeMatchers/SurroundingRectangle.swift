@@ -9,16 +9,27 @@ import PythonKit
 
 
 /// A rectangle surrounding an object
-public class SurroundingRectangle: RoundedRectangle {
+///
+/// ```swift
+/// let hex = RegularPolygon(n: 6, fill: .blue)
+/// let rect = SurroundingRectangle(hex)
+/// rect.color = .yellow
+/// ```
+///
+/// ![Preview](SurroundingRectangle)
+public class SurroundingRectangle: Rectangle {
     
     /// Creates the rectangle.
     ///
     /// - Parameters:
     ///   - base: The attached object.
-    ///   - color: The color of stroke.
-    ///   - cornerRadius: The color radius of stroke.
-    public init(_ base: MObject, color: Color = .yellow, cornerRadius: Double = 0.5) {
-        super.init(manim.SurroundingRectangle(base.pythonObject, color: color, corner_radius: cornerRadius))
+    ///   - stroke: The color used for the shape's outline.
+    ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
+    ///   - fill: The color used to fill the shape's interior.
+    public init(_ base: MObject, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+            arguments.insert("", base.pythonObject, at: 0)
+        }
     }
     
     

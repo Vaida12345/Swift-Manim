@@ -10,7 +10,20 @@ import PythonKit
 
 /// Traces the path of a point returned by a function call.
 ///
-/// - SeeAlso: ``MObject/trace(_:color:width:dissipatingTime:)``
+/// You can create this object directly, or use ``MObject/trace(_:color:width:dissipatingTime:)``.
+///
+/// ![Preview](trace)
+///
+/// ```swift
+/// let dot = Dot(at: [2, 0])
+/// let trace = dot.trace(\.center, dissipatingTime: 0.5)
+/// scene.add(dot, trace)
+///
+/// withAnimation {
+///     dot.shift(by: [-2, 0])
+///         .path(.arc(.degrees(45)))
+/// }
+/// ```
 public final class TracedPath: VMObject {
     
     /// Traces the path of a point returned by a function call.

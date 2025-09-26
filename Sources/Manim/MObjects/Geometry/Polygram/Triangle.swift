@@ -8,7 +8,13 @@
 import PythonKit
 
 
-/// A background rectangle. Its default color is the background color of the scene.
+/// A triangle.
+///
+/// ```swift
+/// let triangle = Triangle()
+/// ```
+///
+/// ![Preview](Triangle)
 public final class Triangle: RegularPolygon {
     
     /// Creates a shape.
@@ -19,8 +25,8 @@ public final class Triangle: RegularPolygon {
     ///   - fill: The color used to fill the shape's interior.
     ///
     /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
-    public convenience init(stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
-        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+    public init(stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             
         }
     }

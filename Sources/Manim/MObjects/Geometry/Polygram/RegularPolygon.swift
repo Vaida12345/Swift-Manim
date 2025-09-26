@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// An n-sided regular Polygon.
+///
+/// ```swift
+/// let hex = RegularPolygon(n: 6)
+/// ```
+///
+/// ![Preview](RegularPolygon)
 public class RegularPolygon: RegularPolygram {
     
     /// Creates a shape.
@@ -20,8 +26,8 @@ public class RegularPolygon: RegularPolygram {
     ///   - fill: The color used to fill the shape's interior.
     ///
     /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
-    public convenience init(n: Int, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
-        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+    public init(n: Int, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.insert("", n, at: 0)
         }
     }

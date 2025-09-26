@@ -10,6 +10,14 @@ import SwiftUI
 
 
 /// A regular polygram without the intersecting lines.
+///
+/// ```swift
+/// let star = Star()
+/// ```
+///
+/// ![Preview](Star)
+///
+/// To draw a star with crossings, see ``RegularPolygram``.
 public final class Star: Polygram {
     
     /// Creates a shape.
@@ -24,8 +32,8 @@ public final class Star: Polygram {
     ///   - fill: The color used to fill the shape's interior.
     ///
     /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
-    public convenience init(n: Int = 5, innerRadius: Double? = nil, outerRadius: Double = 1, startAngle: Angle = .radians(1.5707963267948966), stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
-        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+    public init(n: Int = 5, innerRadius: Double? = nil, outerRadius: Double = 1, startAngle: Angle = .radians(1.5707963267948966), stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.insert("n", n, at: 0)
             arguments.append("inner_radius", innerRadius)
             arguments.append("outer_radius", outerRadius)

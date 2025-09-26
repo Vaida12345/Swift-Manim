@@ -11,6 +11,13 @@ import PythonKit
 /// An underline.
 ///
 /// You don't create instances of this class directly, you use ``MObject/underline(padding:)``.
+///
+/// ```swift
+/// let text = Text("Important")
+/// scene.add(text, text.underline())
+/// ```
+///
+/// ![Preview](underline)
 public final class Underline: Line {
     
     /// Creates an underline.
