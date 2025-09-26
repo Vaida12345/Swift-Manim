@@ -8,6 +8,13 @@
 import PythonKit
 
 
+/// A Matrix
+///
+/// ```swift
+/// let matrix = Matrix([[1, 2], [3, 4]])
+/// ```
+///
+/// ![Preview](Matrix)
 public class Matrix: VMObject {
     
     /// The left and right brackets, packed in an array.
@@ -15,10 +22,12 @@ public class Matrix: VMObject {
         self.pythonObject.get_brackets().map { MObject($0) }
     }
     
+    /// Return rows of the matrix.
     public var rows: Array<Group> {
         self.pythonObject.get_rows().map { Group($0) }
     }
     
+    /// Return columns of the matrix.
     public var columns: Array<Group> {
         self.pythonObject.get_columns().map { Group($0) }
     }
@@ -28,6 +37,7 @@ public class Matrix: VMObject {
         self.pythonObject.get_entries().map { Group($0) }
     }
     
+    /// Creates a matrix.
     public init(_ lists: [[some PythonConvertible]], leftBracket: String = "[", rightBracket: String = "]") {
         super.init(manim.Matrix(lists, left_bracket: leftBracket, right_bracket: rightBracket))
     }

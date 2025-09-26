@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// A horizontal stack
+///
+/// ```swift
+/// let stack = HStack(Dot(color: .blue), Dot(color: .red), Dot(color: .green))
+/// ```
+///
+/// ![Preview](HStack)
 public final class HStack: Group {
     
     public init(spacing: Double = 0.25, _ children: [MObject]) {

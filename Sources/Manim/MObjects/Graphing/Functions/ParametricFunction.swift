@@ -20,12 +20,14 @@ public class ParametricFunction: VMObject {
     
     /// The integral of `self`.
     public var integral: ParametricFunction {
-        ParametricFunction(self.pythonObject.plot_antiderivative_graph(self.pythonObject))
+        let axes = Axes()
+        return ParametricFunction(axes.pythonObject.plot_antiderivative_graph(self.pythonObject))
     }
     
     /// The derivative of `self`.
     public var derivative: ParametricFunction {
-        ParametricFunction(self.pythonObject.plot_derivative_graph(self.pythonObject))
+        let axes = Axes()
+        return ParametricFunction(axes.pythonObject.plot_derivative_graph(self.pythonObject))
     }
     
 }

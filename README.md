@@ -138,7 +138,7 @@ Please follow [this guide](https://github.com/Vaida12345/Swift-Manim/blob/main/S
 
 ## Documentation
 
-This package uses [DocC](https://www.swift.org/documentation/docc/) for documentation. [View on Github Pages](https://vaida12345.github.io/Swift-Manim/documentation/manim/)
+This package uses [DocC](https://www.swift.org/documentation/docc/) for documentation. Most shapes and methods come with sample code and example picture / video. [View on Github Pages](https://vaida12345.github.io/Swift-Manim/documentation/manim/)
 
 ## Credits
 

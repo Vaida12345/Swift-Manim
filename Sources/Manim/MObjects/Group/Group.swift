@@ -15,6 +15,7 @@ public class Group: VMObject {
         "\(type(of: self as Any))(\(self.children))"
     }
     
+    /// Arranges ``MObject/children`` in `direction`.
     public func arrange(direction: Direction, spacing: Double = 0.25) {
         self.pythonObject.arrange(direction, buff: spacing)
     }

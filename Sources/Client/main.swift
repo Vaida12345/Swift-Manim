@@ -10,10 +10,10 @@ import Foundation
 
 
 try await withManim { scene in
-    let axes = Axes()
-    let function = axes.plot(function: sin)
-    let line = axes.makeLines(to: Point(x: 2, y: function(2)))
-    scene.add(axes, function, line)
+    let vector = Vector([2, 2])
+    let brace = Brace(vector)
+    scene.add(vector, brace)
+    scene.add(brace.label("2"))
 } configuration: {
     $0.preview = false
 }

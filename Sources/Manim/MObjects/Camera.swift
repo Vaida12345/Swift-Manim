@@ -22,15 +22,15 @@ import PythonKit
 /// ```
 ///
 /// In the example above, the dot remains at the center of the screen.
-public final class MovingCamera: Transformable, @MainActor ConvertibleFromPython, @MainActor PythonConvertible {
+public final class MovingCamera: Transformable {
     
-    public var pythonObject: PythonObject
+    var pythonObject: PythonObject
     
     public var _transformable: PythonObject {
         pythonObject.frame
     }
     
-    public init(_ pythonObject: PythonObject) {
+    init(_ pythonObject: PythonObject) {
         self.pythonObject = pythonObject
     }
     

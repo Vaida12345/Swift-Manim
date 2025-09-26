@@ -42,13 +42,13 @@ public struct SceneProxy {
         scene.wait(duration)
     }
     
-    /// Sorts `targets` next to each other on screen.
+    /// Places `targets` next to each other on screen.
     public func arrange(_ targets: [MObject], direction: Direction, spacing: Double = 0.25) {
         let group = Group(targets)
         group.arrange(direction: direction, spacing: spacing)
     }
     
-    /// Sorts `targets` next to each other on screen.
+    /// Places `targets` next to each other on screen.
     public func arrange(_ targets: MObject..., direction: Direction, spacing: Double = 0.25) {
         self.arrange(targets, direction: direction, spacing: spacing)
     }

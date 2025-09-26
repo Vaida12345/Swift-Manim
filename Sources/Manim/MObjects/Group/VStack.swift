@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// A vertical stack
+///
+/// ```swift
+/// let stack = VStack(Dot(color: .blue), Dot(color: .red), Dot(color: .green))
+/// ```
+///
+/// ![Preview](VStack)
 public final class VStack: Group {
     
     public init(spacing: Double = 0.25, _ children: [MObject]) {
