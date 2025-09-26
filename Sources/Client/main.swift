@@ -10,10 +10,11 @@ import Foundation
 
 
 try await withManim { scene in
-    let rect = Square(length: 2)
+    let text = Text("Circumscribe")
+    scene.add(text)
     
     withAnimation {
-        rect.set(opacity: 0.5)
+        text.circumscribe()
     }
 } configuration: {
     $0.preview = false

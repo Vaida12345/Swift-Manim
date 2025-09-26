@@ -22,7 +22,7 @@ extension MObject {
     /// }
     /// ```
     ///
-    /// ![Preview](Circumscribe)
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/circumscribe.mov)
     ///
     /// ## Topics
     /// - ``CircumscribeShape``
@@ -94,6 +94,17 @@ extension MObject {
     ///   - radius: The distance from point at which the flash lines start.
     ///   - strokeWidth: The stroke width of the flash lines.
     ///   - color: The color of the flash lines.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// dot.show()
+    ///
+    /// withAnimation {
+    ///     dot.flash()
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/flash.mov)
     public func flash(lineLength: Double = 0.2, lineCount: Int = 12, radius: Double = 0.1, strokeWidth: Double = 3, color: Color = .yellow) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.Flash, arguments: [
             ("line_length", lineLength),
@@ -108,6 +119,17 @@ extension MObject {
     ///
     /// - Parameters:
     ///   - color: The color of the spotlight.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// dot.show()
+    ///
+    /// withAnimation {
+    ///     dot.focus()
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/focus.mov)
     public func focus(color: Color = .gray.opacity(0.2)) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.FocusOn, arguments: [
             ("opacity", color.alpha),
@@ -120,6 +142,17 @@ extension MObject {
     /// - Parameters:
     ///   - scale: The factor by which the object will be temporally scaled
     ///   - color: The color the object temporally takes.
+    ///
+    /// ```swift
+    /// let text = Text("Here!")
+    /// text.show()
+    ///
+    /// withAnimation {
+    ///     text.indicate()
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/indicate.mov)
     public func indicate(scale: Double = 1.2, color: Color = .yellow) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.Indicate, arguments: [
             ("scale_factor", scale),
@@ -128,6 +161,17 @@ extension MObject {
     }
     
     /// Wiggle an object.
+    ///
+    /// ```swift
+    /// let text = Text("Here!")
+    /// text.show()
+    ///
+    /// withAnimation {
+    ///     text.shake()
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/shake.mov)
     public func shake() -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.Wiggle)
     }
@@ -140,6 +184,17 @@ extension MObject {
     ///
     /// - Parameters:
     ///   - duration: The length of the sliver relative to the length of the stroke.
+    ///
+    /// ```swift
+    /// let rect = Rectangle(width: 4, height: 2, stroke: .blue)
+    /// rect.show()
+    ///
+    /// withAnimation {
+    ///     rect.showPassingFlash()
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/showPassingFlash.mov)
     public func showPassingFlash(duration: Double = 0.1) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.ShowPassingFlash, arguments: [
             ("time_width", duration)
