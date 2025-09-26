@@ -55,6 +55,9 @@ Although you can use ``MObject/origin`` or ``MObject/move(to:alignedEdges:coordi
 ### Implicit Move
 - ``MObject/shift(by:)``
 - ``MObject/moveAlong(pathOf:)``
+- ``MObject/rotate(angle:axis:)``
+- ``MObject/scale(_:stroke:)``
+- ``MObject/flip(axis:)``
 
 ### Arrangement
 - ``SceneProxy/arrange(_:direction:spacing:)-(MObject...,_,_)``

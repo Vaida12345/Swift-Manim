@@ -44,3 +44,8 @@
 ### Color
 - ``MObject/color``
 - ``MObject/set(color:)``
+
+### State
+- ``MObject/save()``
+- ``MObject/State/restore()``
+- ``MObject/State``

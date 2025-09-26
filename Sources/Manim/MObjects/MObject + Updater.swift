@@ -36,7 +36,7 @@ extension MObject {
     /// } // dependent will remain at the same place
     /// ```
     ///
-    /// ![preview](updater)
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
     ///
     /// - Parameters:
     ///   - index: The index at which the new updater should be added.
@@ -94,7 +94,30 @@ extension MObject {
     
     /// A controller for ``MObject`` updater.
     ///
-    /// You can use ``MObject/addUpdater(index:initial:handler:)``
+    /// You can use ``MObject/addUpdater(index:initial:handler:)`` to obtain an updater.
+    ///
+    /// ```swift
+    /// let independent = Dot(color: .red)
+    /// let dependent = Dot(color: .blue)
+    ///
+    /// scene.add(independent, dependent)
+    ///
+    /// let updater = dependent.addUpdater {
+    ///     dependent.x = independent.x
+    /// }
+    ///
+    /// withAnimation {
+    ///     independent.move(to: [2, 2])
+    /// } // dependent will also move to [2, 0]
+    ///
+    /// updater.removeFromParent()
+    ///
+    /// withAnimation {
+    ///     independent.move(to: [-2, -2])
+    /// } // dependent will remain at the same place
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
     @MainActor
     public struct Updater {
         
@@ -104,6 +127,29 @@ extension MObject {
         
         
         /// Removes the updater from parent.
+        ///
+        /// ```swift
+        /// let independent = Dot(color: .red)
+        /// let dependent = Dot(color: .blue)
+        ///
+        /// scene.add(independent, dependent)
+        ///
+        /// let updater = dependent.addUpdater {
+        ///     dependent.x = independent.x
+        /// }
+        ///
+        /// withAnimation {
+        ///     independent.move(to: [2, 2])
+        /// } // dependent will also move to [2, 0]
+        ///
+        /// updater.removeFromParent()
+        ///
+        /// withAnimation {
+        ///     independent.move(to: [-2, -2])
+        /// } // dependent will remain at the same place
+        /// ```
+        ///
+        /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
         public func removeFromParent() {
             origin.remove_updater(updater)
         }

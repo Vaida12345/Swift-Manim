@@ -46,6 +46,16 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     /// Sets the color.
     ///
     /// Sets both the ``VMObject/fillColor`` and ``VMObject/strokeColor``. This method also calls ``VMObject/set(opacity:)`` internally.
+    ///
+    /// ```swift
+    /// let rect = Square(length: 2)
+    ///
+    /// withAnimation {
+    ///     rect.set(color: .red)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](set_color)
     @discardableResult
     public func set(color: Color) -> Animation {
         _AnimationGroup(animations: [
@@ -75,6 +85,17 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     ///   - matchDepth: If `true`, then the transformed object will match the depth of the original
     ///   - matchCenter: If `true`, then the transformed object will match the center of the original
     ///   - stretch: If `true`, then the transformed object will stretch to fit the proportions of the original
+    ///
+    /// ```swift
+    /// let rect = Rectangle(width: 4, height: 2)
+    /// let dot = Dot()
+    ///
+    /// withAnimation {
+    ///     rect.become(dot)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/become.mov)
     @discardableResult
     public func become(_ target: MObject, matchHeight: Bool = false, matchWidth: Bool = false, matchDepth: Bool = false, matchCenter: Bool = false, stretch: Bool = false) -> AttachedAnimation {
         var closure = Closure("become")
@@ -88,18 +109,38 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
         return AttachedAnimation(base: self, closure: closure)
     }
     
-    /// Create and return an identical copy of the object including all children.
+    /// Create and return an identical deep copy of the object including all children.
     public func copied() -> Self {
         Self(self.pythonObject.copy())
     }
     
     /// Scales the instance to fit the `height` while keeping width/depth proportional.
+    ///
+    /// ```swift
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     rect.scaleToFit(height: 1)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/scaleToFit.mov)
     @discardableResult
     public func scaleToFit(height: Double) -> AttachedAnimation {
         AttachedAnimation(base: self, closure: Closure("scale_to_fit_height", [("", height)]))
     }
     
     /// Scales the instance to fit the `width` while keeping width/depth proportional.
+    ///
+    /// ```swift
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     rect.scaleToFit(width: 2)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/scaleToFit.mov)
     @discardableResult
     public func scaleToFit(width: Double) -> AttachedAnimation {
         AttachedAnimation(base: self, closure: Closure("scale_to_fit_width", [("", width)]))

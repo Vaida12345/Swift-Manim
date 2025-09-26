@@ -113,10 +113,17 @@ internal final class EmptyAnimation: Animation {
 /// You can use this method to set the animation of transition. Simply wrapping code with this method is sufficient to introduce an animation.
 ///
 /// ```swift
+/// let rect = Rectangle(width: 4, height: 2)
+/// let dot = Dot()
+///
 /// withAnimation {
-///     originText.align(.down, to: dot)
+///     rect.become(dot)
 /// }
 /// ```
+///
+/// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/become.mov)
+///
+/// - Note: Any objects that are not added to the scene will be implicitly added.
 @MainActor
 public func withAnimation(_ animation: RateFunction = .smooth, in method: Animation.Method = .serial, @_AnimationBuilder body: () -> _AnimationGroup) {
     shouldUseAnimation = true

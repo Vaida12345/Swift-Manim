@@ -6,13 +6,15 @@
 //
 
 import Manim
+import Foundation
 
 
 try await withManim { scene in
-    let rect = Rectangle(width: 4, height: 2)
-    rect.stroke(.white, width: 6)
-    rect.fill(.white.opacity(0.5))
-    rect.show()
+    let dot = Dot()
+    
+    withAnimation {
+        dot.shift(by: [0, 2])
+    }
 } configuration: {
     $0.preview = false
 }
