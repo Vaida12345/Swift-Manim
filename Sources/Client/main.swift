@@ -10,10 +10,10 @@ import Foundation
 
 
 try await withManim { scene in
-    let dot = Dot()
+    let rect = Square(length: 2)
     
     withAnimation {
-        dot.shift(by: [0, 2])
+        rect.set(opacity: 0.5)
     }
 } configuration: {
     $0.preview = false

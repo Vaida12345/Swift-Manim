@@ -82,6 +82,7 @@ public class VMObject: MObject {
 
 extension VMObject {
     
+    /// The fill color of the object.
     public var fillColor: Color {
         get {
             let color = Color(self.pythonObject.fill_color)!
@@ -93,6 +94,7 @@ extension VMObject {
         }
     }
     
+    /// The stroke color of the object.
     public var strokeColor: Color {
         get {
             let color = Color(self.pythonObject.stroke_color)!
@@ -104,6 +106,7 @@ extension VMObject {
         }
     }
     
+    /// The stroke width.
     public var strokeWidth: Double {
         get { Double(self.pythonObject.stroke_width)! }
         set { self.pythonObject.stroke_width = newValue.pythonObject }
@@ -116,7 +119,7 @@ extension VMObject {
     /// ![Preview](capStyle)
     ///
     /// ```swift
-    ///  let arcs = CapStyle.allCases.map { style in
+    /// let arcs = CapStyle.allCases.map { style in
     ///     let arc = Arc(radius: 1, startAngle: .degrees(0), angle: .degrees(90), color: .green)
     ///     arc.strokeWidth = 20
     ///     arc.capStyle = style
@@ -138,12 +141,34 @@ extension VMObject {
     
     
     /// Set the fill color and fill opacity.
+    ///
+    /// ```swift
+    /// let rect = Square(length: 2)
+    ///
+    /// withAnimation(in: .parallel) {
+    ///     rect.fill(.red)
+    ///     rect.stroke(.green)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/stroke_fill.mov)
     @discardableResult
     public func fill(_ color: Color) -> AttachedAnimation {
         AttachedAnimation(base: self, closure: Closure("set_fill", [("color", color), ("opacity", color.alpha)]))
     }
     
     /// Set the stroke color and stroke opacity.
+    ///
+    /// ```swift
+    /// let rect = Square(length: 2)
+    ///
+    /// withAnimation(in: .parallel) {
+    ///     rect.fill(.red)
+    ///     rect.stroke(.green)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/stroke_fill.mov)
     ///
     /// - Parameters:
     ///   - color: stroke color.
@@ -175,6 +200,16 @@ extension VMObject {
     /// Sets opacity.
     ///
     /// You can also use ``MObject/set(color:)`` to set color.
+    ///
+    /// ```swift
+    /// let rect = Square(length: 2)
+    ///
+    /// withAnimation {
+    ///     rect.set(opacity: 0.5)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/set_opacity.mov)
     @discardableResult
     public func set(opacity: Double) -> Animation {
         AttachedAnimation(base: self, closure: Closure("set_opacity", [("opacity", opacity)]))
