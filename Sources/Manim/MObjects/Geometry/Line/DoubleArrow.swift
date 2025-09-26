@@ -11,31 +11,33 @@ import PythonKit
 /// An arrow.
 public final class DoubleArrow: Arrow {
     
-    /// Creates the arrow
+    /// Creates an arrow.
     ///
     /// - Parameters:
     ///   - start: The starting point of the arrow.
     ///   - end: The ending point of the arrow.
-    ///   - padding: The distance of the arrow from its start and end points.
-    ///   - strokeWidth: Stroke Width
+    ///   - width: The stroke width.
     ///   - color: The stroke color.
-    ///   - tip: The tip shape, `nil` for the default arrow shape.
-    public override init(from start: Point, to end: Point, padding: Double = 0.25, strokeWidth: Double = 6, color: Color = .white, tip: Arrow.TipShape? = nil) {
-        super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape: tip))
+    ///   - padding: The paddings between the line and `start`, `end`.
+    ///   - shape: The shape of the line, `straight` by default.
+    ///   - tip: The tip shape
+    public override init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight, tip: Arrow.TipShape = .triangleFilled) {
+        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, path_arc: shape, tip_shape: tip))
     }
     
-    /// Creates the arrow
+    /// Creates an arrow.
     ///
     /// - Parameters:
     ///   - start: The starting point of the arrow.
     ///   - end: The ending point of the arrow.
-    ///   - padding: The distance of the arrow from its start and end points.
-    ///   - strokeWidth: Stroke Width
+    ///   - width: The stroke width.
     ///   - color: The stroke color.
-    ///   - startTip: The tip shape for `start`, `nil` for the default arrow shape.
-    ///   - endTip: The tip shape for `end`, `nil` for the default arrow shape.
-    public init(from start: Point, to end: Point, padding: Double = 0.25, strokeWidth: Double = 6, color: Color = .white, startTip: Arrow.TipShape? = nil, endTip: Arrow.TipShape? = nil) {
-        super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape_start: startTip, tip_shape_end: endTip))
+    ///   - padding: The paddings between the line and `start`, `end`.
+    ///   - shape: The shape of the line, `straight` by default.
+    ///   - startTip: The tip shape for `start`.
+    ///   - endTip: The tip shape for `end`.
+    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight, startTip: Arrow.TipShape = .triangleFilled, endTip: Arrow.TipShape = .triangleFilled) {
+        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, path_arc: shape, tip_shape_start: startTip, tip_shape_end: endTip))
     }
     
     

@@ -23,5 +23,3 @@ Line, NumberLine, FunctionGraph, and Arc
 - ``ArcBetweenPoints``
 - ``Arc``
 - ``CubicBezier``
-- ``CurvedArrow``
-- ``CurvedDoubleArrow``

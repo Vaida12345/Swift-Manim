@@ -23,7 +23,7 @@ public class RegularPolygram: Polygram {
     ///   - density: Can be thought of as how many vertices to hop to draw a line between them. Every `density`-th vertex is connected.
     ///   - startAngle: The angle the vertices start at; the rotation of the ``RegularPolygram``.
     ///
-    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
     public convenience init(n: Int, radius: Double = 1, startAngle: Angle? = nil, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil, density: Int = 2) {
         self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.insert("num_vertices", n, at: 0)

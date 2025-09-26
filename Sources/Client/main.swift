@@ -10,14 +10,8 @@ import Foundation
 
 
 try await withManim { scene in
-    let line = Line(from: .center, to: [2, 2])
-    line.addTip(at: .start)
-    line.addTip(at: .end)
-    
-    withAnimation(in: .parallel) {
-        line.show()
-    }
+    let ellipse = Ellipse(width: 4, height: 2, stroke: .white)
+    scene.add(ellipse)
 } configuration: {
     $0.preview = false
 }
-

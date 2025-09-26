@@ -36,7 +36,7 @@ try await withManim { scene in
     scene.arrange(dot1, dot2, direction: .right)
 
     let line = Line(from: dot1.center, to: dot2.center, color: .red)
-        line.addUpdater(initialCall: true) {
+    line.addUpdater(initialCall: true) {
         line.moveTo(start: dot1.center, end: dot2.center)
     }
 

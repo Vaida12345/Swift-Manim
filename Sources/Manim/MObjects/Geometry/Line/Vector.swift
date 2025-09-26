@@ -11,14 +11,18 @@ import PythonKit
 /// A Arrow, with the `start` being `.zero`.
 public final class Vector: Arrow {
     
+    /// Creates a vector.
+    ///
     /// - Parameters:
     ///   - direction: The direction of the arrow.
-    ///   - padding: The distance of the vector from its endpoints.
-    ///   - strokeWidth: Stroke Width
+    ///   - end: The ending point of the arrow.
+    ///   - width: The stroke width.
     ///   - color: The stroke color.
-    ///   - tip: The tip shape, `nil` for the default arrow shape.
-    public init(_ direction: Point, padding: Double = 0, strokeWidth: Double = 6, color: Color = .white, tip: Arrow.TipShape? = nil) {
-        super.init(manim.Vector(direction: direction, color: color, buff: padding, stroke_width: strokeWidth, tip_shape: tip))
+    ///   - padding: The paddings between the line and `start`, `end`.
+    ///   - shape: The shape of the line, `straight` by default.
+    ///   - tip: The tip shape
+    public init(_ direction: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight, tip: Arrow.TipShape = .triangleFilled) {
+        super.init(manim.Vector(direction: direction, stroke_width: width, color: color, buff: padding, path_arc: shape, tip_shape: tip))
     }
     
     

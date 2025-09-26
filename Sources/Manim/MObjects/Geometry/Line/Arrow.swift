@@ -13,17 +13,18 @@ import PythonKit
 /// - SeeAlso: ``DoubleArrow``
 public class Arrow: Line {
     
-    /// Creates the arrow
+    /// Creates an arrow.
     ///
     /// - Parameters:
     ///   - start: The starting point of the arrow.
     ///   - end: The ending point of the arrow.
-    ///   - padding: The distance of the arrow from its start and end points.
-    ///   - strokeWidth: Stroke Width
+    ///   - width: The stroke width.
     ///   - color: The stroke color.
-    ///   - tip: The tip shape, `nil` for the default arrow shape.
-    public init(from start: Point, to end: Point, padding: Double = 0.25, strokeWidth: Double = 6, color: Color = .white, tip: Arrow.TipShape? = nil) {
-        super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape: tip))
+    ///   - padding: The paddings between the line and `start`, `end`.
+    ///   - shape: The shape of the line, `straight` by default.
+    ///   - tip: The tip shape
+    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight, tip: Arrow.TipShape = .triangleFilled) {
+        super.init(manim.Arrow(start: start, end: end, stroke_width: width, color: color, buff: padding, path_arc: shape, tip_shape: tip))
     }
     
     

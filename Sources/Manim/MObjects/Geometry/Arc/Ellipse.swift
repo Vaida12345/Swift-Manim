@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// An ellipse
+///
+/// ```swift
+/// let ellipse = Ellipse(width: 4, height: 2)
+/// ```
+///
+/// ![Preview](Ellipse)
 public final class Ellipse: Circle {
     
     /// Creates a shape.
@@ -20,7 +26,7 @@ public final class Ellipse: Circle {
     ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
     ///   - fill: The color used to fill the shape's interior.
     ///
-    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
     public convenience init(width: Double, height: Double, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
         self.init("Ellipse", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.append("width", width)

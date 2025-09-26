@@ -20,7 +20,7 @@ public final class Cutout: VMObject {
     ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
     ///   - fill: The color used to fill the shape's interior.
     ///
-    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
     public convenience init(_ base: VMObject, cutouts: [VMObject], stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
         self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.insert("", base.pythonObject, at: 0)

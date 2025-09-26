@@ -31,7 +31,7 @@ public class VMObject: MObject {
     ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
     ///   - fill: The color used to fill the shape's interior.
     ///
-    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
     convenience init(stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
         self.init("VMObject", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             
@@ -61,11 +61,11 @@ public class VMObject: MObject {
         } else {
             // fall back to default
             assert(strokeWidth == nil, "These is a miss placed argument `strokeWidth`, please check your initializer.")
-            closure.append("stroke_color", Python.None)
-            closure.append("stroke_opacity", 0)
+            closure.append("stroke_color", Color.white)
+            closure.append("stroke_opacity", 1)
             closure.append("stroke_width", strokeWidth ?? 4)
-            closure.append("fill_color", Color.blue)
-            closure.append("fill_opacity", 1)
+            closure.append("fill_color", Python.None)
+            closure.append("fill_opacity", 0)
         }
         
         builder(&closure.arguments)

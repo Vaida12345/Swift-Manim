@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// A dot
+///
+/// ```swift
+/// let dot = Dot(color: .red)
+/// ```
+///
+/// ![Preview](dot)
 public final class Dot: Circle {
     
     /// Creates a dot

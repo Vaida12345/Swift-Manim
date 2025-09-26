@@ -16,7 +16,7 @@ public final class AttachedAnimation: Animation {
     
     let closure: Closure
     
-    var path: Path = .straight
+    var path: Line.Path = .straight
     
     
     override func callAsFunction() -> PythonObject {
@@ -57,7 +57,7 @@ public final class AttachedAnimation: Animation {
     ///         .path(.arc(.degrees(45)))
     /// }
     /// ```
-    public func path(_ path: Path) -> AttachedAnimation {
+    public func path(_ path: Line.Path) -> AttachedAnimation {
         self.path = path
         return self
     }
@@ -78,14 +78,6 @@ public final class AttachedAnimation: Animation {
     
     convenience init(base: MObject, closure: Closure) {
         self.init(base: base.pythonObject, closure: closure)
-    }
-    
-    
-    public enum Path {
-        /// A straight line
-        case straight
-        /// A curved arc.
-        case arc(Angle)
     }
     
 }

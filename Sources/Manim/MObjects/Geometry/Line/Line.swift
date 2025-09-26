@@ -7,12 +7,23 @@
 
 import OSLog
 import PythonKit
+import SwiftUI
 
 
+/// A line.
 public class Line: TipableVMObject {
     
-    public init(from start: Point, to end: Point, color: Color = .white) {
-        super.init(manim.Line(start: start, end: end, color: color))
+    /// Creates a Line.
+    ///
+    /// - Parameters:
+    ///   - start: The starting point of the line.
+    ///   - end: The ending point of the line.
+    ///   - width: The stroke width.
+    ///   - color: The stroke color.
+    ///   - padding: The paddings between the line and `start`, `end`.
+    ///   - shape: The shape of the line, `straight` by default.
+    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight) {
+        super.init(manim.Line(start: start, end: end, stroke_width: width, color: color, buff: padding, path_arc: shape))
     }
     
     
@@ -24,12 +35,54 @@ public class Line: TipableVMObject {
         super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
     }
     
+    
+    /// The path of a line.
+    public enum Path: PythonConvertible {
+        /// A straight line
+        case straight
+        /// A curved arc.
+        case arc(Angle)
+        
+        public var pythonObject: PythonObject {
+            switch self {
+            case .straight:
+                Python.None
+            case .arc(let angle):
+                angle.radians.pythonObject
+            }
+        }
+    }
+    
 }
 
 
 extension Line {
     
     /// Moves the ``MObject/start`` and ``MObject/end``.
+    ///
+    /// ```swift
+    /// let dot1 = Dot(color: .blue)
+    /// let dot2 = Dot(color: .green)
+    ///
+    /// scene.arrange(dot1, dot2, direction: .right)
+    ///
+    /// let line = Line(from: dot1.center, to: dot2.center, color: .red)
+    /// line.addUpdater(initialCall: true) {
+    ///     line.moveTo(start: dot1.center, end: dot2.center)
+    /// }
+    ///
+    /// scene.add(dot1, dot2, line)
+    ///
+    /// let x = dot1.track(\.x)
+    /// let y = dot2.track(\.y)
+    ///
+    /// withAnimation {
+    ///     x += 4
+    ///     y += 4
+    /// }
+    /// ```
+    ///
+    /// ![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/MovingDots.mov)
     @discardableResult
     public func moveTo(start: Point, end: Point) -> AttachedAnimation {
         AttachedAnimation(base: self._transformable, closure: Closure("put_start_and_end_on", [("", start), ("", end)]))

@@ -9,16 +9,18 @@ import PythonKit
 
 
 /// A circle
+///
+/// ```swift
+/// scene.add(
+///     HStack(
+///         Circle(fill: .blue),
+///         Circle(stroke: .white)
+///     )
+/// )
+/// ```
+///
+/// ![Preview](Circle)
 public class Circle: Arc {
-    
-    
-    /// - Parameters:
-    ///   - color: The stroke color.
-    ///   - radius: The radius of the circle.
-    public init(radius: Double? = nil, color: Color = .yellow) {
-        let object = manim.Circle(radius: radius, color: color)
-        super.init(object)
-    }
     
     /// Creates a shape.
     ///
@@ -28,7 +30,7 @@ public class Circle: Arc {
     ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
     ///   - fill: The color used to fill the shape's interior.
     ///
-    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `fill` and a ``Color/white`` `stroke`.
     public convenience init(radius: Double = 1, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
         self.init("Circle", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
             arguments.append("radius", radius)
