@@ -9,39 +9,38 @@ import PythonKit
 
 
 /// Creates a number line with tick marks.
+///
+/// ```swift
+/// let numberLine = NumberLine(
+///     range: Range(1...5),
+///     include: [.numbers, .tip, .ticks]
+/// )
+/// ```
+///
+/// ![Preview](NumberLine)
 public final class NumberLine: Line {
     
     /// Creates a number line with tick marks.
     ///
     /// - Parameters:
     ///   - range: The range of the axis.
-    ///   - length: The length of the axis.
-    ///   - unitSize: The distance between each tick of the line. Overwritten by `length`, if specified.
     ///   - include: The set to include on graph.
-    ///   - strokeWidth: The thickness of the line.
+    ///   - width: The thickness of the line.
     ///   - scaling: The way the `range` is value is scaled.
-    ///   - start: The starting point for the number line.
-    ///   - end: The ending point for the number line.
     public init(
         range: Range? = nil,
-        length: Double? = nil,
-        unitSize: Double = 1,
-        include: DisplayStyle = [],
-        strokeWidth: Double? = nil,
-        scaling: ScaleBase = .linear(),
-        from start: Point? = nil, to end: Point? = nil
+        width: Double = 2,
+        include: DisplayStyle = [.tip, .ticks],
+        scaling: ScaleBase = .linear()
     ) {
         var args: Closure.Arguments = [
             ("x_range", range),
-            ("length", length),
-            ("unit_size", unitSize),
-            ("stroke_width", strokeWidth),
-            ("scaling", scaling),
-            ("start", start), ("end", end)
+            ("stroke_width", width),
+            ("scaling", scaling)
         ]
-        if !include.contains(.ticks)  { args.append("include_ticks",  false) }
-        if include.contains(.numbers) { args.append("include_numbers", true) }
-        if include.contains(.tip)     { args.append("include_tip",     true) }
+        args.append("include_ticks",  include.contains(.ticks))
+        args.append("include_numbers", include.contains(.numbers))
+        args.append("include_tip",     include.contains(.tip))
         
         super.init(manim.NumberLine.dynamicallyCall(withKeywordArguments: args))
     }

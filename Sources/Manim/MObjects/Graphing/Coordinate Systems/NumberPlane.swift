@@ -9,7 +9,13 @@ import PythonKit
 
 /// Creates a number plane that spans the entire screen.
 ///
-/// ![example](VectorArrow)
+/// ```swift
+/// let numberPlane = NumberPlane()
+/// ```
+///
+/// ![example](NumberPlane)
+///
+/// - SeeAlso: ``Axes``
 public class NumberPlane: Axes {
     
     public convenience init(domain: ClosedRange<Double>, range: ClosedRange<Double>) {

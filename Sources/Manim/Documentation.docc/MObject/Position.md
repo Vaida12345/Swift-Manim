@@ -21,7 +21,7 @@ Follow the same guideline, the ``MObject/origin`` of an object is defined to be 
 
 ## Positioning
 
-Although you can use ``MObject/origin`` or ``MObject/move(to:alignedEdges:coordinateMask:)-(Point,_,_)`` to retrieve and move objects using its absolute coordinate, which you can use the ``NumberPlane`` as a reference. It is suggested to use relative layouts, such as ``MObject/move(below:padding:)`` or ``SceneProxy/arrange(_:direction:spacing:)-(MObject...,_,_)``.
+Although you can use ``MObject/origin`` or ``MObject/move(to:alignedEdges:coordinateMask:)-(Point,_,_)`` to retrieve and move objects using its absolute coordinate, which you can use the ``NumberPlane`` as a reference. It is suggested to use relative layouts, such as ``MObject/move(below:padding:)-(Point,_)`` or ``SceneProxy/arrange(_:direction:spacing:)-(MObject...,_,_)``.
 
 
 

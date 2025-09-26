@@ -52,6 +52,16 @@ public struct SceneProxy {
     public func arrange(_ targets: MObject..., direction: Direction, spacing: Double = 0.25) {
         self.arrange(targets, direction: direction, spacing: spacing)
     }
+    
+    /// The logical unit width of the screen
+    public var width: Double {
+        Double(manim.config.frame_width)!
+    }
+    
+    /// The logical unit height of the screen
+    public var height: Double {
+        Double(manim.config.frame_height)!
+    }
  
     /// Add the objects without animation.
     ///

@@ -21,7 +21,6 @@ public final class Vector: Arrow {
     ///
     /// - Parameters:
     ///   - direction: The direction of the arrow.
-    ///   - end: The ending point of the arrow.
     ///   - width: The stroke width.
     ///   - color: The stroke color.
     ///   - padding: The paddings between the line and `start`, `end`.

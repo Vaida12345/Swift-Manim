@@ -10,10 +10,10 @@ import Foundation
 
 
 try await withManim { scene in
-    let hex = RegularPolygon(n: 6, fill: .blue)
-    let rect = SurroundingRectangle(hex)
-    rect.color = .yellow
-    scene.add(hex, rect)
+    let axes = Axes()
+    let function = axes.plot(function: sin)
+    let line = axes.makeLines(to: Point(x: 2, y: function(2)))
+    scene.add(axes, function, line)
 } configuration: {
     $0.preview = false
 }

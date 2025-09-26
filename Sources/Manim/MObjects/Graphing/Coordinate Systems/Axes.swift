@@ -9,8 +9,25 @@ import PythonKit
 
 
 /// Creates a set of axes.
+///
+/// The axes always span the entire screen.
+///
+/// ```swift
+/// let axes = Axes()
+/// ```
+///
+/// ![Preview](Axes)
+///
+/// - SeeAlso: ``NumberPlane``
 public class Axes: Group {
     
+    /// Creates a set of axes.
+    ///
+    /// Note that the axes coordinate space is the same as global coordinate space.
+    ///
+    /// - Parameters:
+    ///   - domain: The `(x_min, x_max)` values of the x-axis.
+    ///   - range: The `(y_min, y_max)` values of the y-axis.
     public convenience init(domain: ClosedRange<Double>, range: ClosedRange<Double>) {
         self.init(domain: Range(domain), range: Range(range))
     }
@@ -39,28 +56,6 @@ public class Axes: Group {
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
         super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
-    }
-    
-    
-    /// Accepts coordinates and returns a point with respect to the `destination`.
-    public func convert(_ point: Point, from source: CoordinateSpace, to destination: CoordinateSpace) -> Point {
-        switch (source, destination) {
-        case (.canvas, .axis):
-            Point(self.pythonObject.coords_to_point(point))!
-        case (.axis, .canvas):
-            Point(self.pythonObject.point_to_coords(point))!
-        default:
-            point
-        }
-    }
-    
-    
-    public enum CoordinateSpace {
-        /// The coordinate on the canvas, ie, the ``SceneProxy``.
-        case canvas
-        
-        /// The coordinate on the ``Axes``.
-        case axis
     }
     
 }

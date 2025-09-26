@@ -122,6 +122,15 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
         self.box = .hex(hex, alpha: alpha)
     }
     
+    /// Initializes a grayscale color with the specified white intensity and opacity.
+    ///
+    /// - Parameters:
+    ///   - white: A grayscale intensity value from 0.0 (black) to 1.0 (white).
+    ///   - alpha: The opacity level of the color, where 0.0 is fully transparent and 1.0 is fully opaque. Defaults to 1.0.
+    public init(white: Double, alpha: Double = 1) {
+        self.box = .rgba(white, white, white, alpha)
+    }
+    
     public init?(_ object: PythonObject) {
         for color in Color.predefinedColors {
             if object == manim.ManimColor.parse(color) {
