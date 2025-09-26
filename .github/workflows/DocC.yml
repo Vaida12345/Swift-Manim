@@ -7,7 +7,7 @@ jobs:
 
     env:
       # The DocC target, change this to your target.
-      DocC_Target: manim
+      DocC_Target: Manim
       # on complete, the webpage is located at `https://vaida12345.github.io/<repo>/documentation/<target_lowercased>`
       
     steps:
