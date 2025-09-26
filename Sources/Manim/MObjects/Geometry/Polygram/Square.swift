@@ -11,17 +11,28 @@ import PythonKit
 /// A square.
 public final class Square: Rectangle {
     
-    /// Creates a square.
+    /// Creates a shape.
     ///
     /// - Parameters:
     ///   - length: The length for each side.
-    ///   - color: The stroke color.
-    ///   - gridStep: Space between horizontal and vertical grid lines.
-    public init(length: Double, color: Color = .yellow, gridStep: (x: Double?, y: Double?)? = nil) {
-        super.init(manim.Square(side_length: length, color: color, grid_xstep: gridStep?.x, grid_ystep: gridStep?.y))
+    ///   - stroke: The color used for the shape's outline.
+    ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
+    ///   - fill: The color used to fill the shape's interior.
+    ///
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    public convenience init(length: Double, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+            arguments.insert("side_length", length, at: 0)
+        }
     }
+    
     
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
 }

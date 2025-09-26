@@ -8,7 +8,13 @@
 import PythonKit
 
 
-/// The axis.
+/// An `OptionSet` representing one or more principal axes in 3D space.
+/// 
+/// Use this type to specify the x-, y-, and z-axes individually or in combination:
+///   - `.x` selects the x-axis
+///   - `.y` selects the y-axis
+///   - `.z` selects the z-axis
+///   - `.all` selects all three axes at once
 @MainActor
 public struct Axis: @MainActor OptionSet, @MainActor PythonConvertible {
     

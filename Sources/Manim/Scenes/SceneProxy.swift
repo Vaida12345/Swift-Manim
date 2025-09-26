@@ -42,16 +42,20 @@ public struct SceneProxy {
         scene.wait(duration)
     }
     
+    /// Sorts `targets` next to each other on screen.
     public func arrange(_ targets: [MObject], direction: Direction, spacing: Double = 0.25) {
         let group = Group(targets)
         group.arrange(direction: direction, spacing: spacing)
     }
     
+    /// Sorts `targets` next to each other on screen.
     public func arrange(_ targets: MObject..., direction: Direction, spacing: Double = 0.25) {
         self.arrange(targets, direction: direction, spacing: spacing)
     }
  
     /// Add the objects without animation.
+    ///
+    /// Objects that are added first are placed at the bottom.
     ///
     /// - SeeAlso: ``MObject/show(animation:)`` to add objects with animations.
     public func add(_ targets: MObject...) {
@@ -59,6 +63,8 @@ public struct SceneProxy {
     }
     
     /// Add the objects without animation.
+    ///
+    /// Objects that are added first are placed at the bottom.
     ///
     /// - SeeAlso: ``MObject/show(animation:)`` to add objects with animations.
     public func add(_ targets: [MObject]) {

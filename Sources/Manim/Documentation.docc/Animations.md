@@ -110,8 +110,12 @@ In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinat
 
 ### Functions
 - ``withAnimation(_:in:body:)``
-- ``MObject/transform(to:transform:)`
-- ``MObject/replacementTransform(to:)`
+- ``MObject/track(_:)``
+- ``MObject/bind(_:to:)``
+
+### MObjects
+- ``TracedPath``
+- ``MovingCamera``
 
 ### Structures
 - ``ValueTracker``

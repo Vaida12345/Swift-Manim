@@ -8,7 +8,7 @@
 import PythonKit
 
 
-/// A point, with the center being (0, 0, 0).
+/// A point in 2D / 3D plane.
 @MainActor
 public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConvertible, @MainActor ConvertibleFromPython {
     
@@ -19,6 +19,13 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
     public let z: Double
     
     
+    /// Shifts the point by a given distance along a specified direction.
+    ///
+    /// - Parameters:
+    ///   - value: The distance to move the point.
+    ///   - direction: The `Direction` in which to shift the point.
+    ///
+    /// - Returns: A new `Point` translated from the original by `value` units toward `direction`.
     public func shift(_ value: Double, to direction: Direction) -> Point {
         self + value * Point(direction)
     }
@@ -27,6 +34,7 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
         numpy.array([self.x, self.y, self.z])
     }
     
+    /// Returns a point located at the center of the screen.
     public static var center: Point {
         Point(x: 0, y: 0)
     }

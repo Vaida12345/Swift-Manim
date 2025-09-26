@@ -8,6 +8,7 @@
 import PythonKit
 
 
+/// Primary compass directions in a 2D plane.
 @MainActor
 public enum Direction: Equatable, @MainActor PythonConvertible {
     case left

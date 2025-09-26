@@ -28,7 +28,7 @@ extension TipableVMObject {
     ///   - shape: The tip shape, `nil` for the default arrow shape.
     ///   - position: The position to add the tip. Note that if multiple shapes are added to the same position, they will be positioned in serial.
     @discardableResult
-    public func addTip(shape: ArrowTipShape? = nil, at position: Position) -> Animation {
+    public func addTip(shape: Arrow.TipShape? = nil, at position: Position) -> Animation {
         let tip = self.pythonObject.create_tip(tip_shape: shape, at_start: position == .start)
         return MObject(tip).show().preAction {
             self.pythonObject.add_tip(tip, at_start: position == .start)
@@ -36,6 +36,7 @@ extension TipableVMObject {
     }
     
     
+    /// A position on a line.
     public enum Position: Equatable {
         case start, end
     }

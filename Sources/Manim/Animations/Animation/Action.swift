@@ -23,13 +23,22 @@ extension MObject {
     /// ```
     ///
     /// ![Preview](Circumscribe)
+    ///
+    /// ## Topics
+    /// - ``CircumscribeShape``
+    /// - ``CircumscribeStyle``
     public func circumscribe(shape: CircumscribeShape = .rectangle, style: CircumscribeStyle = .lineDrawInOut(delta: 0.5), color: Color = .yellow) -> WrappedAnimation {
         WrappedAnimation(base: self.pythonObject, caller: manim.Circumscribe, arguments: [("shape", shape), ("color", color)] + style.args)
     }
     
+    /// An enumeration of shapes used to circumscribe an MObject when applying the `circumscribe` animation.
+    ///
+    /// You can use ``MObject/circumscribe(shape:style:color:)`` to circumscribe an object.
     @MainActor
     public enum CircumscribeShape: @MainActor PythonConvertible {
+        ///  Draws a circular outline centered on the object.
         case circle
+        /// Draws a rectangular outline matching the object's bounding box.
         case rectangle
         
         public var pythonObject: PythonObject {
@@ -42,6 +51,10 @@ extension MObject {
         }
     }
     
+    
+    /// An enumeration of styles used to circumscribe an MObject when applying the `circumscribe` animation.
+    ///
+    /// You can use ``MObject/circumscribe(shape:style:color:)`` to circumscribe an object.
     @MainActor
     public enum CircumscribeStyle {
         /// Draw the line to create, and fade out.

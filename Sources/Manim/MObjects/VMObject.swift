@@ -5,10 +5,77 @@
 //  Created by Vaida on 2023/10/7.
 //
 
+import PythonKit
 
-/// A vectorized ``MObject``.
+
+/// Vectorized Mathematical Object.
+///
+/// Many concrete classes inherit from `VMObject`. You do not create instances directly from this abstract class; instead, you create instances of concrete classes that inherit the properties and methods of `VMObject`.
+///
+/// ```swift
+/// let rect = Rectangle(width: 4, height: 2)
+/// rect.stroke(.white, width: 6)
+/// rect.fill(.white.opacity(0.5))
+/// rect.show()
+/// ```
+///
+/// ![Preview](rect)
 public class VMObject: MObject {
     
+    /// Expected initializer for most `VMObjects`.
+    ///
+    /// Any object with a meaningful differentiation between `stroke` and `fill` should have this signature in the initializer, right after parameters for sizing.
+    ///
+    /// - Parameters:
+    ///   - stroke: The color used for the shape's outline.
+    ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
+    ///   - fill: The color used to fill the shape's interior.
+    ///
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    convenience init(stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        self.init("VMObject", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+            
+        }
+    }
+    
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        var closure = Closure(name)
+        if let stroke, let strokeWidth, let fill {
+            closure.append("stroke_color", stroke)
+            closure.append("stroke_opacity", stroke.alpha)
+            closure.append("stroke_width", strokeWidth)
+            closure.append("fill_color", fill)
+            closure.append("fill_opacity", fill.alpha)
+        } else if let stroke {
+            closure.append("stroke_color", stroke)
+            closure.append("stroke_opacity", stroke.alpha)
+            closure.append("stroke_width", strokeWidth ?? 4)
+            closure.append("fill_color", Python.None)
+            closure.append("fill_opacity", 0) // no fill
+        } else if let fill {
+            closure.append("stroke_color", Python.None)
+            closure.append("stroke_opacity", 0)
+            closure.append("stroke_width", strokeWidth ?? 4)
+            closure.append("fill_color", fill)
+            closure.append("fill_opacity", fill.alpha)
+        } else {
+            // fall back to default
+            assert(strokeWidth == nil, "These is a miss placed argument `strokeWidth`, please check your initializer.")
+            closure.append("stroke_color", Python.None)
+            closure.append("stroke_opacity", 0)
+            closure.append("stroke_width", strokeWidth ?? 4)
+            closure.append("fill_color", Color.blue)
+            closure.append("fill_opacity", 1)
+        }
+        
+        builder(&closure.arguments)
+        
+        super.init(manim[dynamicMember: closure.name].dynamicallyCall(withKeywordArguments: closure.arguments))
+    }
+    
+    
+    @_disfavoredOverload
+    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
 }
 

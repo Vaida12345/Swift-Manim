@@ -9,6 +9,9 @@ import SwiftUI
 import PythonKit
 
 
+/// A builder for Manim-based reveal animations.
+///
+/// You can use ``MObject/show(animation:)`` to show an object, and pass a `ShowAnimation`.
 @MainActor
 public struct ShowAnimation {
     

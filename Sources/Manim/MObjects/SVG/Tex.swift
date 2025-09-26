@@ -1,35 +1,35 @@
 //
-//  MathTex.swift
+//  Tex.swift
 //  Manim
 //
-//  Created by Vaida on 8/26/24.
+//  Created by Vaida on 2025-09-26.
 //
 
 import PythonKit
 
 
-/// A string compiled with LaTeX in math mode.
+/// A string compiled with LaTeX in normal mode.
 ///
 /// > Tip:
 /// > You can use the variadic argument to specify groups.
 /// > ```swift
-/// > MathTex("5", "14")
+/// > Tex("5", "14")
 /// > ```
 /// >
 /// > In this way, you can use ``MObject/children`` to access the sub objects.
-public class MathTex: SVGMObject {
+public final class Tex: MathTex {
     
     /// Creates a string.
     ///
     /// > Tip:
     /// > You can use the variadic argument to specify groups.
     /// > ```swift
-    /// > MathTex("5", "14")
+    /// > Tex("5", "14")
     /// > ```
     /// >
     /// > In this way, you can use ``MObject/children`` to access the sub objects.
-    public init(_ latex: String...) {
-        super.init(manim.MathTex(latex.map({ "{{\($0)}}" }).joined()))
+    public override init(_ latex: String...) {
+        super.init(manim.Tex(latex.map({ "{{\($0)}}" }).joined()))
     }
     
     

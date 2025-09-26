@@ -94,7 +94,7 @@ extension MObject {
     
     /// A controller for ``MObject`` updater.
     ///
-    /// You can use ``MObject/addUpdate(index:initialCall:)``
+    /// You can use ``MObject/addUpdater(index:initial:handler:)``
     @MainActor
     public struct Updater {
         

@@ -20,6 +20,8 @@ public final class NumberLine: Line {
     ///   - include: The set to include on graph.
     ///   - strokeWidth: The thickness of the line.
     ///   - scaling: The way the `range` is value is scaled.
+    ///   - start: The starting point for the number line.
+    ///   - end: The ending point for the number line.
     public init(
         range: Range? = nil,
         length: Double? = nil,
@@ -46,6 +48,11 @@ public final class NumberLine: Line {
     
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
     
     @MainActor

@@ -14,7 +14,7 @@ public final class TracedPath: VMObject {
     /// Traces the path of a point returned by a function call.
     ///
     /// - Parameters:
-    ///   - function: The function to be traced.
+    ///   - callable: The function to be traced.
     ///   - color: The color of the trace.
     ///   - width: The width of the trace.
     ///   - dissipatingTime: The time taken for the path to dissipate. Default set to `nil` which disables dissipation.
@@ -35,6 +35,11 @@ public final class TracedPath: VMObject {
     
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
 }
 
@@ -57,7 +62,7 @@ extension MObject {
     /// ```
     ///
     /// - Parameters:
-    ///   - function: The function to be traced.
+    ///   - keyPath: The property to be traced.
     ///   - color: The color of the trace.
     ///   - width: The width of the trace.
     ///   - dissipatingTime: The time taken for the path to dissipate. Default set to `nil` which disables dissipation.

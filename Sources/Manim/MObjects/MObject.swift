@@ -9,7 +9,21 @@ import SwiftUI
 import PythonKit
 
 
-/// Mathematical Object: base class for objects that can be displayed on screen.
+/// Mathematical Object: The base class for objects that can be displayed on screen.
+///
+/// Most concrete classes inherit from `MObject`. You do not create instances directly from this abstract class; instead, you create instances of concrete classes that inherit the properties and methods of `MObject`.
+///
+/// ```swift
+/// let dot = Dot(at: [1, 2])
+/// let text = Text("(1, 2)")
+/// let numberLine = NumberPlane()
+///
+/// text.move(below: dot)
+/// scene.add(numberLine, dot, text)
+/// print(dot.x) // 1
+/// ```
+///
+/// ![Preview](coord)
 @MainActor
 public class MObject: @MainActor CustomStringConvertible, @MainActor Transformable {
     
@@ -31,7 +45,7 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     
     /// Sets the color.
     ///
-    /// Sets both the ``fillColor`` and ``strokeColor``. This method also calls ``VMObject/set(opacity:)`` internally.
+    /// Sets both the ``VMObject/fillColor`` and ``VMObject/strokeColor``. This method also calls ``VMObject/set(opacity:)`` internally.
     @discardableResult
     public func set(color: Color) -> Animation {
         _AnimationGroup(animations: [

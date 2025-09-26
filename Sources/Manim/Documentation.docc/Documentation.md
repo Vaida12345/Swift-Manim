@@ -34,17 +34,25 @@ try await withManim { scene in
 ### Getting Started
 - <doc:Setup>
 
+### Showcase
+- <doc:Gallery>
+
 ### Animation
 
 - <doc:Animations>
 
-
 ### Entry
 - ``withManim(scene:configuration:)``
 - ``MObject``
-- ``MObject``
 - ``SceneProxy``
 - ``ConfigurationProxy``
+
+### Concrete class
+- <doc:Text-display>
+- <doc:Line-display>
+- <doc:Shape>
+- <doc:Grouping>
+- <doc:Intermediate>
 
 ### Common Structures
 - ``Point``
@@ -52,3 +60,4 @@ try await withManim { scene in
 - ``Axis``
 - ``Direction``
 - ``Range``
+

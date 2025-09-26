@@ -22,11 +22,17 @@ public class Arrow: Line {
     ///   - strokeWidth: Stroke Width
     ///   - color: The stroke color.
     ///   - tip: The tip shape, `nil` for the default arrow shape.
-    public init(from start: Point, to end: Point, padding: Double = 0.25, strokeWidth: Double = 6, color: Color = .white, tip: ArrowTipShape? = nil) {
+    public init(from start: Point, to end: Point, padding: Double = 0.25, strokeWidth: Double = 6, color: Color = .white, tip: Arrow.TipShape? = nil) {
         super.init(manim.Arrow(start: start, end: end, buff: padding, stroke_width: strokeWidth, color: color, tip_shape: tip))
     }
     
+    
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
 }

@@ -17,11 +17,17 @@ public final class Vector: Arrow {
     ///   - strokeWidth: Stroke Width
     ///   - color: The stroke color.
     ///   - tip: The tip shape, `nil` for the default arrow shape.
-    public init(_ direction: Point, padding: Double = 0, strokeWidth: Double = 6, color: Color = .white, tip: ArrowTipShape? = nil) {
+    public init(_ direction: Point, padding: Double = 0, strokeWidth: Double = 6, color: Color = .white, tip: Arrow.TipShape? = nil) {
         super.init(manim.Vector(direction: direction, color: color, buff: padding, stroke_width: strokeWidth, tip_shape: tip))
     }
     
+    
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
 }

@@ -8,29 +8,33 @@
 import PythonKit
 
 
-/// A Rectangle
+/// A quadrilateral with two sets of parallel sides.
 public class Rectangle: Polygon {
-    
     
     /// Creates a rectangle.
     ///
     /// - Parameters:
     ///   - width: The width of the rectangle
     ///   - height: The height of the rectangle
-    ///   - gridStep: Space between horizontal and vertical grid lines.
-    ///   - color: The stroke color.
-    public init(width: Double, height: Double, color: Color = .yellow, gridStep: (x: Double?, y: Double?)? = nil) {
-        var arguments = Closure.Arguments()
-        arguments.append("width", width)
-        arguments.append("height", height)
-        arguments.append("color", color)
-        arguments.append("grid_xstep", gridStep?.x)
-        arguments.append("grid_ystep", gridStep?.y)
-        
-        super.init(manim.Rectangle.dynamicallyCall(withKeywordArguments: arguments))
+    ///   - stroke: The color used for the shape's outline.
+    ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
+    ///   - fill: The color used to fill the shape's interior.
+    ///
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    public convenience init(width: Double, height: Double, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+            arguments.insert("width", width, at: 0)
+            arguments.insert("height", height, at: 1)
+        }
     }
+    
     
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
 }

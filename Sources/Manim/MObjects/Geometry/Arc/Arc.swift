@@ -19,7 +19,7 @@ public class Arc: TipableVMObject {
     ///
     /// - Parameters:
     ///   - radius: The radius of arc.
-    ///   - start: The start angle. When `start` is `0`, the line an arrow from (0, 0) to (1, 0)
+    ///   - startAngle: The start angle. When `start` is `0`, the line an arrow from (0, 0) to (1, 0)
     ///   - angle: The angle length.
     ///   - center: The center position.
     ///   - color: The stroke color.
@@ -42,7 +42,13 @@ public class Arc: TipableVMObject {
         super.init(object)
     }
     
+    
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
 }

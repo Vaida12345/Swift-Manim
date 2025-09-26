@@ -9,13 +9,41 @@
 extension MObject {
     
     // MARK: - read write
-    /// The `x`-coordinate
+    /// The `x`-coordinate value of ``origin`` (ie, center).
+    ///
+    /// You can use this property to access and modify the x-coordinate value.
+    ///
+    /// ```swift
+    /// let dot = Dot(at: [1, 2])
+    /// let text = Text("(1, 2)")
+    /// let numberLine = NumberPlane()
+    ///
+    /// text.move(below: dot)
+    /// scene.add(numberLine, dot, text)
+    /// print(dot.x) // 1
+    /// ```
+    ///
+    /// ![Preview](coord)
     public var x: Double {
         get { Double(self.pythonObject.get_x())! }
         set { self.pythonObject.set_x(newValue) }
     }
     
-    /// The `y`-coordinate
+    /// The `y`-coordinate value of ``origin`` (ie, center).
+    ///
+    /// You can use this property to access and modify the y-coordinate value.
+    ///
+    /// ```swift
+    /// let dot = Dot(at: [1, 2])
+    /// let text = Text("(1, 2)")
+    /// let numberLine = NumberPlane()
+    ///
+    /// text.move(below: dot)
+    /// scene.add(numberLine, dot, text)
+    /// print(dot.y) // 2
+    /// ```
+    ///
+    /// ![Preview](coord)
     public var y: Double {
         get { Double(self.pythonObject.get_y())! }
         set { self.pythonObject.set_y(newValue) }
@@ -27,7 +55,7 @@ extension MObject {
         set { self.pythonObject.z_index = newValue.pythonObject }
     }
     
-    /// Sets both the ``fillColor`` and ``strokeColor``.
+    /// Sets both the ``VMObject/fillColor`` and ``VMObject/strokeColor``.
     ///
     /// If `fillColor` is not `nil`, returns `fillColor`. Otherwise `strokeColor`.
     public var color: Color {

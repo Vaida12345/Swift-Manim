@@ -15,9 +15,19 @@ public class Line: TipableVMObject {
         super.init(manim.Line(start: start, end: end, color: color))
     }
     
+    
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
+    
+}
+
+
+extension Line {
     
     /// Moves the ``MObject/start`` and ``MObject/end``.
     @discardableResult

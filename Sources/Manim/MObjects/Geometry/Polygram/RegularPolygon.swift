@@ -11,15 +11,28 @@ import PythonKit
 /// An n-sided regular Polygon.
 public class RegularPolygon: RegularPolygram {
     
-    
+    /// Creates a shape.
+    ///
     /// - Parameters:
     ///   - n: The number of sides of the RegularPolygon.
-    ///   - color: The stroke color.
-    public init(n: Int, color: Color) {
-        super.init(manim.RegularPolygon(n: n, color: color))
+    ///   - stroke: The color used for the shape's outline.
+    ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
+    ///   - fill: The color used to fill the shape's interior.
+    ///
+    /// If `stroke` or `fill` are not specified, a default style will be applied with no `stroke` and a `fill` color of ``Color/blue``.
+    public convenience init(n: Int, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
+        self.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+            arguments.insert("", n, at: 0)
+        }
     }
+    
     
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
     
 }

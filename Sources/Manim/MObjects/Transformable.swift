@@ -46,7 +46,9 @@ extension Transformable {
     /// Moves the current object next to `target`.
     ///
     /// - Parameters:
-    ///   - position: The position of `self` relative to `target`
+    ///   - target: The reference point
+    ///   - placing: The position of `self` relative to `target`
+    ///   - padding: The padding from `self` to `target`
     @discardableResult
     public func move(nextTo target: Point, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
         var closure = Closure(name: "next_to")
@@ -60,7 +62,9 @@ extension Transformable {
     /// Moves the current object next to `target`.
     ///
     /// - Parameters:
-    ///   - position: The position of `self` relative to `target`
+    ///   - target: The reference point
+    ///   - placing: The position of `self` relative to `target`
+    ///   - padding: The padding from `self` to `target`
     @discardableResult
     public func move(nextTo target: MObject, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
         var closure = Closure(name: "next_to")

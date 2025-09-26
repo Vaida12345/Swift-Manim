@@ -8,12 +8,13 @@
 import PythonKit
 
 
-/// A preset of colors.
+/// A representation of a color
 @MainActor
 public struct Color: Equatable, @MainActor PythonConvertible, @MainActor ConvertibleFromPython, @MainActor CustomStringConvertible {
     
     let box: Box
     
+    /// A human-readable description of the color.
     public var description: String {
         switch box {
         case .predefined(let string):
@@ -30,6 +31,7 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
         }
     }
     
+    /// The opacity (alpha channel) of this color, from 0 (fully transparent) to 1 (fully opaque).
     public var alpha: Double {
         switch self.box {
         case .predefined: 1
@@ -38,6 +40,11 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
         }
     }
     
+    /// Returns a new Color with the same base hue but the specified opacity.
+    ///
+    /// - Parameter opacity: A value between 0 and 1 representing the desired alpha component.
+    ///
+    /// - Returns: A copy of this color with its alpha set to `opacity`.
     public func opacity(_ opacity: Double) -> Color {
         switch self.box {
         case .predefined(let string):
@@ -70,16 +77,34 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
     public static let white = Color(box: .predefined("white"))
     public static let gray = Color(box: .predefined("gray"))
     public static let black = Color(box: .predefined("black"))
+    
+    /// A fully transparent (clear) color, equivalent to white with zero alpha.
     public static let clear = Color(box: .rgba(1, 1, 1, 0))
     
+    /// All available predefined color constants, in no particular order.
     public static let predefinedColors: [Color] = [
         blue, teal, green, yellow, gold, red, maroon, purple, pink, orange, white, gray, black
     ]
-    
+        
+    /// Creates a color from a hexadecimal string.
+    ///
+    /// - Parameters:
+    ///   - hex: A hex code string, with or without a leading “#”, e.g. “FF00FF” or “#FF00FF”.
+    ///   - alpha: An optional alpha component from 0 to 1 (default is 1).
+    /// - Returns: A new Color representing the given hex code and opacity.
     public static func hex(_ hex: String, alpha: Double = 1) -> Color {
         Color(box: .hex(hex, alpha: alpha))
     }
     
+    /// Creates a color from individual red, green, blue, and optional alpha components.
+    ///
+    /// - Parameters:
+    ///   - r: Red channel, from 0 to 1.
+    ///   - g: Green channel, from 0 to 1.
+    ///   - b: Blue channel, from 0 to 1.
+    ///   - a: Alpha channel, from 0 to 1 (default is 1).
+    ///
+    /// - Returns: A new Color with the specified RGBA values.
     public static func rgba(_ r: Double, _ g: Double, _ b: Double, _ a: Double = 1) -> Color {
         Color(box: .rgba(r, g, b, a))
     }
@@ -88,6 +113,11 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
         self.box = box
     }
     
+    /// Initializes a Color by parsing a hex string.
+    ///
+    /// - Parameters:
+    ///   - hex: A hex code string, e.g. “FF0000” or “#FF0000”.
+    ///   - alpha: An optional alpha component (default is 1).
     public init(_ hex: String, alpha: Double = 1) {
         self.box = .hex(hex, alpha: alpha)
     }

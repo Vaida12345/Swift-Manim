@@ -8,6 +8,9 @@
 import PythonKit
 
 
+/// A builder for Manim-based hide animations.
+///
+/// You can use ``MObject/hide(animation:)`` to hide an object, and pass a `HideAnimation`.
 @MainActor
 public struct HideAnimation {
     

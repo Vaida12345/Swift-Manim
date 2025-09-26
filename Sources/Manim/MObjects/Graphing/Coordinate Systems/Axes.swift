@@ -36,6 +36,11 @@ public class Axes: Group {
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
+    
     
     /// Accepts coordinates and returns a point with respect to the `destination`.
     public func convert(_ point: Point, from source: CoordinateSpace, to destination: CoordinateSpace) -> Point {

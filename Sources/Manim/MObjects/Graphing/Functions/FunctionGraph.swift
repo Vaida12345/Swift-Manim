@@ -33,4 +33,9 @@ public final class FunctionGraph: ParametricFunction {
     @_disfavoredOverload
     required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
     
+    @_disfavoredOverload
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    }
+    
 }

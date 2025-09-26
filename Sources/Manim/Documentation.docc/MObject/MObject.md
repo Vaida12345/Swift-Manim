@@ -9,9 +9,10 @@
 - <doc:Position>
 - ``MObject/rotate(angle:axis:)``
 - ``MObject/flip(axis:)``
-- ``MObject/scale(_:)``
+- ``MObject/scale(_:stroke:)``
+- ``MObject/scaleToFit(width:)``
+- ``MObject/scaleToFit(height:)``
 - ``MObject/apply(matrix:center:)``
-- ``MObject/zIndex``
 
 ### Lifetime
 - ``MObject/show(animation:)``
@@ -23,15 +24,10 @@
 ### Action
 - ``MObject/circumscribe(shape:style:color:)``
 - ``MObject/flash(lineLength:lineCount:radius:strokeWidth:color:)``
-- ``MObject/focus(opacity:color:)``
+- ``MObject/focus(color:)``
 - ``MObject/indicate(scale:color:)``
 - ``MObject/shake()``
 - ``MObject/showPassingFlash(duration:)``
-
-### Color & Style
-- ``MObject/set(color:)``
-- ``MObject/fill(_:opacity:)``
-- ``MObject/stroke(_:width:opacity:)``
 
 ### Decedents
 - ``MObject/children``
@@ -40,7 +36,7 @@
 - ``MObject/copied()``
 
 ### Updater
-- ``MObject/addUpdater(index:initialCall:handler:)``
+- ``MObject/addUpdater(index:initial:handler:)``
 - ``MObject/Updater``
 - ``MObject/track(_:)``
 - ``MObject/bind(_:to:)``
