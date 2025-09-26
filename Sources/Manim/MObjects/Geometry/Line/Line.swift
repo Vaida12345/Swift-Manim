@@ -11,6 +11,13 @@ import SwiftUI
 
 
 /// A line.
+///
+/// ```swift
+/// let line = Line(from: [-1, -1], to: [1, 1], width: 6)
+/// line.capStyle = .round
+/// ```
+///
+/// ![Preview](Line)
 public class Line: TipableVMObject {
     
     /// Creates a Line.
@@ -21,9 +28,8 @@ public class Line: TipableVMObject {
     ///   - width: The stroke width.
     ///   - color: The stroke color.
     ///   - padding: The paddings between the line and `start`, `end`.
-    ///   - shape: The shape of the line, `straight` by default.
-    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight) {
-        super.init(manim.Line(start: start, end: end, stroke_width: width, color: color, buff: padding, path_arc: shape))
+    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0) {
+        super.init(manim.Line(start: start, end: end, stroke_width: width, color: color, buff: padding))
     }
     
     

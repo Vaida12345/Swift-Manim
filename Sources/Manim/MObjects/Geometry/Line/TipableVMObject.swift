@@ -7,6 +7,20 @@
 
 
 /// A ``VMObject`` that can have tips.
+///
+/// You can use ``addTip(shape:at:)`` to add a new Tip.
+///
+/// ```swift
+/// let line = Line(from: .center, to: [2, 2])
+/// line.addTip(at: .start)
+/// line.addTip(at: .end)
+///
+/// withAnimation(in: .parallel) {
+///     line.show()
+/// }
+/// ```
+///
+/// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/add_tip.mov)
 public class TipableVMObject: VMObject {
     
 }

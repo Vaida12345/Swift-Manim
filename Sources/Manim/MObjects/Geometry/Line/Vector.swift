@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// A Arrow, with the `start` being `.zero`.
+///
+/// ```swift
+/// let vector = Vector([1, 1])
+/// ```
+///
+/// ![Preview](Vector)
 public final class Vector: Arrow {
     
     /// Creates a vector.

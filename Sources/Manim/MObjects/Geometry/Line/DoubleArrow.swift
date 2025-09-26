@@ -9,6 +9,12 @@ import PythonKit
 
 
 /// An arrow.
+///
+/// ```swift
+/// let arrow = DoubleArrow(from: [-1, -1], to: [1, 1])
+/// ```
+///
+/// ![Preview](DoubleArrow)
 public final class DoubleArrow: Arrow {
     
     /// Creates an arrow.

@@ -10,6 +10,12 @@ import PythonKit
 
 /// An arrow.
 ///
+/// ```swift
+/// let arrow = Arrow(from: [-1, -1], to: [1, 1])
+/// ```
+///
+/// ![Preview](Arrow)
+///
 /// - SeeAlso: ``DoubleArrow``
 public class Arrow: Line {
     

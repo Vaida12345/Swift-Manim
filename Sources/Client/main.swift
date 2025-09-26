@@ -10,8 +10,8 @@ import Foundation
 
 
 try await withManim { scene in
-    let ellipse = Ellipse(width: 4, height: 2, stroke: .white)
-    scene.add(ellipse)
+    let vector = Vector([1, 1])
+    scene.add(vector)
 } configuration: {
     $0.preview = false
 }
