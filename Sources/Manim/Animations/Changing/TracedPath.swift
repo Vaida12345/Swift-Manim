@@ -9,6 +9,8 @@ import PythonKit
 
 
 /// Traces the path of a point returned by a function call.
+///
+/// - SeeAlso: ``MObject/trace(_:color:width:dissipatingTime:)``
 public final class TracedPath: VMObject {
     
     /// Traces the path of a point returned by a function call.
@@ -18,6 +20,8 @@ public final class TracedPath: VMObject {
     ///   - color: The color of the trace.
     ///   - width: The width of the trace.
     ///   - dissipatingTime: The time taken for the path to dissipate. Default set to `nil` which disables dissipation.
+    ///
+    /// - SeeAlso: ``MObject/trace(_:color:width:dissipatingTime:)``
     public init<T>(_ callable: @autoclosure @escaping () -> T, color: Color = .white, width: Double = 2, dissipatingTime: Double? = nil) where T: PythonConvertible {
         let method = PythonFunction { _ in
             return callable()

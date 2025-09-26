@@ -49,3 +49,7 @@
 - ``MObject/save()``
 - ``MObject/State/restore()``
 - ``MObject/State``
+
+### Spawn MObjects
+- ``MObject/trace(_:color:width:dissipatingTime:)``
+- ``MObject/underline(padding:)``

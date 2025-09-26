@@ -55,7 +55,7 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     /// }
     /// ```
     ///
-    /// ![Preview](set_color)
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/set_color.mov)
     @discardableResult
     public func set(color: Color) -> Animation {
         _AnimationGroup(animations: [

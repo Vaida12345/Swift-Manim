@@ -8,6 +8,9 @@
 import PythonKit
 
 
+/// An underline.
+///
+/// You don't create instances of this class directly, you use ``MObject/underline(padding:)``.
 public final class Underline: Line {
     
     /// Creates an underline.
@@ -28,6 +31,14 @@ public final class Underline: Line {
 
 extension MObject {
     
+    /// Underline this instance.
+    ///
+    /// ```swift
+    /// let text = Text("Important")
+    /// scene.add(text, text.underline())
+    /// ```
+    ///
+    /// ![Preview](underline)
     public func underline(padding: Double = 0.25) -> Underline {
         Underline(base: self, padding: padding)
     }
