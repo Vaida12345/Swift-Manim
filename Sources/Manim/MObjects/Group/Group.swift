@@ -11,6 +11,10 @@ import PythonKit
 /// A group of vectorized ``MObject``.
 public class Group: VMObject {
     
+    public override var description: String {
+        "\(type(of: self as Any))(\(self.children))"
+    }
+    
     public func arrange(direction: Direction, spacing: Double = 0.25) {
         self.pythonObject.arrange(direction, buff: spacing)
     }

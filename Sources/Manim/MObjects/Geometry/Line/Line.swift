@@ -11,7 +11,7 @@ import PythonKit
 
 public class Line: TipableVMObject {
     
-    public init(from start: Point, to end: Point, color: Color) {
+    public init(from start: Point, to end: Point, color: Color = .white) {
         super.init(manim.Line(start: start, end: end, color: color))
     }
     

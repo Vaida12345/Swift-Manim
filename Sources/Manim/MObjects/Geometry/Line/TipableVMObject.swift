@@ -6,6 +6,7 @@
 //
 
 
+/// A ``VMObject`` that can have tips.
 public class TipableVMObject: VMObject {
     
 }
@@ -13,11 +14,24 @@ public class TipableVMObject: VMObject {
 
 extension TipableVMObject {
     
+    /// The length of the line.
+    ///
+    /// ```swift
+    /// let line = Line(from: .center, to: [2, 2])
+    /// line.length // 2.8284271247461903
+    /// ```
     public var length: Double {
         Double(self.pythonObject.get_length())!
     }
     
     /// Returns a ``Group`` (collection of ``VMObject``s) containing the the instance’s tips.
+    ///
+    /// ```swift
+    /// let line = Line(from: .center, to: [2, 2])
+    /// line.addTip(at: .start)
+    /// line.addTip(at: .end)
+    /// line.tips // Group([MObject(ArrowTriangleFilledTip), MObject(ArrowTriangleFilledTip)])
+    /// ```
     public var tips: Group {
         Group(self.pythonObject.get_tips())
     }
@@ -27,12 +41,25 @@ extension TipableVMObject {
     /// - Parameters:
     ///   - shape: The tip shape, `nil` for the default arrow shape.
     ///   - position: The position to add the tip. Note that if multiple shapes are added to the same position, they will be positioned in serial.
+    ///
+    /// - Returns: The Tip object.
+    ///
+    /// ```swift
+    /// let line = Line(from: .center, to: [2, 2])
+    /// line.addTip(at: .start)
+    /// line.addTip(at: .end)
+    ///
+    /// withAnimation(in: .parallel) {
+    ///     line.show()
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/add_tip.mov)
     @discardableResult
-    public func addTip(shape: Arrow.TipShape? = nil, at position: Position) -> Animation {
+    public func addTip(shape: Arrow.TipShape = .triangleFilled, at position: Position) -> MObject {
         let tip = self.pythonObject.create_tip(tip_shape: shape, at_start: position == .start)
-        return MObject(tip).show().preAction {
-            self.pythonObject.add_tip(tip, at_start: position == .start)
-        }
+        self.pythonObject.add_tip(tip, at_start: position == .start)
+        return MObject(tip)
     }
     
     

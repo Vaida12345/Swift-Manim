@@ -10,8 +10,13 @@ import Foundation
 
 
 try await withManim { scene in
-    let text = Text("Important")
-    scene.add(text, text.underline())
+    let line = Line(from: .center, to: [2, 2])
+    line.addTip(at: .start)
+    line.addTip(at: .end)
+    
+    withAnimation(in: .parallel) {
+        line.show()
+    }
 } configuration: {
     $0.preview = false
 }

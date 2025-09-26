@@ -30,7 +30,7 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     internal var pythonObject: PythonKit.PythonObject
     
     public var description: String {
-        "\(type(of: self as Any))(\(self.pythonObject))"
+        "\(type(of: self))(\(self.pythonObject))"
     }
     
     public var _transformable: PythonObject {
