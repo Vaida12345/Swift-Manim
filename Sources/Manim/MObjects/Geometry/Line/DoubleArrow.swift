@@ -27,8 +27,8 @@ public final class DoubleArrow: Arrow {
     ///   - padding: The paddings between the line and `start`, `end`.
     ///   - shape: The shape of the line, `straight` by default.
     ///   - tip: The tip shape
-    public override init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight, tip: Arrow.TipShape = .triangleFilled) {
-        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, path_arc: shape, tip_shape: tip))
+    public override init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangleFilled) {
+        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip))
     }
     
     /// Creates an arrow.
@@ -42,8 +42,8 @@ public final class DoubleArrow: Arrow {
     ///   - shape: The shape of the line, `straight` by default.
     ///   - startTip: The tip shape for `start`.
     ///   - endTip: The tip shape for `end`.
-    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, shape: Path = .straight, startTip: Arrow.TipShape = .triangleFilled, endTip: Arrow.TipShape = .triangleFilled) {
-        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, path_arc: shape, tip_shape_start: startTip, tip_shape_end: endTip))
+    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, startTip: Arrow.TipShape = .triangleFilled, endTip: Arrow.TipShape = .triangleFilled) {
+        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape_start: startTip, tip_shape_end: endTip))
     }
     
     

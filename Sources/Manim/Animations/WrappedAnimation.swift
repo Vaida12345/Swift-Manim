@@ -43,16 +43,12 @@ public class WrappedAnimation: Animation {
         }
         
         var group: PythonObject {
-            if self.duration == 1 && self.lagRatio == 0 {
-                return body
-            } else {
-                var arguments = Closure.Arguments()
-                arguments.append("", body)
-                arguments.append("run_time", self.duration)
-                arguments.append("lag_ratio", self.lagRatio)
-                
-                return manim.AnimationGroup.dynamicallyCall(withKeywordArguments: arguments)
-            }
+            var arguments = Closure.Arguments()
+            arguments.append("", body)
+            arguments.append("run_time", self.duration)
+            arguments.append("lag_ratio", self.lagRatio)
+            
+            return manim.AnimationGroup.dynamicallyCall(withKeywordArguments: arguments)
         }
         
         if self.delay != 0 {

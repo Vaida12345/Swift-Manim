@@ -16,7 +16,7 @@ public final class AttachedAnimation: Animation {
     
     let closure: Closure
     
-    var path: Line.Path = .straight
+    var path: Transform.Path = .straight
     
     
     override func callAsFunction() -> PythonObject {
@@ -24,13 +24,7 @@ public final class AttachedAnimation: Animation {
             var args = Closure.Arguments()
             args.append("run_time", self.duration)
             args.append("lag_ratio", self.lagRatio)
-            
-            switch path {
-            case .straight:
-                break
-            case .arc(let angle):
-                args.append("path_arc", angle.radians)
-            }
+            args.append("path_func", self.path)
             
             return self.base.animate.dynamicallyCall(withKeywordArguments: args)[dynamicMember: self.closure.name].dynamicallyCall(withKeywordArguments: self.closure.arguments)
         }
@@ -57,7 +51,7 @@ public final class AttachedAnimation: Animation {
     ///         .path(.arc(.degrees(45)))
     /// }
     /// ```
-    public func path(_ path: Line.Path) -> AttachedAnimation {
+    public func path(_ path: Transform.Path) -> AttachedAnimation {
         self.path = path
         return self
     }

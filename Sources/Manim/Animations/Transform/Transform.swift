@@ -8,35 +8,56 @@
 import PythonKit
 
 
-/// A Transform transforms a ``MObject`` into a target ``MObject``.
+/// A Transform transforms a Mobject into a target Mobject.
 ///
-/// You can use the ``MObject/transform(to:transform:)`` to create a transform.
+/// Instead of creating instances of this class directly, you use ``MObject/transform(to:style:)``.
 @MainActor
-public enum Transform {
+public final class Transform: WrappedAnimation {
     
-    /// Performs the transform in an arc instead of straight line.
-    case clockwise
+    var path: Transform.Path = .straight
     
-    /// Performs the transform in an arc instead of straight line.
-    case counterClockwise
     
-    /// An animation trying to transform groups by matching the shape of their sub-objects.
+    /// Sets the path that the transition should follow.
     ///
-    /// This method is similar to Magic Move, match characters.
-    case matchShapes
-    
-    /// A transformation trying to transform rendered LaTeX strings.
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Transform.mov)
+    /// 
+    /// ```swift
+    /// let dot = Dot(at: [-2, 0])
+    /// let dest = Dot(at: [2, 0])
+    /// scene.add(dest, dot)
     ///
-    /// Two sub-objects match if their components matches.
-    case matchTex
+    /// withAnimation {
+    ///     dot.transform(to: dest)
+    ///         .path(.clockwise)
+    /// }
+    /// ```
+    public func path(_ path: Transform.Path) -> Transform {
+        self.path = path
+        return self
+    }
     
     
-    public var pythonObject: PythonObject {
-        switch self {
-        case .clockwise: manim.ClockwiseTransform
-        case .counterClockwise: manim.CounterclockwiseTransform
-        case .matchShapes: manim.TransformMatchingShapes
-        case .matchTex: manim.TransformMatchingTex
+    override func callAsFunction() -> PythonObject {
+        var body: PythonObject {
+            var arguments = self.arguments
+            arguments.insert("", self.base, at: 0)
+            arguments.append("path_func", self.path)
+            return self.caller.dynamicallyCall(withKeywordArguments: arguments)
+        }
+        
+        var group: PythonObject {
+            var arguments = Closure.Arguments()
+            arguments.append("", body)
+            arguments.append("run_time", self.duration)
+            arguments.append("lag_ratio", self.lagRatio)
+            
+            return manim.AnimationGroup.dynamicallyCall(withKeywordArguments: arguments)
+        }
+        
+        if self.delay != 0 {
+            return manim.Succession(manim.Wait(self.delay), group)
+        } else {
+            return group
         }
     }
     
@@ -50,8 +71,23 @@ extension MObject {
     /// - Parameters:
     ///   - target: The destination.
     ///   - transform: The transform used.
-    public func transform(to target: MObject, transform: Transform = .matchShapes) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: transform.pythonObject, arguments: [("", target.pythonObject)])
+    ///
+    /// - SeeAlso: ``Transform`` for cases and example videos.
+    ///
+    /// ```swift
+    /// let dot = Dot(at: [-2, 0])
+    /// let dest = Dot(at: [2, 0])
+    /// scene.add(dest, dot)
+    ///
+    /// withAnimation {
+    ///     dot.transform(to: dest)
+    ///         .path(.clockwise)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Transform.mov)
+    public func transform(to target: MObject, style transform: Transform.Style = .plain) -> Transform {
+        Transform(base: self.pythonObject, caller: transform.pythonObject, arguments: [("", target.pythonObject)])
     }
     
 }

@@ -41,24 +41,6 @@ public class Line: TipableVMObject {
         super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
     }
     
-    
-    /// The path of a line.
-    public enum Path: PythonConvertible {
-        /// A straight line
-        case straight
-        /// A curved arc.
-        case arc(Angle)
-        
-        public var pythonObject: PythonObject {
-            switch self {
-            case .straight:
-                Python.None
-            case .arc(let angle):
-                angle.radians.pythonObject
-            }
-        }
-    }
-    
 }
 
 
