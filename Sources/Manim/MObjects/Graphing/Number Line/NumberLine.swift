@@ -12,7 +12,7 @@ import PythonKit
 ///
 /// ```swift
 /// let numberLine = NumberLine(
-///     range: Range(1...5),
+///     range: Range(1...4),
 ///     include: [.numbers, .tip, .ticks]
 /// )
 /// ```
@@ -34,7 +34,7 @@ public final class NumberLine: Line {
         scaling: ScaleBase = .linear()
     ) {
         var args: Closure.Arguments = [
-            ("x_range", range),
+            ("x_range", range?._adjustForTip(hasTip: include.contains(.tip))),
             ("stroke_width", width),
             ("scaling", scaling)
         ]

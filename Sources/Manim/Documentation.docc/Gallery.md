@@ -68,7 +68,7 @@ View source code in [animation.md](<doc:Animations>)
 @ValueTracker var value = 0.0
 let number = DecimalNumber($value, format: .precision(fractionLength: 4))
 let dot = Dot()
-let numberLine = NumberLine(range: Range(0...5))
+let numberLine = NumberLine(range: Range(0...4))
 scene.add(VStack(numberLine, number), dot)
 
 dot.addUpdater {
