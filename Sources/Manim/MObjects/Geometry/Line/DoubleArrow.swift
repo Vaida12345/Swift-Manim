@@ -26,8 +26,8 @@ public final class DoubleArrow: Arrow {
     ///   - color: The stroke color.
     ///   - padding: The paddings between the line and `start`, `end`.
     ///   - tip: The tip shape
-    public override init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangleFilled) {
-        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip))
+    public override init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangle.filled) {
+        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip.pythonObject))
     }
     
     /// Creates an arrow.
@@ -40,8 +40,8 @@ public final class DoubleArrow: Arrow {
     ///   - padding: The paddings between the line and `start`, `end`.
     ///   - startTip: The tip shape for `start`.
     ///   - endTip: The tip shape for `end`.
-    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, startTip: Arrow.TipShape = .triangleFilled, endTip: Arrow.TipShape = .triangleFilled) {
-        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape_start: startTip, tip_shape_end: endTip))
+    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, startTip: Arrow.TipShape = .triangle.filled, endTip: Arrow.TipShape = .triangle.filled) {
+        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape_start: startTip.pythonObject, tip_shape_end: endTip.pythonObject))
     }
     
     

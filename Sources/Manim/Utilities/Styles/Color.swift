@@ -10,6 +10,8 @@ import PythonKit
 
 /// A representation of a color
 ///
+/// ![Preview](Colors)
+///
 /// ```swift
 /// let dots = Color.predefinedColors.map {
 ///     Dot(color: $0)
@@ -22,8 +24,6 @@ import PythonKit
 ///     scene.add(text)
 /// }
 /// ```
-///
-/// ![Preview](Colors)
 @MainActor
 public struct Color: Equatable, @MainActor PythonConvertible, @MainActor ConvertibleFromPython, @MainActor CustomStringConvertible {
     

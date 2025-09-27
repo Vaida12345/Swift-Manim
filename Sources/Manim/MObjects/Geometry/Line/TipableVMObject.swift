@@ -70,7 +70,7 @@ extension TipableVMObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/add_tip.mov)
     @discardableResult
-    public func addTip(shape: Arrow.TipShape = .triangleFilled, at position: Position) -> MObject {
+    public func addTip(shape: Arrow.TipShape = .triangle.filled, at position: Position) -> MObject {
         let tip = self.pythonObject.create_tip(tip_shape: shape, at_start: position == .start)
         self.pythonObject.add_tip(tip, at_start: position == .start)
         return MObject(tip)

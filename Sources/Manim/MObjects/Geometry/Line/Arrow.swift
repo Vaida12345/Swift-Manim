@@ -28,8 +28,8 @@ public class Arrow: Line {
     ///   - color: The stroke color.
     ///   - padding: The paddings between the line and `start`, `end`.
     ///   - tip: The tip shape
-    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangleFilled) {
-        super.init(manim.Arrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip))
+    public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangle.filled) {
+        super.init(manim.Arrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip.pythonObject))
     }
     
     
