@@ -17,8 +17,7 @@
 ### Lifetime
 - ``MObject/show(animation:)``
 - ``MObject/become(_:matchHeight:matchWidth:matchDepth:matchCenter:stretch:)``
-- ``MObject/transform(to:transform:)``
-- ``MObject/replacementTransform(to:)``
+- ``MObject/transform(to:style:)``
 - ``MObject/hide(animation:)``
 
 ### Action

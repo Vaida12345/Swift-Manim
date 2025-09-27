@@ -9,6 +9,21 @@ import PythonKit
 
 
 /// A representation of a color
+///
+/// ```swift
+/// let dots = Color.predefinedColors.map {
+///     Dot(color: $0)
+/// }
+/// scene.add(HStack(spacing: 1, dots))
+/// for dot in dots {
+///     let text = Text("\(dot.color)")
+///     text.scale(0.4)
+///     text.move(above: dot)
+///     scene.add(text)
+/// }
+/// ```
+///
+/// ![Preview](Colors)
 @MainActor
 public struct Color: Equatable, @MainActor PythonConvertible, @MainActor ConvertibleFromPython, @MainActor CustomStringConvertible {
     
@@ -18,7 +33,7 @@ public struct Color: Equatable, @MainActor PythonConvertible, @MainActor Convert
     public var description: String {
         switch box {
         case .predefined(let string):
-            return "Color.\(string)"
+            return ".\(string)"
         case .hex(let string, let alpha):
             var string = "Color(\(string.uppercased())"
             if alpha != 1 {

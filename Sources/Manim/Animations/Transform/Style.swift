@@ -12,7 +12,7 @@ extension Transform {
     
     /// Defines the transform styles that can be used in ``MObject/transform(to:style:)``.
     ///
-    /// You can use the ``MObject/transform(to:transform:)`` to create a transform.
+    /// You can use the ``MObject/transform(to:style:)`` to create a transform.
     ///
     /// - ``Style/matchShapes``
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Transform_matchShapes.mov)

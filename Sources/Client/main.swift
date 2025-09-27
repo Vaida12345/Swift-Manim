@@ -10,15 +10,9 @@ import Foundation
 
 
 try await withManim { scene in
-    let dest = MathTex("3", "^2", "+", "4", "^2", "=", "5", "^2")
-    dest.move(to: [0, -1])
-    
-    withAnimation {
-        MathTex("a", "^2", "+", "b", "^2", "=", "c", "^2")
-            .transform(to: dest, style: .matchTex)
-    }
-     
-    scene.sleep()
+    let point: Point = [2, 2]
+    let dot = Dot(at: point)
+    scene.add(dot)
 } configuration: {
     $0.preview = false
 }

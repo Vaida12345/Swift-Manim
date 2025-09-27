@@ -9,6 +9,11 @@ import PythonKit
 
 
 /// A point in 2D / 3D plane.
+///
+/// You can use an array to represent a point
+/// ```swift
+/// let point: Point = [2, 2]
+/// ```
 @MainActor
 public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConvertible, @MainActor ConvertibleFromPython {
     

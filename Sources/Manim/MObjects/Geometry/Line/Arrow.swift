@@ -27,7 +27,6 @@ public class Arrow: Line {
     ///   - width: The stroke width.
     ///   - color: The stroke color.
     ///   - padding: The paddings between the line and `start`, `end`.
-    ///   - shape: The shape of the line, `straight` by default.
     ///   - tip: The tip shape
     public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangleFilled) {
         super.init(manim.Arrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip))
