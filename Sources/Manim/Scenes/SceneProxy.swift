@@ -62,6 +62,16 @@ public struct SceneProxy {
     public var height: Double {
         Double(manim.config.frame_height)!
     }
+    
+    /// Returns all mobjects which are not submobjects.
+    public var topLevelObjects: [MObject] {
+        scene.get_top_level_mobjects().map(MObject.init)
+    }
+    
+    /// The time since the start of the scene.
+    public var time: Double {
+        Double(scene.renderer.time)!
+    }
  
     /// Add the objects without animation.
     ///

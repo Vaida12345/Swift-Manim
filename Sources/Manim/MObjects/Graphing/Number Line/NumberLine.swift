@@ -89,3 +89,28 @@ public final class NumberLine: Line {
     }
     
 }
+
+
+extension NumberLine {
+    
+    /// Returns a float along the number line.
+    ///
+    /// - Parameters:
+    ///   - point: A point with respect to the scene.
+    ///
+    /// - Returns: A float representing a value along the number line.
+    public func convert(point: Point) -> Double {
+        Double(self.pythonObject.point_to_number(point))!
+    }
+    
+    /// Returns a point with respect to the scene.
+    ///
+    /// - Parameters:
+    ///   - number: The value to be transformed into a coordinate.
+    ///
+    /// - Returns: A point with respect to the scene’s coordinate system.
+    public func convert(number: Double) -> Point {
+        Point(self.pythonObject.number_to_point(number))!
+    }
+    
+}
