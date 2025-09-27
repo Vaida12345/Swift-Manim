@@ -18,7 +18,7 @@ withAnimation {
 }
 ```
 
-The blocks, or ``AttachedAnimation``s, comes with some declarations that can be attached to the blocks, for example, you can use ``Animation/duration(_:)`` to set the duration, or ``Animation/delay(_:)`` to set the delay.
+The blocks, or ``Animation``s, comes with some declarations that can be attached to the blocks, for example, you can use ``Animation/duration(_:)`` to set the duration, or ``Animation/delay(_:)`` to set the delay.
 ```swift
 withAnimation(in: .parallel) {
     dot.move(to: [0, -1])
@@ -27,7 +27,7 @@ withAnimation(in: .parallel) {
 }
 ```
 
-You can explore ``withAnimation(_:in:body:)`` for more options.
+You can explore ``withAnimation(_:in:body:)`` or ``Animation`` for more options.
 
 ### Lag Ratio
 
@@ -78,7 +78,7 @@ try await withManim { scene in
 You can freeze the scene using ``SceneProxy/sleep(for:)`` function.
 
 ```swift
-withAnimation(in: .parallel, lagRatio: 1) {
+withAnimation(in: .parallel) {
     originText.fill(.red)
     dot.fill(.blue)
 }
