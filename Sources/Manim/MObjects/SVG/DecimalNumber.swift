@@ -59,7 +59,7 @@ public class DecimalNumber: SVGMObject {
     ///   - unit: A unit string which can be placed to the right of the numerical values.
     ///   - fontSize: Size of the font.
     ///   - color: The color of the text.
-    public convenience init(_ number: ValueTracker<Double>, format: Format? = nil, unit: String? = nil, fontSize: Double = 48, color: Color = .white) {
+    public convenience init(_ number: Binding<Double>, format: Format? = nil, unit: String? = nil, fontSize: Double = 48, color: Color = .white) {
         self.init(number.wrappedValue, format: format, unit: unit, fontSize: fontSize, color: color)
         self.addUpdater { self.number = number.wrappedValue }
     }

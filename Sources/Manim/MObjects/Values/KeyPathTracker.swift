@@ -8,14 +8,14 @@
 import PythonKit
 
 
-final class KeyPathTracker<T>: ValueTracker<T> where T: PythonConvertible & ConvertibleFromPython {
+final class KeyPathTracker: ValueTracker {
     
-    let keyPath: ReferenceWritableKeyPath<MObject, T>
+    let keyPath: ReferenceWritableKeyPath<MObject, Double>
     
     let base: MObject
     
     
-    init(base: MObject, keyPath: ReferenceWritableKeyPath<MObject, T>) {
+    init(base: MObject, keyPath: ReferenceWritableKeyPath<MObject, Double>) {
         self.keyPath = keyPath
         self.base = base
         super.init(wrappedValue: base[keyPath: keyPath])
@@ -52,7 +52,7 @@ extension MObject {
     ///
     /// - Parameters:
     ///   - keyPath: The key path of the property to be tracked.
-    public func track<T>(_ keyPath: ReferenceWritableKeyPath<MObject, T>) -> ValueTracker<T> where T: PythonConvertible & ConvertibleFromPython {
+    public func track(_ keyPath: ReferenceWritableKeyPath<MObject, Double>) -> ValueTracker {
         KeyPathTracker(base: self, keyPath: keyPath)
     }
     

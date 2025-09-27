@@ -97,27 +97,6 @@ extension Transformable {
         return AttachedAnimation(base: self._transformable, closure: closure)
     }
     
-    
-    /// Move `self` below `target`.
-    ///
-    /// ```swift
-    /// let dot = Dot()
-    /// let rect = Rectangle(width: 4, height: 2)
-    ///
-    /// withAnimation {
-    ///     dot.move(leftOf: rect)
-    ///     dot.move(above: rect)
-    ///     dot.move(rightOf: rect)
-    ///     dot.move(below: rect)
-    /// }
-    /// ```
-    ///
-    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
-    @discardableResult
-    public func move(below target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .bottom, padding: padding)
-    }
-    
     /// Move `self` below `target`.
     ///
     /// ```swift
@@ -136,26 +115,6 @@ extension Transformable {
     @discardableResult
     public func move(below target: MObject, padding: Double = 0.25) -> AttachedAnimation {
         self.move(nextTo: target, placing: .bottom, padding: padding)
-    }
-    
-    /// Move `self` above `target`.
-    ///
-    /// ```swift
-    /// let dot = Dot()
-    /// let rect = Rectangle(width: 4, height: 2)
-    ///
-    /// withAnimation {
-    ///     dot.move(leftOf: rect)
-    ///     dot.move(above: rect)
-    ///     dot.move(rightOf: rect)
-    ///     dot.move(below: rect)
-    /// }
-    /// ```
-    ///
-    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
-    @discardableResult
-    public func move(above target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .top, padding: padding)
     }
     
     /// Move `self` above `target`.
@@ -194,48 +153,8 @@ extension Transformable {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
     @discardableResult
-    public func move(leftOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .left, padding: padding)
-    }
-    
-    /// Move `self` to the left of `target`.
-    ///
-    /// ```swift
-    /// let dot = Dot()
-    /// let rect = Rectangle(width: 4, height: 2)
-    ///
-    /// withAnimation {
-    ///     dot.move(leftOf: rect)
-    ///     dot.move(above: rect)
-    ///     dot.move(rightOf: rect)
-    ///     dot.move(below: rect)
-    /// }
-    /// ```
-    ///
-    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
-    @discardableResult
     public func move(leftOf target: MObject, padding: Double = 0.25) -> AttachedAnimation {
         self.move(nextTo: target, placing: .left, padding: padding)
-    }
-    
-    /// Move `self` to the right of `target`.
-    ///
-    /// ```swift
-    /// let dot = Dot()
-    /// let rect = Rectangle(width: 4, height: 2)
-    ///
-    /// withAnimation {
-    ///     dot.move(leftOf: rect)
-    ///     dot.move(above: rect)
-    ///     dot.move(rightOf: rect)
-    ///     dot.move(below: rect)
-    /// }
-    /// ```
-    ///
-    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
-    @discardableResult
-    public func move(rightOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
-        self.move(nextTo: target, placing: .right, padding: padding)
     }
     
     /// Move `self` to the right of `target`.
@@ -348,6 +267,28 @@ extension Transformable {
     @discardableResult
     public func flip(axis: Axis) -> AttachedAnimation {
         AttachedAnimation(base: self._transformable, closure: Closure("flip", [("", axis)]))
+    }
+    
+}
+
+
+extension MObject {
+    
+    /// Moves to the given point.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// let dot2 = Dot(at: [2, 0])
+    ///
+    /// withAnimation {
+    ///     dot.move(to: dot2.center)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_to.mov)
+    @discardableResult
+    public func move(to target: Binding<Point>, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
+        self.addUpdater(self.move(to: target.wrappedValue, alignedEdges: alignedEdges, coordinateMask: coordinateMask))
     }
     
 }

@@ -41,23 +41,28 @@ import PythonKit
 ///
 /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/track.mov)
 @propertyWrapper
-public class ValueTracker<T>: MObject where T: PythonConvertible & ConvertibleFromPython {
+public class ValueTracker: Binding<Double> { // Python `ValueTracker` is always Double.
     
-    public var wrappedValue: T {
-        get { T(self.pythonObject.get_value())! }
+    /// The underlying value.
+    public override var wrappedValue: Double {
+        get { Double(self.pythonObject.get_value())! }
         set { self.pythonObject.set_value(newValue) }
     }
     
-    public var projectedValue: ValueTracker<T> {
+    /// Swift Syntax suger.
+    ///
+    /// Use `$wrappedValue` to access `self`.
+    public override var projectedValue: ValueTracker {
         self
     }
     
-    public init(wrappedValue value: T) {
+    /// Creates a value tracker by providing an initial value.
+    public init(wrappedValue value: Double) {
         let object = manim.ValueTracker(value)
         super.init(object)
     }
     
-    required public init(_ pythonObject: PythonObject) {
+    required init(_ pythonObject: PythonObject) {
         super.init(pythonObject)
     }
     
@@ -74,7 +79,7 @@ extension ValueTracker {
 }
 
 
-extension ValueTracker where T == Double {
+extension ValueTracker {
     
     @discardableResult
     public static func += (lhs: ValueTracker, rhs: Double) -> AttachedAnimation {

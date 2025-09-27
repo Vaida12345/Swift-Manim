@@ -116,9 +116,7 @@ let dot = Dot()
 let numberLine = NumberLine(range: Range(0...5))
 scene.add(VStack(numberLine, number), dot)
 
-dot.addUpdater {
-    dot.move(to: numberLine.convert(number: value))
-}
+dot.move(to: numberLine.convert(number: $value))
 withAnimation {
     $value.become(.pi)
 }

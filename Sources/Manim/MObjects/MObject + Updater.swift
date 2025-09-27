@@ -157,3 +157,13 @@ extension MObject {
     }
     
 }
+
+
+extension MObject {
+    
+    func addUpdater(_ closure: @autoclosure @escaping () -> AttachedAnimation) -> AttachedAnimation {
+        self.addUpdater { let _ = closure() } // ignores the returned animation.
+        return closure()
+    }
+    
+}

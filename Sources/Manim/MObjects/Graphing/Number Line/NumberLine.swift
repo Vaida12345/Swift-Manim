@@ -114,3 +114,36 @@ extension NumberLine {
     }
     
 }
+
+
+extension NumberLine {
+    
+    /// Returns a float along the number line.
+    ///
+    /// - Parameters:
+    ///   - point: A point with respect to the scene.
+    ///
+    /// - Returns: A float representing a value along the number line.
+    public func convert(point: Binding<Point>) -> Binding<Double> {
+        Binding {
+            self.convert(point: point.wrappedValue)
+        } set: { newValue in
+            point.wrappedValue = self.convert(number: newValue)
+        }
+    }
+    
+    /// Returns a point with respect to the scene.
+    ///
+    /// - Parameters:
+    ///   - number: The value to be transformed into a coordinate.
+    ///
+    /// - Returns: A point with respect to the scene’s coordinate system.
+    public func convert(number: Binding<Double>) -> Binding<Point> {
+        Binding {
+            self.convert(number: number.wrappedValue)
+        } set: { newValue in
+            number.wrappedValue = self.convert(point: newValue)
+        }
+    }
+    
+}
