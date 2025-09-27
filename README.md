@@ -105,6 +105,25 @@ try await withManim { scene in
 } 
 ```
 
+### NumberLine
+
+![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/DecimalNumber.mov)
+
+```swift
+@ValueTracker var value = 0.0
+let number = DecimalNumber($value, format: .precision(fractionLength: 4))
+let dot = Dot()
+let numberLine = NumberLine(range: Range(0...5))
+scene.add(VStack(numberLine, number), dot)
+
+dot.addUpdater {
+    dot.move(to: numberLine.convert(number: value))
+}
+withAnimation {
+    $value.become(.pi)
+}
+```
+
 ### Matrix Multiplication
 
 [See Here](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/matmul.md)

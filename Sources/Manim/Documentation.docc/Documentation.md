@@ -9,23 +9,20 @@ A Swift wrapper to Manim, framework for creating beautiful mathematical animatio
 This package uses the engine of [ManimCE](https://docs.manim.community/en/stable/index.html) and [PythonKit](https://github.com/pvieito/PythonKit) for Python interoperation.
 
 
-![Example](VectorArrow)
-
-With Swift-native API.
+![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/DecimalNumber.mov)
 
 ```swift
-try await withManim { scene in
-    let dot = Dot(color: .blue.opacity(0.5))
-    let arrow = Vector([2, 2])
-    let numberPlane = NumberPlane()
+@ValueTracker var value = 0.0
+let number = DecimalNumber($value, format: .precision(fractionLength: 4))
+let dot = Dot()
+let numberLine = NumberLine(range: Range(0...5))
+scene.add(VStack(numberLine, number), dot)
 
-    let originText = Text("(0, 0)")
-    originText.move(below: dot)
-
-    let tipText = Text("(2, 2)")
-    tipText.move(rightOf: arrow.end)
-
-    scene.add(dot, arrow, numberPlane, originText, tipText)
+dot.addUpdater {
+    dot.move(to: numberLine.convert(number: value))
+}
+withAnimation {
+    $value.become(.pi)
 }
 ```
 
