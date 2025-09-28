@@ -10,22 +10,12 @@ import Foundation
 
 
 try await withManim { scene in
-    let dot = Dot()
-    let plane = NumberPlane(margin: 2)
+    let line = Line(from: [-2, -1], to: [2, 1], color: .orange)
     
-    let text = Text("(\(dot.x), \(dot.y))")
-    text.addUpdater(initial: true) {
-        text.become(Text("(\(dot.x.formatted(.number.precision(2))), \(dot.y.formatted(.number.precision(2))))"))
-        text.move(rightOf: dot)
-    }
-    scene.add(plane, dot, text)
+    let brace = Brace(line, direction: .angle(line.angle.rotated(by: .degrees(90))))
+    let text = brace.label(math: "x-x_1")
     
-    withAnimation(.linear, in: .parallel) {
-        dot.move(to: [1, 1])
-        scene.camera.move(to: [1, 1])
-    }
-    
-    scene.sleep()
+    scene.add(line, brace, text)
 } configuration: {
     $0.preview = false
     $0.quality = .high

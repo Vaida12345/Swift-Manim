@@ -7,7 +7,6 @@
 
 import OSLog
 import PythonKit
-import SwiftUI
 
 
 /// A line.
@@ -45,6 +44,27 @@ public class Line: TipableVMObject {
 
 
 extension Line {
+    
+    /// The angle between the line and the x-axis.
+    ///
+    /// ```swift
+    /// let vector = Vector([1, 1])
+    /// vector.angle // .degree(45.0)
+    /// ```
+    public var angle: Angle {
+        Angle(self.pythonObject.get_angle())!
+    }
+    
+    /// Returns the slope of the line.
+    ///
+    ///
+    /// ```swift
+    /// let vector = Vector([1, 1])
+    /// vector.gradient // 1
+    /// ```
+    public var gradient: Double {
+        Double(self.pythonObject.get_slope())!
+    }
     
     /// Moves the ``MObject/start`` and ``MObject/end``.
     ///

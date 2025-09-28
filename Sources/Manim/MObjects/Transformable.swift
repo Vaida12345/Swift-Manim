@@ -5,7 +5,6 @@
 //  Created by Vaida on 2025-09-20.
 //
 
-import SwiftUI
 import PythonKit
 
 
@@ -289,6 +288,91 @@ extension MObject {
     @discardableResult
     public func move(to target: Projection<Point>, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
         self.addUpdater(self.move(to: target.wrappedValue, alignedEdges: alignedEdges, coordinateMask: coordinateMask))
+    }
+    
+}
+
+
+extension Transformable {
+    
+    /// Move `self` below `target`.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     dot.move(leftOf: rect)
+    ///     dot.move(above: rect)
+    ///     dot.move(rightOf: rect)
+    ///     dot.move(below: rect)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
+    @discardableResult
+    public func move(below target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .bottom, padding: padding)
+    }
+    
+    /// Move `self` above `target`.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     dot.move(leftOf: rect)
+    ///     dot.move(above: rect)
+    ///     dot.move(rightOf: rect)
+    ///     dot.move(below: rect)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
+    @discardableResult
+    public func move(above target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .top, padding: padding)
+    }
+    
+    /// Move `self` to the left of `target`.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     dot.move(leftOf: rect)
+    ///     dot.move(above: rect)
+    ///     dot.move(rightOf: rect)
+    ///     dot.move(below: rect)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
+    @discardableResult
+    public func move(leftOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .left, padding: padding)
+    }
+    
+    /// Move `self` to the right of `target`.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     dot.move(leftOf: rect)
+    ///     dot.move(above: rect)
+    ///     dot.move(rightOf: rect)
+    ///     dot.move(below: rect)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
+    @discardableResult
+    public func move(rightOf target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: .right, padding: padding)
     }
     
 }

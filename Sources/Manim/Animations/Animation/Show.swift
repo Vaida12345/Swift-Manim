@@ -5,7 +5,6 @@
 //  Created by Vaida on 2023/10/8.
 //
 
-import SwiftUI
 import PythonKit
 
 

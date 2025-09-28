@@ -6,7 +6,6 @@
 //
 
 import PythonKit
-import SwiftUI
 
 
 /// A regular polygram without the intersecting lines.

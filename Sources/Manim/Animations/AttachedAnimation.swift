@@ -6,7 +6,6 @@
 //
 
 import PythonKit
-import SwiftUI
 
 
 /// An animation that is attached to an object.

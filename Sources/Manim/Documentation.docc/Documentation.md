@@ -12,20 +12,28 @@ This package uses the engine of [ManimCE](https://docs.manim.community/en/stable
 ![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/DecimalNumber.mov)
 
 ```swift
-@ValueTracker var value = 0.0
-let number = DecimalNumber($value, format: .precision(fractionLength: 4))
-let dot = Dot()
-let numberLine = NumberLine(range: Range(0...4))
-scene.add(VStack(numberLine, number), dot)
+import Manim
+import Foundation
 
-dot.move(to: numberLine.convert(number: $value))
-withAnimation {
-    $value.become(.pi)
-}
+try await withManim { scene in
+    @ValueTracker var value = 0.0
+    let number = DecimalNumber($value, format: .precision(fractionLength: 4))
+    let dot = Dot()
+    let numberLine = NumberLine(range: Range(0...4))
+    scene.add(VStack(numberLine, number), dot)
 
-scene.sleep()
-withAnimation {
-    $value.become(0)
+    dot.move(to: numberLine.convert(number: $value))
+    withAnimation {
+        $value.become(.pi)
+    }
+
+    scene.sleep()
+    withAnimation {
+        $value.become(0)
+    }
+} configuration: {
+    $0.preview = false
+    $0.quality = .high
 }
 ```
 

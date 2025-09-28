@@ -6,7 +6,6 @@
 //
 
 import PythonKit
-import SwiftUI
 
 
 extension MObject {

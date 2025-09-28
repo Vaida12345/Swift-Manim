@@ -6,7 +6,6 @@
 //
 
 import PythonKit
-import SwiftUI
 
 
 /// A Polygram with regularly spaced vertices.

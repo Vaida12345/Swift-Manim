@@ -12,29 +12,6 @@ To use this package, please make sure you have [ManimCE](https://docs.manim.comm
 
 Examples of using Manim.
 
-### VectorArrow
-
-![Example](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Resources/VectorArrow.png)
-
-```swift
-import Manim
-
-try await withManim { scene in
-    let dot = Dot(color: .blue.opacity(0.5))
-    let arrow = Vector([2, 2])
-    let numberPlane = NumberPlane()
-    
-    let originText = Text("(0, 0)")
-    originText.move(below: dot)
-    
-    let tipText = Text("(2, 2)")
-    tipText.move(rightOf: arrow.end)
-    
-    scene.add(dot, arrow, numberPlane, originText, tipText)
-}
-```
-
-
 ### Moving Dots
 
 ![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/MovingDots.mov)
@@ -90,9 +67,9 @@ withAnimation {
 }
 ```
 
-### Matrix Multiplication
+### More Examples
 
-[See Here](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/matmul.md)
+See [Gallery](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Gallery.md)
 
 
 ## Getting Started

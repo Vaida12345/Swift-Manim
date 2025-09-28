@@ -9,17 +9,17 @@ Examples of using Manim.
 
 ```swift
 try await withManim { scene in
-    let dot = Dot(color: .blue.opacity(0.5))
+    let dot = Dot()
     let arrow = Vector([2, 2])
     let numberPlane = NumberPlane()
-
+    
     let originText = Text("(0, 0)")
     originText.move(below: dot)
-
+    
     let tipText = Text("(2, 2)")
     tipText.move(rightOf: arrow.end)
-
-    scene.add(dot, arrow, numberPlane, originText, tipText)
+    
+    scene.add(numberPlane, dot, arrow, originText, tipText)
 }
 ```
 
@@ -144,6 +144,24 @@ withAnimation(.linear, in: .parallel) {
     dot.move(to: [1, 1])
     scene.camera.move(to: [1, 1])
 }
+```
+
+## Brace
+![Preview](Gallery_Brace)
+
+```swift
+let dot1 = Dot(at: [-2, -1])
+let dot2 = Dot(at: [ 2,  1])
+
+let line = Line(from: dot1.center, to: dot2.center, color: .orange)
+
+let brace1 = Brace(line)
+let brace1Text = brace1.label("Horizontal distance")
+
+let brace2 = Brace(line, direction: .angle(line.angle.rotated(by: .degrees(90))))
+let brace2Text = brace2.label(math: "x-x_1")
+
+scene.add(line, dot1, brace1, brace1Text, dot2, brace2, brace2Text)
 ```
 
 ## Matmul

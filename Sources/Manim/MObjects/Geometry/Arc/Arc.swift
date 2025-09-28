@@ -7,7 +7,6 @@
 
 import Foundation
 import PythonKit
-import SwiftUI
 
 
 /// A circular arc.
