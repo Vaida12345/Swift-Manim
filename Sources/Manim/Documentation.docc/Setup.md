@@ -16,7 +16,7 @@ Run ``withManim(scene:configuration:)``, and observe the logs. You should be abl
 ```sh
 Using Python 3.13.7 (main, Aug 14 2025, 11:12:11) [Clang 17.0.0 (clang-1700.3.19.1)]
 ```
-If it runs into errors, you specify the python `dylib` path using ``ConfigurationProxy/pythonLibraryPath``.
+If it runs into errors, you need to specify a python `dylib` path using ``ConfigurationProxy/pythonLibraryPath``.
 
 ```swift
 try await withManim {
@@ -56,7 +56,7 @@ $ pip install manim numpy
 
 ### Setup Latex
 
-By default, `Swift-Manim` uses `latex` located at the following:
+By default, `Swift-Manim` uses `latex` located at
 ```
 /Library/TeX/texbin/latex
 ```

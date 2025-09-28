@@ -13,7 +13,6 @@ This package uses the engine of [ManimCE](https://docs.manim.community/en/stable
 
 ```swift
 import Manim
-import Foundation
 
 try await withManim { scene in
     @ValueTracker var value = 0.0

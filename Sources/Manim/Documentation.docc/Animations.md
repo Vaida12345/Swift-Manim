@@ -10,7 +10,7 @@ Most methods that implies animation could be animated. We can use the `withAnima
 
 ```swift
 // not animated
-originText.align(.down, to: dot)
+originText.move(below: dot)
 
 // animated
 withAnimation {
