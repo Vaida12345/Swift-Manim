@@ -16,12 +16,9 @@ import PythonKit
 ///
 /// ```swift
 /// withAnimation {
-///     dot.move(to: [1, 1])
 ///     scene.camera.move(to: [1, 1])
 /// }
 /// ```
-///
-/// In the example above, the dot remains at the center of the screen.
 public final class MovingCamera: Transformable {
     
     var pythonObject: PythonObject

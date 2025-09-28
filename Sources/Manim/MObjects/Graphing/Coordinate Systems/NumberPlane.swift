@@ -18,10 +18,6 @@ import PythonKit
 /// - SeeAlso: ``Axes``
 public class NumberPlane: Axes {
     
-    public convenience init(domain: ClosedRange<Double>, range: ClosedRange<Double>) {
-        self.init(domain: Range(domain), range: Range(range))
-    }
-    
     /// Creates a set of axes.
     ///
     /// Note that the axes coordinate space is the same as global coordinate space.
@@ -29,12 +25,13 @@ public class NumberPlane: Axes {
     /// - Parameters:
     ///   - domain: The `(x_min, x_max, x_step)` values of the x-axis.
     ///   - range: The `(y_min, y_max, y_step)` values of the y-axis.
-    public override init(domain: Range? = nil, range: Range? = nil) {
+    ///   - margin: The margin outside the initial frame. Set a `margin` greater than `0` to move the camera around.
+    public init(domain: Range? = nil, range: Range? = nil, margin: Double = 0) {
         let args: Closure.Arguments = [
-            ("x_range", domain),
-            ("y_range", range),
-            ("x_length", manim.config.frame_width),
-            ("y_length", manim.config.frame_height)
+            ("x_range", Range(domain?.min ?? -Double(manim.config.frame_width)!/2, domain?.max ?? Double(manim.config.frame_width)!/2)._expandBothSides(by: margin)),
+            ("y_range", Range(range?.min ?? -Double(manim.config.frame_height)!/2, range?.max ?? Double(manim.config.frame_height)!/2)._expandBothSides(by: margin)),
+            ("x_length", Double(manim.config.frame_width)! + margin * 2),
+            ("y_length", Double(manim.config.frame_height)! + margin * 2)
         ]
         
         super.init(manim.NumberPlane.dynamicallyCall(withKeywordArguments: args))

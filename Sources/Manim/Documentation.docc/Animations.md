@@ -41,7 +41,6 @@ Please refer to the video for details.
     }
     @Tab("Source Code") {
         ```swift
-        try await withManim { scene in
         let ratios = [0, 0.1, 0.5, 1]
         
         // Create dot groups
@@ -52,7 +51,7 @@ Please refer to the video for details.
         
         // Label groups
         let label = Text("lagRatio", fontSize: 36)
-        label.move(above: group, padding: 1.5)
+        label.move(above: groups, padding: 1.5)
         label.show()
         
         for (group, ratio) in zip(groups.children, ratios) {
@@ -61,11 +60,11 @@ Please refer to the video for details.
             text.show()
         }
         
-        // Animate groups with different lag_ratios
+        // Animate groups with different lagRatios
         withAnimation {
             for (group, ratio) in zip(groups.children, ratios) {
                 group.shift(by: [0, -2, 0])
-                .lagRat io(ratio)
+                    .lagRatio(ratio)
             }
         }
         
@@ -73,8 +72,7 @@ Please refer to the video for details.
             groups.shift(by: [0, 2, 0])
                 .lagRatio(0.1)
                 .duration(2)
-            }
-        } 
+        }
         ```
     }
 }

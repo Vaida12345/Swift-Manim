@@ -10,20 +10,19 @@ import Foundation
 
 
 try await withManim { scene in
-    @ValueTracker var value = 0.0
-    let number = DecimalNumber($value, format: .precision(fractionLength: 4))
     let dot = Dot()
-    let numberLine = NumberLine(range: Range(0...4))
-    scene.add(VStack(numberLine, number), dot)
+    let plane = NumberPlane(margin: 2)
     
-    dot.move(to: numberLine.convert(number: $value))
-    withAnimation {
-        $value.become(.pi)
+    let text = Text("(\(dot.x), \(dot.y))")
+    text.addUpdater(initial: true) {
+        text.become(Text("(\(dot.x.formatted(.number.precision(2))), \(dot.y.formatted(.number.precision(2))))"))
+        text.move(rightOf: dot)
     }
+    scene.add(plane, dot, text)
     
-    scene.sleep()
-    withAnimation {
-        $value.become(0)
+    withAnimation(.linear, in: .parallel) {
+        dot.move(to: [1, 1])
+        scene.camera.move(to: [1, 1])
     }
     
     scene.sleep()

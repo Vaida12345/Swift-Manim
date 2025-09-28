@@ -26,17 +26,6 @@ public class Axes: Group {
     /// Note that the axes coordinate space is the same as global coordinate space.
     ///
     /// - Parameters:
-    ///   - domain: The `(x_min, x_max)` values of the x-axis.
-    ///   - range: The `(y_min, y_max)` values of the y-axis.
-    public convenience init(domain: ClosedRange<Double>, range: ClosedRange<Double>) {
-        self.init(domain: Range(domain), range: Range(range))
-    }
-    
-    /// Creates a set of axes.
-    ///
-    /// Note that the axes coordinate space is the same as global coordinate space.
-    ///
-    /// - Parameters:
     ///   - domain: The `(x_min, x_max, x_step)` values of the x-axis.
     ///   - range: The `(y_min, y_max, y_step)` values of the y-axis.
     public init(domain: Range? = nil, range: Range? = nil) {

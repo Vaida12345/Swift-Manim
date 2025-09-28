@@ -59,9 +59,47 @@ try await withManim { scene in
 
 ## Different Lag Ratios
 
-![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mov)
-
-View source code in [animation.md](<doc:Animations>)
+@TabNavigator {
+    @Tab("Video") {
+        ![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mov)
+    }
+    @Tab("Source Code") {
+        ```swift
+        let ratios = [0, 0.1, 0.5, 1]
+        
+        // Create dot groups
+        let group = HStack(Dot(), Dot(), Dot(), Dot())
+        let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
+        
+        groups.show()
+        
+        // Label groups
+        let label = Text("lagRatio", fontSize: 36)
+        label.move(above: groups, padding: 1.5)
+        label.show()
+        
+        for (group, ratio) in zip(groups.children, ratios) {
+            let text = Text("\(ratio)", fontSize: 36)
+            text.move(above: group)
+            text.show()
+        }
+        
+        // Animate groups with different lagRatios
+        withAnimation {
+            for (group, ratio) in zip(groups.children, ratios) {
+                group.shift(by: [0, -2, 0])
+                    .lagRatio(ratio)
+            }
+        }
+        
+        withAnimation {
+            groups.shift(by: [0, 2, 0])
+                .lagRatio(0.1)
+                .duration(2)
+        }
+        ```
+    }
+}
 
 ## NumberLine
 
@@ -87,6 +125,29 @@ withAnimation {
 }
 ```
 
+## Scene Camera
+
+![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/scene_camera.mov)
+
+```swift
+let dot = Dot()
+let plane = NumberPlane(margin: 2)
+
+let text = Text("(\(dot.x), \(dot.y))")
+text.addUpdater(initial: true) {
+    text.become(Text("(\(dot.x.formatted(.number.precision(2))), \(dot.y.formatted(.number.precision(2))))"))
+    text.move(rightOf: dot)
+}
+scene.add(plane, dot, text)
+
+withAnimation(.linear, in: .parallel) {
+    dot.move(to: [1, 1])
+    scene.camera.move(to: [1, 1])
+}
+```
+
 ## Matmul
 
-<doc:matmul>
+![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/matmul.mov)
+
+[Source code](<doc:matmul>)

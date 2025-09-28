@@ -19,14 +19,24 @@ public struct SceneProxy {
     ///
     /// You can use the suite that comes with ``Transformable`` to move the camera.
     ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/scene_camera.mov)
+    ///
     /// ```swift
-    /// withAnimation {
+    /// let dot = Dot()
+    /// let plane = NumberPlane(margin: 2)
+    ///
+    /// let text = Text("(\(dot.x), \(dot.y))")
+    /// text.addUpdater(initial: true) {
+    ///     text.become(Text("(\(dot.x.formatted(.number.precision(2))), \(dot.y.formatted(.number.precision(2))))"))
+    ///     text.move(rightOf: dot)
+    /// }
+    /// scene.add(plane, dot, text)
+    ///
+    /// withAnimation(.linear, in: .parallel) {
     ///     dot.move(to: [1, 1])
     ///     scene.camera.move(to: [1, 1])
     /// }
     /// ```
-    ///
-    /// In the example above, the dot remains at the center of the screen.
     public let camera: MovingCamera
     
     

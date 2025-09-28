@@ -59,5 +59,9 @@ public struct Range: @MainActor PythonConvertible {
         Range(self.min, self.max + 1, step: self.step)
     }
     
+    func _expandBothSides(by amount: Double) -> Range {
+        Range(self.min - amount, self.max + amount, step: self.step)
+    }
+    
 }
     
