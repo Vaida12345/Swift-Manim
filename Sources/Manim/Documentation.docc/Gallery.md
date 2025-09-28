@@ -5,7 +5,7 @@ Examples of using Manim.
 
 ## VectorArrow
 
-![image](VectorArrow)
+![image](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/VectorArrow.png)
 
 ```swift
 try await withManim { scene in
@@ -147,7 +147,7 @@ withAnimation(.linear, in: .parallel) {
 ```
 
 ## Brace
-![Preview](Gallery_Brace)
+![image](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Gallery_Brace.png)
 
 ```swift
 let dot1 = Dot(at: [-2, -1])

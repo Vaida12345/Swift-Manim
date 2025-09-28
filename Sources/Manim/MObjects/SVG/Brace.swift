@@ -27,6 +27,7 @@ public final class Brace: VMObject {
     /// - Parameters:
     ///   - object: The object that is braced.
     ///   - direction: Passing a direction vector determines the direction from which the brace is drawn.
+    ///   - color: The color of the brace.
     public init(_ object: MObject, direction: Direction = .bottom, color: Color = .white) {
         super.init(manim.Brace(object.pythonObject, direction: direction, color: color))
     }
