@@ -40,7 +40,6 @@ try await withManim { scene in
         y += 2
     }
 } configuration: {
-    $0.preview = false
     $0.quality = .high
 }
 ```

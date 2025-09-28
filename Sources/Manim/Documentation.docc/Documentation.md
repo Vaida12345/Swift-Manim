@@ -32,7 +32,6 @@ try await withManim { scene in
         $value.become(0)
     }
 } configuration: {
-    $0.preview = false
     $0.quality = .high
 }
 ```
