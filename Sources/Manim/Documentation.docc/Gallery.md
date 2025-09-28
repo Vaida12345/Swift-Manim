@@ -36,21 +36,24 @@ try await withManim { scene in
     scene.arrange(dot1, dot2, direction: .right)
 
     let line = Line(from: dot1.center, to: dot2.center, color: .red)
-    line.addUpdater(initialCall: true) {
-        line.moveTo(start: dot1.center, end: dot2.center)
-    }
+    line.moveTo(start: dot1.track(\.center), end: dot2.track(\.center))
 
-    scene.add(dot1, dot2, line)
+    scene.add(line, dot1, dot2)
 
     let x = dot1.track(\.x)
     let y = dot2.track(\.y)
 
     withAnimation {
         x += 4
-        y += 4
+    }
+
+    withAnimation(in: .parallel) {
+        x.become(-4)
+        y += 2
     }
 } configuration: {
     $0.preview = false
+    $0.quality = .high
 }
 ```
 
@@ -76,6 +79,11 @@ dot.addUpdater {
 }
 withAnimation {
     $value.become(.pi)
+}
+
+scene.sleep()
+withAnimation {
+    $value.become(0)
 }
 ```
 

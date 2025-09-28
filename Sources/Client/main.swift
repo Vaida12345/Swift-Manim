@@ -22,6 +22,12 @@ try await withManim { scene in
     }
     
     scene.sleep()
+    withAnimation {
+        $value.become(0)
+    }
+    
+    scene.sleep()
 } configuration: {
     $0.preview = false
+    $0.quality = .high
 }

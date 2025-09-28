@@ -37,7 +37,8 @@
 ### Updater
 - ``MObject/addUpdater(index:initial:handler:)``
 - ``MObject/Updater``
-- ``MObject/track(_:)``
+- ``MObject/track(_:)->ValueTracker``
+- ``MObject/track(_:)->Projection<T>``
 - ``MObject/bind(_:to:)``
 
 ### Color

@@ -22,6 +22,11 @@ dot.move(to: numberLine.convert(number: $value))
 withAnimation {
     $value.become(.pi)
 }
+
+scene.sleep()
+withAnimation {
+    $value.become(0)
+}
 ```
 
 ## Topics

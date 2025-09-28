@@ -31,47 +31,53 @@ You can explore ``withAnimation(_:in:body:)`` or ``Animation`` for more options.
 
 ### Lag Ratio
 
+You can specify the lag ratio to create an asynchronous effect of animating ``MObject/children``. 
+
 Please refer to the video for details.
 
-![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mov)
-
-```swift
-try await withManim { scene in
-    let ratios = [0, 0.1, 0.5, 1]
-
-    // Create dot groups
-    let group = HStack(Dot(), Dot(), Dot(), Dot())
-    let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
-
-    groups.show()
-
-    // Label groups
-    let label = Text("lagRatio", fontSize: 36)
-    label.move(above: group, padding: 1.5)
-    label.show()
-
-    for (group, ratio) in zip(groups.children, ratios) {
-        let text = Text("\(ratio)", fontSize: 36)
-        text.move(above: group)
-        text.show()
+@TabNavigator {
+    @Tab("Video") {
+        ![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/lagRatio.mov)
     }
-
-    // Animate groups with different lag_ratios
-    withAnimation {
+    @Tab("Source Code") {
+        ```swift
+        try await withManim { scene in
+        let ratios = [0, 0.1, 0.5, 1]
+        
+        // Create dot groups
+        let group = HStack(Dot(), Dot(), Dot(), Dot())
+        let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
+        
+        groups.show()
+        
+        // Label groups
+        let label = Text("lagRatio", fontSize: 36)
+        label.move(above: group, padding: 1.5)
+        label.show()
+        
         for (group, ratio) in zip(groups.children, ratios) {
-            group.shift(by: [0, -2, 0])
-                .lagRatio(ratio)
+            let text = Text("\(ratio)", fontSize: 36)
+            text.move(above: group)
+            text.show()
         }
+        
+        // Animate groups with different lag_ratios
+        withAnimation {
+            for (group, ratio) in zip(groups.children, ratios) {
+                group.shift(by: [0, -2, 0])
+                .lagRat io(ratio)
+            }
+        }
+        
+        withAnimation {
+            groups.shift(by: [0, 2, 0])
+                .lagRatio(0.1)
+                .duration(2)
+            }
+        } 
+        ```
     }
-
-    withAnimation {
-        groups.shift(by: [0, 2, 0])
-            .lagRatio(0.1)
-            .duration(2)
-    }
-} 
-```
-
+}
 
 ## Wait
 
@@ -84,12 +90,12 @@ withAnimation(in: .parallel) {
 }
 
 // Let's wait 2 seconds.
-self.wait(2)
+self.wait(for: .seconds(2))
 ```
 
 ## Binding
 
-It is also possible to [observe](``MObject/addUpdater(index:initialCall:handler:)``) changes.
+It is also possible to synchronize changes using ``MObject/track(_:)->Projection<T>`` or ``MObject/bind(_:to:)``.
 
 ```swift
 let dot1 = Dot(at: [0, 2], color: .blue)
@@ -104,13 +110,16 @@ withAnimation {
 }
 ```
 
-In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinate of `dot2`, and `dot1` moves as `dot2` changes its `x`-coordinate.
+![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/bind.mov)
 
 ## Topics
 
 ### Functions
 - ``withAnimation(_:in:body:)``
-- ``MObject/track(_:)``
+
+### Binding
+- ``MObject/track(_:)->ValueTracker``
+- ``MObject/track(_:)->Projection<T>``
 - ``MObject/bind(_:to:)``
 
 ### MObjects
@@ -119,6 +128,7 @@ In the example above, the `x`-coordinate of `dot1` is bound to the `x`-coordinat
 
 ### Structures
 - ``ValueTracker``
+- ``Projection``
 - ``Animation``
 - ``AttachedAnimation``
 - ``WrappedAnimation``

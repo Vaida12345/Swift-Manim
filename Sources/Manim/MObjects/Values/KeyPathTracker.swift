@@ -36,7 +36,7 @@ extension MObject {
     
     /// Returns a ``ValueTracker`` that is linked to `keyPath` of `self`.
     ///
-    /// Even better, you can use ``MObject/track(_:)`` that comes with syncing.
+    /// Even better, you can use ``MObject/track(_:)->ValueTracker`` that comes with syncing.
     ///
     /// ```swift
     /// let dot = Dot(color: .blue)

@@ -27,7 +27,7 @@ import PythonKit
 /// }
 /// ```
 ///
-/// Even better, you can use ``MObject/track(_:)`` that comes with syncing.
+/// Even better, you can use ``MObject/track(_:)->ValueTracker`` that comes with syncing.
 ///
 /// ```swift
 /// let dot = Dot(color: .blue)
@@ -41,7 +41,7 @@ import PythonKit
 ///
 /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/track.mov)
 @propertyWrapper
-public class ValueTracker: Binding<Double> { // Python `ValueTracker` is always Double.
+public class ValueTracker: Projection<Double> { // Python `ValueTracker` is always Double.
     
     /// The underlying value.
     public override var wrappedValue: Double {

@@ -47,62 +47,25 @@ try await withManim { scene in
     scene.arrange(dot1, dot2, direction: .right)
     
     let line = Line(from: dot1.center, to: dot2.center, color: .red)
-    line.addUpdater(initialCall: true) {
-        line.moveTo(start: dot1.center, end: dot2.center)
-    }
+    line.moveTo(start: dot1.track(\.center), end: dot2.track(\.center))
     
-    scene.add(dot1, dot2, line)
+    scene.add(line, dot1, dot2)
     
     let x = dot1.track(\.x)
     let y = dot2.track(\.y)
     
-    withAnimation {
+     withAnimation {
         x += 4
-        y += 4
+    }
+    
+    withAnimation(in: .parallel) {
+        x.become(-4)
+        y += 2
     }
 } configuration: {
     $0.preview = false
+    $0.quality = .high
 }
-```
-
-### Different Lag Ratios
-![Video](https://github.com/user-attachments/assets/8f91cfa7-e8ea-4c97-b3c5-36362ca183d2)
-
-```swift
-try await withManim { scene in
-    let ratios = [0, 0.1, 0.5, 1]
-    
-    // Create dot groups
-    let group = HStack(Dot(), Dot(), Dot(), Dot())
-    let groups = HStack(spacing: 1, group, group.copied(), group.copied(), group.copied())
-    
-    groups.show()
-    
-    // Label groups
-    let label = Text("lagRatio", fontSize: 36)
-    label.move(above: group, padding: 1.5)
-    label.show()
-    
-    for (group, ratio) in zip(groups.children, ratios) {
-        let text = Text("\(ratio)", fontSize: 36)
-        text.move(above: group)
-        text.show()
-    }
-    
-    // Animate groups with different lag_ratios
-    withAnimation {
-        for (group, ratio) in zip(groups.children, ratios) {
-            group.shift(by: [0, -2, 0])
-                .lagRatio(ratio)
-        }
-    }
-    
-    withAnimation {
-        groups.shift(by: [0, 2, 0])
-            .lagRatio(0.1)
-            .duration(2)
-    }
-} 
 ```
 
 ### NumberLine
@@ -119,6 +82,11 @@ scene.add(VStack(numberLine, number), dot)
 dot.move(to: numberLine.convert(number: $value))
 withAnimation {
     $value.become(.pi)
+}
+
+scene.sleep()
+withAnimation {
+    $value.become(0)
 }
 ```
 

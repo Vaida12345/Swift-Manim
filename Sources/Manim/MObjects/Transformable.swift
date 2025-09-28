@@ -287,7 +287,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_to.mov)
     @discardableResult
-    public func move(to target: Binding<Point>, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
+    public func move(to target: Projection<Point>, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
         self.addUpdater(self.move(to: target.wrappedValue, alignedEdges: alignedEdges, coordinateMask: coordinateMask))
     }
     
