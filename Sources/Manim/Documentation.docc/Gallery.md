@@ -222,6 +222,32 @@ withAnimation {
 }
 ```
 
+## Moving Frame Box
+
+![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Moving_Frame_Box.mov)
+
+```swift
+let text = MathTex(
+    "\\frac{d}{dx}f(x)g(x)=","f(x)\\frac{d}{dx}g(x)","+",
+    "g(x)\\frac{d}{dx}f(x)"
+)
+
+let box1 = SurroundingRectangle(text.children[1], padding: 0.1)
+let box2 = SurroundingRectangle(text.children[3], padding: 0.1)
+
+withAnimation {
+    text.show(animation: .write)
+    box1.show(animation: .create)
+}
+
+scene.sleep()
+
+withAnimation {
+    box1.transform(to: box2, style: .replace)
+}
+
+scene.sleep()
+```
 ## Matmul
 
 ![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/matmul.mov)

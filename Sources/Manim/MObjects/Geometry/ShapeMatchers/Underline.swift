@@ -30,8 +30,8 @@ public final class Underline: Line {
     required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
-    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
-        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, defaultColor: Color = .white, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, defaultColor: defaultColor, builder)
     }
 }
 

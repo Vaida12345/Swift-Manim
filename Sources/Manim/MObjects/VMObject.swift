@@ -42,7 +42,7 @@ public class VMObject: @MainActor MObject {
         }
     }
     
-    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, defaultColor: Color = .white, _ builder: (inout Closure.Arguments) -> Void) {
         var closure = Closure(name)
         if let stroke, let strokeWidth, let fill {
             closure.append("stroke_color", stroke)
@@ -65,7 +65,7 @@ public class VMObject: @MainActor MObject {
         } else {
             // fall back to default
             assert(strokeWidth == nil, "These is a miss placed argument `strokeWidth`, please check your initializer.")
-            closure.append("stroke_color", Color.white)
+            closure.append("stroke_color", defaultColor)
             closure.append("stroke_opacity", 1)
             closure.append("stroke_width", strokeWidth ?? 4)
             closure.append("fill_color", Python.None)
@@ -87,6 +87,11 @@ public class VMObject: @MainActor MObject {
 
 
 extension VMObject {
+    
+    /// Create and return an identical deep copy of the object including all children.
+    public func copied() -> Self {
+        Self(_pythonObject: self._pythonObject.copy())
+    }
     
     /// The fill color of the object.
     public var fillColor: Color {

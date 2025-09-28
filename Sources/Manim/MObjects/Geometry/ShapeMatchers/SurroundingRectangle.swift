@@ -26,9 +26,10 @@ public class SurroundingRectangle: Rectangle {
     ///   - stroke: The color used for the shape's outline.
     ///   - strokeWidth: The width of the outline stroke, in points. The default stroke with is `4`.
     ///   - fill: The color used to fill the shape's interior.
-    public init(_ base: MObject, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
-        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
+    public init(_ base: MObject, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil, padding: Double = 0.25) {
+        super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill, defaultColor: .yellow) { arguments in
             arguments.insert("", base._pythonObject, at: 0)
+            arguments.append("buff", padding)
         }
     }
     
@@ -37,8 +38,8 @@ public class SurroundingRectangle: Rectangle {
     required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
-    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
-        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, builder)
+    required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, defaultColor: Color = .yellow, _ builder: (inout Closure.Arguments) -> Void) {
+        super.init(name, stroke: stroke, strokeWidth: strokeWidth, fill: fill, defaultColor: defaultColor, builder)
     }
     
 }

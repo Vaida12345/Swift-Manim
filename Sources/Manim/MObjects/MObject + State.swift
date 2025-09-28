@@ -28,7 +28,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/state_restore.mov)
     public func save() -> State {
-        State(parent: self, copy: self.copied())  // note: this is how it is implemented in Python.
+        State(parent: self, copy: self._pythonObject.copy())  // note: this is how it is implemented in Python.
     }
     
 }
@@ -56,7 +56,7 @@ public struct State {
     
     let parent: MObject
     
-    let copy: MObject
+    let copy: PythonObject
     
     /// Restores the saved state of `parent`
     ///
@@ -75,7 +75,11 @@ public struct State {
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/state_restore.mov)
     @discardableResult
     public func restore() -> AttachedAnimation {
-        parent.become(copy) // note: this is how it is implemented in Python.
+        // note: this is how it is implemented in Python.
+        var closure = Closure("become")
+        closure.append("", copy)
+        
+        return AttachedAnimation(base: self.parent, closure: closure)
     }
     
-    }
+}

@@ -28,8 +28,6 @@ public protocol MObject: Transformable, CustomStringConvertible {
     
     var _pythonObject: PythonObject { get }
     
-    init(_pythonObject: PythonObject)
-    
 }
 
 
@@ -113,11 +111,6 @@ extension MObject {
         closure.append("stretch",      stretch)
         
         return AttachedAnimation(base: self, closure: closure)
-    }
-    
-    /// Create and return an identical deep copy of the object including all children.
-    public func copied() -> Self {
-        Self(_pythonObject: self._pythonObject.copy())
     }
     
     /// Scales the instance to fit the `height` while keeping width/depth proportional.
