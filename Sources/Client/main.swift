@@ -12,6 +12,8 @@ import Foundation
 try await withManim { scene in
     @ValueTracker var theta = 110.0
     let line1 = Line(from: [0, 0], to: [2, 0])
+    line1.capStyle = .round
+    
     let movingLine = line1.copied()
     let lineRef = movingLine.copied()
     movingLine.rotate(angle: .degrees(theta), about: [0, 0])

@@ -17,6 +17,10 @@ import PythonKit
 /// ```
 ///
 /// ![Preview](arc)
+///
+/// An arc always choose to connect from the shortest side.
+///
+/// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Moving_Angle.mov)
 public class Arc: TipableVMObject {
     
     /// Creates an arc.

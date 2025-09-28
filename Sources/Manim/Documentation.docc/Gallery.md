@@ -187,6 +187,41 @@ withAnimation {
 }
 ```
 
+## Moving Angle
+![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Moving_Angle.mov)
+
+```swift
+@ValueTracker var theta = 110.0
+let line1 = Line(from: [0, 0], to: [2, 0])
+line1.capStyle = .round
+
+let movingLine = line1.copied()
+let lineRef = movingLine.copied()
+movingLine.rotate(angle: .degrees(theta), about: [0, 0])
+let arc = Arc(radius: 0.5, angle: movingLine.angle)
+arc.addUpdater {
+    arc.become(Arc(radius: 0.5, angle: movingLine.angle))
+}
+
+let tex = MathTex("\\theta")
+tex.move(to: 3 * arc.track(\.center))
+
+scene.add(line1, movingLine, arc, tex)
+scene.sleep()
+
+movingLine.addUpdater {
+    movingLine.become(lineRef.copied())
+    movingLine.rotate(angle: .degrees(theta), about: [0, 0])
+}
+
+withAnimation {
+    $theta.become(40)
+    $theta += 140
+    tex.set(color: .red).duration(0.5)
+    $theta.become(350)
+}
+```
+
 ## Matmul
 
 ![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/matmul.mov)
