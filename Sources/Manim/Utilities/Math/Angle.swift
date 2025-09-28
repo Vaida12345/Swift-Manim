@@ -38,8 +38,12 @@ public struct Angle: @MainActor PythonConvertible, @MainActor ConvertibleFromPyt
         Angle(radians: radians)
     }
     
-    public func rotated(by other: Angle) -> Angle {
-        Angle(radians: self.radians + other.radians)
+    public static func + (lhs: Angle, rhs: Angle) -> Angle {
+        Angle(radians: lhs.radians + rhs.radians)
+    }
+    
+    public static func - (lhs: Angle, rhs: Angle) -> Angle {
+        Angle(radians: lhs.radians - rhs.radians)
     }
     
     

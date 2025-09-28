@@ -158,7 +158,7 @@ let line = Line(from: dot1.center, to: dot2.center, color: .orange)
 let brace1 = Brace(line)
 let brace1Text = brace1.label("Horizontal distance")
 
-let brace2 = Brace(line, direction: .angle(line.angle.rotated(by: .degrees(90))))
+let brace2 = Brace(line, direction: .angle(line.angle + .degrees(90)))
 let brace2Text = brace2.label(math: "x-x_1")
 
 scene.add(line, dot1, brace1, brace1Text, dot2, brace2, brace2Text)

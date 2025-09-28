@@ -68,4 +68,4 @@ try await withManim { scene in
 - ``Axis``
 - ``Direction``
 - ``Range``
-
+- ``Angle``
