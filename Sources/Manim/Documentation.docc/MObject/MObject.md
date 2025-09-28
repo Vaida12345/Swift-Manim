@@ -29,7 +29,7 @@
 - ``VMObject/children``
 - ``MObject/add(_:)``
 - ``MObject/remove(_:)``
-- ``MObject/copied()``
+- ``VMObject/copied()``
 
 ### Updater
 - ``MObject/addUpdater(index:initial:handler:)``
