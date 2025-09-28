@@ -7,9 +7,6 @@
 ### Transformation
 
 - <doc:Position>
-- ``MObject/rotate(angle:axis:)``
-- ``MObject/flip(axis:)``
-- ``MObject/scale(_:stroke:)``
 - ``MObject/scaleToFit(width:)``
 - ``MObject/scaleToFit(height:)``
 - ``MObject/apply(matrix:center:)``
@@ -29,14 +26,14 @@
 - ``MObject/showPassingFlash(duration:)``
 
 ### Decedents
-- ``MObject/children``
+- ``VMObject/children``
 - ``MObject/add(_:)``
 - ``MObject/remove(_:)``
 - ``MObject/copied()``
 
 ### Updater
 - ``MObject/addUpdater(index:initial:handler:)``
-- ``MObject/Updater``
+- ``Updater``
 - ``MObject/track(_:)->ValueTracker``
 - ``MObject/track(_:)->Projection<T>``
 - ``MObject/bind(_:to:)``
@@ -47,8 +44,8 @@
 
 ### State
 - ``MObject/save()``
-- ``MObject/State/restore()``
-- ``MObject/State``
+- ``State/restore()``
+- ``State``
 
 ### Spawn MObjects
 - ``MObject/trace(_:color:width:dissipatingTime:)``

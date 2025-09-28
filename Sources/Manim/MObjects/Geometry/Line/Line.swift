@@ -28,12 +28,12 @@ public class Line: TipableVMObject {
     ///   - color: The stroke color.
     ///   - padding: The paddings between the line and `start`, `end`.
     public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0) {
-        super.init(manim.Line(start: start, end: end, stroke_width: width, color: color, buff: padding))
+        super.init(_pythonObject: manim.Line(start: start, end: end, stroke_width: width, color: color, buff: padding))
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
@@ -52,7 +52,7 @@ extension Line {
     /// vector.angle // .degree(45.0)
     /// ```
     public var angle: Angle {
-        Angle(self.pythonObject.get_angle())!
+        Angle(self._pythonObject.get_angle())!
     }
     
     /// Returns the slope of the line.
@@ -63,7 +63,7 @@ extension Line {
     /// vector.gradient // 1
     /// ```
     public var gradient: Double {
-        Double(self.pythonObject.get_slope())!
+        Double(self._pythonObject.get_slope())!
     }
     
     /// Moves the ``MObject/start`` and ``MObject/end``.
@@ -93,7 +93,7 @@ extension Line {
     /// ![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/MovingDots.mov)
     @discardableResult
     public func moveTo(start: Point, end: Point) -> AttachedAnimation {
-        AttachedAnimation(base: self._transformable, closure: Closure("put_start_and_end_on", [("", start), ("", end)]))
+        AttachedAnimation(base: self._pythonObject, closure: Closure("put_start_and_end_on", [("", start), ("", end)]))
     }
     
     /// Moves the ``MObject/start`` and ``MObject/end``.
@@ -121,7 +121,7 @@ extension Line {
     /// ![video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/MovingDots.mov)
     @discardableResult
     public func moveTo(start: Projection<Point>, end: Projection<Point>) -> AttachedAnimation {
-        self.addUpdater(AttachedAnimation(base: self._transformable, closure: Closure("put_start_and_end_on", [("", start.wrappedValue), ("", end.wrappedValue)])))
+        self.addUpdater(AttachedAnimation(base: self._pythonObject, closure: Closure("put_start_and_end_on", [("", start.wrappedValue), ("", end.wrappedValue)])))
     }
     
 }

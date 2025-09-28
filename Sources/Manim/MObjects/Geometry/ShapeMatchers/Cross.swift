@@ -22,12 +22,12 @@ public final class Cross: Group {
     ///   - color: The stroke color
     ///   - width: The stroke width
     public init(color: Color = .red, width: Double = 6) {
-        super.init(manim.Cross(stroke_color: color, stroke_width: width))
+        super.init(_pythonObject: manim.Cross(stroke_color: color, stroke_width: width))
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

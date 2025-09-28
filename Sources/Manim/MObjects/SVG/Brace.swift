@@ -29,11 +29,11 @@ public final class Brace: VMObject {
     ///   - direction: Passing a direction vector determines the direction from which the brace is drawn.
     ///   - color: The color of the brace.
     public init(_ object: MObject, direction: Direction = .bottom, color: Color = .white) {
-        super.init(manim.Brace(object.pythonObject, direction: direction, color: color))
+        super.init(_pythonObject: manim.Brace(object._pythonObject, direction: direction, color: color))
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
@@ -56,7 +56,7 @@ extension Brace {
     ///
     /// ![Preview](Brace_label)
     public func label(_ string: String) -> Tex {
-        Tex(self.pythonObject.get_text(string))
+        Tex(_pythonObject: self._pythonObject.get_text(string))
     }
     
     /// Places the text compiled in LaTeX mode at the brace tip.
@@ -70,7 +70,7 @@ extension Brace {
     ///
     /// ![Preview](Brace_label)
     public func label(math string: String) -> MathTex {
-        MathTex(self.pythonObject.get_tex(string))
+        MathTex(_pythonObject: self._pythonObject.get_tex(string))
     }
     
 }

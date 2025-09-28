@@ -58,10 +58,10 @@ extension MObject {
     @discardableResult
     public func hide(animation: HideAnimation = .unwrite) -> Animation {
         if !shouldUseAnimation {
-            scene.remove(self.pythonObject)
+            scene.remove(self._pythonObject)
             return EmptyAnimation()
         } else {
-            return WrappedAnimation(base: self.pythonObject, caller: animation.caller, arguments: animation.arguments)
+            return WrappedAnimation(base: self._pythonObject, caller: animation.caller, arguments: animation.arguments)
         }
     }
     

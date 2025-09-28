@@ -70,7 +70,7 @@ public final class AttachedAnimation: Animation {
     }
     
     convenience init(base: MObject, closure: Closure) {
-        self.init(base: base.pythonObject, closure: closure)
+        self.init(base: base._pythonObject, closure: closure)
     }
     
 }

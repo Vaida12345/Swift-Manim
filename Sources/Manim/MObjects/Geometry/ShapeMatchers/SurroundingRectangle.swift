@@ -28,13 +28,13 @@ public class SurroundingRectangle: Rectangle {
     ///   - fill: The color used to fill the shape's interior.
     public init(_ base: MObject, stroke: Color? = nil, _ strokeWidth: Double? = nil, fill: Color? = nil) {
         super.init("\(Self.self)", stroke: stroke, strokeWidth: strokeWidth, fill: fill) { arguments in
-            arguments.insert("", base.pythonObject, at: 0)
+            arguments.insert("", base._pythonObject, at: 0)
         }
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

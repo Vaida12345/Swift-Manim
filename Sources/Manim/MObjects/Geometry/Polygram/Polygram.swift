@@ -53,7 +53,7 @@ public class Polygram: VMObject {
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
@@ -80,7 +80,7 @@ extension Polygram {
     /// ![Preview](cornerRadius)
     @discardableResult
     public func cornerRadius(_ radius: Double) -> AttachedAnimation {
-        AttachedAnimation(base: self.pythonObject, closure: Closure("round_corners", [("", radius)]))
+        AttachedAnimation(base: self, closure: Closure("round_corners", [("", radius)]))
     }
     
 }

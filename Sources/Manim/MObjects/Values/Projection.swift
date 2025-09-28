@@ -15,7 +15,11 @@ import PythonKit
 /// You can use ``MObject/track(_:)->Projection<T>`` that comes with syncing.
 @propertyWrapper
 @dynamicMemberLookup
-public class Projection<T>: MObject where T: PythonConvertible & ConvertibleFromPython {
+@MainActor
+public class Projection<T>: @MainActor MObject where T: PythonConvertible & ConvertibleFromPython {
+    
+    public var _pythonObject: PythonKit.PythonObject
+    
     
     let get: (() -> T)! // optional for `ValueTracker` to inherit from `Binding`.
     
@@ -37,25 +41,22 @@ public class Projection<T>: MObject where T: PythonConvertible & ConvertibleFrom
         }
     }
     
+    public required init(_pythonObject: PythonObject) {
+        self.get = nil
+        self._pythonObject = _pythonObject
+    }
+    
     init(get: @escaping () -> T) {
         self.get = get
-        
-        super.init(manim.Mobject())
+        self._pythonObject = manim.Mobject()
     }
-    
-    required init(_ pythonObject: PythonObject) {
-        self.get = nil
-        
-        super.init(pythonObject)
-    }
-    
 }
 
 
 extension MObject {
     
     /// Returns a ``Projection`` of `keyPath`.
-    public func track<T>(_ keyPath: KeyPath<MObject, T>) -> Projection<T> where T: PythonConvertible & ConvertibleFromPython {
+    public func track<T>(_ keyPath: KeyPath<Self, T>) -> Projection<T> where T: PythonConvertible & ConvertibleFromPython {
         Projection {
             self[keyPath: keyPath]
         }

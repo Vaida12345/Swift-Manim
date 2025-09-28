@@ -53,7 +53,7 @@ public class DecimalNumber: SVGMObject {
         arguments.append("fill_color", color)
         arguments.append("fill_opacity", color.alpha)
         
-        super.init(manim.DecimalNumber.dynamicallyCall(withKeywordArguments: arguments))
+        super.init(_pythonObject: manim.DecimalNumber.dynamicallyCall(withKeywordArguments: arguments))
     }
     
     /// Creates a number display & updates from the `ValueTracker` automatically.
@@ -71,8 +71,8 @@ public class DecimalNumber: SVGMObject {
     
     /// The wrapped value
     public var number: Double {
-        get { Double(self.pythonObject.get_value())! }
-        set { self.pythonObject.set_value(newValue) }
+        get { Double(self._pythonObject.get_value())! }
+        set { self._pythonObject.set_value(newValue) }
     }
     
     
@@ -141,7 +141,7 @@ public class DecimalNumber: SVGMObject {
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

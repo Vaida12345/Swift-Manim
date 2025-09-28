@@ -27,7 +27,7 @@ public struct SceneProxy {
     ///
     /// let text = Text("(\(dot.x), \(dot.y))")
     /// text.addUpdater(initial: true) {
-    ///     text.become(Text("(\(dot.x.formatted(.number.precision(2))), \(dot.y.formatted(.number.precision(2))))"))
+    ///     text.become(Text(dot.origin.description))
     ///     text.move(rightOf: dot)
     /// }
     /// scene.add(plane, dot, text)
@@ -74,8 +74,8 @@ public struct SceneProxy {
     }
     
     /// Returns all mobjects which are not submobjects.
-    public var topLevelObjects: [MObject] {
-        scene.get_top_level_mobjects().map(MObject.init)
+    public var topLevelObjects: [VMObject] {
+        scene.get_top_level_mobjects().map(VMObject.init)
     }
     
     /// The time since the start of the scene.
@@ -99,7 +99,7 @@ public struct SceneProxy {
     /// - SeeAlso: ``MObject/show(animation:)`` to add objects with animations.
     public func add(_ targets: [MObject]) {
         for target in targets {
-            scene.add(target.pythonObject)
+            scene.add(target._pythonObject)
         }
     }
     
@@ -115,7 +115,7 @@ public struct SceneProxy {
     /// - Note: This has no effect if `targets` is not a children of `self`.
     public func remove(_ targets: [MObject]) {
         for target in targets {
-            scene.remove(target.pythonObject)
+            scene.remove(target._pythonObject)
         }
     }
     

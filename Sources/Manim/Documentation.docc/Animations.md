@@ -31,7 +31,7 @@ You can explore ``withAnimation(_:in:body:)`` or ``Animation`` for more options.
 
 ### Lag Ratio
 
-You can specify the lag ratio to create an asynchronous effect of animating ``MObject/children``. 
+You can specify the lag ratio to create an asynchronous effect of animating ``VMObject/children``. 
 
 Please refer to the video for details.
 

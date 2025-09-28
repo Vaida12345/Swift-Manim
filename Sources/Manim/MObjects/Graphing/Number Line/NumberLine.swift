@@ -42,11 +42,11 @@ public final class NumberLine: Line {
         args.append("include_numbers", include.contains(.numbers))
         args.append("include_tip",     include.contains(.tip))
         
-        super.init(manim.NumberLine.dynamicallyCall(withKeywordArguments: args))
+        super.init(_pythonObject: manim.NumberLine.dynamicallyCall(withKeywordArguments: args))
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
@@ -100,7 +100,7 @@ extension NumberLine {
     ///
     /// - Returns: A float representing a value along the number line.
     public func convert(point: Point) -> Double {
-        Double(self.pythonObject.point_to_number(point))!
+        Double(self._pythonObject.point_to_number(point))!
     }
     
     /// Returns a point with respect to the scene.
@@ -110,7 +110,7 @@ extension NumberLine {
     ///
     /// - Returns: A point with respect to the scene’s coordinate system.
     public func convert(number: Double) -> Point {
-        Point(self.pythonObject.number_to_point(number))!
+        Point(self._pythonObject.number_to_point(number))!
     }
     
 }

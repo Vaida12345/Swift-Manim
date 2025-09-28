@@ -13,7 +13,7 @@ import PythonKit
 /// - SeeAlso: ``MathTex`` for LaTeX text.
 public class Text: SVGMObject {
     
-    public init(_ text: String, strokeWidth: Double = 0, color: Color = .white, fontSize: Double = 48, lineSpacing: Double = -1, font: String = "", italic: Bool = false, weight: FontWeight = .normal) {
+    public init(_ text: String, strokeWidth: Double = 0, color: Color = .white, fontSize: Double = 36, lineSpacing: Double = -1, font: String = "", italic: Bool = false, weight: FontWeight = .normal) {
         var arguments = Closure.Arguments()
         arguments.append("text", text)
         arguments.append("fill_opacity", color.alpha)
@@ -25,11 +25,11 @@ public class Text: SVGMObject {
         arguments.append("slant", italic ? "ITALIC" : "NORMAL")
         arguments.append("weight", weight)
         
-        super.init(manim.Text.dynamicallyCall(withKeywordArguments: arguments))
+        super.init(_pythonObject: manim.Text.dynamicallyCall(withKeywordArguments: arguments))
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
@@ -50,18 +50,18 @@ public class Text: SVGMObject {
 extension Text {
     
     public var fontSize: Int {
-        get { Int(self.pythonObject.font_size)! }
-        set { self.pythonObject.font_size = newValue.pythonObject }
+        get { Int(self._pythonObject.font_size)! }
+        set { self._pythonObject.font_size = newValue.pythonObject }
     }
     
     public var font: String {
-        get { String(self.pythonObject.font)! }
-        set { self.pythonObject.font = newValue.pythonObject }
+        get { String(self._pythonObject.font)! }
+        set { self._pythonObject.font = newValue.pythonObject }
     }
     
     public var weight: Int {
-        get { Int(self.pythonObject.weight)! }
-        set { self.pythonObject.weight = newValue.pythonObject }
+        get { Int(self._pythonObject.weight)! }
+        set { self._pythonObject.weight = newValue.pythonObject }
     }
     
 }

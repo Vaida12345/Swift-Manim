@@ -25,8 +25,8 @@ extension MObject {
     ///
     /// ![Preview](coord)
     public var x: Double {
-        get { Double(self.pythonObject.get_x())! }
-        set { self.pythonObject.set_x(newValue) }
+        get { Double(self._pythonObject.get_x())! }
+        set { self._pythonObject.set_x(newValue) }
     }
     
     /// The `y`-coordinate value of ``origin`` (ie, center).
@@ -45,8 +45,8 @@ extension MObject {
     ///
     /// ![Preview](coord)
     public var y: Double {
-        get { Double(self.pythonObject.get_y())! }
-        set { self.pythonObject.set_y(newValue) }
+        get { Double(self._pythonObject.get_y())! }
+        set { self._pythonObject.set_y(newValue) }
     }
 
     /// The z index for controlling layer.
@@ -68,8 +68,8 @@ extension MObject {
     ///
     /// ![Preview](zIndex)
     public var zIndex: Double {
-        get { Double(self.pythonObject.z_index)! }
-        set { self.pythonObject.z_index = newValue.pythonObject }
+        get { Double(self._pythonObject.z_index)! }
+        set { self._pythonObject.z_index = newValue.pythonObject }
     }
     
     /// Sets both the ``VMObject/fillColor`` and ``VMObject/strokeColor``.
@@ -84,55 +84,47 @@ extension MObject {
     ///
     /// ![Preview](dot)
     public var color: Color {
-        get { Color(self.pythonObject.color)! }
-        set { self.pythonObject.color = newValue.pythonObject }
-    }
-    
-    /// The origin, defined as the center point.
-    ///
-    /// ![Preview](origin)
-    public var origin: Point {
-        get { self.center }
-        set { self.center = newValue }
+        get { Color(self._pythonObject.color)! }
+        set { self._pythonObject.color = newValue.pythonObject }
     }
     
     /// The center point.
     ///
     /// ![Preview](origin)
     public var center: Point {
-        get { Point(self.pythonObject.get_center())! }
+        get { Point(self._pythonObject.get_center())! }
         set { self.move(to: newValue) }
     }
     
     // MARK: - read only
     /// The bottom point.
     public var bottom: Point {
-        Point(self.pythonObject.get_bottom())!
+        Point(self._pythonObject.get_bottom())!
     }
     
     /// The top point.
     public var top: Point {
-        Point(self.pythonObject.get_top())!
+        Point(self._pythonObject.get_top())!
     }
     
     /// The left point.
     public var left: Point {
-        Point(self.pythonObject.get_left())!
+        Point(self._pythonObject.get_left())!
     }
     
     /// The right point.
     public var right: Point{
-        Point(self.pythonObject.get_right())!
+        Point(self._pythonObject.get_right())!
     }
     
     /// Returns the point, where the stroke that surrounds the object ends.
     public var end: Point {
-        Point(self.pythonObject.get_end())!
+        Point(self._pythonObject.get_end())!
     }
     
     /// Returns the point, where the stroke that surrounds the object starts.
     public var start: Point {
-        Point(self.pythonObject.get_start())!
+        Point(self._pythonObject.get_start())!
     }
     
     /// The width of the object.
@@ -142,7 +134,7 @@ extension MObject {
     /// rect.width // 4.0
     /// ```
     public var width: Double {
-        Double(self.pythonObject.width)!
+        Double(self._pythonObject.width)!
     }
     
     /// The height of the object.
@@ -152,7 +144,7 @@ extension MObject {
     /// rect.height // 2.0
     /// ```
     public var height: Double {
-        Double(self.pythonObject.height)!
+        Double(self._pythonObject.height)!
     }
     
 }

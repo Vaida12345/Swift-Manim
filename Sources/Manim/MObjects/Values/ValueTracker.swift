@@ -45,8 +45,8 @@ public class ValueTracker: Projection<Double> { // Python `ValueTracker` is alwa
     
     /// The underlying value.
     public override var wrappedValue: Double {
-        get { Double(self.pythonObject.get_value())! }
-        set { self.pythonObject.set_value(newValue) }
+        get { Double(self._pythonObject.get_value())! }
+        set { self._pythonObject.set_value(newValue) }
     }
     
     /// Swift Syntax suger.
@@ -59,11 +59,11 @@ public class ValueTracker: Projection<Double> { // Python `ValueTracker` is alwa
     /// Creates a value tracker by providing an initial value.
     public init(wrappedValue value: Double) {
         let object = manim.ValueTracker(value)
-        super.init(object)
+        super.init(_pythonObject: object)
     }
     
-    required init(_ pythonObject: PythonObject) {
-        super.init(pythonObject)
+    public required init(_pythonObject: PythonObject) {
+        super.init(_pythonObject: _pythonObject)
     }
     
 }
@@ -73,7 +73,7 @@ extension ValueTracker {
     /// Set the new value using an animation.
     @discardableResult
     public func become(_ value: Double) -> AttachedAnimation {
-        AttachedAnimation(base: self.pythonObject, closure: Closure("set_value", [("", value)]))
+        AttachedAnimation(base: self._pythonObject, closure: Closure("set_value", [("", value)]))
     }
     
 }
@@ -83,7 +83,7 @@ extension ValueTracker {
     
     @discardableResult
     public static func += (lhs: ValueTracker, rhs: Double) -> AttachedAnimation {
-        AttachedAnimation(base: lhs.pythonObject, closure: Closure("increment_value", [("", rhs)]))
+        lhs.become(lhs.wrappedValue + rhs)
     }
     
     @discardableResult

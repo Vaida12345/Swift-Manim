@@ -43,7 +43,7 @@ public final class CubicBezier: VMObject {
     ///
     /// ![Preview](CubicBezier_Control)
     public init(start: Control, end: Control, width: Double = 4, color: Color = .white) {
-        super.init(manim.CubicBezier(start_anchor: start.anchor, start_handle: start.handle, end_anchor: end.anchor, end_handle: end.handle, stroke_width: width, color: color))
+        super.init(_pythonObject: manim.CubicBezier(start_anchor: start.anchor, start_handle: start.handle, end_anchor: end.anchor, end_handle: end.handle, stroke_width: width, color: color))
     }
     
     /// A control point for cubic Bézier curve.
@@ -91,7 +91,7 @@ public final class CubicBezier: VMObject {
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

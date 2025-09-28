@@ -15,13 +15,23 @@ import PythonKit
 /// let point: Point = [2, 2]
 /// ```
 @MainActor
-public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConvertible, @MainActor ConvertibleFromPython {
+public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConvertible, @MainActor ConvertibleFromPython, @MainActor CustomStringConvertible {
     
     public let x: Double
     
     public let y: Double
     
     public let z: Double
+    
+    
+    /// A description for a point that is suitable for displaying to user using ``Text``.
+    public var description: String {
+        var description = "(\(x.userFriendlyDescription), \(y.userFriendlyDescription)"
+        if z != 0 {
+            description += ", \(z.userFriendlyDescription))"
+        }
+        return description + ")"
+    }
     
     
     /// Shifts the point by a given distance along a specified direction.
@@ -93,4 +103,15 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
               y: lhs.y - rhs.y,
               z: lhs.z - rhs.z)
     }
+}
+
+
+extension Projection<Point> {
+    
+    public static func * (lhs: Double, rhs: Projection<Point>) -> Projection<Point> {
+        Projection {
+            lhs * rhs.wrappedValue
+        }
+    }
+    
 }

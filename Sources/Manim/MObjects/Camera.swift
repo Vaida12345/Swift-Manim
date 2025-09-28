@@ -23,7 +23,7 @@ public final class MovingCamera: Transformable {
     
     var pythonObject: PythonObject
     
-    public var _transformable: PythonObject {
+    public var _pythonObject: PythonObject {
         pythonObject.frame
     }
     

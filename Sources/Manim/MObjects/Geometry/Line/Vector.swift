@@ -26,12 +26,12 @@ public final class Vector: Arrow {
     ///   - padding: The paddings between the line and `start`, `end`.
     ///   - tip: The tip shape
     public init(_ direction: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangle.filled) {
-        super.init(manim.Vector(direction: direction, stroke_width: width, color: color, buff: padding, tip_shape: tip))
+        super.init(_pythonObject: manim.Vector(direction: direction, stroke_width: width, color: color, buff: padding, tip_shape: tip))
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

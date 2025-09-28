@@ -9,6 +9,8 @@ import PythonKit
 
 
 /// A geometric angle whose value you access in either radians or degrees.
+///
+/// When `Angle` is `0`, the line an arrow from `(0, 0)` to `(1, 0)`.
 @MainActor
 public struct Angle: @MainActor PythonConvertible, @MainActor ConvertibleFromPython, @MainActor CustomStringConvertible {
     
@@ -57,7 +59,23 @@ public struct Angle: @MainActor PythonConvertible, @MainActor ConvertibleFromPyt
     }
     
     public var description: String {
-        ".degree(\(self.degrees))"
+        ".degree(\(self.degrees.userFriendlyDescription))"
+    }
+}
+
+
+extension Projection<Angle> {
+    
+    public static func degrees(_ degrees: Projection<Double>) -> Projection<Angle> {
+        Projection {
+            Angle(degrees: degrees.wrappedValue)
+        }
+    }
+    
+    public static func radians(_ radians: Projection<Double>) -> Projection<Angle> {
+        Projection {
+            Angle(radians: radians.wrappedValue)
+        }
     }
     
 }

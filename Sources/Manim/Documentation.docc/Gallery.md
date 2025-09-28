@@ -135,7 +135,7 @@ let plane = NumberPlane(margin: 2)
 
 let text = Text("(\(dot.x), \(dot.y))")
 text.addUpdater(initial: true) {
-    text.become(Text("(\(dot.x.formatted(.number.precision(2))), \(dot.y.formatted(.number.precision(2))))"))
+    text.become(Text(dot.origin))
     text.move(rightOf: dot)
 }
 scene.add(plane, dot, text)
@@ -162,6 +162,29 @@ let brace2 = Brace(line, direction: .angle(line.angle + .degrees(90)))
 let brace2Text = brace2.label(math: "x-x_1")
 
 scene.add(line, dot1, brace1, brace1Text, dot2, brace2, brace2Text)
+```
+
+## Point Moving on Shapes
+![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/PointMovingOnShapes.mov)
+
+```swift
+let circle = Circle(stroke: .blue)
+let dot = Dot()
+dot.zIndex = 999
+scene.add(dot)
+
+let line = Line(from: [3, 0], to: [5, 0])
+scene.add(line)
+
+withAnimation {
+    circle.show(animation: .growFromCenter)
+    dot.move(to: [1, 0])
+    dot.moveAlong(pathOf: circle)
+        .duration(2)
+    dot.move(to: line.start)
+        .path(.clockwise)
+    dot.moveAlong(pathOf: line)
+}
 ```
 
 ## Matmul

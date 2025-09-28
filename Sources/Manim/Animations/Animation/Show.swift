@@ -74,7 +74,7 @@ public struct ShowAnimation {
     ///
     /// The animation is a scaling from the given object.
     public static func grow(from object: MObject) -> ShowAnimation {
-        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("", object.pythonObject)])
+        ShowAnimation(caller: manim.GrowFromEdge, arguments: [("", object._pythonObject)])
     }
     
     /// Scale and rotate.
@@ -96,10 +96,10 @@ extension MObject {
     @discardableResult
     public func show(animation: ShowAnimation = .write) -> Animation {
         if !shouldUseAnimation {
-            scene.add(self.pythonObject)
+            scene.add(self._pythonObject)
             return EmptyAnimation()
         } else {
-            return WrappedAnimation(base: self.pythonObject, caller: animation.caller, arguments: animation.arguments)
+            return WrappedAnimation(base: self._pythonObject, caller: animation.caller, arguments: animation.arguments)
         }
     }
     

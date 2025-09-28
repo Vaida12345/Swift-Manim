@@ -25,7 +25,7 @@ final class KeyPathTracker: ValueTracker {
         }
     }
     
-    required init(_ pythonObject: PythonObject) {
+    required init(_pythonObject: PythonObject) {
         fatalError()
     }
     
@@ -54,51 +54,6 @@ extension MObject {
     ///   - keyPath: The key path of the property to be tracked.
     public func track(_ keyPath: ReferenceWritableKeyPath<MObject, Double>) -> ValueTracker {
         KeyPathTracker(base: self, keyPath: keyPath)
-    }
-    
-}
-
-
-extension MObject {
-    
-    /// Binds `keyPath` to `target`.
-    ///
-    /// You can use `bind` to ensure two properties are always in sync.
-    ///
-    /// ```swift
-    /// let dot1 = Dot(at: [0, 2], color: .blue)
-    /// let dot2 = Dot(at: .center, color: .green)
-    ///
-    /// scene.add(dot1, dot2)
-    ///
-    /// dot1.bind(\.x, to: dot2.x)
-    ///
-    /// withAnimation {
-    ///     dot2.move(to: [2, 0])
-    /// }
-    /// ```
-    ///
-    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/bind.mov)
-    ///
-    /// - Parameters:
-    ///   - keyPath: The key path of the property to be bind to `target`.
-    ///   - target: The target property.
-    public func bind<T>(
-        _ keyPath: ReferenceWritableKeyPath<MObject, T>,
-        to target: @autoclosure @escaping () -> T,
-    ) where T: PythonConvertible & ConvertibleFromPython {
-        self.addUpdater {
-            self[keyPath: keyPath] = target()
-        }
-    }
-    
-    /// Binds `keyPath` to `object`.`onKeyPath`.
-    @available(*, deprecated, renamed: "bind")
-    public func link<T>(
-        _ keyPath: ReferenceWritableKeyPath<MObject, T>,
-        to target: @autoclosure @escaping () -> T,
-    ) where T: PythonConvertible & ConvertibleFromPython {
-        self.bind(keyPath, to: target())
     }
     
 }

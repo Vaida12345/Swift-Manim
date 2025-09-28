@@ -20,7 +20,11 @@ import PythonKit
 /// ```
 ///
 /// ![Preview](rect)
-public class VMObject: MObject {
+@MainActor
+public class VMObject: @MainActor MObject {
+    
+    public var _pythonObject: PythonKit.PythonObject
+    
     
     /// Expected initializer for most `VMObjects`.
     ///
@@ -70,12 +74,14 @@ public class VMObject: MObject {
         
         builder(&closure.arguments)
         
-        super.init(manim[dynamicMember: closure.name].dynamicallyCall(withKeywordArguments: closure.arguments))
+        self._pythonObject = manim[dynamicMember: closure.name].dynamicallyCall(withKeywordArguments: closure.arguments)
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    public required init(_pythonObject pythonObject: PythonObject) {
+        self._pythonObject = pythonObject
+    }
     
 }
 
@@ -85,8 +91,8 @@ extension VMObject {
     /// The fill color of the object.
     public var fillColor: Color {
         get {
-            let color = Color(self.pythonObject.fill_color)!
-            let opacity = Double(self.pythonObject.fill_opacity) ?? 1
+            let color = Color(self._pythonObject.fill_color)!
+            let opacity = Double(self._pythonObject.fill_opacity) ?? 1
             return color.opacity(opacity)
         }
         set {
@@ -97,8 +103,8 @@ extension VMObject {
     /// The stroke color of the object.
     public var strokeColor: Color {
         get {
-            let color = Color(self.pythonObject.stroke_color)!
-            let opacity = Double(self.pythonObject.stroke_opacity) ?? 1
+            let color = Color(self._pythonObject.stroke_color)!
+            let opacity = Double(self._pythonObject.stroke_opacity) ?? 1
             return color.opacity(opacity)
         }
         set {
@@ -108,8 +114,8 @@ extension VMObject {
     
     /// The stroke width.
     public var strokeWidth: Double {
-        get { Double(self.pythonObject.stroke_width)! }
-        set { self.pythonObject.stroke_width = newValue.pythonObject }
+        get { Double(self._pythonObject.stroke_width)! }
+        set { self._pythonObject.stroke_width = newValue.pythonObject }
     }
     
     /// Collection of available cap styles.
@@ -135,8 +141,8 @@ extension VMObject {
     /// }
     /// ```
     public var capStyle: CapStyle {
-        get { CapStyle(self.pythonObject.cap_style)! }
-        set { self.pythonObject.cap_style = newValue.pythonObject }
+        get { CapStyle(self._pythonObject.cap_style)! }
+        set { self._pythonObject.cap_style = newValue.pythonObject }
     }
     
     

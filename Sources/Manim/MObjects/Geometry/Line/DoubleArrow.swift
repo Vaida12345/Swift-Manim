@@ -27,7 +27,7 @@ public final class DoubleArrow: Arrow {
     ///   - padding: The paddings between the line and `start`, `end`.
     ///   - tip: The tip shape
     public override init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangle.filled) {
-        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip.pythonObject))
+        super.init(_pythonObject: manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip.pythonObject))
     }
     
     /// Creates an arrow.
@@ -41,12 +41,12 @@ public final class DoubleArrow: Arrow {
     ///   - startTip: The tip shape for `start`.
     ///   - endTip: The tip shape for `end`.
     public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, startTip: Arrow.TipShape = .triangle.filled, endTip: Arrow.TipShape = .triangle.filled) {
-        super.init(manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape_start: startTip.pythonObject, tip_shape_end: endTip.pythonObject))
+        super.init(_pythonObject: manim.DoubleArrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape_start: startTip.pythonObject, tip_shape_end: endTip.pythonObject))
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

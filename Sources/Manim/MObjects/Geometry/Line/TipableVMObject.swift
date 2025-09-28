@@ -35,7 +35,7 @@ extension TipableVMObject {
     /// line.length // 2.8284271247461903
     /// ```
     public var length: Double {
-        Double(self.pythonObject.get_length())!
+        Double(self._pythonObject.get_length())!
     }
     
     /// Returns a ``Group`` (collection of ``VMObject``s) containing the the instance’s tips.
@@ -47,7 +47,7 @@ extension TipableVMObject {
     /// line.tips // Group([MObject(ArrowTriangleFilledTip), MObject(ArrowTriangleFilledTip)])
     /// ```
     public var tips: Group {
-        Group(self.pythonObject.get_tips())
+        Group(_pythonObject: self._pythonObject.get_tips())
     }
     
     /// Adds a tip to the instance.
@@ -70,10 +70,10 @@ extension TipableVMObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/add_tip.mov)
     @discardableResult
-    public func addTip(shape: Arrow.TipShape = .triangle.filled, at position: Position) -> MObject {
-        let tip = self.pythonObject.create_tip(tip_shape: shape, at_start: position == .start)
-        self.pythonObject.add_tip(tip, at_start: position == .start)
-        return MObject(tip)
+    public func addTip(shape: Arrow.TipShape = .triangle.filled, at position: Position) -> VMObject {
+        let tip = self._pythonObject.create_tip(tip_shape: shape, at_start: position == .start)
+        self._pythonObject.add_tip(tip, at_start: position == .start)
+        return VMObject(_pythonObject: tip)
     }
     
     

@@ -27,58 +27,58 @@ extension MObject {
     /// - ``CircumscribeShape``
     /// - ``CircumscribeStyle``
     public func circumscribe(shape: CircumscribeShape = .rectangle, style: CircumscribeStyle = .lineDrawInOut(delta: 0.5), color: Color = .yellow) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: manim.Circumscribe, arguments: [("shape", shape), ("color", color)] + style.args)
+        WrappedAnimation(base: self._pythonObject, caller: manim.Circumscribe, arguments: [("shape", shape), ("color", color)] + style.args)
     }
     
-    /// An enumeration of shapes used to circumscribe an MObject when applying the `circumscribe` animation.
-    ///
-    /// You can use ``MObject/circumscribe(shape:style:color:)`` to circumscribe an object.
-    @MainActor
-    public enum CircumscribeShape: @MainActor PythonConvertible {
-        ///  Draws a circular outline centered on the object.
-        case circle
-        /// Draws a rectangular outline matching the object's bounding box.
-        case rectangle
-        
-        public var pythonObject: PythonObject {
-            switch self {
-            case .circle:
-                manim.Circle
-            case .rectangle:
-                manim.Rectangle
-            }
+}
+
+/// An enumeration of shapes used to circumscribe an MObject when applying the `circumscribe` animation.
+///
+/// You can use ``MObject/circumscribe(shape:style:color:)`` to circumscribe an object.
+@MainActor
+public enum CircumscribeShape: @MainActor PythonConvertible {
+    ///  Draws a circular outline centered on the object.
+    case circle
+    /// Draws a rectangular outline matching the object's bounding box.
+    case rectangle
+    
+    public var pythonObject: PythonObject {
+        switch self {
+        case .circle:
+            manim.Circle
+        case .rectangle:
+            manim.Rectangle
         }
     }
+}
+
+
+/// An enumeration of styles used to circumscribe an MObject when applying the `circumscribe` animation.
+///
+/// You can use ``MObject/circumscribe(shape:style:color:)`` to circumscribe an object.
+@MainActor
+public enum CircumscribeStyle {
+    /// Draw the line to create, and fade out.
+    case lineDrawIn
     
+    /// Fade in, then un draw the lines.
+    case lineDrawOut
     
-    /// An enumeration of styles used to circumscribe an MObject when applying the `circumscribe` animation.
-    ///
-    /// You can use ``MObject/circumscribe(shape:style:color:)`` to circumscribe an object.
-    @MainActor
-    public enum CircumscribeStyle {
-        /// Draw the line to create, and fade out.
-        case lineDrawIn
-        
-        /// Fade in, then un draw the lines.
-        case lineDrawOut
-        
-        /// Draw the line to create, then undraw.
-        /// - Parameters:
-        ///   - delta: The time difference between the fadeIn and fadeOut.
-        case lineDrawInOut(delta: Double)
-        
-        fileprivate var args: Closure.Arguments {
-            switch self {
-            case .lineDrawIn:
-                [("fade_out", true)]
-            case .lineDrawOut:
-                [("fade_in", true)]
-            case .lineDrawInOut(let delta):
-                [("time_width", delta)]
-            }
+    /// Draw the line to create, then undraw.
+    /// - Parameters:
+    ///   - delta: The time difference between the fadeIn and fadeOut.
+    case lineDrawInOut(delta: Double)
+    
+    fileprivate var args: Closure.Arguments {
+        switch self {
+        case .lineDrawIn:
+            [("fade_out", true)]
+        case .lineDrawOut:
+            [("fade_in", true)]
+        case .lineDrawInOut(let delta):
+            [("time_width", delta)]
         }
     }
-    
 }
 
 extension MObject {
@@ -105,7 +105,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/flash.mov)
     public func flash(lineLength: Double = 0.2, lineCount: Int = 12, radius: Double = 0.1, strokeWidth: Double = 3, color: Color = .yellow) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: manim.Flash, arguments: [
+        WrappedAnimation(base: self._pythonObject, caller: manim.Flash, arguments: [
             ("line_length", lineLength),
             ("num_lines", lineCount),
             ("flash_radius", radius),
@@ -130,7 +130,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/focus.mov)
     public func focus(color: Color = .gray.opacity(0.2)) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: manim.FocusOn, arguments: [
+        WrappedAnimation(base: self._pythonObject, caller: manim.FocusOn, arguments: [
             ("opacity", color.alpha),
             ("color", color),
         ])
@@ -153,7 +153,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/indicate.mov)
     public func indicate(scale: Double = 1.2, color: Color = .yellow) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: manim.Indicate, arguments: [
+        WrappedAnimation(base: self._pythonObject, caller: manim.Indicate, arguments: [
             ("scale_factor", scale),
             ("color", color),
         ])
@@ -172,7 +172,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/shake.mov)
     public func shake() -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: manim.Wiggle)
+        WrappedAnimation(base: self._pythonObject, caller: manim.Wiggle)
     }
     
     /// Show only a sliver of the object each frame.
@@ -195,7 +195,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/showPassingFlash.mov)
     public func showPassingFlash(duration: Double = 0.1) -> WrappedAnimation {
-        WrappedAnimation(base: self.pythonObject, caller: manim.ShowPassingFlash, arguments: [
+        WrappedAnimation(base: self._pythonObject, caller: manim.ShowPassingFlash, arguments: [
             ("time_width", duration)
         ])
     }

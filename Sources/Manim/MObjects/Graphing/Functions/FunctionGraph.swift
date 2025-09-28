@@ -27,11 +27,11 @@ public final class FunctionGraph: ParametricFunction {
             function(Double(object)!)
         }
         
-        super.init(manim.FunctionGraph(function, color: color, x_range: range))
+        super.init(_pythonObject: manim.FunctionGraph(function, color: color, x_range: range))
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

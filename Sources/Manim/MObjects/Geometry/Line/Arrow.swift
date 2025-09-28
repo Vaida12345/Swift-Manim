@@ -29,12 +29,12 @@ public class Arrow: Line {
     ///   - padding: The paddings between the line and `start`, `end`.
     ///   - tip: The tip shape
     public init(from start: Point, to end: Point, width: Double = 4, color: Color = .white, padding: Double = 0, tip: Arrow.TipShape = .triangle.filled) {
-        super.init(manim.Arrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip.pythonObject))
+        super.init(_pythonObject: manim.Arrow(start: start, end: end, stroke_width: width, color: color, buff: padding, tip_shape: tip.pythonObject))
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

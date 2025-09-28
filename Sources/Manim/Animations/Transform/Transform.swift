@@ -87,7 +87,7 @@ extension MObject {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/Transform.mov)
     public func transform(to target: MObject, style transform: Transform.Style = .plain) -> Transform {
-        Transform(base: self.pythonObject, caller: transform.pythonObject, arguments: [("", target.pythonObject)])
+        Transform(base: self._pythonObject, caller: transform.pythonObject, arguments: [("", target._pythonObject)])
     }
     
 }

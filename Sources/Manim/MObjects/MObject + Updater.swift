@@ -9,6 +9,71 @@ import Foundation
 import PythonKit
 
 
+/// A controller for ``MObject`` updater.
+///
+/// You can use ``MObject/addUpdater(index:initial:handler:)`` to obtain an updater.
+///
+/// ```swift
+/// let independent = Dot(color: .red)
+/// let dependent = Dot(color: .blue)
+///
+/// scene.add(independent, dependent)
+///
+/// let updater = dependent.addUpdater {
+///     dependent.x = independent.x
+/// }
+///
+/// withAnimation {
+///     independent.move(to: [2, 2])
+/// } // dependent will also move to [2, 0]
+///
+/// updater.removeFromParent()
+///
+/// withAnimation {
+///     independent.move(to: [-2, -2])
+/// } // dependent will remain at the same place
+/// ```
+///
+/// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
+@MainActor
+public struct Updater {
+    
+    let origin: PythonObject
+    
+    let updater: PythonObject
+    
+    
+    /// Removes the updater from parent.
+    ///
+    /// ```swift
+    /// let independent = Dot(color: .red)
+    /// let dependent = Dot(color: .blue)
+    ///
+    /// scene.add(independent, dependent)
+    ///
+    /// let updater = dependent.addUpdater {
+    ///     dependent.x = independent.x
+    /// }
+    ///
+    /// withAnimation {
+    ///     independent.move(to: [2, 2])
+    /// } // dependent will also move to [2, 0]
+    ///
+    /// updater.removeFromParent()
+    ///
+    /// withAnimation {
+    ///     independent.move(to: [-2, -2])
+    /// } // dependent will remain at the same place
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
+    public func removeFromParent() {
+        origin.remove_updater(updater)
+    }
+    
+}
+
+
 extension MObject {
     
     /// Add an update function to *this* object.
@@ -59,8 +124,8 @@ extension MObject {
         }))
         Python.exec(code, main.__dict__)
         
-        self.pythonObject.add_updater(main.__dict__[uniqueName], index: index, call_updater: initial)
-        return Updater(origin: self.pythonObject, updater: main.__dict__[uniqueName])
+        self._pythonObject.add_updater(main.__dict__[uniqueName], index: index, call_updater: initial)
+        return Updater(origin: self._pythonObject, updater: main.__dict__[uniqueName])
     }
     
     /// Removes every updater.
@@ -68,7 +133,7 @@ extension MObject {
     /// - Parameters:
     ///   - recursive: Whether to recursively remove all updaters for all children.
     public func removeAllUpdaters(recursive: Bool = true) {
-        self.pythonObject.clear_updater(recursive: recursive)
+        self._pythonObject.clear_updater(recursive: recursive)
     }
     
     /// Disable updating from updaters and animations.
@@ -78,7 +143,7 @@ extension MObject {
     ///
     /// - SeeAlso: ``resume(recursive:)``
     public func pause(recursive: Bool = true) {
-        self.pythonObject.suspend_updating(recursive: recursive)
+        self._pythonObject.suspend_updating(recursive: recursive)
     }
     
     /// Enable updating from updaters and animations.
@@ -88,74 +153,8 @@ extension MObject {
     ///
     /// - SeeAlso: ``pause(recursive:)``
     public func resume(recursive: Bool = true) {
-        self.pythonObject.resume_updating(recursive: recursive)
+        self._pythonObject.resume_updating(recursive: recursive)
     }
-    
-    
-    /// A controller for ``MObject`` updater.
-    ///
-    /// You can use ``MObject/addUpdater(index:initial:handler:)`` to obtain an updater.
-    ///
-    /// ```swift
-    /// let independent = Dot(color: .red)
-    /// let dependent = Dot(color: .blue)
-    ///
-    /// scene.add(independent, dependent)
-    ///
-    /// let updater = dependent.addUpdater {
-    ///     dependent.x = independent.x
-    /// }
-    ///
-    /// withAnimation {
-    ///     independent.move(to: [2, 2])
-    /// } // dependent will also move to [2, 0]
-    ///
-    /// updater.removeFromParent()
-    ///
-    /// withAnimation {
-    ///     independent.move(to: [-2, -2])
-    /// } // dependent will remain at the same place
-    /// ```
-    ///
-    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
-    @MainActor
-    public struct Updater {
-        
-        let origin: PythonObject
-        
-        let updater: PythonObject
-        
-        
-        /// Removes the updater from parent.
-        ///
-        /// ```swift
-        /// let independent = Dot(color: .red)
-        /// let dependent = Dot(color: .blue)
-        ///
-        /// scene.add(independent, dependent)
-        ///
-        /// let updater = dependent.addUpdater {
-        ///     dependent.x = independent.x
-        /// }
-        ///
-        /// withAnimation {
-        ///     independent.move(to: [2, 2])
-        /// } // dependent will also move to [2, 0]
-        ///
-        /// updater.removeFromParent()
-        ///
-        /// withAnimation {
-        ///     independent.move(to: [-2, -2])
-        /// } // dependent will remain at the same place
-        /// ```
-        ///
-        /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
-        public func removeFromParent() {
-            origin.remove_updater(updater)
-        }
-        
-    }
-    
 }
 
 
@@ -164,6 +163,51 @@ extension MObject {
     func addUpdater(_ closure: @autoclosure @escaping () -> AttachedAnimation) -> AttachedAnimation {
         self.addUpdater { let _ = closure() } // ignores the returned animation.
         return closure()
+    }
+    
+}
+
+
+extension MObject {
+    
+    /// Binds `keyPath` to `target`.
+    ///
+    /// You can use `bind` to ensure two properties are always in sync.
+    ///
+    /// ```swift
+    /// let dot1 = Dot(at: [0, 2], color: .blue)
+    /// let dot2 = Dot(at: .center, color: .green)
+    ///
+    /// scene.add(dot1, dot2)
+    ///
+    /// dot1.bind(\.x, to: dot2.x)
+    ///
+    /// withAnimation {
+    ///     dot2.move(to: [2, 0])
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/bind.mov)
+    ///
+    /// - Parameters:
+    ///   - keyPath: The key path of the property to be bind to `target`.
+    ///   - target: The target property.
+    public func bind<T>(
+        _ keyPath: ReferenceWritableKeyPath<Self, T>,
+        to target: @autoclosure @escaping () -> T,
+    ) where T: PythonConvertible & ConvertibleFromPython {
+        self.addUpdater {
+            self[keyPath: keyPath] = target()
+        }
+    }
+    
+    /// Binds `keyPath` to `object`.`onKeyPath`.
+    @available(*, deprecated, renamed: "bind")
+    public func link<T>(
+        _ keyPath: ReferenceWritableKeyPath<Self, T>,
+        to target: @autoclosure @escaping () -> T,
+    ) where T: PythonConvertible & ConvertibleFromPython {
+        self.bind(keyPath, to: target())
     }
     
 }

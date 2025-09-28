@@ -6,7 +6,7 @@
 //
 
 
-extension MObject {
+extension VMObject {
     
     /// The contained objects
     ///
@@ -14,8 +14,8 @@ extension MObject {
     /// let rect = HStack(Square(length: 2), Triangle())
     /// rect.children // [MObject(Square), MObject(Triangle)]
     /// ```
-    public var children: [MObject] {
-        self.pythonObject.submobjects.map({ MObject($0) })
+    public var children: [VMObject] {
+        self._pythonObject.submobjects.map({ VMObject(_pythonObject: $0) })
     }
     
 }

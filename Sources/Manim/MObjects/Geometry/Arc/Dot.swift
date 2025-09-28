@@ -25,12 +25,27 @@ public final class Dot: Circle {
     ///   - color: The color of the dot.
     public init(at point: Point = .center, radius: Double = 0.08, color: Color = .white) {
         let object = manim.Dot(point: point, radius: radius, fill_opacity: color.alpha, color: color)
-        super.init(object)
+        super.init(_pythonObject: object)
+    }
+    
+    /// Creates a dot
+    ///
+    /// - Parameters:
+    ///   - point: The location of the dot.
+    ///   - radius: The radius of the dot.
+    ///   - color: The color of the dot.
+    public init(at point: Projection<Point>, radius: Double = 0.08, color: Color = .white) {
+        let object = manim.Dot(point: point.wrappedValue, radius: radius, fill_opacity: color.alpha, color: color)
+        super.init(_pythonObject: object)
+        
+        self.addUpdater {
+            self.move(to: point.wrappedValue)
+        }
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

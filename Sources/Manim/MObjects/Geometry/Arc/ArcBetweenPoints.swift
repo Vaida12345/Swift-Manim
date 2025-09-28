@@ -51,7 +51,7 @@ public class ArcBetweenPoints: Arc {
     ///   - color: The stroke color.
     public init(radius: Double, start: Angle = .zero, angle: Angle, center: Point = .center, width: Double = 4, color: Color = .white) {
         let object = manim.ArcBetweenPoints(radius: radius, start_angle: start.radians, angle: angle.radians, arc_center: center, stroke_width: width, color: color)
-        super.init(object)
+        super.init(_pythonObject: object)
     }
     
     /// Creates an arc.
@@ -65,12 +65,12 @@ public class ArcBetweenPoints: Arc {
     ///   - color: The stroke color.
     public init(radius: Double, start: Point, end: Point, angle: Angle = .degrees(45), width: Double = 4, color: Color = .white) {
         let object = manim.ArcBetweenPoints(radius: radius, start: start, end: end, angle: angle.radians, stroke_width: width, color: color)
-        super.init(object)
+        super.init(_pythonObject: object)
     }
     
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

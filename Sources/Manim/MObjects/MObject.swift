@@ -24,21 +24,28 @@ import PythonKit
 ///
 /// ![Preview](coord)
 @MainActor
-public class MObject: @MainActor CustomStringConvertible, @MainActor Transformable {
+public protocol MObject: Transformable, CustomStringConvertible {
     
-    internal var pythonObject: PythonKit.PythonObject
+    var _pythonObject: PythonObject { get }
+    
+    init(_pythonObject: PythonObject)
+    
+}
+
+
+
+extension MObject {
     
     public var description: String {
-        "\(type(of: self))(\(self.pythonObject))"
+        "\(type(of: self as Any))(\(self._pythonObject))"
     }
     
-    public var _transformable: PythonObject {
-        self.pythonObject
-    }
-    
-    /// Creates an instance with the initializer.
-    internal required init(_ pythonObject: PythonObject) {
-        self.pythonObject = pythonObject
+    /// The origin point.
+    ///
+    /// The origin of an object is defined by its child class. In most cases, it is the ``center``.
+    public var origin: Point {
+        get { self.center }
+        set { self.center = newValue }
     }
     
     
@@ -65,14 +72,14 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     
     /// Add `child` as sub object.
     public func add(_ child: MObject) {
-        self.pythonObject.add(child.pythonObject)
+        self._pythonObject.add(child._pythonObject)
     }
     
     /// Remove `child` as sub object.
     ///
     /// - Note: This has no effect if `child` is not a children of `self`.
     public func remove(_ child: MObject) {
-        self.pythonObject.remove(child.pythonObject)
+        self._pythonObject.remove(child._pythonObject)
     }
     
     /// Edit points, colors and sub objects to be identical to another ``MObject``.
@@ -98,7 +105,7 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     @discardableResult
     public func become(_ target: MObject, matchHeight: Bool = false, matchWidth: Bool = false, matchDepth: Bool = false, matchCenter: Bool = false, stretch: Bool = false) -> AttachedAnimation {
         var closure = Closure("become")
-        closure.append("", target.pythonObject)
+        closure.append("", target._pythonObject)
         closure.append("match_height", matchHeight)
         closure.append("match_width",  matchWidth)
         closure.append("match_depth",  matchDepth)
@@ -110,7 +117,7 @@ public class MObject: @MainActor CustomStringConvertible, @MainActor Transformab
     
     /// Create and return an identical deep copy of the object including all children.
     public func copied() -> Self {
-        Self(self.pythonObject.copy())
+        Self(_pythonObject: self._pythonObject.copy())
     }
     
     /// Scales the instance to fit the `height` while keeping width/depth proportional.

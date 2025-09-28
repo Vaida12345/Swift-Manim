@@ -15,19 +15,19 @@ public class ParametricFunction: VMObject {
     
     /// Evaluate a function.
     public func callAsFunction(_ x: Double) -> Double {
-        Double(self.pythonObject.get_function()(x)[1])!
+        Double(self._pythonObject.get_function()(x)[1])!
     }
     
     /// The integral of `self`.
     public var integral: ParametricFunction {
         let axes = Axes()
-        return ParametricFunction(axes.pythonObject.plot_antiderivative_graph(self.pythonObject))
+        return ParametricFunction(_pythonObject: axes._pythonObject.plot_antiderivative_graph(self._pythonObject))
     }
     
     /// The derivative of `self`.
     public var derivative: ParametricFunction {
         let axes = Axes()
-        return ParametricFunction(axes.pythonObject.plot_derivative_graph(self.pythonObject))
+        return ParametricFunction(_pythonObject: axes._pythonObject.plot_derivative_graph(self._pythonObject))
     }
     
 }

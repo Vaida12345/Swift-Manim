@@ -47,11 +47,11 @@ public final class TracedPath: VMObject {
             opacity = color.alpha.pythonObject
         }
         
-        super.init(manim.TracedPath(traced_point_func: method, stroke_width: width, stroke_opacity: opacity, stroke_color: color, dissipating_time: dissipatingTime))
+        super.init(_pythonObject: manim.TracedPath(traced_point_func: method, stroke_width: width, stroke_opacity: opacity, stroke_color: color, dissipating_time: dissipatingTime))
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

@@ -35,7 +35,7 @@ extension Axes {
             function(Double(object)!)
         }
         
-        return ParametricFunction(manim.FunctionGraph(function, color: color, x_range: range))
+        return ParametricFunction(_pythonObject: manim.FunctionGraph(function, color: color, x_range: range))
     }
     
     /// Returns the angle to the x-axis of the tangent to the plotted curve at a particular x-value.
@@ -44,7 +44,7 @@ extension Axes {
     ///   - x: The x-value at which the tangent must touch the curve.
     ///   - function: The function for which to calculate the tangent.
     public func tangentAngle(of function: ParametricFunction, at x: Double) -> Double {
-        Double(self.pythonObject.angle_of_tangent(x, function.pythonObject))!
+        Double(self._pythonObject.angle_of_tangent(x, function._pythonObject))!
     }
     
     /// Returns the slope of the tangent to the plotted curve at a particular x-value.
@@ -53,7 +53,7 @@ extension Axes {
     ///   - x: The x-value at which the tangent must touch the curve.
     ///   - function: The function for which to calculate the tangent.
     public func tangentSlope(of function: ParametricFunction, at x: Double) -> Double {
-        Double(self.pythonObject.slope_of_tangent(x, function.pythonObject))!
+        Double(self._pythonObject.slope_of_tangent(x, function._pythonObject))!
     }
     
     /// Creates a labelled triangle marker with a vertical line from the x-axis to a curve at a given x-value.
@@ -75,7 +75,7 @@ extension Axes {
     ///
     /// ![Preview](Axes_label)
     public func label(xValue: Double, of function: ParametricFunction, label: String? = nil, color: Color = .white) -> Group {
-        Group(self.pythonObject.get_T_label(x_val: xValue, graph: function.pythonObject, label: label ?? xValue.description, triangle_color: color, line_color: color))
+        Group(_pythonObject: self._pythonObject.get_T_label(x_val: xValue, graph: function._pythonObject, label: label ?? xValue.description, triangle_color: color, line_color: color))
     }
     
     /// Returns a Polygon representing the area under the graph passed.
@@ -97,7 +97,7 @@ extension Axes {
     ///
     /// ![Preview](Axes_integral)
     public func integral(_ range: ClosedRange<Double>, of function: ParametricFunction, _ secondFunction: ParametricFunction? = nil, color: Color = .green.opacity(0.3)) -> Polygon {
-        Polygon(self.pythonObject.get_area(graph: function.pythonObject, x_range: [range.lowerBound, range.upperBound], color: color, opacity: color.alpha, bounded_graph: secondFunction?.pythonObject))
+        Polygon(_pythonObject: self._pythonObject.get_area(graph: function._pythonObject, x_range: [range.lowerBound, range.upperBound], color: color, opacity: color.alpha, bounded_graph: secondFunction?._pythonObject))
     }
     
     /// Creates a properly positioned label & dot for the passed graph.
@@ -120,7 +120,7 @@ extension Axes {
     /// ![Preview](Axes_label_pointAt)
     public func label(pointAt x: Double, of function: ParametricFunction, label: String? = nil, color: Color? = nil) -> Group {
         let y = function(x)
-        return Group(self.pythonObject.get_graph_label(graph: function.pythonObject, label: label ?? "(\(x, format: .number.precision(2)), \(y, format: .number.precision(2)))", x_val: x, color: color, direction: numpy.array([x, y, 0]), dot: true))
+        return Group(_pythonObject: self._pythonObject.get_graph_label(graph: function._pythonObject, label: label ?? "(\(x.userFriendlyDescription), \(y.userFriendlyDescription))", x_val: x, color: color, direction: numpy.array([x, y, 0]), dot: true))
     }
     
     /// Generate both horizontal and vertical lines from the axis to a point.
@@ -139,16 +139,16 @@ extension Axes {
     ///
     /// ![Preview](Axes_makeLines)
     public func makeLines(to point: Point, width: Double = 2, color: Color = .white) -> Group {
-        return Group(self.pythonObject.get_lines_to_point(point: point, stroke_width: width, color: color))
+        return Group(_pythonObject: self._pythonObject.get_lines_to_point(point: point, stroke_width: width, color: color))
     }
     
     /// Accepts coordinates and returns a point with respect to the `destination`.
     public func convert(_ point: Point, from source: CoordinateSpace, to destination: CoordinateSpace) -> Point {
         switch (source, destination) {
         case (.canvas, .axis):
-            Point(self.pythonObject.coords_to_point(point))!
+            Point(self._pythonObject.coords_to_point(point))!
         case (.axis, .canvas):
-            Point(self.pythonObject.point_to_coords(point))!
+            Point(self._pythonObject.point_to_coords(point))!
         default:
             point
         }

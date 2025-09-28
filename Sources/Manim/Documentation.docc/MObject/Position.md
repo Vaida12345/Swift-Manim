@@ -21,7 +21,7 @@ Follow the same guideline, the ``MObject/origin`` of an object is defined to be 
 
 ## Positioning
 
-Although you can use ``MObject/origin`` or ``Transformable/move(to:alignedEdges:coordinateMask:)-(Point,_,_)`` to retrieve and move objects using its absolute coordinate, which you can use the ``NumberPlane`` as a reference. It is suggested to use relative layouts, such as ``MObject/move(below:padding:)-(Point,_)`` or ``SceneProxy/arrange(_:direction:spacing:)-(MObject...,_,_)``.
+Although you can use ``MObject/origin`` or ``Transformable/move(to:alignedEdges:coordinateMask:)-(Point,_,_)`` to retrieve and move objects using its absolute coordinate, which you can use the ``NumberPlane`` as a reference. It is suggested to use relative layouts, such as ``Transformable/move(below:padding:)-(Point,_)`` or ``SceneProxy/arrange(_:direction:spacing:)-(MObject...,_,_)``.
 
 
 
@@ -47,16 +47,17 @@ Although you can use ``MObject/origin`` or ``Transformable/move(to:alignedEdges:
 ### Move Suite
 - ``Transformable/move(to:alignedEdges:coordinateMask:)-(Point,_,_)``
 - ``Transformable/move(above:padding:)-(Point,_)``
-- ``Transformable/move(below:padding:)``
+- ``Transformable/move(below:padding:)-(Point,_)``
 - ``Transformable/move(leftOf:padding:)-(Point,_)``
 - ``Transformable/move(rightOf:padding:)-(Point,_)``
+- ``Transformable/move(_:of:padding:)-(_,Point,_)``
 
 ### Implicit Move
-- ``MObject/shift(by:)``
-- ``MObject/moveAlong(pathOf:)``
-- ``MObject/rotate(angle:axis:)``
-- ``MObject/scale(_:stroke:)``
-- ``MObject/flip(axis:)``
+- ``Transformable/shift(by:)``
+- ``Transformable/moveAlong(pathOf:)``
+- ``Transformable/rotate(angle:about:axis:)``
+- ``Transformable/scale(_:stroke:)``
+- ``Transformable/flip(axis:)``
 
 ### Arrangement
 - ``SceneProxy/arrange(_:direction:spacing:)-(MObject...,_,_)``

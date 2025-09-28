@@ -10,9 +10,9 @@ import PythonKit
 
 /// A protocol indicating that it can be moved.
 @MainActor
-public protocol Transformable {
+public protocol Transformable: AnyObject {
     
-    var _transformable: PythonObject { get }
+    var _pythonObject: PythonObject { get }
     
 }
 
@@ -40,7 +40,7 @@ extension Transformable {
         closure.append("point_or_mobject", target.pythonObject)
         closure.append("aligned_edge", alignedEdges)
         closure.append("coor_mask", coordinateMask)
-        return AttachedAnimation(base: self._transformable, closure: closure)
+        return AttachedAnimation(base: self._pythonObject, closure: closure)
     }
     
     /// Moves to the given point.
@@ -58,10 +58,10 @@ extension Transformable {
     @discardableResult
     public func move(to target: MObject, alignedEdges: Axis = Axis(), coordinateMask: Axis = .all) -> AttachedAnimation {
         var closure = Closure(name: "move_to")
-        closure.append("point_or_mobject", target.pythonObject)
+        closure.append("point_or_mobject", target._pythonObject)
         closure.append("aligned_edge", alignedEdges)
         closure.append("coor_mask", coordinateMask)
-        return AttachedAnimation(base: self._transformable, closure: closure)
+        return AttachedAnimation(base: self._pythonObject, closure: closure)
     }
 
     /// Moves the current object next to `target`.
@@ -71,13 +71,13 @@ extension Transformable {
     ///   - placing: The position of `self` relative to `target`
     ///   - padding: The padding from `self` to `target`
     @discardableResult
-    private func move(nextTo target: Point, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
+    fileprivate func move(nextTo target: Point, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
         var closure = Closure(name: "next_to")
         closure.append("", target.pythonObject)
         closure.append("", placing)
         closure.append("buff", padding)
         
-        return AttachedAnimation(base: self._transformable, closure: closure)
+        return AttachedAnimation(base: self._pythonObject, closure: closure)
     }
     
     /// Moves the current object next to `target`.
@@ -87,13 +87,13 @@ extension Transformable {
     ///   - placing: The position of `self` relative to `target`
     ///   - padding: The padding from `self` to `target`
     @discardableResult
-    private func move(nextTo target: MObject, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
+    fileprivate func move(nextTo target: MObject, placing: Direction, padding: Double = 0.25) -> AttachedAnimation {
         var closure = Closure(name: "next_to")
-        closure.append("", target.pythonObject)
+        closure.append("", target._pythonObject)
         closure.append("", placing)
         closure.append("buff", padding)
         
-        return AttachedAnimation(base: self._transformable, closure: closure)
+        return AttachedAnimation(base: self._pythonObject, closure: closure)
     }
     
     /// Move `self` below `target`.
@@ -192,7 +192,7 @@ extension Transformable {
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/shift.mov)
     @discardableResult
     public func shift(by point: Point) -> AttachedAnimation {
-        AttachedAnimation(base: self._transformable, closure: Closure("shift", [("", point)]))
+        AttachedAnimation(base: self._pythonObject, closure: Closure("shift", [("", point)]))
     }
     
     /// Moves the object along the border of the `path` object.
@@ -209,7 +209,7 @@ extension Transformable {
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/moveAlong_pathOf.mov)
     @discardableResult
     public func moveAlong(pathOf object: MObject) -> WrappedAnimation {
-        WrappedAnimation(base: self._transformable, caller: manim.MoveAlongPath, arguments: [("", object.pythonObject)])
+        WrappedAnimation(base: self._pythonObject, caller: manim.MoveAlongPath, arguments: [("", object._pythonObject)])
     }
     
     /// Rotates the object about a certain point.
@@ -217,6 +217,7 @@ extension Transformable {
     /// - Parameters:
     ///   - angle: The rotation angle.
     ///   - axis: The rotation axis.
+    ///   - point: The rotation center.
     ///
     /// ```swift
     /// let rect = Rectangle(width: 4, height: 2)
@@ -228,8 +229,8 @@ extension Transformable {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/rotate.mov)
     @discardableResult
-    public func rotate(angle: Angle, axis: Axis = .z) -> AttachedAnimation {
-        AttachedAnimation(base: self._transformable, closure: Closure("rotate", [("angle", angle.radians), ("axis", axis)]))
+    public func rotate(angle: Angle, about point: Point? = nil, axis: Axis = .z) -> AttachedAnimation {
+        AttachedAnimation(base: self._pythonObject, closure: Closure("rotate", [("angle", angle.radians), ("axis", axis), ("about_point", point)]))
     }
     
     /// Scale the object by a factor.
@@ -249,7 +250,7 @@ extension Transformable {
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/scale.mov)
     @discardableResult
     public func scale(_ factor: Double, stroke: Bool = false) -> AttachedAnimation {
-        AttachedAnimation(base: self._transformable, closure: Closure("scale", [("", factor), ("scale_stroke", stroke)]))
+        AttachedAnimation(base: self._pythonObject, closure: Closure("scale", [("", factor), ("scale_stroke", stroke)]))
     }
     
     /// Flips/Mirrors an object about its center.
@@ -265,7 +266,7 @@ extension Transformable {
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/flip.mov)
     @discardableResult
     public func flip(axis: Axis) -> AttachedAnimation {
-        AttachedAnimation(base: self._transformable, closure: Closure("flip", [("", axis)]))
+        AttachedAnimation(base: self._pythonObject, closure: Closure("flip", [("", axis)]))
     }
     
 }
@@ -375,4 +376,54 @@ extension Transformable {
         self.move(nextTo: target, placing: .right, padding: padding)
     }
     
+    /// Move `self` in reference to `target`.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     dot.move(.left, of: rect)
+    ///     dot.move(.up, of: rect)
+    ///     dot.move(.right, of: rect)
+    ///     dot.move(.down, of: rect)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
+    @discardableResult
+    public func move(_ direction: Direction, of target: MObject, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: direction, padding: padding)
+    }
+    
+    /// Move `self` in reference to `target`.
+    ///
+    /// ```swift
+    /// let dot = Dot()
+    /// let rect = Rectangle(width: 4, height: 2)
+    ///
+    /// withAnimation {
+    ///     dot.move(.left, of: rect)
+    ///     dot.move(.up, of: rect)
+    ///     dot.move(.right, of: rect)
+    ///     dot.move(.down, of: rect)
+    /// }
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/move_left_right.mov)
+    @discardableResult
+    public func move(_ direction: Direction, of target: Point, padding: Double = 0.25) -> AttachedAnimation {
+        self.move(nextTo: target, placing: direction, padding: padding)
+    }
+    
+}
+
+
+extension MObject {
+    
+    /// Move `self` in reference to `target`.
+    @discardableResult
+    public func move(_ direction: Direction, of target: Projection<Point>, padding: Double = 0.25) -> AttachedAnimation {
+        self.addUpdater(self.move(direction, of: target, padding: padding))
+    }
 }

@@ -11,18 +11,18 @@ import PythonKit
 /// A group of vectorized ``MObject``.
 public class Group: VMObject {
     
-    public override var description: String {
+    public var description: String {
         "\(type(of: self as Any))(\(self.children))"
     }
     
-    /// Arranges ``MObject/children`` in `direction`.
+    /// Arranges ``VMObject/children`` in `direction`.
     public func arrange(direction: Direction, spacing: Double = 0.25) {
-        self.pythonObject.arrange(direction, buff: spacing)
+        self._pythonObject.arrange(direction, buff: spacing)
     }
     
     public init(_ children: [MObject]) {
-        let object = manim.Group.dynamicallyCall(withArguments: children.map(\.pythonObject))
-        super.init(object)
+        let object = manim.Group.dynamicallyCall(withArguments: children.map(\._pythonObject))
+        super.init(_pythonObject: object)
     }
     
     @_disfavoredOverload
@@ -31,7 +31,7 @@ public class Group: VMObject {
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {

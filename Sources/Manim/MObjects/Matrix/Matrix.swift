@@ -18,32 +18,32 @@ import PythonKit
 public class Matrix: VMObject {
     
     /// The left and right brackets, packed in an array.
-    public var brackets: Array<MObject> {
-        self.pythonObject.get_brackets().map { MObject($0) }
+    public var brackets: Array<VMObject> {
+        self._pythonObject.get_brackets().map { VMObject(_pythonObject: $0) }
     }
     
     /// Return rows of the matrix.
     public var rows: Array<Group> {
-        self.pythonObject.get_rows().map { Group($0) }
+        self._pythonObject.get_rows().map { Group(_pythonObject: $0) }
     }
     
     /// Return columns of the matrix.
     public var columns: Array<Group> {
-        self.pythonObject.get_columns().map { Group($0) }
+        self._pythonObject.get_columns().map { Group(_pythonObject: $0) }
     }
     
     /// The entries of the matrix, in row-major order.
     public var entries: Array<Group> {
-        self.pythonObject.get_entries().map { Group($0) }
+        self._pythonObject.get_entries().map { Group(_pythonObject: $0) }
     }
     
     /// Creates a matrix.
     public init(_ lists: [[some PythonConvertible]], leftBracket: String = "[", rightBracket: String = "]") {
-        super.init(manim.Matrix(lists, left_bracket: leftBracket, right_bracket: rightBracket))
+        super.init(_pythonObject: manim.Matrix(lists, left_bracket: leftBracket, right_bracket: rightBracket))
     }
     
     @_disfavoredOverload
-    required init(_ pythonObject: PythonObject) { super.init(pythonObject) }
+    required init(_pythonObject: PythonObject) { super.init(_pythonObject: _pythonObject) }
     
     @_disfavoredOverload
     required init(_ name: String, stroke: Color?, strokeWidth: Double?, fill: Color?, _ builder: (inout Closure.Arguments) -> Void) {
