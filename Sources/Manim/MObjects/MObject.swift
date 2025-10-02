@@ -24,7 +24,7 @@ import PythonKit
 ///
 /// ![Preview](coord)
 @MainActor
-public protocol MObject: Transformable, CustomStringConvertible {
+public protocol MObject: Transformable, CustomStringConvertible, CustomDebugStringConvertible {
     
     var _pythonObject: PythonObject { get }
     
@@ -36,6 +36,15 @@ extension MObject {
     
     public var description: String {
         "\(type(of: self as Any))(\(self._pythonObject))"
+    }
+    
+    public var debugDescription: String {
+        var description = self.description
+        description += " {\n"
+        for element in self._pythonObject.__dict__ {
+            description += "    \(element): \(self._pythonObject[dynamicMember: String(element)!])\n"
+        }
+        return description + "}"
     }
     
     /// The origin point.

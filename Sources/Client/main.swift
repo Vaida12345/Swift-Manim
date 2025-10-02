@@ -15,21 +15,7 @@ try await withManim { scene in
         "g(x)\\frac{d}{dx}f(x)"
     )
     
-    let box1 = SurroundingRectangle(text.children[1], padding: 0.1)
-    let box2 = SurroundingRectangle(text.children[3], padding: 0.1)
-    
-    withAnimation {
-        text.show(animation: .write)
-        box1.show(animation: .create)
-    }
-    
-    scene.sleep()
-    
-    withAnimation {
-        box1.transform(to: box2, style: .replace)
-    }
-    
-    scene.sleep()
+    debugPrint(text)
 } configuration: {
     $0.preview = false
     $0.quality = .high

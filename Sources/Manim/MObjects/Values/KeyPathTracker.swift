@@ -25,7 +25,7 @@ final class KeyPathTracker: ValueTracker {
         }
     }
     
-    required init(_pythonObject: PythonObject) {
+    override init(_pythonObject: PythonObject) {
         fatalError()
     }
     

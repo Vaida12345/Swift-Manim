@@ -41,12 +41,16 @@ public class Projection<T>: @MainActor MObject where T: PythonConvertible & Conv
         }
     }
     
-    public required init(_pythonObject: PythonObject) {
+    init(_pythonObject: PythonObject) {
         self.get = nil
         self._pythonObject = _pythonObject
     }
     
-    init(get: @escaping () -> T) {
+    /// Creates a projection using the `get` closure.
+    ///
+    /// - Parameters:
+    ///   - get: On access, the ``wrappedValue`` will be evaluated using the provided closure.
+    public init(get: @escaping () -> T) {
         self.get = get
         self._pythonObject = manim.Mobject()
     }
