@@ -54,6 +54,11 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
         Point(x: 0, y: 0)
     }
     
+    /// The point at (0, 0).
+    public static var zero: Point {
+        Point(x: 0, y: 0)
+    }
+    
     public init?(_ object: PythonKit.PythonObject) {
         guard let array = Array<Double>(object) else { return nil }
         self.init(array)

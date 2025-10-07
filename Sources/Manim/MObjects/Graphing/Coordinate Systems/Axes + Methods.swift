@@ -146,9 +146,9 @@ extension Axes {
     public func convert(_ point: Point, from source: CoordinateSpace, to destination: CoordinateSpace) -> Point {
         switch (source, destination) {
         case (.canvas, .axis):
-            Point(self._pythonObject.coords_to_point(point))!
-        case (.axis, .canvas):
             Point(self._pythonObject.point_to_coords(point))!
+        case (.axis, .canvas):
+            Point(self._pythonObject.coords_to_point.dynamicallyCall(withArguments: [point.x, point.y, point.z]))!
         default:
             point
         }

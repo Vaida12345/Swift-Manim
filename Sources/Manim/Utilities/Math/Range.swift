@@ -56,7 +56,7 @@ public struct Range: @MainActor PythonConvertible {
     
     /// Adjust the max by `+1` to make space for `tip`.
     func _adjustForTip(hasTip: Bool) -> Range {
-        Range(self.min, self.max + 1, step: self.step)
+        Range(self.min, hasTip ? self.max + 1 : self.max, step: self.step)
     }
     
     func _expandBothSides(by amount: Double) -> Range {

@@ -10,13 +10,15 @@ import Foundation
 
 
 try await withManim { scene in
-    let text = MathTex(
-        "\\frac{d}{dx}f(x)g(x)=","f(x)\\frac{d}{dx}g(x)","+",
-        "g(x)\\frac{d}{dx}f(x)"
-    )
+    let axes = Axes(domain: Range(-3, 8), range: Range(-1, 1), width: 11, height: 2, xStyle: [], yStyle: [])
+    scene.add(axes)
     
-    debugPrint(text)
+    let circle = Circle()
+    circle.origin = axes.convert(.zero, from: .axis, to: .canvas)
+    print(axes.convert(.zero, from: .axis, to: .canvas))
+    print(axes.convert(.zero, from: .canvas, to: .axis))
+    scene.add(circle)
 } configuration: {
     $0.preview = false
-    $0.quality = .high
+//    $0.quality = .high
 }
