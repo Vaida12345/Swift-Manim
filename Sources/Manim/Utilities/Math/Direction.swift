@@ -11,7 +11,7 @@ import PythonKit
 
 /// Primary compass directions in a 2D plane.
 @MainActor
-public struct Direction: Equatable, @MainActor PythonConvertible {
+public struct Direction: Equatable, @MainActor PythonConvertible, @MainActor ConvertibleFromPython {
     
     public let pythonObject: PythonObject
     
@@ -29,6 +29,10 @@ public struct Direction: Equatable, @MainActor PythonConvertible {
     
     init(pythonObject: PythonObject) {
         self.pythonObject = pythonObject
+    }
+    
+    public init?(_ object: PythonObject) {
+        self.pythonObject = object
     }
     
     /// Creates a direction by normalizing a point to a unit vector.

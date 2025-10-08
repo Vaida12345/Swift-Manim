@@ -50,7 +50,7 @@ public struct ShowAnimation {
     /// Fade In.
     ///
     /// - Parameters:
-    ///   - shift: Fade in with shift, with the direction being `shift`.
+    ///   - shift: The direction to which the object will be shifted.
     ///   - scale: Fade in with scale. `scale` defines the initial scaling.
     public static func fadeIn(shift: Direction? = nil, scale: Double? = nil) -> ShowAnimation {
         ShowAnimation(caller: manim.FadeIn, arguments: [("shift", shift), ("scale", scale)])
@@ -89,6 +89,26 @@ public struct ShowAnimation {
 
 
 extension MObject {
+    
+    /// Show the object.
+    ///
+    /// To animate the action, you must wrap it with ``withAnimation(_:in:body:)``.
+    @discardableResult
+    @_disfavoredOverload
+    public func show(animation: ShowAnimation = .create) -> Animation {
+        if !shouldUseAnimation {
+            scene.add(self._pythonObject)
+            return EmptyAnimation()
+        } else {
+            return WrappedAnimation(base: self._pythonObject, caller: animation.caller, arguments: animation.arguments)
+        }
+    }
+    
+}
+
+
+
+extension VMObject {
     
     /// Show the object.
     ///

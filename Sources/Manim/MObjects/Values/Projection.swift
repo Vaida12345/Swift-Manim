@@ -41,7 +41,7 @@ public class Projection<T>: @MainActor MObject where T: PythonConvertible & Conv
         }
     }
     
-    init(_pythonObject: PythonObject) {
+    required public init(_pythonObject: PythonObject) {
         self.get = nil
         self._pythonObject = _pythonObject
     }
@@ -64,6 +64,23 @@ extension MObject {
         Projection {
             self[keyPath: keyPath]
         }
+    }
+    
+}
+
+
+extension Projection {
+    
+    /// Defines a constant projection.
+    public static func constant(_ value: T) -> Projection {
+        Projection(get: { value })
+    }
+    
+    /// Defines a value that is evaluated on each update.
+    ///
+    /// This is the equivalent of calling the ``Projection/init(get:)`` initializer.
+    public static func evaluate(_ value: @autoclosure @escaping () -> T) -> Projection {
+        Projection(get: value)
     }
     
 }

@@ -227,3 +227,15 @@ extension VMObject {
     }
     
 }
+
+
+extension VMObject {
+    
+    /// Cast `self` as `T`.
+    ///
+    /// - Warning: There is no way for the compiler to know if the type-cast is valid. Runtime error will occur if the casting fails.
+    public func `as`<T>(_ type: T.Type) -> T where T: VMObject {
+        T(_pythonObject: self._pythonObject)
+    }
+    
+}

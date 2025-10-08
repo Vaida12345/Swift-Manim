@@ -28,6 +28,8 @@ public protocol MObject: Transformable, CustomStringConvertible, CustomDebugStri
     
     var _pythonObject: PythonObject { get }
     
+    init(_pythonObject: PythonObject)
+    
 }
 
 

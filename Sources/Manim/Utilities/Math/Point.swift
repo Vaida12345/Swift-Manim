@@ -119,4 +119,10 @@ extension Projection<Point> {
         }
     }
     
+    public static func + (lhs: Projection<Point>, rhs: @autoclosure @escaping () -> Point) -> Projection<Point> {
+        Projection {
+            lhs.wrappedValue + rhs()
+        }
+    }
+    
 }

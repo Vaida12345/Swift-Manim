@@ -37,7 +37,7 @@ public final class Transform: WrappedAnimation {
     }
     
     
-    override func callAsFunction() -> PythonObject {
+    override func callAsFunction(animation: RateFunction) -> PythonObject {
         var body: PythonObject {
             var arguments = self.arguments
             arguments.insert("", self.base, at: 0)
@@ -50,6 +50,7 @@ public final class Transform: WrappedAnimation {
             arguments.append("", body)
             arguments.append("run_time", self.duration)
             arguments.append("lag_ratio", self.lagRatio)
+            arguments.append("rate_func", self.rateFunction ?? animation)
             
             return manim.AnimationGroup.dynamicallyCall(withKeywordArguments: arguments)
         }

@@ -23,7 +23,9 @@ public class Animation {
     
     var preAction: () -> Void = { }
     
-    func callAsFunction() -> PythonObject {
+    var rateFunction: RateFunction? = nil
+    
+    func callAsFunction(animation: RateFunction) -> PythonObject {
         fatalError()
     }
     
@@ -64,6 +66,14 @@ extension Animation {
     /// [read more](<doc:Animations>)
     public func lagRatio(_ ratio: Double) -> Self {
         self.lagRatio = ratio
+        return self
+    }
+    
+    /// Specifies the animation used.
+    ///
+    /// If not specified, the animation passed to ``withAnimation(_:in:body:)`` will be used.
+    public func animation(_ function: RateFunction) -> Self {
+        self.rateFunction = function
         return self
     }
     
@@ -136,7 +146,7 @@ public func withAnimation(_ animation: RateFunction = .smooth, in method: Animat
     case .serial:
         for ani in animations {
             ani.preAction()
-            scene.play(ani(), rate_func: animation)
+            scene.play(ani(animation: animation))
             ani.completionHandler()
         }
         
@@ -144,7 +154,7 @@ public func withAnimation(_ animation: RateFunction = .smooth, in method: Animat
         for animation in animations {
             animation.preAction()
         }
-        scene.play(manim.AnimationGroup(animations.map({ $0() })), rate_func: animation)
+        scene.play(manim.AnimationGroup(animations.map({ $0(animation: animation) })))
         for animation in animations {
             animation.completionHandler()
         }

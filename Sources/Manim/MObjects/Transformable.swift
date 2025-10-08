@@ -424,6 +424,12 @@ extension MObject {
     /// Move `self` in reference to `target`.
     @discardableResult
     public func move(_ direction: Direction, of target: Projection<Point>, padding: Double = 0.25) -> AttachedAnimation {
-        self.addUpdater(self.move(direction, of: target, padding: padding))
+        self.addUpdater(self.move(direction, of: target.wrappedValue, padding: padding))
+    }
+    
+    /// Move `self` in reference to `target`.
+    @discardableResult
+    public func move(_ direction: Projection<Direction>, of target: Projection<Point>, padding: Double = 0.25) -> AttachedAnimation {
+        self.addUpdater(self.move(direction.wrappedValue, of: target.wrappedValue, padding: padding))
     }
 }

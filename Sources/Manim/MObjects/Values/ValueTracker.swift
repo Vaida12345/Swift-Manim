@@ -62,7 +62,7 @@ public class ValueTracker: Projection<Double> { // Python `ValueTracker` is alwa
         super.init(_pythonObject: object)
     }
     
-    override init(_pythonObject: PythonObject) {
+    required init(_pythonObject: PythonObject) {
         super.init(_pythonObject: _pythonObject)
     }
     

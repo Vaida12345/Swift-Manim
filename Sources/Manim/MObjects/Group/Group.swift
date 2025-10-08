@@ -21,7 +21,7 @@ public class Group: VMObject {
     }
     
     public init(_ children: [MObject]) {
-        let object = manim.Group.dynamicallyCall(withArguments: children.map(\._pythonObject))
+        let object = manim.VGroup.dynamicallyCall(withArguments: children.map(\._pythonObject))
         super.init(_pythonObject: object)
     }
     

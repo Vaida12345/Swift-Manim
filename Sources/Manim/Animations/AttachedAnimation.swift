@@ -18,12 +18,13 @@ public final class AttachedAnimation: Animation {
     var path: Transform.Path = .straight
     
     
-    override func callAsFunction() -> PythonObject {
+    override func callAsFunction(animation: RateFunction) -> PythonObject {
         var body: PythonObject {
             var args = Closure.Arguments()
             args.append("run_time", self.duration)
             args.append("lag_ratio", self.lagRatio)
             args.append("path_func", self.path)
+            args.append("rate_func", self.rateFunction ?? animation)
             
             return self.base.animate.dynamicallyCall(withKeywordArguments: args)[dynamicMember: self.closure.name].dynamicallyCall(withKeywordArguments: self.closure.arguments)
         }

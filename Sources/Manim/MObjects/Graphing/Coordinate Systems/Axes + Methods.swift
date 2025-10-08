@@ -10,6 +10,14 @@ import PythonKit
 
 extension Axes {
     
+    public var xAxis: NumberLine {
+        NumberLine(_pythonObject: Group(_pythonObject: self._pythonObject.get_axes()).children[0]._pythonObject)
+    }
+    
+    public var yAxis: NumberLine {
+        NumberLine(_pythonObject: Group(_pythonObject: self._pythonObject.get_axes()).children[1]._pythonObject)
+    }
+    
     /// Generates a curve based on a function on `self`.
     ///
     /// Plots a 2D curve on these axes by sampling a Swift closure and converting it into a Manim function graph.
@@ -35,7 +43,7 @@ extension Axes {
             function(Double(object)!)
         }
         
-        return ParametricFunction(_pythonObject: manim.FunctionGraph(function, color: color, x_range: range))
+        return ParametricFunction(_pythonObject: self._pythonObject.plot(function, color: color, x_range: range))
     }
     
     /// Returns the angle to the x-axis of the tangent to the plotted curve at a particular x-value.

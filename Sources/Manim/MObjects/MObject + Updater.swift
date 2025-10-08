@@ -107,19 +107,21 @@ extension MObject {
     ///   - index: The index at which the new updater should be added.
     ///   - initial: Whether the action should be run when this method is first called.
     ///   - handler: The update handler.
+    ///
+    /// - term dt: The time in seconds since the last update call.
     @discardableResult
-    public func addUpdater(index: Int? = nil, initial: Bool = false, handler: @escaping () -> Void) -> Updater {
+    public func addUpdater(index: Int? = nil, initial: Bool = false, handler: @escaping (_ dt: Double) -> Void) -> Updater {
         let uniqueName = "helper_\(UUID().uuidString.replacingOccurrences(of: "-", with: "_"))"
         let bridgeName = "_swift_bridge_\(UUID().uuidString.replacingOccurrences(of: "-", with: "_"))"
         
         let code = """
-        def \(uniqueName)(obj):
-            \(bridgeName)(obj)
+        def \(uniqueName)(obj, dt):
+            \(bridgeName)(obj, dt)
         """
         
         let main = Python.import("__main__")
-        main.__dict__[bridgeName] = PythonObject(PythonFunction({ object in
-            handler()
+        main.__dict__[bridgeName] = PythonObject(PythonFunction({ objects in
+            handler(Double(objects[1])!)
             return Python.None
         }))
         Python.exec(code, main.__dict__)
@@ -128,12 +130,50 @@ extension MObject {
         return Updater(origin: self._pythonObject, updater: main.__dict__[uniqueName])
     }
     
+    /// Add an update function to *this* object.
+    ///
+    /// This function is designed to *update* self, not *observe* self. Hence it might be different from most `KVO` use-cases.
+    ///
+    /// ```swift
+    /// let independent = Dot(color: .red)
+    /// let dependent = Dot(color: .blue)
+    ///
+    /// scene.add(independent, dependent)
+    ///
+    /// let updater = dependent.addUpdater {
+    ///     $0.x = independent.x
+    /// }
+    ///
+    /// withAnimation {
+    ///     independent.move(to: [2, 2])
+    /// } // dependent will also move to [2, 0]
+    ///
+    /// updater.removeFromParent()
+    ///
+    /// withAnimation {
+    ///     independent.move(to: [-2, -2])
+    /// } // dependent will remain at the same place
+    /// ```
+    ///
+    /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/updater.mov)
+    ///
+    /// - Parameters:
+    ///   - index: The index at which the new updater should be added.
+    ///   - initial: Whether the action should be run when this method is first called.
+    ///   - handler: The update handler.
+    @discardableResult
+    public func addUpdater(index: Int? = nil, initial: Bool = false, handler: @escaping () -> Void) -> Updater {
+        self.addUpdater(index: index, initial: initial) { dt in
+            handler()
+        }
+    }
+    
     /// Removes every updater.
     ///
     /// - Parameters:
     ///   - recursive: Whether to recursively remove all updaters for all children.
     public func removeAllUpdaters(recursive: Bool = true) {
-        self._pythonObject.clear_updater(recursive: recursive)
+        self._pythonObject.clear_updaters(recursive: recursive)
     }
     
     /// Disable updating from updaters and animations.
@@ -161,7 +201,7 @@ extension MObject {
 extension MObject {
     
     func addUpdater(_ closure: @autoclosure @escaping () -> AttachedAnimation) -> AttachedAnimation {
-        self.addUpdater { let _ = closure() } // ignores the returned animation.
+        self.addUpdater { _ in let _ = closure() } // ignores the returned animation.
         return closure()
     }
     
