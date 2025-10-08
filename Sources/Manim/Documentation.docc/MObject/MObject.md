@@ -32,7 +32,8 @@
 - ``VMObject/copied()``
 
 ### Updater
-- ``MObject/addUpdater(index:initial:handler:)``
+- ``MObject/addUpdater(index:initial:handler:)-(_,_,()->Void)``
+- ``MObject/addUpdater(index:initial:handler:)-(_,_,(Double)->Void)``
 - ``Updater``
 - ``MObject/track(_:)->ValueTracker``
 - ``MObject/track(_:)->Projection<T>``
@@ -50,3 +51,7 @@
 ### Spawn MObjects
 - ``MObject/trace(_:color:width:dissipatingTime:)``
 - ``MObject/underline(padding:)``
+
+### Structures
+- ``CircumscribeShape``
+- ``CircumscribeStyle``

@@ -23,7 +23,7 @@ try await withManim { scene in
 
     dot.move(to: numberLine.convert(number: $value))
     withAnimation {
-        $value.become(.pi)
+        $value += .pi
     }
 
     scene.sleep()

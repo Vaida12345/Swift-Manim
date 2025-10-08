@@ -114,7 +114,7 @@ withAnimation {
 
 ### Functions
 - ``withAnimation(_:in:body:)``
-- ``alwaysRedraw(makeMObject:)``
+- ``alwaysRedraw(using:)``
 
 ### Binding
 - ``MObject/track(_:)->ValueTracker``

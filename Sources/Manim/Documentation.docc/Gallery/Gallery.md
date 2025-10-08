@@ -253,3 +253,14 @@ scene.sleep()
 ![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/matmul.mov)
 
 [Source code](<doc:matmul>)
+
+## Sine Curve
+
+![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/sine_curve.mov)
+
+ [Source code](<doc:SineCurve>)
+
+## Topics
+### Docs
+- <doc:matmul>
+- <doc:SineCurve>

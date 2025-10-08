@@ -1,6 +1,7 @@
 
-# Matmul example
+# Matmul
 
+Step-by-step guide for calculating matrix multiplication
 
 ## Matrix Multiplication
 

@@ -11,7 +11,7 @@ import PythonKit
 
 /// A controller for ``MObject`` updater.
 ///
-/// You can use ``MObject/addUpdater(index:initial:handler:)`` to obtain an updater.
+/// You can use ``MObject/addUpdater(index:initial:handler:)-(_,_,()->Void)`` to obtain an updater.
 ///
 /// ```swift
 /// let independent = Dot(color: .red)

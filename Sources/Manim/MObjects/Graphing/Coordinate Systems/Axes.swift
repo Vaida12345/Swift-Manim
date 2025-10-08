@@ -30,6 +30,8 @@ public class Axes: Group {
     ///   - range: The `(y_min, y_max, y_step)` values of the y-axis.
     ///   - width: The width of the axes in global coordinate space
     ///   - height: The height of the axes in global coordinate space
+    ///   - xStyle: Specifies the style for the x axis number line.
+    ///   - yStyle: Specifies the style for the y axis number line.
     public init(
         domain: Range? = nil,
         range: Range? = nil,

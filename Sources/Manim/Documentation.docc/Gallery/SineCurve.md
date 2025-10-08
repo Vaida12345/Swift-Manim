@@ -1,9 +1,15 @@
 
 # Sine Curve
 
+Unit circle & sine wave
+
 ## Sine Curve & Unit Circle
 
 ![Video](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/sine_curve.mov)
+
+The video demonstrates the generation of a sine wave by showing a point moving in circular motion, with its vertical projection traced over time to form the wave. 
+
+Pedagogically, this helps students connect abstract trigonometric functions to tangible geometric motion, reinforcing the relationship between circular rotation and oscillatory behavior. By observing how uniform angular motion translates into a periodic vertical displacement, learners can better grasp key sine wave properties, including amplitude, period, and phase, and understand that the wave’s shape arises naturally from circular motion rather than as an arbitrary graph.
 
 ```swift
 let axes = Axes(domain: Range(-3, 18), range: Range(-2, 2), width: 21, height: 4, xStyle: [], yStyle: [])
