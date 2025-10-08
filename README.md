@@ -68,7 +68,7 @@ withAnimation {
 
 ### More Examples
 
-See [Gallery](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Gallery.md)
+See [Gallery](https://github.com/Vaida12345/Swift-Manim/blob/main/Sources/Manim/Documentation.docc/Gallery/Gallery.md)
 
 
 ## Getting Started
