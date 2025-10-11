@@ -72,6 +72,8 @@ public final class ConfigurationProxy {
     public var preview: Bool = true
     
     /// Whether to disable cache, for debugging purposes.
+    ///
+    /// `Manim` comes with cache by default, and this could be troubling during debugging. For example, `print`s won't work as expected in ``MObject/addUpdater(index:initial:handler:)-(_,_,()->Void)``.
     public var disableCache: Bool = false
     
     /// Video quality.
