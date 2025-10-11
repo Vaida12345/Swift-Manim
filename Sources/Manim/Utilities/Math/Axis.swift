@@ -16,7 +16,7 @@ import PythonKit
 ///   - `.z` selects the z-axis
 ///   - `.all` selects all three axes at once
 @MainActor
-public struct Axis: @MainActor OptionSet, @MainActor PythonConvertible {
+public struct Axis: @MainActor OptionSet, @MainActor PythonConvertible, @MainActor CustomStringConvertible {
     
     public let rawValue: UInt8
     
@@ -25,6 +25,17 @@ public struct Axis: @MainActor OptionSet, @MainActor PythonConvertible {
     public static let z = Axis(rawValue: 1 << 2)
     
     public static let all: Axis = [.x, .y, .z]
+    
+    
+    public var description: String {
+        switch self {
+        case .x: ".x"
+        case .y: ".y"
+        case .z: ".z"
+        case .all: ".all"
+        default: [self.contains(.x) ? 1 : 0, self.contains(.y) ? 1 : 0, self.contains(.z) ? 1 : 0].description
+        }
+    }
     
     
     public init(rawValue: UInt8) {

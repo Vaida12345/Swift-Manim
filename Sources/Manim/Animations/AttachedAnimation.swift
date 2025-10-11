@@ -15,7 +15,7 @@ public final class AttachedAnimation: Animation {
     
     let closure: Closure
     
-    var path: Transform.Path = .straight
+    var path: Transform.Path?
     
     
     override func callAsFunction(animation: RateFunction) -> PythonObject {

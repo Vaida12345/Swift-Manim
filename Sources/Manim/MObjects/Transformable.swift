@@ -215,7 +215,7 @@ extension Transformable {
     /// Rotates the object about a certain point.
     ///
     /// - Parameters:
-    ///   - angle: The rotation absolute angle.
+    ///   - angle: The absolute rotation angle.
     ///   - axis: The rotation axis.
     ///   - point: The rotation center.
     ///
@@ -229,8 +229,8 @@ extension Transformable {
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/rotate.mov)
     @discardableResult
-    public func rotate(angle: Angle, about point: Point? = nil, axis: Axis = .z) -> AttachedAnimation {
-        AttachedAnimation(base: self._pythonObject, closure: Closure("rotate", [("angle", angle.radians), ("axis", axis), ("about_point", point)]))
+    public func rotate(angle: Angle, about point: Point? = nil, axis: Axis = .z) -> Transform {
+        Transform(base: self._pythonObject, caller: manim.Rotate, arguments: [("angle", angle.radians), ("axis", axis), ("about_point", point)])
     }
     
     /// Scale the object by a factor.

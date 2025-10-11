@@ -16,8 +16,11 @@ try await withManim { scene in
     let trace = arrow.trace(\.end)
     scene.add(trace)
     
+    let square = Square(length: 0.5)
+    square.shift(by: [0, 2])
+    
     withAnimation {
-        arrow.rotate(angle: .degrees(90), about: .zero)
+        arrow.rotate(angle: .degrees(360), about: .zero)
     }
     
     scene.sleep()

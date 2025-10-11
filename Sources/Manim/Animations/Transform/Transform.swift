@@ -14,7 +14,7 @@ import PythonKit
 @MainActor
 public final class Transform: WrappedAnimation {
     
-    var path: Transform.Path = .straight
+    var path: Transform.Path?
     
     
     /// Sets the path that the transition should follow.
