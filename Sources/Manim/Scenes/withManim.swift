@@ -24,8 +24,8 @@ import OSLog
 ///   - configuration: The constructor for configurations.
 @MainActor
 public func withManim(
-    scene: (SceneProxy) async throws -> Void,
-    configuration: (ConfigurationProxy) async throws -> Void = { _ in },
+    scene: @MainActor (SceneProxy) async throws -> Void,
+    configuration: @MainActor (ConfigurationProxy) async throws -> Void = { _ in },
 ) async throws {
     
     let logger = Logger(subsystem: "Manim", category: "Initialization")
@@ -43,8 +43,8 @@ public func withManim(
     
     let sys = Python.import("sys")
     if let packagesPath = configProxy.pythonPackagesPath {
-        precondition(packagesPath.exists, "Cannot find any packages, please follow README to setup environment.")
-        sys.path.append(packagesPath.path)
+        precondition(packagesPath.exists, "Cannot find python packages, please follow README to setup environment.")
+        sys.path.insert(0, packagesPath.path)
     }
     
     if let latex = configProxy.latexPath {

@@ -215,7 +215,7 @@ extension Transformable {
     /// Rotates the object about a certain point.
     ///
     /// - Parameters:
-    ///   - angle: The rotation angle.
+    ///   - angle: The rotation absolute angle.
     ///   - axis: The rotation axis.
     ///   - point: The rotation center.
     ///

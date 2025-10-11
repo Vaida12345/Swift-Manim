@@ -44,6 +44,10 @@ public struct Angle: @MainActor PythonConvertible, @MainActor ConvertibleFromPyt
         Angle(radians: lhs.radians + rhs.radians)
     }
     
+    public static func += (lhs: inout Angle, rhs: Angle) {
+        lhs = lhs + rhs
+    }
+    
     public static func - (lhs: Angle, rhs: Angle) -> Angle {
         Angle(radians: lhs.radians - rhs.radians)
     }

@@ -83,7 +83,7 @@ extension MObject {
     ///   - color: The color of the trace.
     ///   - width: The width of the trace.
     ///   - dissipatingTime: The time taken for the path to dissipate. Default set to `nil` which disables dissipation.
-    public func trace<T>(_ keyPath: KeyPath<MObject, T> = \.center, color: Color? = nil, width: Double = 2, dissipatingTime: Double? = nil) -> TracedPath where T: PythonConvertible {
+    public func trace<T>(_ keyPath: KeyPath<MObject, T>, color: Color? = nil, width: Double = 2, dissipatingTime: Double? = nil) -> TracedPath where T: PythonConvertible {
         TracedPath(self[keyPath: keyPath], color: color ?? self.color, width: width, dissipatingTime: dissipatingTime)
     }
     
