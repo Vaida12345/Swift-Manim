@@ -117,16 +117,29 @@ public func withManim(
     
     // MARK: - Tweak Logging
     
+    let manimLogger = Logger(subsystem: "Swift-Manim", category: "Manim Logs")
     let emit = PythonFunction { args in
         let record = args[0].format(args[1])
-        let logger = Logger(subsystem: "Swift-Manim", category: "Manim Logs")
-        logger.info("\(record.description.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines.union(["\""])))")
+        var level: OSLogType {
+            guard let (_, match) = args[1].description.wholeMatch(of: /\[<.*?,(.*?),.*?,.*?,.*>\]/.dotMatchesNewlines())?.output else { return .default }
+            
+            switch match {
+            case "10": return .debug
+            case "20": return .info
+            case "30": return .error
+            case "40": return .error
+            case "50": return .fault
+            default: return .default
+            }
+        }
+        manimLogger.log(level: level, "\(record.description.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines.union(["\""])))")
+        
         return Python.None
     }
     
     let types = Python.import("types")
     for handler in manim.logger.handlers {
-        if Bool(Python.hasattr(handler, "console"))! {
+        if Bool(Python.hasattr(handler, "emit"))! {
             handler.emit = types.MethodType(emit, handler)
         }
     }
