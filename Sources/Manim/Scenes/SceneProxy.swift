@@ -40,6 +40,12 @@ public struct SceneProxy {
     public let camera: MovingCamera
     
     
+    /// The main scene proxy, internal use only.
+    internal static var shared: SceneProxy {
+        SceneProxy(scene: Manim.scene)
+    }
+    
+    
     init(scene: PythonObject) {
         self.scene = scene
         self.camera = MovingCamera(scene.camera)

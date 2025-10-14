@@ -197,7 +197,7 @@ line1.capStyle = .round
 
 let movingLine = line1.copied()
 let lineRef = movingLine.copied()
-movingLine.rotate(angle: .degrees(theta), about: [0, 0])
+movingLine.rotate(to: .degrees(theta), about: [0, 0])
 let arc = Arc(radius: 0.5, angle: movingLine.angle)
 arc.addUpdater {
     arc.become(Arc(radius: 0.5, angle: movingLine.angle))
@@ -211,7 +211,7 @@ scene.sleep()
 
 movingLine.addUpdater {
     movingLine.become(lineRef.copied())
-    movingLine.rotate(angle: .degrees(theta), about: [0, 0])
+    movingLine.rotate(to: .degrees(theta), about: [0, 0])
 }
 
 withAnimation {

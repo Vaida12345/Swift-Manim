@@ -223,11 +223,17 @@ extension Transformable {
     /// let rect = Rectangle(width: 4, height: 2)
     ///
     /// withAnimation {
-    ///     rect.rotate(angle: .degrees(45), axis: .y)
+    ///     rect.rotate(to: .degrees(45), axis: .y)
     /// }
     /// ```
     ///
     /// ![Preview](https://github.com/Vaida12345/Swift-Manim/raw/refs/heads/main/Sources/Manim/Documentation.docc/Resources/rotate.mov)
+    @discardableResult
+    public func rotate(to angle: Angle, about point: Point? = nil, axis: Axis = .z) -> Transform {
+        Transform(base: self._pythonObject, caller: manim.Rotate, arguments: [("angle", angle.radians), ("axis", axis), ("about_point", point)])
+    }
+    
+    @available(*, deprecated, renamed: "rotate(to:about:axis:)", message: "This method is deprecated due to ambiguity.")
     @discardableResult
     public func rotate(angle: Angle, about point: Point? = nil, axis: Axis = .z) -> Transform {
         Transform(base: self._pythonObject, caller: manim.Rotate, arguments: [("angle", angle.radians), ("axis", axis), ("about_point", point)])

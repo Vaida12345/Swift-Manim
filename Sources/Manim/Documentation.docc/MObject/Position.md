@@ -55,7 +55,7 @@ Although you can use ``MObject/origin`` or ``Transformable/move(to:alignedEdges:
 ### Implicit Move
 - ``Transformable/shift(by:)``
 - ``Transformable/moveAlong(pathOf:)``
-- ``Transformable/rotate(angle:about:axis:)``
+- ``Transformable/rotate(to:about:axis:)``
 - ``Transformable/scale(_:stroke:)``
 - ``Transformable/flip(axis:)``
 

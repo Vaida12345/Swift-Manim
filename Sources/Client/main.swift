@@ -10,15 +10,14 @@ import Foundation
 
 
 try await withManim { scene in
-    let arrow = Arrow(from: .zero, to: [1, 0])
-    scene.add(arrow)
+    let dot = Dot(at: .zero)
+    let circle = Circle()
     
-    let trace = arrow.trace(\.end, dissipatingTime: 2)
-    scene.add(trace)
-    
-    withAnimation {
-        arrow.rotate(angle: .degrees(360), about: .zero)
+    circle.addUpdater {
+        circle.shift(by: [0.1, 0])
     }
+    
+    scene.add(dot, circle)
     
     scene.sleep()
 } configuration: {

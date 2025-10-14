@@ -28,10 +28,9 @@ public func withManim(
     configuration: @MainActor (ConfigurationProxy) async throws -> Void = { _ in },
 ) async throws {
     
-    let logger = Logger(subsystem: "Manim", category: "Initialization")
-    
     // MARK: - Configuration
     
+    let logger = Logger(subsystem: "Manim", category: "Initialization")
     let configProxy = ConfigurationProxy()
     try await configuration(configProxy)
     if let libraryPath = configProxy.pythonLibraryPath {
@@ -41,10 +40,19 @@ public func withManim(
     
     logger.info("Using Python \(Python.version)")
     
+    // setup packages
+    let os = Python.import("os")
     let sys = Python.import("sys")
+    
+    let stdlib = String(os.path.dirname(Python.getattr(sys, "executable")))! + "/../lib/python" + String(Int(sys.version_info.major)!) + "." + String(Int(sys.version_info.minor)!)
+    let dynload = stdlib + "/lib-dynload"
+    let sitePackages = stdlib + "/site-packages"
+    
+    sys.path = [stdlib, dynload, sitePackages].pythonObject
+    
     if let packagesPath = configProxy.pythonPackagesPath {
         precondition(packagesPath.exists, "Cannot find python packages, please follow README to setup environment.")
-        sys.path.insert(0, packagesPath.path)
+        sys.path.append(packagesPath.path)
     }
     
     if let latex = configProxy.latexPath {
@@ -87,8 +95,8 @@ public func withManim(
     config["media_dir"] = configProxy.mediaDirectory.path.pythonObject
     config["save_sections"] = configProxy.saveSections.pythonObject
     config["output_file"] = "\(configProxy.mediaDirectory)/\(configProxy.fileName)".pythonObject
-    config["format"] = configProxy.format.rawValue.pythonObject
     config["movie_file_extension"] = ("." + configProxy.format.rawValue).pythonObject
+    config["format"] = configProxy.format.rawValue.pythonObject
     if let frameRate = configProxy.frameRate {
         config["frame_rate"] = frameRate.pythonObject
     }
@@ -107,6 +115,21 @@ public func withManim(
     config["disable_caching"] = configProxy.disableCache.pythonObject
     config["verbosity"] = configProxy.verbosity.rawValue.uppercased().pythonObject
     
+    // MARK: - Tweak Logging
+    
+    let emit = PythonFunction { args in
+        let record = args[0].format(args[1])
+        let logger = Logger(subsystem: "Swift-Manim", category: "Manim Logs")
+        logger.info("\(record.description.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines.union(["\""])))")
+        return Python.None
+    }
+    
+    let types = Python.import("types")
+    for handler in manim.logger.handlers {
+        if Bool(Python.hasattr(handler, "console"))! {
+            handler.emit = types.MethodType(emit, handler)
+        }
+    }
     
     // MARK: - Global scene
     let constructFunc: PythonFunction = PythonFunction { args, kwargs in
