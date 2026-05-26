@@ -21,11 +21,14 @@ public class Projection<T>: @MainActor MObject where T: PythonConvertible & Conv
     public var _pythonObject: PythonKit.PythonObject
     
     
-    let get: (() -> T)! // optional for `ValueTracker` to inherit from `Binding`.
-    
+    let get: (() -> T)?
+
     /// The underlying value.
     public var wrappedValue: T {
-        self.get()
+        guard let get else {
+            fatalError("Projection was initialized without a getter closure. Use init(get:) instead of init(_pythonObject:).")
+        }
+        return get()
     }
     
     /// Swift Syntax suger.
@@ -35,7 +38,7 @@ public class Projection<T>: @MainActor MObject where T: PythonConvertible & Conv
         self
     }
     
-    subscript<Subject>(dynamicMember keyPath: KeyPath<T, Subject>) -> Projection<Subject> {
+    public subscript<Subject>(dynamicMember keyPath: KeyPath<T, Subject>) -> Projection<Subject> {
         Projection<Subject> {
             self.wrappedValue[keyPath: keyPath]
         }

@@ -5,6 +5,7 @@
 //  Created by Vaida on 2025-09-24.
 //
 
+import FinderItem
 import PythonKit
 import OSLog
 
@@ -50,8 +51,14 @@ public func withManim(
     
     sys.path = [stdlib, dynload, sitePackages].pythonObject
     
-    if let packagesPath = configProxy.pythonPackagesPath {
-        precondition(packagesPath.exists, "Cannot find python packages, please follow README to setup environment.")
+    let packagesPath: FinderItem
+    if let userPath = configProxy.pythonPackagesPath {
+        precondition(userPath.exists, "Cannot find python packages at \(userPath), please follow README to setup environment.")
+        packagesPath = userPath
+    } else {
+        packagesPath = FinderItem("\(NSHomeDirectory())/Documents/Swift Manim/manim-venv/lib/python\(Int(sys.version_info.major)!).\(Int(sys.version_info.minor)!)/site-packages")
+    }
+    if packagesPath.exists {
         sys.path.append(packagesPath.path)
     }
     

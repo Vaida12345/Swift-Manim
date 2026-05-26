@@ -48,9 +48,11 @@ extension Animation {
     ///
     /// By default, the duration is `1`.
     public func duration(_ seconds: Double) -> Self {
-        if duration == 0 {
-            let logger = Logger(subsystem: "Manim", category: "Animation.duration(_:)")
-            logger.warning("Attempting to give a duration of zero. This could prevent the video from rendering.")
+        if seconds == 0 {
+            if #available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
+                let logger = Logger(subsystem: "Manim", category: "Animation.duration(_:)")
+                logger.warning("Attempting to give a duration of zero. This could prevent the video from rendering.")
+            }
         }
         
         self.duration = seconds
@@ -136,11 +138,12 @@ internal final class EmptyAnimation: Animation {
 /// - Note: Any objects that are not added to the scene will be implicitly added.
 @MainActor
 public func withAnimation(_ animation: RateFunction = .smooth, in method: Animation.Method = .serial, @_AnimationBuilder body: () -> _AnimationGroup) {
+    let previousShouldUseAnimation = shouldUseAnimation
     shouldUseAnimation = true
     let animations = body()
         .get()
         .filter { !($0 is EmptyAnimation) }
-     shouldUseAnimation = false
+    shouldUseAnimation = previousShouldUseAnimation
     
     switch method {
     case .serial:

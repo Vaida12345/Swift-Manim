@@ -32,7 +32,7 @@ public final class ConfigurationProxy {
     /// [Read more](<doc:Setup>) about setting up the environment.
     ///
     /// - Experiment: It may take time to setup when calling it for the first time.
-    public var pythonPackagesPath: FinderItem? = "\(NSHomeDirectory())/Documents/Swift Manim/manim-venv/lib/python3.13/site-packages"
+    public var pythonPackagesPath: FinderItem?
     
     /// If specified, use the `latex` compiler indicated by the path.
     ///

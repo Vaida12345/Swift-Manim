@@ -64,7 +64,7 @@ public class VMObject: @MainActor MObject {
             closure.append("fill_opacity", fill.alpha)
         } else {
             // fall back to default
-            assert(strokeWidth == nil, "These is a miss placed argument `strokeWidth`, please check your initializer.")
+            assert(strokeWidth == nil, "There is a misplaced argument `strokeWidth`, please check your initializer.")
             closure.append("stroke_color", defaultColor)
             closure.append("stroke_opacity", 1)
             closure.append("stroke_width", strokeWidth ?? 4)

@@ -28,7 +28,7 @@ public struct Point: @MainActor ExpressibleByArrayLiteral, @MainActor PythonConv
     public var description: String {
         var description = "(\(x.userFriendlyDescription), \(y.userFriendlyDescription)"
         if z != 0 {
-            description += ", \(z.userFriendlyDescription))"
+            description += ", \(z.userFriendlyDescription)"
         }
         return description + ")"
     }
