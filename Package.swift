@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "Manim", targets: ["Manim"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "1.2.5"),
+        .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "2.1.0"),
         .package(url: "https://github.com/pvieito/PythonKit.git", branch: "master")
     ],
     targets: [
