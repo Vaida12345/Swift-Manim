@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.4
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "Manim", targets: ["Manim"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "2.1.0"),
+        .package(url: "https://github.com/Vaida12345/FinderItem.git", from: "2.2.1"),
         .package(url: "https://github.com/pvieito/PythonKit.git", branch: "master")
     ],
     targets: [
