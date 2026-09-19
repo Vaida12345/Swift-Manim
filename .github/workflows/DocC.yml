@@ -1,6 +1,8 @@
 name: DocC
 on:
-   workflow_dispatch:
+   push:
+    tags:
+      - '*'
 jobs:
   Build_DocC:
     runs-on: macos-latest
